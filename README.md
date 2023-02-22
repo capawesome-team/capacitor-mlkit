@@ -46,9 +46,9 @@ Click on the name of the desired plugin under the [`Plugins`](#plugins) section 
 
 ## Plugins
 
-| Name | Package | Version | Downloads |
-| ---- | ------- | ------- | --------- |
-
+| Name                                  | Package                        | Version                                                                                                                                                 | Downloads                                                                                                                                                    |
+| ------------------------------------- | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| [Translation](./packages/translation) | `@capacitor-mlkit/translation` | [![npm badge](https://img.shields.io/npm/v/@capacitor-mlkit/translation?style=flat-square)](https://www.npmjs.com/package/@capacitor-mlkit/translation) | [![npm downloads](https://img.shields.io/npm/dw/@capacitor-mlkit/translation?style=flat-square)](https://www.npmjs.com/package/@capacitor-mlkit/translation) |
 
 ## Changelogs
 
