@@ -1,0 +1,20 @@
+name: Add package label
+
+on:
+  issues:
+    types:
+      - opened
+
+jobs:
+  package-label:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Add package-translation label
+        if: contains(github.event.issue.body, '@capacitor-mlkit/translation')
+        run: |
+          curl --request POST \
+          --url 'https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/labels' \
+          --header 'Authorization: token ${{ secrets.GITHUB_TOKEN }}' \
+          --header 'Content-Type: application/json' \
+          --header 'Accept: application/vnd.github.v3+json' \
+          --data-raw '{ "labels": ["package: translation"] }'
