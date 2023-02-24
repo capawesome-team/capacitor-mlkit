@@ -1,7 +1,8 @@
 <br />
 <div align="center">
-  <img src="" width="720" />
+  <img src="https://avatars.githubusercontent.com/u/105555861" width="128" height="128" />
 </div>
+<h3 align="center">ML Kit</h3>
 <br />
 <p align="center">
   <a href="https://github.com/capawesome-team/capacitor-mlkit"><img src="https://img.shields.io/maintenance/yes/2023?style=flat-square" /></a>
