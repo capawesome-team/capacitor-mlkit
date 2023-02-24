@@ -5,7 +5,7 @@
     { "repo": "capawesome-team/capacitor-mlkit" }
   ],
   "commit": false,
-  "fixed": [[]],
+  "fixed": [["@capacitor-mlkit/translation"]],
   "linked": [],
   "access": "public",
   "baseBranch": "main",

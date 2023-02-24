@@ -1,7 +1,8 @@
 <br />
 <div align="center">
-  <img src="" width="720" />
+  <img src="https://avatars.githubusercontent.com/u/105555861" width="128" height="128" />
 </div>
+<h3 align="center">ML Kit</h3>
 <br />
 <p align="center">
   <a href="https://github.com/capawesome-team/capacitor-mlkit"><img src="https://img.shields.io/maintenance/yes/2023?style=flat-square" /></a>
@@ -46,9 +47,9 @@ Click on the name of the desired plugin under the [`Plugins`](#plugins) section 
 
 ## Plugins
 
-| Name | Package | Version | Downloads |
-| ---- | ------- | ------- | --------- |
-
+| Name                                  | Package                        | Version                                                                                                                                                 | Downloads                                                                                                                                                    |
+| ------------------------------------- | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| [Translation](./packages/translation) | `@capacitor-mlkit/translation` | [![npm badge](https://img.shields.io/npm/v/@capacitor-mlkit/translation?style=flat-square)](https://www.npmjs.com/package/@capacitor-mlkit/translation) | [![npm downloads](https://img.shields.io/npm/dw/@capacitor-mlkit/translation?style=flat-square)](https://www.npmjs.com/package/@capacitor-mlkit/translation) |
 
 ## Changelogs
 
@@ -59,6 +60,11 @@ Click on the name of the desired plugin under the [`Plugins`](#plugins) section 
 
 Each plugin has its own `BREAKING.md` file which contains information about breaking changes.
 Click on the name of the desired plugin under the [`Plugins`](#plugins) section to get to the plugin folder.
+
+## Data Processing
+
+This plugin uses the [Google ML Kit](https://developers.google.com/ml-kit).
+Information about Terms & Privacy can be found [here](https://developers.google.com/ml-kit/terms).
 
 ## Contributing
 
