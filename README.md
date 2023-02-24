@@ -61,6 +61,11 @@ Click on the name of the desired plugin under the [`Plugins`](#plugins) section 
 Each plugin has its own `BREAKING.md` file which contains information about breaking changes.
 Click on the name of the desired plugin under the [`Plugins`](#plugins) section to get to the plugin folder.
 
+## Data Processing
+
+This plugin uses the [Google ML Kit](https://developers.google.com/ml-kit).
+Information about Terms & Privacy can be found [here](https://developers.google.com/ml-kit/terms).
+
 ## Contributing
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md).

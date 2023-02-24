@@ -18,6 +18,22 @@ public class Translation {
         this.modelManager = RemoteModelManager.getInstance();
     }
 
+    public void deleteDownloadedModel(String language, final DeleteDownloadedModelResultCallback resultCallback) {
+        TranslateRemoteModel frenchModel = new TranslateRemoteModel.Builder(language).build();
+        modelManager
+            .deleteDownloadedModel(frenchModel)
+            .addOnSuccessListener(
+                (OnSuccessListener) result -> {
+                    resultCallback.success();
+                }
+            )
+            .addOnFailureListener(
+                exception -> {
+                    resultCallback.error(exception);
+                }
+            );
+    }
+
     public void downloadModel(String language, final DownloadModelResultCallback resultCallback) {
         TranslateRemoteModel frenchModel = new TranslateRemoteModel.Builder(language).build();
         DownloadConditions conditions = new DownloadConditions.Builder().requireWifi().build();
@@ -39,7 +55,7 @@ public class Translation {
         modelManager
             .getDownloadedModels(TranslateRemoteModel.class)
             .addOnSuccessListener(
-                (OnSuccessListener<Set>) models -> {
+                (OnSuccessListener<Set<TranslateRemoteModel>>) models -> {
                     resultCallback.success(models);
                 }
             )
