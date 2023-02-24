@@ -82,11 +82,13 @@ public class Translation {
                         .addOnSuccessListener(
                             (OnSuccessListener<String>) translateResult -> {
                                 resultCallback.success(translateResult);
+                                translator.close();
                             }
                         )
                         .addOnFailureListener(
                             exception -> {
                                 resultCallback.error(exception);
+                                translator.close();
                             }
                         );
                 }
@@ -94,6 +96,7 @@ public class Translation {
             .addOnFailureListener(
                 exception -> {
                     resultCallback.error(exception);
+                    translator.close();
                 }
             );
     }
