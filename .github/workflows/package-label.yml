@@ -9,6 +9,96 @@ jobs:
   package-label:
     runs-on: ubuntu-latest
     steps:
+      - name: Add package-text-recognition label
+        if: contains(github.event.issue.body, '@capacitor-mlkit/text-recognition')
+        run: |
+          curl --request POST \
+          --url 'https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/labels' \
+          --header 'Authorization: token ${{ secrets.GITHUB_TOKEN }}' \
+          --header 'Content-Type: application/json' \
+          --header 'Accept: application/vnd.github.v3+json' \
+          --data-raw '{ "labels": ["package: text-recognition"] }'
+      - name: Add package-face-detection label
+        if: contains(github.event.issue.body, '@capacitor-mlkit/face-detection')
+        run: |
+          curl --request POST \
+          --url 'https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/labels' \
+          --header 'Authorization: token ${{ secrets.GITHUB_TOKEN }}' \
+          --header 'Content-Type: application/json' \
+          --header 'Accept: application/vnd.github.v3+json' \
+          --data-raw '{ "labels": ["package: face-detection"] }'
+      - name: Add package-face-mesh-detection label
+        if: contains(github.event.issue.body, '@capacitor-mlkit/face-mesh-detection')
+        run: |
+          curl --request POST \
+          --url 'https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/labels' \
+          --header 'Authorization: token ${{ secrets.GITHUB_TOKEN }}' \
+          --header 'Content-Type: application/json' \
+          --header 'Accept: application/vnd.github.v3+json' \
+          --data-raw '{ "labels": ["package: face-mesh-detection"] }'
+      - name: Add package-pose-detection label
+        if: contains(github.event.issue.body, '@capacitor-mlkit/pose-detection')
+        run: |
+          curl --request POST \
+          --url 'https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/labels' \
+          --header 'Authorization: token ${{ secrets.GITHUB_TOKEN }}' \
+          --header 'Content-Type: application/json' \
+          --header 'Accept: application/vnd.github.v3+json' \
+          --data-raw '{ "labels": ["package: pose-detection"] }'
+      - name: Add package-selfie-segmentation label
+        if: contains(github.event.issue.body, '@capacitor-mlkit/selfie-segmentation')
+        run: |
+          curl --request POST \
+          --url 'https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/labels' \
+          --header 'Authorization: token ${{ secrets.GITHUB_TOKEN }}' \
+          --header 'Content-Type: application/json' \
+          --header 'Accept: application/vnd.github.v3+json' \
+          --data-raw '{ "labels": ["package: selfie-segmentation"] }'
+      - name: Add package-barcode-scanning label
+        if: contains(github.event.issue.body, '@capacitor-mlkit/barcode-scanning')
+        run: |
+          curl --request POST \
+          --url 'https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/labels' \
+          --header 'Authorization: token ${{ secrets.GITHUB_TOKEN }}' \
+          --header 'Content-Type: application/json' \
+          --header 'Accept: application/vnd.github.v3+json' \
+          --data-raw '{ "labels": ["package: barcode-scanning"] }'
+      - name: Add package-image-labeling label
+        if: contains(github.event.issue.body, '@capacitor-mlkit/image-labeling')
+        run: |
+          curl --request POST \
+          --url 'https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/labels' \
+          --header 'Authorization: token ${{ secrets.GITHUB_TOKEN }}' \
+          --header 'Content-Type: application/json' \
+          --header 'Accept: application/vnd.github.v3+json' \
+          --data-raw '{ "labels": ["package: image-labeling"] }'
+      - name: Add package-object-detection label
+        if: contains(github.event.issue.body, '@capacitor-mlkit/object-detection')
+        run: |
+          curl --request POST \
+          --url 'https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/labels' \
+          --header 'Authorization: token ${{ secrets.GITHUB_TOKEN }}' \
+          --header 'Content-Type: application/json' \
+          --header 'Accept: application/vnd.github.v3+json' \
+          --data-raw '{ "labels": ["package: object-detection"] }'
+      - name: Add package-language-identification label
+        if: contains(github.event.issue.body, '@capacitor-mlkit/language-identification')
+        run: |
+          curl --request POST \
+          --url 'https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/labels' \
+          --header 'Authorization: token ${{ secrets.GITHUB_TOKEN }}' \
+          --header 'Content-Type: application/json' \
+          --header 'Accept: application/vnd.github.v3+json' \
+          --data-raw '{ "labels": ["package: language-identification"] }'
+      - name: Add package-digital-ink-recognition label
+        if: contains(github.event.issue.body, '@capacitor-mlkit/digital-ink-recognition')
+        run: |
+          curl --request POST \
+          --url 'https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/labels' \
+          --header 'Authorization: token ${{ secrets.GITHUB_TOKEN }}' \
+          --header 'Content-Type: application/json' \
+          --header 'Accept: application/vnd.github.v3+json' \
+          --data-raw '{ "labels": ["package: digital-ink-recognition"] }'
       - name: Add package-translation label
         if: contains(github.event.issue.body, '@capacitor-mlkit/translation')
         run: |
@@ -18,3 +108,21 @@ jobs:
           --header 'Content-Type: application/json' \
           --header 'Accept: application/vnd.github.v3+json' \
           --data-raw '{ "labels": ["package: translation"] }'
+      - name: Add package-smart-reply label
+        if: contains(github.event.issue.body, '@capacitor-mlkit/smart-reply')
+        run: |
+          curl --request POST \
+          --url 'https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/labels' \
+          --header 'Authorization: token ${{ secrets.GITHUB_TOKEN }}' \
+          --header 'Content-Type: application/json' \
+          --header 'Accept: application/vnd.github.v3+json' \
+          --data-raw '{ "labels": ["package: smart-reply"] }'
+      - name: Add package-entity-extraction label
+        if: contains(github.event.issue.body, '@capacitor-mlkit/entity-extraction')
+        run: |
+          curl --request POST \
+          --url 'https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/labels' \
+          --header 'Authorization: token ${{ secrets.GITHUB_TOKEN }}' \
+          --header 'Content-Type: application/json' \
+          --header 'Accept: application/vnd.github.v3+json' \
+          --data-raw '{ "labels": ["package: entity-extraction"] }'
