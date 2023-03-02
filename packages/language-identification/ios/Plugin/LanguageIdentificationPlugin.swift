@@ -1,6 +1,5 @@
 import Foundation
 import Capacitor
-import MLKitTranslate
 
 /**
  * Please read the Capacitor iOS Plugin Development Guide
@@ -8,7 +7,7 @@ import MLKitTranslate
  */
 @objc(LanguageIdentificationPlugin)
 public class LanguageIdentificationPlugin: CAPPlugin {
-    public let errorLanguageMissing = "language must be provided."
+    public let errorTextMissing = "text must be provided."
 
     private var implementation: LanguageIdentification?
 
@@ -16,17 +15,21 @@ public class LanguageIdentificationPlugin: CAPPlugin {
         implementation = LanguageIdentification(plugin: self)
     }
 
-    @objc func deleteDownloadedModel(_ call: CAPPluginCall) {
-        guard let languageOption = call.getString("language") else {
-            call.reject(errorLanguageMissing)
+    @objc func identifyLanguage(_ call: CAPPluginCall) {
+        guard let text = call.getString("text") else {
+            call.reject(errorTextMissing)
             return
         }
-        let language = TranslateLanguage(rawValue: languageOption)
 
-        implementation?.deleteDownloadedModel(language: language, completion: { error in
+        implementation?.identifyLanguage(text: text, completion: { languageCode, error in
             if let error = error {
                 call.reject(error.localizedDescription)
                 return
+            }
+            if let languageCode = languageCode, languageCode != "und" {
+              print("Identified Language: \(languageCode)")
+            } else {
+              print("No language was identified")
             }
             call.resolve()
         })

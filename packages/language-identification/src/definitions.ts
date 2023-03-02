@@ -50,6 +50,7 @@ export interface IdentifyLanguageResult {
  * The language to translate to or from.
  *
  * @since 0.0.2
+ * @see https://developers.google.com/ml-kit/language/identification/langid-support
  */
 export enum Language {
   /**
@@ -59,7 +60,19 @@ export enum Language {
   /**
    * @since 0.0.2
    */
+  Amharic = 'am',
+  /**
+   * @since 0.0.2
+   */
   Arabic = 'ar',
+  /**
+   * @since 0.0.2
+   */
+  ArabicLatin = 'ar-Latn',
+  /**
+   * @since 0.0.2
+   */
+  Azerbaijani = 'az',
   /**
    * @since 0.0.2
    */
@@ -71,11 +84,27 @@ export enum Language {
   /**
    * @since 0.0.2
    */
+  BulgarianLatin = 'bg-Latn',
+  /**
+   * @since 0.0.2
+   */
   Bengali = 'bn',
   /**
    * @since 0.0.2
    */
+  Bosnian = 'bs',
+  /**
+   * @since 0.0.2
+   */
   Catalan = 'ca',
+  /**
+   * @since 0.0.2
+   */
+  Cebuano = 'ceb',
+  /**
+   * @since 0.0.2
+   */
+  Corsican = 'co',
   /**
    * @since 0.0.2
    */
@@ -99,6 +128,10 @@ export enum Language {
   /**
    * @since 0.0.2
    */
+  GreekLatin = 'el-Latn',
+  /**
+   * @since 0.0.2
+   */
   English = 'en',
   /**
    * @since 0.0.2
@@ -115,6 +148,10 @@ export enum Language {
   /**
    * @since 0.0.2
    */
+  Basque = 'eu',
+  /**
+   * @since 0.0.2
+   */
   Persian = 'fa',
   /**
    * @since 0.0.2
@@ -123,11 +160,23 @@ export enum Language {
   /**
    * @since 0.0.2
    */
+  Filipino = 'fil',
+  /**
+   * @since 0.0.2
+   */
   French = 'fr',
   /**
    * @since 0.0.2
    */
+  WesternFrisian = 'fy',
+  /**
+   * @since 0.0.2
+   */
   Irish = 'ga',
+  /**
+   * @since 0.0.2
+   */
+  ScotsGaelic = 'gd',
   /**
    * @since 0.0.2
    */
@@ -139,11 +188,27 @@ export enum Language {
   /**
    * @since 0.0.2
    */
+  Hausa = 'ha',
+  /**
+   * @since 0.0.2
+   */
+  Hawaiian = 'haw',
+  /**
+   * @since 0.0.2
+   */
   Hebrew = 'he',
   /**
    * @since 0.0.2
    */
   Hindi = 'hi',
+  /**
+   * @since 0.0.2
+   */
+  HindiLatin = 'hi-Latn',
+  /**
+   * @since 0.0.2
+   */
+  Hmong = 'hmn',
   /**
    * @since 0.0.2
    */
@@ -159,7 +224,15 @@ export enum Language {
   /**
    * @since 0.0.2
    */
+  Armenian = 'hy',
+  /**
+   * @since 0.0.2
+   */
   Indonesian = 'id',
+  /**
+   * @since 0.0.2
+   */
+  Igbo = 'ig',
   /**
    * @since 0.0.2
    */
@@ -175,7 +248,23 @@ export enum Language {
   /**
    * @since 0.0.2
    */
+  JapaneseLatin = 'ja-Latn',
+  /**
+   * @since 0.0.2
+   */
+  Javanese = 'jv',
+  /**
+   * @since 0.0.2
+   */
   Georgian = 'ka',
+  /**
+   * @since 0.0.2
+   */
+  Kazakh = 'kk',
+  /**
+   * @since 0.0.2
+   */
+  Khmer = 'km',
   /**
    * @since 0.0.2
    */
@@ -187,6 +276,26 @@ export enum Language {
   /**
    * @since 0.0.2
    */
+  Kurdish = 'ku',
+  /**
+   * @since 0.0.2
+   */
+  Kyrgyz = 'ky',
+  /**
+   * @since 0.0.2
+   */
+  Latin = 'la',
+  /**
+   * @since 0.0.2
+   */
+  Luxembourgish = 'lb',
+  /**
+   * @since 0.0.2
+   */
+  Lao = 'lo',
+  /**
+   * @since 0.0.2
+   */
   Lithuanian = 'lt',
   /**
    * @since 0.0.2
@@ -195,7 +304,23 @@ export enum Language {
   /**
    * @since 0.0.2
    */
+  Malagasy = 'mg',
+  /**
+   * @since 0.0.2
+   */
+  Maori = 'mi',
+  /**
+   * @since 0.0.2
+   */
   Macedonian = 'mk',
+  /**
+   * @since 0.0.2
+   */
+  Malayalam = 'ml',
+  /**
+   * @since 0.0.2
+   */
+  Mongolian = 'mn',
   /**
    * @since 0.0.2
    */
@@ -211,6 +336,14 @@ export enum Language {
   /**
    * @since 0.0.2
    */
+  Burmese = 'my',
+  /**
+   * @since 0.0.2
+   */
+  Nepali = 'ne',
+  /**
+   * @since 0.0.2
+   */
   Dutch = 'nl',
   /**
    * @since 0.0.2
@@ -219,7 +352,19 @@ export enum Language {
   /**
    * @since 0.0.2
    */
+  Nyanja = 'ny',
+  /**
+   * @since 0.0.2
+   */
+  Punjabi = 'pa',
+  /**
+   * @since 0.0.2
+   */
   Polish = 'pl',
+  /**
+   * @since 0.0.2
+   */
+  Pashto = 'ps',
   /**
    * @since 0.0.2
    */
@@ -235,6 +380,18 @@ export enum Language {
   /**
    * @since 0.0.2
    */
+  RussianLatin = 'ru-Latn',
+  /**
+   * @since 0.0.2
+   */
+  Sindhi = 'sd',
+  /**
+   * @since 0.0.2
+   */
+  Sinhala = 'si',
+  /**
+   * @since 0.0.2
+   */
   Slovak = 'sk',
   /**
    * @since 0.0.2
@@ -243,7 +400,31 @@ export enum Language {
   /**
    * @since 0.0.2
    */
+  Samoan = 'sm',
+  /**
+   * @since 0.0.2
+   */
+  Shona = 'sn',
+  /**
+   * @since 0.0.2
+   */
+  Somali = 'so',
+  /**
+   * @since 0.0.2
+   */
   Albanian = 'sq',
+  /**
+   * @since 0.0.2
+   */
+  Serbian = 'sr',
+  /**
+   * @since 0.0.2
+   */
+  Sesotho = 'st',
+  /**
+   * @since 0.0.2
+   */
+  Sundanese = 'su',
   /**
    * @since 0.0.2
    */
@@ -263,11 +444,11 @@ export enum Language {
   /**
    * @since 0.0.2
    */
-  Thai = 'th',
+  Tajik = 'tg',
   /**
    * @since 0.0.2
    */
-  Tagalog = 'tl',
+  Thai = 'th',
   /**
    * @since 0.0.2
    */
@@ -283,9 +464,33 @@ export enum Language {
   /**
    * @since 0.0.2
    */
+  Uzbek = 'uz',
+  /**
+   * @since 0.0.2
+   */
   Vietnamese = 'vi',
   /**
    * @since 0.0.2
    */
+  Xhosa = 'xh',
+  /**
+   * @since 0.0.2
+   */
+  Yiddish = 'yi',
+  /**
+   * @since 0.0.2
+   */
+  Yoruba = 'yo',
+  /**
+   * @since 0.0.2
+   */
   Chinese = 'zh',
+  /**
+   * @since 0.0.2
+   */
+  ChineseLatin = 'zh-Latn',
+  /**
+   * @since 0.0.2
+   */
+  Zulu = 'zu',
 }

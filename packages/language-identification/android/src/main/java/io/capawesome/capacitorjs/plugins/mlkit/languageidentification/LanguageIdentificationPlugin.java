@@ -1,4 +1,4 @@
-package io.capawesome.capacitorjs.plugins.mlkit.translation;
+package io.capawesome.capacitorjs.plugins.mlkit.languageidentification;
 
 import com.getcapacitor.JSArray;
 import com.getcapacitor.JSObject;

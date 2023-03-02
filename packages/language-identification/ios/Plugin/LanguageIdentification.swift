@@ -1,5 +1,5 @@
 import Foundation
-import MLKitTranslate
+import MLKitNaturalLanguage
 
 @objc public class LanguageIdentification: NSObject {
     private let plugin: LanguageIdentificationPlugin
@@ -8,10 +8,14 @@ import MLKitTranslate
         self.plugin = plugin
     }
 
-    @objc public func deleteDownloadedModel(language: TranslateLanguage, completion: @escaping (Error?) -> Void) {
-        let model = TranslateRemoteModel.translateRemoteModel(language: language)
-        ModelManager.modelManager().deleteDownloadedModel(model) { error in
-            completion(error)
-        }
+    @objc public func identifyLanguage(text: String, completion: @escaping (String?, Error?) -> Void) {
+        let languageIdentification = NaturalLanguage.languageIdentification()
+        languageIdentification.identifyLanguage(for: text) { (languageCode, error) in
+            if let error = error {
+                completion(nil, error)
+              return
+            }
+            completion(languageCode, nil)
+          }
     }
 }

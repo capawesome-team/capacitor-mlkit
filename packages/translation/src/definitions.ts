@@ -117,6 +117,7 @@ export interface TranslateResult {
  * The language to translate to or from.
  *
  * @since 0.0.1
+ * @see https://developers.google.com/ml-kit/language/translation/translation-language-support
  */
 export enum Language {
   /**

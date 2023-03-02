@@ -1,4 +1,4 @@
-package io.capawesome.capacitorjs.plugins.mlkit.translation;
+package io.capawesome.capacitorjs.plugins.mlkit.languageidentification;
 
 import androidx.annotation.NonNull;
 import com.google.android.gms.tasks.OnFailureListener;
