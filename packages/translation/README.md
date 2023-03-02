@@ -61,12 +61,12 @@ const translate = async () => {
 
 <docgen-index>
 
-* [`deleteDownloadedModel(...)`](#deletedownloadedmodel)
-* [`downloadModel(...)`](#downloadmodel)
-* [`getDownloadedModels()`](#getdownloadedmodels)
-* [`translate(...)`](#translate)
-* [Interfaces](#interfaces)
-* [Enums](#enums)
+- [`deleteDownloadedModel(...)`](#deletedownloadedmodel)
+- [`downloadModel(...)`](#downloadmodel)
+- [`getDownloadedModels()`](#getdownloadedmodels)
+- [`translate(...)`](#translate)
+- [Interfaces](#interfaces)
+- [Enums](#enums)
 
 </docgen-index>
 
@@ -89,8 +89,7 @@ Only available on Android and iOS.
 
 **Since:** 0.0.1
 
---------------------
-
+---
 
 ### downloadModel(...)
 
@@ -111,8 +110,7 @@ Only available on Android and iOS.
 
 **Since:** 0.0.1
 
---------------------
-
+---
 
 ### getDownloadedModels()
 
@@ -128,8 +126,7 @@ Only available on Android and iOS.
 
 **Since:** 0.0.1
 
---------------------
-
+---
 
 ### translate(...)
 
@@ -153,11 +150,9 @@ Only available on Android and iOS.
 
 **Since:** 0.0.1
 
---------------------
-
+---
 
 ### Interfaces
-
 
 #### DeleteDownloadedModelOptions
 
@@ -165,13 +160,11 @@ Only available on Android and iOS.
 | -------------- | --------------------------------------------- | ------------------------------------------- | ----- |
 | **`language`** | <code><a href="#language">Language</a></code> | The language for which to delete the model. | 0.0.1 |
 
-
 #### DownloadModel
 
 | Prop           | Type                                          | Description                             | Since |
 | -------------- | --------------------------------------------- | --------------------------------------- | ----- |
 | **`language`** | <code><a href="#language">Language</a></code> | The language to download the model for. | 0.0.1 |
-
 
 #### GetDownloadedModelsResult
 
@@ -179,13 +172,11 @@ Only available on Android and iOS.
 | --------------- | ----------------------- | ---------------------------------------------------- |
 | **`languages`** | <code>Language[]</code> | The languages for which a model has been downloaded. |
 
-
 #### TranslateResult
 
 | Prop       | Type                | Description          | Since |
 | ---------- | ------------------- | -------------------- | ----- |
 | **`text`** | <code>string</code> | The translated text. | 0.0.1 |
-
 
 #### TranslateOptions
 
@@ -195,9 +186,7 @@ Only available on Android and iOS.
 | **`sourceLanguage`** | <code><a href="#language">Language</a></code> | The source language of the text. If you don't know the source language, you can use the <a href="#language">`Language</a> Identification` plugin to detect it. | 0.0.1 |
 | **`targetLanguage`** | <code><a href="#language">Language</a></code> | The target language to translate the text to.                                                                                                                  | 0.0.1 |
 
-
 ### Enums
-
 
 #### Language
 
@@ -267,8 +256,8 @@ Only available on Android and iOS.
 
 ## Changelog
 
-See [CHANGELOG.md](/packages/analytics/CHANGELOG.md).
+See [CHANGELOG.md](/packages/translation/CHANGELOG.md).
 
 ## License
 
-See [LICENSE](/packages/analytics/LICENSE).
+See [LICENSE](/packages/translation/LICENSE).
