@@ -185,7 +185,7 @@ typealias MLKitBarcodeScanner = MLKitBarcodeScanning.BarcodeScanner
     }
 
     private func handleScannedBarcode(barcode: Barcode, imageWidth: Int, imageHeight: Int) {
-        plugin.notifyBarcodeScannedListener(barcode: barcode, imageWidth: imageWidth, imageHeight:  imageHeight)
+        plugin.notifyBarcodeScannedListener(barcode: barcode, imageWidth: imageWidth, imageHeight: imageHeight)
     }
 
 }

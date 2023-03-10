@@ -28,7 +28,7 @@ public protocol BarcodeScannerViewDelegate {
     init (implementation: BarcodeScanner, settings: ScanSettings) throws {
         self.implementation = implementation
         self.settings = settings
-        
+
         super.init(frame: UIScreen.main.bounds)
 
         let captureSession = AVCaptureSession()
