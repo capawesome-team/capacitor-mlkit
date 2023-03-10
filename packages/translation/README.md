@@ -1,6 +1,6 @@
 # @capacitor-mlkit/translation
 
-⚡️ Capacitor plugin for ML Kit Translation.
+Unofficial Capacitor plugin for [ML Kit Translation](https://developers.google.com/ml-kit/language/translation).[^1]
 
 ## Installation
 
@@ -265,6 +265,10 @@ Only available on Android and iOS.
 
 </docgen-api>
 
+## Terms & Privacy
+
+See [Terms & Privacy](https://developers.google.com/ml-kit/terms).
+
 ## Changelog
 
 See [CHANGELOG.md](/packages/analytics/CHANGELOG.md).
@@ -272,3 +276,5 @@ See [CHANGELOG.md](/packages/analytics/CHANGELOG.md).
 ## License
 
 See [LICENSE](/packages/analytics/LICENSE).
+
+[^1]: This project is not affiliated with, endorsed by, sponsored by, or approved by Google LLC or any of their affiliates or subsidiaries.
