@@ -53,7 +53,11 @@ No configuration required for this plugin.
 ## Usage
 
 ```typescript
-import { BarcodeScanner } from '@capawesome-team/capacitor-barcode-scanner';
+import {
+  BarcodeScanner,
+  BarcodeFormat,
+  LensFacing,
+} from '@capawesome-team/capacitor-barcode-scanner';
 
 const startScan = async () => {
   // The camera is visible behind the WebView, so that you can customize the UI in the WebView.
@@ -103,6 +107,55 @@ const scanSingleBarcode = async () => {
 
     await BarcodeScanner.startScan();
   });
+};
+
+const scan = async () => {
+  const { barcodes } = await BarcodeScanner.scan({
+    formats: [BarcodeFormat.QrCode],
+    lensFacing: LensFacing.Back,
+  });
+  return barcodes;
+};
+
+const isSupported = async () => {
+  const { supported } = await BarcodeScanner.isSupported();
+  return supported;
+};
+
+const enableTorch = async () => {
+  await BarcodeScanner.enableTorch();
+};
+
+const disableTorch = async () => {
+  await BarcodeScanner.disableTorch();
+};
+
+const toggleTorch = async () => {
+  await BarcodeScanner.toggleTorch();
+};
+
+const isTorchEnabled = async () => {
+  const { enabled } = await BarcodeScanner.isTorchEnabled();
+  return enabled;
+};
+
+const isTorchAvailable = async () => {
+  const { available } = await BarcodeScanner.isTorchAvailable();
+  return available;
+};
+
+const openSettings = async () => {
+  await BarcodeScanner.openSettings();
+};
+
+const checkPermissions = async () => {
+  const { camera } = await BarcodeScanner.checkPermissions();
+  return camera;
+};
+
+const requestPermissions = async () => {
+  const { camera } = await BarcodeScanner.requestPermissions();
+  return camera;
 };
 ```
 
