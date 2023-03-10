@@ -267,7 +267,11 @@ Only available on Android and iOS.
 
 ## Terms & Privacy
 
-See [Terms & Privacy](https://developers.google.com/ml-kit/terms).
+This plugin uses the [Google ML Kit](https://developers.google.com/ml-kit):
+
+- [Terms & Privacy](https://developers.google.com/ml-kit/terms)
+- [Android Data Disclosure](https://developers.google.com/ml-kit/android-data-disclosure)
+- [iOS Data Disclosure](https://developers.google.com/ml-kit/ios-data-disclosure)
 
 ## Changelog
 
