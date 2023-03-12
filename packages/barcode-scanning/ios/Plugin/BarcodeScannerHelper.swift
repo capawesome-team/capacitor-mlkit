@@ -6,21 +6,32 @@ import Capacitor
 import MLKitBarcodeScanning
 
 public class BarcodeScannerHelper {
-    public static func createBarcodeResultForBarcode(_ barcode: Barcode, imageWidth: Int?, imageHeight: Int?) -> JSObject {
+    public static func normalizeCornerPoints(cornerPoints: [NSValue], imageWidth: Int, imageHeight: Int) -> [NSValue] {
         let screenSize: CGRect = UIScreen.main.bounds
+        let isPortrait = UIDevice.current.orientation == .portrait || UIDevice.current.orientation == .portraitUpsideDown
+        var normalizedCornerPoints = [NSValue]()
+        for cornerPoint in cornerPoints {
+            var x = Int((cornerPoint.cgPointValue.x / CGFloat(imageWidth)) * screenSize.width)
+            var y = Int((cornerPoint.cgPointValue.y / CGFloat(imageHeight)) * screenSize.height)
+            if isPortrait {
+                x = Int((1 - (cornerPoint.cgPointValue.y / CGFloat(imageHeight))) * screenSize.width)
+                y = Int((cornerPoint.cgPointValue.x / CGFloat(imageWidth)) * screenSize.height)
+            }
+            let point = CGPoint(x: x, y: y)
+            let value = NSValue(cgPoint: point)
+            normalizedCornerPoints.append(value)
+        }
+        return normalizedCornerPoints
+    }
+
+    public static func createBarcodeResultForBarcode(_ barcode: Barcode, imageWidth: Int?, imageHeight: Int?) -> JSObject {
         var cornerPointsResult = [[Int]]()
         if let cornerPoints = barcode.cornerPoints, let imageWidth = imageWidth, let imageHeight = imageHeight {
-            for cornerPoint in cornerPoints {
+            let normalizedCornerPoints = normalizeCornerPoints(cornerPoints: cornerPoints, imageWidth: imageWidth, imageHeight: imageHeight)
+            for cornerPoint in normalizedCornerPoints {
                 var value = [Int]()
-                switch UIDevice.current.orientation {
-                case .portrait:
-                    value.append(Int((1 - (cornerPoint.cgPointValue.y / CGFloat(imageHeight))) * screenSize.width))
-                    value.append(Int((cornerPoint.cgPointValue.x / CGFloat(imageWidth)) * screenSize.height))
-                    break
-                default:
-                    value.append(Int((cornerPoint.cgPointValue.x / CGFloat(imageWidth)) * screenSize.width))
-                    value.append(Int((cornerPoint.cgPointValue.y / CGFloat(imageHeight)) * screenSize.height))
-                }
+                value.append(Int(cornerPoint.cgPointValue.x))
+                value.append(Int(cornerPoint.cgPointValue.y))
                 cornerPointsResult.append(value)
             }
         }

@@ -24,6 +24,8 @@ public protocol BarcodeScannerViewDelegate {
     private var videoPreviewLayer: AVCaptureVideoPreviewLayer?
     private var cancelButton: UIButton?
     private var torchButton: UIButton?
+    private var detectionAreaView: UIView?
+    private var detectionAreaViewFrame: CGRect?
 
     init (implementation: BarcodeScanner, settings: ScanSettings) throws {
         self.implementation = implementation
@@ -80,13 +82,13 @@ public protocol BarcodeScannerViewDelegate {
     }
 
     deinit {
-        self.videoPreviewLayer?.removeFromSuperlayer()
-        self.videoPreviewLayer = nil
+        self.removeDetectionAreaView()
+        self.removeTorchButton()
+        self.removeCancelButton()
+        self.removeVideoPreviewLayer()
         self.captureSession?.stopRunning()
         self.captureSession = nil
         self.barcodeScannerInstance = nil
-        self.cancelButton = nil
-        self.torchButton = nil
     }
 
     override public func layoutSubviews() {
@@ -99,6 +101,8 @@ public protocol BarcodeScannerViewDelegate {
             self.addCancelButton()
             self.removeTorchButton()
             self.addTorchButton()
+            self.removeDetectionAreaView()
+            self.addDetectionAreaView()
         }
 
         if let interfaceOrientation = UIApplication.shared.windows.first(where: { $0.isKeyWindow })?.windowScene?.interfaceOrientation {
@@ -129,6 +133,12 @@ public protocol BarcodeScannerViewDelegate {
         }
         let imageWidth = CVPixelBufferGetWidth(imageBuffer)
         let imageHeight = CVPixelBufferGetHeight(imageBuffer)
+        if let detectionAreaViewFrame = self.detectionAreaViewFrame {
+            barcodes = filterBarcodesOutsideTheDetectionArea(barcodes, imageWidth: imageWidth, imageHeight: imageHeight, detectionArea: detectionAreaViewFrame)
+            if barcodes.isEmpty {
+                return
+            }
+        }
         onBarcodesDetected(barcodes: barcodes, imageWidth: imageWidth, imageHeight: imageHeight)
     }
 
@@ -174,6 +184,11 @@ public protocol BarcodeScannerViewDelegate {
         self.videoPreviewLayer = videoPreviewLayer
     }
 
+    private func removeVideoPreviewLayer() {
+        self.videoPreviewLayer?.removeFromSuperlayer()
+        self.videoPreviewLayer = nil
+    }
+
     private func addCancelButton() {
         let interfaceOrientation = UIApplication.shared.windows.first(where: { $0.isKeyWindow })?.windowScene?.interfaceOrientation ?? UIInterfaceOrientation.portrait
         let image = UIImage(systemName: "xmark")?.withTintColor(.white, renderingMode: .alwaysOriginal)
@@ -196,12 +211,13 @@ public protocol BarcodeScannerViewDelegate {
 
     private func removeCancelButton() {
         self.cancelButton?.removeFromSuperview()
+        self.cancelButton = nil
     }
 
     private func addTorchButton() {
         let image = UIImage(systemName: "flashlight.off.fill")?.withTintColor(.white, renderingMode: .alwaysOriginal)
         let button = UIButton(type: .custom)
-        button.frame = CGRect(x: (self.bounds.size.width / 2) - 25, y: self.bounds.size.height - 100, width: 60, height: 60)
+        button.frame = CGRect(x: (self.bounds.size.width / 2) - 25, y: self.bounds.size.height - 86, width: 60, height: 60)
         button.backgroundColor = .black.withAlphaComponent(0.5)
         button.setImage(image, for: .normal)
         button.layer.cornerRadius = button.bounds.size.width / 2
@@ -215,6 +231,56 @@ public protocol BarcodeScannerViewDelegate {
 
     private func removeTorchButton() {
         self.torchButton?.removeFromSuperview()
+        self.torchButton = nil
+    }
+
+    private func addDetectionAreaView() {
+        let halfScreenWidth = UIScreen.main.bounds.width / 2
+        let halfScreenHeight = UIScreen.main.bounds.height / 2
+        let width = halfScreenWidth > halfScreenHeight ? halfScreenHeight : halfScreenWidth
+        let x = self.center.x - (width / 2)
+        let y = self.center.y - (width / 2)
+        let view = UIView(frame: CGRect(x: x, y: y, width: width, height: width))
+        view.backgroundColor = UIColor.clear
+        view.layer.cornerRadius = 12
+        view.layer.borderWidth = 4
+        view.layer.borderColor = UIColor.white.cgColor
+        self.addSubview(view)
+        self.detectionAreaView = view
+        self.detectionAreaViewFrame = view.frame
+    }
+
+    private func removeDetectionAreaView() {
+        self.detectionAreaView?.removeFromSuperview()
+        self.detectionAreaView = nil
+        self.detectionAreaViewFrame = nil
+    }
+
+    private func filterBarcodesOutsideTheDetectionArea(_ barcodes: [Barcode], imageWidth: Int?, imageHeight: Int?, detectionArea: CGRect) -> [Barcode] {
+        return barcodes.filter { barcode in
+            if let cornerPoints = barcode.cornerPoints, let imageWidth = imageWidth, let imageHeight = imageHeight {
+                let normalizedCornerPoints = BarcodeScannerHelper.normalizeCornerPoints(cornerPoints: cornerPoints, imageWidth: imageWidth, imageHeight: imageHeight)
+
+                let topLeft = normalizedCornerPoints[0].cgPointValue
+                let topRight = normalizedCornerPoints[1].cgPointValue
+                let bottomRight = normalizedCornerPoints[2].cgPointValue
+                let bottomLeft = normalizedCornerPoints[3].cgPointValue
+
+                if topLeft.x < detectionArea.minX || topLeft.y < detectionArea.minY {
+                    return false
+                }
+                if topRight.x > detectionArea.maxX || topRight.y < detectionArea.minY {
+                    return false
+                }
+                if bottomRight.x > detectionArea.maxX || bottomRight.y > detectionArea.maxY {
+                    return false
+                }
+                if bottomLeft.x < detectionArea.minX || bottomLeft.y > detectionArea.maxY {
+                    return false
+                }
+            }
+            return true
+        }
     }
 
     @objc private func onBarcodesDetected(barcodes: [Barcode], imageWidth: Int, imageHeight: Int) {
