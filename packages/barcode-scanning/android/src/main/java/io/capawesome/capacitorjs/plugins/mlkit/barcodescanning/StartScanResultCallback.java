@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022 Robin Genz
+ * Copyright (c) 2023 Robin Genz
  */
 package io.capawesome.capacitorjs.plugins.mlkit.barcodescanning;
 
