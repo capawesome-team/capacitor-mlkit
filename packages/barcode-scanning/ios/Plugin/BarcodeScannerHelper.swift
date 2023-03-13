@@ -5,7 +5,9 @@ import Foundation
 import Capacitor
 import MLKitBarcodeScanning
 
+// swiftlint:disable cyclomatic_complexity
 public class BarcodeScannerHelper {
+    // swiftlint:disable identifier_name
     public static func normalizeCornerPoints(cornerPoints: [NSValue], imageWidth: Int, imageHeight: Int) -> [NSValue] {
         let screenSize: CGRect = UIScreen.main.bounds
         let isPortrait = UIDevice.current.orientation == .portrait || UIDevice.current.orientation == .portraitUpsideDown

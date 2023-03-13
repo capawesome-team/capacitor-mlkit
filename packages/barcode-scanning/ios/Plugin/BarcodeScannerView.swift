@@ -8,6 +8,7 @@ import Capacitor
 import MLKitBarcodeScanning
 import MLKitVision
 
+// swiftlint:disable class_delegate_protocol
 public protocol BarcodeScannerViewDelegate {
     func onBarcodesDetected(barcodes: [Barcode], imageWidth: Int, imageHeight: Int)
     func onCancel()
@@ -134,7 +135,8 @@ public protocol BarcodeScannerViewDelegate {
         let imageWidth = CVPixelBufferGetWidth(imageBuffer)
         let imageHeight = CVPixelBufferGetHeight(imageBuffer)
         if let detectionAreaViewFrame = self.detectionAreaViewFrame {
-            barcodes = filterBarcodesOutsideTheDetectionArea(barcodes, imageWidth: imageWidth, imageHeight: imageHeight, detectionArea: detectionAreaViewFrame)
+            barcodes = filterBarcodesOutsideTheDetectionArea(barcodes, imageWidth: imageWidth, imageHeight: imageHeight,
+                                                             detectionArea: detectionAreaViewFrame)
             if barcodes.isEmpty {
                 return
             }
@@ -190,7 +192,8 @@ public protocol BarcodeScannerViewDelegate {
     }
 
     private func addCancelButton() {
-        let interfaceOrientation = UIApplication.shared.windows.first(where: { $0.isKeyWindow })?.windowScene?.interfaceOrientation ?? UIInterfaceOrientation.portrait
+        let interfaceOrientation = UIApplication.shared.windows.first(where: { $0.isKeyWindow })?
+            .windowScene?.interfaceOrientation ?? UIInterfaceOrientation.portrait
         let image = UIImage(systemName: "xmark")?.withTintColor(.white, renderingMode: .alwaysOriginal)
         let button = UIButton(type: .custom)
         if interfaceOrientation.isPortrait {
@@ -238,9 +241,8 @@ public protocol BarcodeScannerViewDelegate {
         let halfScreenWidth = UIScreen.main.bounds.width / 2
         let halfScreenHeight = UIScreen.main.bounds.height / 2
         let width = halfScreenWidth > halfScreenHeight ? halfScreenHeight : halfScreenWidth
-        let x = self.center.x - (width / 2)
-        let y = self.center.y - (width / 2)
-        let view = UIView(frame: CGRect(x: x, y: y, width: width, height: width))
+        let topLeft = CGPoint(x: self.center.x - (width / 2), y: self.center.y - (width / 2))
+        let view = UIView(frame: CGRect(x: topLeft.x, y: topLeft.y, width: width, height: width))
         view.backgroundColor = UIColor.clear
         view.layer.cornerRadius = 12
         view.layer.borderWidth = 4
@@ -259,7 +261,8 @@ public protocol BarcodeScannerViewDelegate {
     private func filterBarcodesOutsideTheDetectionArea(_ barcodes: [Barcode], imageWidth: Int?, imageHeight: Int?, detectionArea: CGRect) -> [Barcode] {
         return barcodes.filter { barcode in
             if let cornerPoints = barcode.cornerPoints, let imageWidth = imageWidth, let imageHeight = imageHeight {
-                let normalizedCornerPoints = BarcodeScannerHelper.normalizeCornerPoints(cornerPoints: cornerPoints, imageWidth: imageWidth, imageHeight: imageHeight)
+                let normalizedCornerPoints = BarcodeScannerHelper.normalizeCornerPoints(cornerPoints: cornerPoints,
+                                                                                        imageWidth: imageWidth, imageHeight: imageHeight)
 
                 let topLeft = normalizedCornerPoints[0].cgPointValue
                 let topRight = normalizedCornerPoints[1].cgPointValue
