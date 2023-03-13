@@ -80,7 +80,7 @@ const startScan = async () => {
 
 const stopScan = async () => {
   // Make all elements in the WebView visible again
-  document.querySelector('body')?.classList.add('barcode-scanner-active');
+  document.querySelector('body')?.classList.remove('barcode-scanner-active');
 
   // Remove all listeners
   await BarcodeScanner.removeAllListeners();
