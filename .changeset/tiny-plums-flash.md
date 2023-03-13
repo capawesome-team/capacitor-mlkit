@@ -1,5 +1,5 @@
 ---
-"@capacitor-mlkit/barcode-scanning": minor
+"@capacitor-mlkit/barcode-scanning": patch
 ---
 
-Initial release
+🎉 Initial release
