@@ -57,7 +57,7 @@ import {
   BarcodeScanner,
   BarcodeFormat,
   LensFacing,
-} from '@capawesome-team/capacitor-barcode-scanner';
+} from '@capacitor-mlkit/barcode-scanning';
 
 const startScan = async () => {
   // The camera is visible behind the WebView, so that you can customize the UI in the WebView.
