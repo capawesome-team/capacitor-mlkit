@@ -681,11 +681,11 @@ This plugin uses the [Google ML Kit](https://developers.google.com/ml-kit):
 
 ## Changelog
 
-See [CHANGELOG.md](/packages/analytics/CHANGELOG.md).
+See [CHANGELOG.md](https://github.com/capawesome-team/capacitor-mlkit/blob/main/packages/barcode-scanning/CHANGELOG.md).
 
 ## License
 
-See [LICENSE](/packages/analytics/LICENSE).
+See [LICENSE](https://github.com/capawesome-team/capacitor-mlkit/blob/main/packages/barcode-scanning/LICENSE).
 
 [^1]: This project is not affiliated with, endorsed by, sponsored by, or approved by Google LLC or any of their affiliates or subsidiaries.
 [^2]: `QR Code` is a registered trademark of DENSO WAVE INCORPORATED.
