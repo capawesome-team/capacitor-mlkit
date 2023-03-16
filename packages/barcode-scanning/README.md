@@ -50,6 +50,10 @@ Add the `NSCameraUsageDescription` key to the `ios/App/App/Info.plist` file, whi
 
 No configuration required for this plugin.
 
+## Demo
+
+A working example can be found here: [robingenz/capacitor-mlkit-plugin-demo](https://github.com/robingenz/capacitor-mlkit-plugin-demo)
+
 ## Usage
 
 ```typescript
