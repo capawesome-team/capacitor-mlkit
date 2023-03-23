@@ -228,25 +228,25 @@ If you can't see the camera view, make sure all elements in the DOM are not visi
 
 <docgen-index>
 
-- [`startScan(...)`](#startscan)
-- [`stopScan()`](#stopscan)
-- [`readBarcodesFromImage(...)`](#readbarcodesfromimage)
-- [`scan(...)`](#scan)
-- [`isSupported()`](#issupported)
-- [`enableTorch()`](#enabletorch)
-- [`disableTorch()`](#disabletorch)
-- [`toggleTorch()`](#toggletorch)
-- [`isTorchEnabled()`](#istorchenabled)
-- [`isTorchAvailable()`](#istorchavailable)
-- [`openSettings()`](#opensettings)
-- [`checkPermissions()`](#checkpermissions)
-- [`requestPermissions()`](#requestpermissions)
-- [`addListener('barcodeScanned', ...)`](#addlistenerbarcodescanned)
-- [`addListener('scanError', ...)`](#addlistenerscanerror)
-- [`removeAllListeners()`](#removealllisteners)
-- [Interfaces](#interfaces)
-- [Type Aliases](#type-aliases)
-- [Enums](#enums)
+* [`startScan(...)`](#startscan)
+* [`stopScan()`](#stopscan)
+* [`readBarcodesFromImage(...)`](#readbarcodesfromimage)
+* [`scan(...)`](#scan)
+* [`isSupported()`](#issupported)
+* [`enableTorch()`](#enabletorch)
+* [`disableTorch()`](#disabletorch)
+* [`toggleTorch()`](#toggletorch)
+* [`isTorchEnabled()`](#istorchenabled)
+* [`isTorchAvailable()`](#istorchavailable)
+* [`openSettings()`](#opensettings)
+* [`checkPermissions()`](#checkpermissions)
+* [`requestPermissions()`](#requestpermissions)
+* [`addListener('barcodeScanned', ...)`](#addlistenerbarcodescanned)
+* [`addListener('scanError', ...)`](#addlistenerscanerror)
+* [`removeAllListeners()`](#removealllisteners)
+* [Interfaces](#interfaces)
+* [Type Aliases](#type-aliases)
+* [Enums](#enums)
 
 </docgen-index>
 
@@ -269,7 +269,8 @@ Only available on Android and iOS.
 
 **Since:** 0.0.1
 
----
+--------------------
+
 
 ### stopScan()
 
@@ -283,7 +284,8 @@ Only available on Android and iOS.
 
 **Since:** 0.0.1
 
----
+--------------------
+
 
 ### readBarcodesFromImage(...)
 
@@ -303,7 +305,8 @@ Only available on Android and iOS.
 
 **Since:** 0.0.1
 
----
+--------------------
+
 
 ### scan(...)
 
@@ -325,7 +328,8 @@ Only available on Android and iOS.
 
 **Since:** 0.0.1
 
----
+--------------------
+
 
 ### isSupported()
 
@@ -341,7 +345,8 @@ Available on Android and iOS.
 
 **Since:** 0.0.1
 
----
+--------------------
+
 
 ### enableTorch()
 
@@ -355,7 +360,8 @@ Only available on Android and iOS.
 
 **Since:** 0.0.1
 
----
+--------------------
+
 
 ### disableTorch()
 
@@ -369,7 +375,8 @@ Only available on Android and iOS.
 
 **Since:** 0.0.1
 
----
+--------------------
+
 
 ### toggleTorch()
 
@@ -383,7 +390,8 @@ Only available on Android and iOS.
 
 **Since:** 0.0.1
 
----
+--------------------
+
 
 ### isTorchEnabled()
 
@@ -399,7 +407,8 @@ Only available on Android and iOS.
 
 **Since:** 0.0.1
 
----
+--------------------
+
 
 ### isTorchAvailable()
 
@@ -415,7 +424,8 @@ Only available on Android and iOS.
 
 **Since:** 0.0.1
 
----
+--------------------
+
 
 ### openSettings()
 
@@ -429,7 +439,8 @@ Only available on Android and iOS.
 
 **Since:** 0.0.1
 
----
+--------------------
+
 
 ### checkPermissions()
 
@@ -445,7 +456,8 @@ Only available on Android and iOS.
 
 **Since:** 0.0.1
 
----
+--------------------
+
 
 ### requestPermissions()
 
@@ -461,7 +473,8 @@ Only available on Android and iOS.
 
 **Since:** 0.0.1
 
----
+--------------------
+
 
 ### addListener('barcodeScanned', ...)
 
@@ -482,7 +495,8 @@ Available on Android and iOS.
 
 **Since:** 0.0.1
 
----
+--------------------
+
 
 ### addListener('scanError', ...)
 
@@ -503,7 +517,8 @@ Available on Android and iOS.
 
 **Since:** 0.0.1
 
----
+--------------------
+
 
 ### removeAllListeners()
 
@@ -515,9 +530,11 @@ Remove all listeners for this plugin.
 
 **Since:** 0.0.1
 
----
+--------------------
+
 
 ### Interfaces
+
 
 #### StartScanOptions
 
@@ -526,11 +543,13 @@ Remove all listeners for this plugin.
 | **`formats`**    | <code>BarcodeFormat[]</code>                      | Improve the speed of the barcode scanner by configuring the barcode formats to scan for. | 0.0.1 |
 | **`lensFacing`** | <code><a href="#lensfacing">LensFacing</a></code> | Configure the camera (front or back) to use.                                             | 0.0.1 |
 
+
 #### ReadBarcodesFromImageResult
 
 | Prop           | Type                   | Description            | Since |
 | -------------- | ---------------------- | ---------------------- | ----- |
 | **`barcodes`** | <code>Barcode[]</code> | The detected barcodes. | 0.0.1 |
+
 
 #### Barcode
 
@@ -543,6 +562,7 @@ Remove all listeners for this plugin.
 | **`rawValue`**     | <code>string</code>                                                                   | The barcode value in a machine readable format.                                  | 0.0.1 |
 | **`valueType`**    | <code><a href="#barcodevaluetype">BarcodeValueType</a></code>                         | The barcode value type.                                                          | 0.0.1 |
 
+
 #### ReadBarcodesFromImageOptions
 
 | Prop          | Type                         | Description                                                                              | Since |
@@ -550,11 +570,13 @@ Remove all listeners for this plugin.
 | **`formats`** | <code>BarcodeFormat[]</code> | Improve the speed of the barcode scanner by configuring the barcode formats to scan for. | 0.0.1 |
 | **`path`**    | <code>string</code>          | The local path to the image file.                                                        | 0.0.1 |
 
+
 #### ScanResult
 
 | Prop           | Type                   | Description            | Since |
 | -------------- | ---------------------- | ---------------------- | ----- |
 | **`barcodes`** | <code>Barcode[]</code> | The detected barcodes. | 0.0.1 |
+
 
 #### ScanOptions
 
@@ -562,11 +584,13 @@ Remove all listeners for this plugin.
 | ------------- | ---------------------------- | ---------------------------------------------------------------------------------------- | ----- |
 | **`formats`** | <code>BarcodeFormat[]</code> | Improve the speed of the barcode scanner by configuring the barcode formats to scan for. | 0.0.1 |
 
+
 #### IsSupportedResult
 
 | Prop            | Type                 | Description                                      | Since |
 | --------------- | -------------------- | ------------------------------------------------ | ----- |
 | **`supported`** | <code>boolean</code> | Whether or not the barcode scanner is supported. | 0.0.1 |
+
 
 #### IsTorchEnabledResult
 
@@ -574,11 +598,13 @@ Remove all listeners for this plugin.
 | ------------- | -------------------- | ------------------------------------ | ----- |
 | **`enabled`** | <code>boolean</code> | Whether or not the torch is enabled. | 0.0.1 |
 
+
 #### IsTorchAvailableResult
 
 | Prop            | Type                 | Description                            | Since |
 | --------------- | -------------------- | -------------------------------------- | ----- |
 | **`available`** | <code>boolean</code> | Whether or not the torch is available. | 0.0.1 |
+
 
 #### PermissionStatus
 
@@ -586,11 +612,13 @@ Remove all listeners for this plugin.
 | ------------ | ----------------------------------------------------------------------- | ----- |
 | **`camera`** | <code><a href="#camerapermissionstate">CameraPermissionState</a></code> | 0.0.1 |
 
+
 #### PluginListenerHandle
 
 | Prop         | Type                                      |
 | ------------ | ----------------------------------------- |
 | **`remove`** | <code>() =&gt; Promise&lt;void&gt;</code> |
+
 
 #### BarcodeScannedEvent
 
@@ -598,41 +626,48 @@ Remove all listeners for this plugin.
 | ------------- | ------------------------------------------- | ------------------- | ----- |
 | **`barcode`** | <code><a href="#barcode">Barcode</a></code> | A detected barcode. | 0.0.1 |
 
+
 #### ScanErrorEvent
 
 | Prop          | Type                | Description        | Since |
 | ------------- | ------------------- | ------------------ | ----- |
 | **`message`** | <code>string</code> | The error message. | 0.0.1 |
 
+
 ### Type Aliases
+
 
 #### CameraPermissionState
 
 <code><a href="#permissionstate">PermissionState</a> | 'limited'</code>
 
+
 #### PermissionState
 
 <code>'prompt' | 'prompt-with-rationale' | 'granted' | 'denied'</code>
 
+
 ### Enums
+
 
 #### BarcodeFormat
 
-| Members          | Value                      | Since |
-| ---------------- | -------------------------- | ----- |
-| **`Aztec`**      | <code>'AZTEC'</code>       | 0.0.1 |
-| **`Codabar`**    | <code>'CODABAR'</code>     | 0.0.1 |
-| **`Code39`**     | <code>'CODE_39'</code>     | 0.0.1 |
-| **`Code93`**     | <code>'CODE_93'</code>     | 0.0.1 |
-| **`Code128`**    | <code>'CODE_128'</code>    | 0.0.1 |
-| **`DataMatrix`** | <code>'DATA_MATRIX'</code> | 0.0.1 |
-| **`Ean8`**       | <code>'EAN_8'</code>       | 0.0.1 |
-| **`Ean13`**      | <code>'EAN_13'</code>      | 0.0.1 |
-| **`Itf`**        | <code>'ITF'</code>         | 0.0.1 |
-| **`Pdf417`**     | <code>'PDF_417'</code>     | 0.0.1 |
-| **`QrCode`**     | <code>'QR_CODE'</code>     | 0.0.1 |
-| **`UpcA`**       | <code>'UPC_A'</code>       | 0.0.1 |
-| **`UpcE`**       | <code>'UPC_E'</code>       | 0.0.1 |
+| Members          | Value                      | Since                                    |
+| ---------------- | -------------------------- | ---------------------------------------- |
+| **`Aztec`**      | <code>'AZTEC'</code>       | 0.0.1 Only available on Android and iOS. |
+| **`Codabar`**    | <code>'CODABAR'</code>     | 0.0.1 Only available on Android and iOS. |
+| **`Code39`**     | <code>'CODE_39'</code>     | 0.0.1 Only available on Android and iOS. |
+| **`Code93`**     | <code>'CODE_93'</code>     | 0.0.1 Only available on Android and iOS. |
+| **`Code128`**    | <code>'CODE_128'</code>    | 0.0.1 Only available on Android and iOS. |
+| **`DataMatrix`** | <code>'DATA_MATRIX'</code> | 0.0.1 Only available on Android and iOS. |
+| **`Ean8`**       | <code>'EAN_8'</code>       | 0.0.1 Only available on Android and iOS. |
+| **`Ean13`**      | <code>'EAN_13'</code>      | 0.0.1 Only available on Android and iOS. |
+| **`Itf`**        | <code>'ITF'</code>         | 0.0.1 Only available on Android and iOS. |
+| **`Pdf417`**     | <code>'PDF_417'</code>     | 0.0.1 Only available on Android and iOS. |
+| **`QrCode`**     | <code>'QR_CODE'</code>     | 0.0.1 Only available on Android and iOS. |
+| **`UpcA`**       | <code>'UPC_A'</code>       | 0.0.1 Only available on Android and iOS. |
+| **`UpcE`**       | <code>'UPC_E'</code>       | 0.0.1 Only available on Android and iOS. |
+
 
 #### LensFacing
 
@@ -640,6 +675,7 @@ Remove all listeners for this plugin.
 | ----------- | -------------------- | ----- |
 | **`Front`** | <code>'FRONT'</code> | 0.0.1 |
 | **`Back`**  | <code>'BACK'</code>  | 0.0.1 |
+
 
 #### BarcodeValueType
 

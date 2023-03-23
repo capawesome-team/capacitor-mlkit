@@ -354,54 +354,80 @@ export interface Barcode {
 export enum BarcodeFormat {
   /**
    * @since 0.0.1
+   *
+   * Only available on Android and iOS.
    */
   Aztec = 'AZTEC',
   /**
    * @since 0.0.1
+   *
+   * Only available on Android and iOS.
    */
   Codabar = 'CODABAR',
   /**
    * @since 0.0.1
+   *
+   * Only available on Android and iOS.
    */
   Code39 = 'CODE_39',
   /**
    * @since 0.0.1
+   *
+   * Only available on Android and iOS.
    */
   Code93 = 'CODE_93',
   /**
    * @since 0.0.1
+   *
+   * Only available on Android and iOS.
    */
   Code128 = 'CODE_128',
   /**
    * @since 0.0.1
+   *
+   * Only available on Android and iOS.
    */
   DataMatrix = 'DATA_MATRIX',
   /**
    * @since 0.0.1
+   *
+   * Only available on Android and iOS.
    */
   Ean8 = 'EAN_8',
   /**
    * @since 0.0.1
+   *
+   * Only available on Android and iOS.
    */
   Ean13 = 'EAN_13',
   /**
    * @since 0.0.1
+   *
+   * Only available on Android and iOS.
    */
   Itf = 'ITF',
   /**
    * @since 0.0.1
+   *
+   * Only available on Android and iOS.
    */
   Pdf417 = 'PDF_417',
   /**
    * @since 0.0.1
+   *
+   * Only available on Android and iOS.
    */
   QrCode = 'QR_CODE',
   /**
    * @since 0.0.1
+   *
+   * Only available on Android and iOS.
    */
   UpcA = 'UPC_A',
   /**
    * @since 0.0.1
+   *
+   * Only available on Android and iOS.
    */
   UpcE = 'UPC_E',
 }
