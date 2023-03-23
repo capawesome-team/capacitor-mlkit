@@ -652,21 +652,21 @@ Remove all listeners for this plugin.
 
 #### BarcodeFormat
 
-| Members          | Value                      | Since                                    |
-| ---------------- | -------------------------- | ---------------------------------------- |
-| **`Aztec`**      | <code>'AZTEC'</code>       | 0.0.1 Only available on Android and iOS. |
-| **`Codabar`**    | <code>'CODABAR'</code>     | 0.0.1 Only available on Android and iOS. |
-| **`Code39`**     | <code>'CODE_39'</code>     | 0.0.1 Only available on Android and iOS. |
-| **`Code93`**     | <code>'CODE_93'</code>     | 0.0.1 Only available on Android and iOS. |
-| **`Code128`**    | <code>'CODE_128'</code>    | 0.0.1 Only available on Android and iOS. |
-| **`DataMatrix`** | <code>'DATA_MATRIX'</code> | 0.0.1 Only available on Android and iOS. |
-| **`Ean8`**       | <code>'EAN_8'</code>       | 0.0.1 Only available on Android and iOS. |
-| **`Ean13`**      | <code>'EAN_13'</code>      | 0.0.1 Only available on Android and iOS. |
-| **`Itf`**        | <code>'ITF'</code>         | 0.0.1 Only available on Android and iOS. |
-| **`Pdf417`**     | <code>'PDF_417'</code>     | 0.0.1 Only available on Android and iOS. |
-| **`QrCode`**     | <code>'QR_CODE'</code>     | 0.0.1 Only available on Android and iOS. |
-| **`UpcA`**       | <code>'UPC_A'</code>       | 0.0.1 Only available on Android and iOS. |
-| **`UpcE`**       | <code>'UPC_E'</code>       | 0.0.1 Only available on Android and iOS. |
+| Members          | Value                      | Description                        | Since |
+| ---------------- | -------------------------- | ---------------------------------- | ----- |
+| **`Aztec`**      | <code>'AZTEC'</code>       | Only available on Android and iOS. | 0.0.1 |
+| **`Codabar`**    | <code>'CODABAR'</code>     | Only available on Android and iOS. | 0.0.1 |
+| **`Code39`**     | <code>'CODE_39'</code>     | Only available on Android and iOS. | 0.0.1 |
+| **`Code93`**     | <code>'CODE_93'</code>     | Only available on Android and iOS. | 0.0.1 |
+| **`Code128`**    | <code>'CODE_128'</code>    | Only available on Android and iOS. | 0.0.1 |
+| **`DataMatrix`** | <code>'DATA_MATRIX'</code> | Only available on Android and iOS. | 0.0.1 |
+| **`Ean8`**       | <code>'EAN_8'</code>       | Only available on Android and iOS. | 0.0.1 |
+| **`Ean13`**      | <code>'EAN_13'</code>      | Only available on Android and iOS. | 0.0.1 |
+| **`Itf`**        | <code>'ITF'</code>         | Only available on Android and iOS. | 0.0.1 |
+| **`Pdf417`**     | <code>'PDF_417'</code>     | Only available on Android and iOS. | 0.0.1 |
+| **`QrCode`**     | <code>'QR_CODE'</code>     | Only available on Android and iOS. | 0.0.1 |
+| **`UpcA`**       | <code>'UPC_A'</code>       | Only available on Android and iOS. | 0.0.1 |
+| **`UpcE`**       | <code>'UPC_E'</code>       | Only available on Android and iOS. | 0.0.1 |
 
 
 #### LensFacing
