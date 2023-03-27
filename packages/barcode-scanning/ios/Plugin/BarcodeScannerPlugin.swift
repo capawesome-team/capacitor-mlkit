@@ -188,6 +188,10 @@ extension AVAuthorizationStatus {
     }
 }
 
-extension String: LocalizedError {
-    public var localizedDescription: String? { return self }
+struct RuntimeError: Error, LocalizedError {
+    let errorDescription: String?
+
+    init(_ description: String) {
+        errorDescription = description
+    }
 }

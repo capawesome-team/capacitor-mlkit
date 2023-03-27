@@ -40,14 +40,14 @@ public protocol BarcodeScannerViewDelegate {
 
         let captureDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: AVMediaType.video, position: settings.lensFacing)
         guard let captureDevice = captureDevice else {
-            throw implementation.plugin.errorNoCaptureDeviceAvailable
+            throw RuntimeError(implementation.plugin.errorNoCaptureDeviceAvailable)
         }
         var deviceInput: AVCaptureDeviceInput
         deviceInput = try AVCaptureDeviceInput(device: captureDevice)
         if captureSession.canAddInput(deviceInput) {
             captureSession.addInput(deviceInput)
         } else {
-            throw implementation.plugin.errorCannotAddCaptureInput
+            throw RuntimeError(implementation.plugin.errorCannotAddCaptureInput)
         }
         let deviceOutput = AVCaptureVideoDataOutput()
         deviceOutput.videoSettings = [kCVPixelBufferPixelFormatTypeKey as String: Int(kCVPixelFormatType_32BGRA)]
@@ -57,7 +57,7 @@ public protocol BarcodeScannerViewDelegate {
         if captureSession.canAddOutput(deviceOutput) {
             captureSession.addOutput(deviceOutput)
         } else {
-            throw implementation.plugin.errorCannotAddCaptureOutput
+            throw RuntimeError(implementation.plugin.errorCannotAddCaptureOutput)
         }
         captureSession.commitConfiguration()
 

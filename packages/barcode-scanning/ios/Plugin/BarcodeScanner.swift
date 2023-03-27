@@ -176,7 +176,7 @@ typealias MLKitBarcodeScanner = MLKitBarcodeScanning.BarcodeScanner
             self.requestCameraPermission {
                 let authorizationStatusAfterRequest = self.getCameraPermission()
                 if authorizationStatusAfterRequest == .denied || authorizationStatusAfterRequest == .restricted {
-                    completion(self.plugin.errorPermissionDenied)
+                    completion(RuntimeError(self.plugin.errorPermissionDenied))
                 } else {
                     completion(nil)
                 }
@@ -185,7 +185,7 @@ typealias MLKitBarcodeScanner = MLKitBarcodeScanning.BarcodeScanner
         } else if authorizationStatus == .authorized {
             completion(nil)
         } else {
-            completion(self.plugin.errorPermissionDenied)
+            completion(RuntimeError(self.plugin.errorPermissionDenied))
         }
     }
 
