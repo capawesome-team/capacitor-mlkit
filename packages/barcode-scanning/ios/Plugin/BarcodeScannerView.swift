@@ -298,7 +298,3 @@ public protocol BarcodeScannerViewDelegate {
         self.delegate?.onTorchToggle()
     }
 }
-
-extension String: LocalizedError {
-    public var localizedDescription: String? { return self }
-}

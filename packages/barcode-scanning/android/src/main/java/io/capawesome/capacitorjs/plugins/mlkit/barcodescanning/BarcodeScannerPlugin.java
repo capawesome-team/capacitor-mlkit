@@ -5,16 +5,19 @@ package io.capawesome.capacitorjs.plugins.mlkit.barcodescanning;
 
 import android.Manifest;
 import androidx.activity.result.ActivityResult;
+import androidx.annotation.NonNull;
 import androidx.camera.core.CameraSelector;
 import com.getcapacitor.JSArray;
 import com.getcapacitor.JSObject;
 import com.getcapacitor.Logger;
+import com.getcapacitor.PermissionState;
 import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.ActivityCallback;
 import com.getcapacitor.annotation.CapacitorPlugin;
 import com.getcapacitor.annotation.Permission;
+import com.getcapacitor.annotation.PermissionCallback;
 import com.google.mlkit.vision.barcode.common.Barcode;
 import java.util.List;
 
@@ -32,6 +35,7 @@ public class BarcodeScannerPlugin extends Plugin {
     public static final String ERROR_SCAN_CANCELED = "scan canceled.";
     public static final String ERROR_PATH_MISSING = "path must be provided.";
     public static final String ERROR_LOAD_IMAGE_FAILED = "The image could not be loaded.";
+    public static final String ERROR_PERMISSION_DENIED = "User denied access to camera.";
 
     private BarcodeScanner implementation;
 
@@ -56,6 +60,11 @@ public class BarcodeScannerPlugin extends Plugin {
             ScanSettings scanSettings = new ScanSettings();
             scanSettings.formats = formats;
             scanSettings.lensFacing = lensFacing;
+
+            boolean granted = implementation.requestCameraPermissionIfNotDetermined(call);
+            if (!granted) {
+                return;
+            }
 
             getActivity()
                 .runOnUiThread(
@@ -287,6 +296,10 @@ public class BarcodeScannerPlugin extends Plugin {
         }
     }
 
+    public void requestPermissionForAlias(@NonNull String alias, @NonNull PluginCall call, @NonNull String callbackName) {
+        super.requestPermissionForAlias(alias, call, callbackName);
+    }
+
     @ActivityCallback
     public void openSettingsResult(PluginCall call, ActivityResult result) {
         try {
@@ -297,6 +310,13 @@ public class BarcodeScannerPlugin extends Plugin {
             call.resolve();
         } catch (Exception exception) {
             Logger.error(exception.getMessage(), exception);
+        }
+    }
+
+    @PermissionCallback
+    private void cameraPermissionsCallback(PluginCall call) {
+        if (call.getMethodName().equals("startScan")) {
+            startScan(call);
         }
     }
 
