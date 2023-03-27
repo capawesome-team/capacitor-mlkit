@@ -20,6 +20,7 @@ public class BarcodeScannerPlugin: CAPPlugin {
     public let errorCannotAddCaptureOutput = "Cannot add output to capture session."
     public let errorScanCanceled = "scan canceled."
     public let errorPermissionDenied = "User denied access to camera."
+    public let errorOpenSettingsFailed = "Cannot open settings."
     public let barcodeScannedEvent = "barcodeScanned"
 
     private var implementation: BarcodeScanner?
@@ -152,6 +153,16 @@ public class BarcodeScannerPlugin: CAPPlugin {
         call.resolve([
             "available": implementation?.isTorchAvailable() ?? false
         ])
+    }
+    
+    @objc func openSettings(_ call: CAPPluginCall) {
+        implementation?.openSettings(completion: { error in
+            if let error = error {
+                call.reject(error.localizedDescription)
+                return
+            }
+            call.resolve()
+        })
     }
 
     @objc override public func checkPermissions(_ call: CAPPluginCall) {

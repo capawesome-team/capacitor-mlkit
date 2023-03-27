@@ -149,6 +149,19 @@ typealias MLKitBarcodeScanner = MLKitBarcodeScanning.BarcodeScanner
         return device.hasTorch
     }
     
+    @objc func openSettings(completion: @escaping (Error?) -> Void) {
+        let url = URL(string: UIApplication.openSettingsURLString)
+        DispatchQueue.main.async {
+            if let url = url, UIApplication.shared.canOpenURL(url) {
+                UIApplication.shared.open(url, completionHandler: { (success) in
+                    completion(nil)
+                })
+            } else {
+                completion(RuntimeError(self.plugin.errorOpenSettingsFailed))
+            }
+        }
+    }
+    
     @objc public func getFileUrlByPath(_ path: String) -> URL? {
         guard let url = URL.init(string: path) else {
             return nil
