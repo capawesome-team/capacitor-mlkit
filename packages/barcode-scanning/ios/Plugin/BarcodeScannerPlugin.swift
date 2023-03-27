@@ -19,6 +19,7 @@ public class BarcodeScannerPlugin: CAPPlugin {
     public let errorCannotAddCaptureInput = "Cannot add input to capture session."
     public let errorCannotAddCaptureOutput = "Cannot add output to capture session."
     public let errorScanCanceled = "scan canceled."
+    public let errorPermissionDenied = "User denied access to camera."
     public let barcodeScannedEvent = "barcodeScanned"
 
     private var implementation: BarcodeScanner?
@@ -37,13 +38,19 @@ public class BarcodeScannerPlugin: CAPPlugin {
         settings.showUIElements = false
         settings.formats = formats
         settings.lensFacing = lensFacing
-
-        self.implementation?.startScan(settings: settings, completion: { errorMessage in
-            if let errorMessage = errorMessage {
-                call.reject(errorMessage)
+        
+        self.implementation?.requestCameraPermissionIfNotDetermined(completion: { error in
+            if let error = error {
+                call.reject(error.localizedDescription)
                 return
             }
-            call.resolve()
+            self.implementation?.startScan(settings: settings, completion: { errorMessage in
+                if let errorMessage = errorMessage {
+                    call.reject(errorMessage)
+                    return
+                }
+                call.resolve()
+            })
         })
     }
 
@@ -92,19 +99,25 @@ public class BarcodeScannerPlugin: CAPPlugin {
         settings.showUIElements = true
         settings.formats = formats
         settings.lensFacing = lensFacing
-
-        self.implementation?.scan(settings: settings, completion: { barcodes, errorMessage in
-            if let errorMessage = errorMessage {
-                call.reject(errorMessage)
+        
+        self.implementation?.requestCameraPermissionIfNotDetermined(completion: { error in
+            if let error = error {
+                call.reject(error.localizedDescription)
                 return
             }
-            var barcodeResults = JSArray()
-            for barcode in barcodes ?? [] {
-                barcodeResults.append(BarcodeScannerHelper.createBarcodeResultForBarcode(barcode, imageWidth: nil, imageHeight: nil))
-            }
-            call.resolve([
-                "barcodes": barcodeResults
-            ])
+            self.implementation?.scan(settings: settings, completion: { barcodes, errorMessage in
+                if let errorMessage = errorMessage {
+                    call.reject(errorMessage)
+                    return
+                }
+                var barcodeResults = JSArray()
+                for barcode in barcodes ?? [] {
+                    barcodeResults.append(BarcodeScannerHelper.createBarcodeResultForBarcode(barcode, imageWidth: nil, imageHeight: nil))
+                }
+                call.resolve([
+                    "barcodes": barcodeResults
+                ])
+            })
         })
     }
 
@@ -173,4 +186,8 @@ extension AVAuthorizationStatus {
             return "prompt"
         }
     }
+}
+
+extension String: LocalizedError {
+    public var localizedDescription: String? { return self }
 }

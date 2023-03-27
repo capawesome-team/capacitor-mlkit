@@ -31,6 +31,7 @@ import androidx.camera.view.PreviewView;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LifecycleOwner;
 import com.getcapacitor.Logger;
+import com.getcapacitor.PermissionState;
 import com.getcapacitor.PluginCall;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.mlkit.vision.barcode.BarcodeScannerOptions;
@@ -213,6 +214,26 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
         Uri uri = Uri.fromParts("package", plugin.getAppId(), null);
         Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, uri);
         plugin.startActivityForResult(call, intent, "openSettingsResult");
+    }
+
+    public PermissionState getCameraPermission() {
+        return plugin.getPermissionState(BarcodeScannerPlugin.CAMERA);
+    }
+
+    public void requestCameraPermission(PluginCall call) {
+        plugin.requestPermissionForAlias(BarcodeScannerPlugin.CAMERA, call, "cameraPermissionsCallback");
+    }
+
+    public boolean requestCameraPermissionIfNotDetermined(PluginCall call) throws Exception {
+        PermissionState state = getCameraPermission();
+        if (state == PermissionState.GRANTED) {
+            return true;
+        } else if (state == PermissionState.DENIED) {
+            throw new Exception(BarcodeScannerPlugin.ERROR_PERMISSION_DENIED);
+        } else {
+            requestCameraPermission(call);
+            return false;
+        }
     }
 
     @Override

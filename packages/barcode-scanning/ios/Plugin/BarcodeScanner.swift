@@ -20,17 +20,6 @@ typealias MLKitBarcodeScanner = MLKitBarcodeScanning.BarcodeScanner
         self.plugin = plugin
     }
 
-    @objc public func getFileUrlByPath(_ path: String) -> URL? {
-        guard let url = URL.init(string: path) else {
-            return nil
-        }
-        if FileManager.default.fileExists(atPath: url.path) {
-            return url
-        } else {
-            return nil
-        }
-    }
-
     @objc public func startScan(settings: ScanSettings, completion: @escaping (String?) -> Void) {
         self.stopScan()
 
@@ -158,6 +147,46 @@ typealias MLKitBarcodeScanner = MLKitBarcodeScanning.BarcodeScanner
             return false
         }
         return device.hasTorch
+    }
+    
+    @objc public func getFileUrlByPath(_ path: String) -> URL? {
+        guard let url = URL.init(string: path) else {
+            return nil
+        }
+        if FileManager.default.fileExists(atPath: url.path) {
+            return url
+        } else {
+            return nil
+        }
+    }
+    
+    @objc public func getCameraPermission() -> AVAuthorizationStatus {
+        return AVCaptureDevice.authorizationStatus(for: .video)
+    }
+    
+    @objc public func requestCameraPermission(completion: @escaping () -> Void) {
+        AVCaptureDevice.requestAccess(for: .video) { _ in
+            completion()
+        }
+    }
+    
+    @objc public func requestCameraPermissionIfNotDetermined(completion: @escaping (Error?) -> Void) {
+        let authorizationStatus = self.getCameraPermission()
+        if authorizationStatus == .notDetermined {
+            self.requestCameraPermission {
+                let authorizationStatusAfterRequest = self.getCameraPermission()
+                if authorizationStatusAfterRequest == .denied || authorizationStatusAfterRequest == .restricted {
+                    completion(self.plugin.errorPermissionDenied)
+                } else {
+                    completion(nil)
+                }
+            }
+            return
+        } else if authorizationStatus == .authorized {
+            completion(nil)
+        } else {
+            completion(self.plugin.errorPermissionDenied)
+        }
     }
 
     /**
