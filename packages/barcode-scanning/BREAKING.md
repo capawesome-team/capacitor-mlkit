@@ -15,3 +15,7 @@ If you want to use this plugin with Capacitor 4, please install version `0.0.3`:
 ```
 npm i @capacitor-mlkit/barcode-scanning@0.0.3
 ```
+
+### Corner Points
+
+The calculation of the corner points has been improved. The coordinates are now multiplied by the pixel ratio of the device.
