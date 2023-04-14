@@ -4,13 +4,14 @@
 package io.capawesome.capacitorjs.plugins.mlkit.barcodescanning;
 
 import android.Manifest;
+import android.graphics.Point;
+import android.util.DisplayMetrics;
 import androidx.activity.result.ActivityResult;
 import androidx.annotation.NonNull;
 import androidx.camera.core.CameraSelector;
 import com.getcapacitor.JSArray;
 import com.getcapacitor.JSObject;
 import com.getcapacitor.Logger;
-import com.getcapacitor.PermissionState;
 import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
@@ -19,6 +20,7 @@ import com.getcapacitor.annotation.CapacitorPlugin;
 import com.getcapacitor.annotation.Permission;
 import com.getcapacitor.annotation.PermissionCallback;
 import com.google.mlkit.vision.barcode.common.Barcode;
+import com.google.mlkit.vision.common.InputImage;
 import java.util.List;
 
 @CapacitorPlugin(
@@ -133,7 +135,7 @@ public class BarcodeScannerPlugin extends Plugin {
                     public void success(List<Barcode> barcodes) {
                         JSArray barcodeResults = new JSArray();
                         for (Barcode barcode : barcodes) {
-                            barcodeResults.put(BarcodeScannerHelper.createBarcodeResultForBarcode(barcode));
+                            barcodeResults.put(BarcodeScannerHelper.createBarcodeResultForBarcode(barcode, null, null));
                         }
 
                         JSObject result = new JSObject();
@@ -170,8 +172,10 @@ public class BarcodeScannerPlugin extends Plugin {
                     new ScanResultCallback() {
                         @Override
                         public void success(Barcode barcode) {
+                            JSObject barcodeResult = BarcodeScannerHelper.createBarcodeResultForBarcode(barcode, null, null);
+
                             JSArray barcodeResults = new JSArray();
-                            barcodeResults.put(BarcodeScannerHelper.createBarcodeResultForBarcode(barcode));
+                            barcodeResults.put(barcodeResult);
 
                             JSObject result = new JSObject();
                             result.put("barcodes", barcodeResults);
@@ -320,10 +324,13 @@ public class BarcodeScannerPlugin extends Plugin {
         }
     }
 
-    public void notifyBarcodeScannedListener(Barcode barcode) {
+    public void notifyBarcodeScannedListener(Barcode barcode, Point imageSize) {
         try {
+            Point screenSize = this.getScreenSize();
+            JSObject barcodeResult = BarcodeScannerHelper.createBarcodeResultForBarcode(barcode, imageSize, screenSize);
+
             JSObject result = new JSObject();
-            result.put("barcode", BarcodeScannerHelper.createBarcodeResultForBarcode(barcode));
+            result.put("barcode", barcodeResult);
             notifyListeners(BARCODE_SCANNED_EVENT, result);
         } catch (Exception exception) {
             Logger.error(exception.getMessage(), exception);
@@ -339,5 +346,15 @@ public class BarcodeScannerPlugin extends Plugin {
         } catch (Exception exception) {
             Logger.error(exception.getMessage(), exception);
         }
+    }
+
+    /**
+     * Returns the display size without navigation bar height and status bar height.
+     */
+    private Point getScreenSize() {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        Point displaySize = new Point(displayMetrics.widthPixels, displayMetrics.heightPixels);
+        return displaySize;
     }
 }

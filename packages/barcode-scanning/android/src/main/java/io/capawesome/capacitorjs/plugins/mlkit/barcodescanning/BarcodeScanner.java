@@ -95,6 +95,7 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
                     CameraSelector cameraSelector = new CameraSelector.Builder().requireLensFacing(this.scanSettings.lensFacing).build();
 
                     previewView = plugin.getActivity().findViewById(R.id.preview_view);
+                    previewView.setScaleType(PreviewView.ScaleType.FILL_CENTER);
 
                     Preview preview = new Preview.Builder().build();
                     preview.setSurfaceProvider(previewView.getSurfaceProvider());
@@ -246,6 +247,7 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
         }
 
         InputImage inputImage = InputImage.fromMediaImage(image, imageProxy.getImageInfo().getRotationDegrees());
+        Point imageSize = new Point(inputImage.getWidth(), inputImage.getHeight());
         barcodeScannerInstance
             .process(inputImage)
             .addOnSuccessListener(
@@ -255,7 +257,7 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
                         return;
                     }
                     for (Barcode barcode : barcodes) {
-                        handleScannedBarcode(barcode);
+                        handleScannedBarcode(barcode, imageSize);
                     }
                 }
             )
@@ -294,8 +296,8 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
         plugin.getBridge().getWebView().setBackgroundColor(Color.WHITE);
     }
 
-    private void handleScannedBarcode(Barcode barcode) {
-        plugin.notifyBarcodeScannedListener(barcode);
+    private void handleScannedBarcode(Barcode barcode, Point imageSize) {
+        plugin.notifyBarcodeScannedListener(barcode, imageSize);
     }
 
     private void handleScanError(Exception exception) {
