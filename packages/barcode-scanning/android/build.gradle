@@ -8,7 +8,6 @@ ext {
     androidxCameraLifecycleVersion = project.hasProperty('androidxCameraLifecycleVersion') ? rootProject.ext.androidxCameraLifecycleVersion : '1.1.0'
     androidxCameraViewVersion = project.hasProperty('androidxCameraViewVersion') ? rootProject.ext.androidxCameraViewVersion : '1.1.0'
     mlkitBarcodeScanningVersion = project.hasProperty('mlkitBarcodeScanningVersion') ? rootProject.ext.mlkitBarcodeScanningVersion : '17.0.3'
-    playServicesCodeScannerVersion = project.hasProperty('playServicesCodeScannerVersion') ? rootProject.ext.playServicesCodeScannerVersion : '16.0.0-beta3'
 }
 
 buildscript {
@@ -63,7 +62,6 @@ dependencies {
     implementation "androidx.camera:camera-lifecycle:$androidxCameraLifecycleVersion"
     implementation "androidx.camera:camera-view:$androidxCameraViewVersion"
     implementation "com.google.mlkit:barcode-scanning:$mlkitBarcodeScanningVersion"
-    implementation "com.google.android.gms:play-services-code-scanner:$playServicesCodeScannerVersion"
     testImplementation "junit:junit:$junitVersion"
     androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"

@@ -40,12 +40,6 @@ This API requires the following permissions be added to your `AndroidManifest.xm
 <uses-permission android:name="android.permission.FLASHLIGHT"/>
 ```
 
-You also need to add the following meta data **in** the `application` tag in your `AndroidManifest.xml`:
-
-```xml
-<meta-data android:name="com.google.mlkit.vision.DEPENDENCIES" android:value="barcode_ui"/>
-```
-
 #### Variables
 
 This plugin will use the following project variables (defined in your app’s `variables.gradle` file):
@@ -55,7 +49,6 @@ This plugin will use the following project variables (defined in your app’s `v
 - `$androidxCameraLifecycleVersion` version of `com.google.mlkit:barcode-scanning` (default: `1.1.0`)
 - `$androidxCameraViewVersion` version of `com.google.mlkit:barcode-scanning` (default: `1.1.0`)
 - `$mlkitBarcodeScanningVersion` version of `com.google.mlkit:barcode-scanning` (default: `17.0.3`)
-- `$playServicesCodeScannerVersion` version of `com.google.mlkit:barcode-scanning` (default: `16.0.0-beta3`)
 
 ### iOS
 

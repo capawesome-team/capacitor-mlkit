@@ -15,3 +15,11 @@ If you want to use this plugin with Capacitor 4, please install version `0.0.3`:
 ```
 npm i @capacitor-mlkit/barcode-scanning@0.0.3
 ```
+
+### Android
+
+You need to **remove** the following meta data from the `application` tag in your `AndroidManifest.xml`:
+
+```xml
+<meta-data android:name="com.google.mlkit.vision.DEPENDENCIES" android:value="barcode_ui"/>
+```
