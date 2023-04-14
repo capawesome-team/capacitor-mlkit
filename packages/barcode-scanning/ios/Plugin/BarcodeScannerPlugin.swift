@@ -39,7 +39,7 @@ public class BarcodeScannerPlugin: CAPPlugin {
         settings.showUIElements = false
         settings.formats = formats
         settings.lensFacing = lensFacing
-        
+
         self.implementation?.requestCameraPermissionIfNotDetermined(completion: { error in
             if let error = error {
                 call.reject(error.localizedDescription)
@@ -82,7 +82,7 @@ public class BarcodeScannerPlugin: CAPPlugin {
             }
             var barcodeResults = JSArray()
             for barcode in barcodes ?? [] {
-                barcodeResults.append(BarcodeScannerHelper.createBarcodeResultForBarcode(barcode, imageWidth: nil, imageHeight: nil))
+                barcodeResults.append(BarcodeScannerHelper.createBarcodeResultForBarcode(barcode, imageSize: nil))
             }
             call.resolve([
                 "barcodes": barcodeResults
@@ -100,7 +100,7 @@ public class BarcodeScannerPlugin: CAPPlugin {
         settings.showUIElements = true
         settings.formats = formats
         settings.lensFacing = lensFacing
-        
+
         self.implementation?.requestCameraPermissionIfNotDetermined(completion: { error in
             if let error = error {
                 call.reject(error.localizedDescription)
@@ -113,7 +113,7 @@ public class BarcodeScannerPlugin: CAPPlugin {
                 }
                 var barcodeResults = JSArray()
                 for barcode in barcodes ?? [] {
-                    barcodeResults.append(BarcodeScannerHelper.createBarcodeResultForBarcode(barcode, imageWidth: nil, imageHeight: nil))
+                    barcodeResults.append(BarcodeScannerHelper.createBarcodeResultForBarcode(barcode, imageSize: nil))
                 }
                 call.resolve([
                     "barcodes": barcodeResults
@@ -154,7 +154,7 @@ public class BarcodeScannerPlugin: CAPPlugin {
             "available": implementation?.isTorchAvailable() ?? false
         ])
     }
-    
+
     @objc func openSettings(_ call: CAPPluginCall) {
         implementation?.openSettings(completion: { error in
             if let error = error {
@@ -177,9 +177,9 @@ public class BarcodeScannerPlugin: CAPPlugin {
         }
     }
 
-    @objc func notifyBarcodeScannedListener(barcode: Barcode, imageWidth: Int, imageHeight: Int) {
+    @objc func notifyBarcodeScannedListener(barcode: Barcode, imageSize: CGSize) {
         var result = JSObject()
-        result["barcode"] = BarcodeScannerHelper.createBarcodeResultForBarcode(barcode, imageWidth: imageWidth, imageHeight: imageHeight)
+        result["barcode"] = BarcodeScannerHelper.createBarcodeResultForBarcode(barcode, imageSize: imageSize)
         notifyListeners(barcodeScannedEvent, data: result)
     }
 }

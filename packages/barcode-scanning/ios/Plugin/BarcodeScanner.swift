@@ -148,12 +148,12 @@ typealias MLKitBarcodeScanner = MLKitBarcodeScanning.BarcodeScanner
         }
         return device.hasTorch
     }
-    
+
     @objc func openSettings(completion: @escaping (Error?) -> Void) {
         let url = URL(string: UIApplication.openSettingsURLString)
         DispatchQueue.main.async {
             if let url = url, UIApplication.shared.canOpenURL(url) {
-                UIApplication.shared.open(url, completionHandler: { (success) in
+                UIApplication.shared.open(url, completionHandler: { (_) in
                     completion(nil)
                 })
             } else {
@@ -161,7 +161,7 @@ typealias MLKitBarcodeScanner = MLKitBarcodeScanning.BarcodeScanner
             }
         }
     }
-    
+
     @objc public func getFileUrlByPath(_ path: String) -> URL? {
         guard let url = URL.init(string: path) else {
             return nil
@@ -172,17 +172,17 @@ typealias MLKitBarcodeScanner = MLKitBarcodeScanning.BarcodeScanner
             return nil
         }
     }
-    
+
     @objc public func getCameraPermission() -> AVAuthorizationStatus {
         return AVCaptureDevice.authorizationStatus(for: .video)
     }
-    
+
     @objc public func requestCameraPermission(completion: @escaping () -> Void) {
         AVCaptureDevice.requestAccess(for: .video) { _ in
             completion()
         }
     }
-    
+
     @objc public func requestCameraPermissionIfNotDetermined(completion: @escaping (Error?) -> Void) {
         let authorizationStatus = self.getCameraPermission()
         if authorizationStatus == .notDetermined {
@@ -226,20 +226,20 @@ typealias MLKitBarcodeScanner = MLKitBarcodeScanning.BarcodeScanner
         webView.scrollView.backgroundColor = UIColor.white
     }
 
-    private func handleScannedBarcode(barcode: Barcode, imageWidth: Int, imageHeight: Int) {
-        plugin.notifyBarcodeScannedListener(barcode: barcode, imageWidth: imageWidth, imageHeight: imageHeight)
+    private func handleScannedBarcode(barcode: Barcode, imageSize: CGSize) {
+        plugin.notifyBarcodeScannedListener(barcode: barcode, imageSize: imageSize)
     }
 
 }
 
 extension BarcodeScanner: BarcodeScannerViewDelegate {
-    public func onBarcodesDetected(barcodes: [Barcode], imageWidth: Int, imageHeight: Int) {
+    public func onBarcodesDetected(barcodes: [Barcode], imageSize: CGSize) {
         if let scanCompletionHandler = self.scanCompletionHandler {
             scanCompletionHandler(barcodes, nil)
             self.stopScan()
         } else {
             for barcode in barcodes {
-                self.handleScannedBarcode(barcode: barcode, imageWidth: imageWidth, imageHeight: imageHeight)
+                self.handleScannedBarcode(barcode: barcode, imageSize: imageSize)
             }
         }
     }
