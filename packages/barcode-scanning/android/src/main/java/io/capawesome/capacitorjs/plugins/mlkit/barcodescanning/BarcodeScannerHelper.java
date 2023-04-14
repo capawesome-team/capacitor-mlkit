@@ -4,23 +4,29 @@
 package io.capawesome.capacitorjs.plugins.mlkit.barcodescanning;
 
 import android.graphics.Point;
+import android.util.DisplayMetrics;
+import android.view.Display;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.getcapacitor.JSArray;
 import com.getcapacitor.JSObject;
+import com.getcapacitor.Logger;
 import com.google.mlkit.vision.barcode.common.Barcode;
+import com.google.mlkit.vision.common.InputImage;
 import org.json.JSONArray;
 import org.json.JSONException;
 
 public class BarcodeScannerHelper {
 
-    public static JSObject createBarcodeResultForBarcode(Barcode barcode) {
+    public static JSObject createBarcodeResultForBarcode(@NonNull Barcode barcode, @Nullable Point imageSize, @Nullable Point screenSize) {
         Point[] cornerPoints = barcode.getCornerPoints();
         JSArray cornerPointsResult = new JSArray();
-        if (cornerPoints != null) {
-            for (int i = 0; i < cornerPoints.length; i++) {
+        if (cornerPoints != null || imageSize != null || screenSize != null) {
+            Point[] normalizedCornerPoints = normalizeCornerPoints(cornerPoints, imageSize, screenSize);
+            for (int i = 0; i < normalizedCornerPoints.length; i++) {
                 JSArray cornerPointResult = new JSArray();
-                cornerPointResult.put(cornerPoints[i].x);
-                cornerPointResult.put(cornerPoints[i].y);
+                cornerPointResult.put(normalizedCornerPoints[i].x);
+                cornerPointResult.put(normalizedCornerPoints[i].y);
                 cornerPointsResult.put(cornerPointResult);
             }
         }
@@ -155,5 +161,26 @@ public class BarcodeScannerHelper {
             ret.put(_byte);
         }
         return ret;
+    }
+
+    private static Point[] normalizeCornerPoints(@NonNull Point[] cornerPoints, @NonNull Point imageSize, @NonNull Point screenSize) {
+        double screenWidth = screenSize.x;
+        double screenHeight = screenSize.y;
+        double imageWidth = imageSize.x;
+        double imageHeight = imageSize.y;
+        if (screenWidth > screenHeight) {
+            imageWidth = imageSize.y;
+            imageHeight = imageSize.x;
+        }
+        double scale = Math.max(screenHeight / imageWidth, screenWidth / imageHeight);
+        double invisibleWidth = imageHeight * scale - screenWidth;
+        double invisibleHeight = imageWidth * scale - screenHeight;
+        Point[] normalizedCornerPoints = new Point[cornerPoints.length];
+        for (int i = 0; i < cornerPoints.length; i++) {
+            int x = (int) ((cornerPoints[i].x * scale) - (invisibleWidth / 2));
+            int y = (int) ((cornerPoints[i].y * scale) - (invisibleHeight / 2));
+            normalizedCornerPoints[i] = new Point(x, y);
+        }
+        return normalizedCornerPoints;
     }
 }
