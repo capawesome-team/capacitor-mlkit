@@ -1,5 +1,19 @@
 # Changelog
 
+## 5.0.0
+
+### Major Changes
+
+- [`7d2236d`](https://github.com/capawesome-team/capacitor-mlkit/commit/7d2236da9b246559823e43d75e6b2073508c4b8a) ([#30](https://github.com/capawesome-team/capacitor-mlkit/pull/30)): feat!: update to Capacitor 5
+
+* [`6f9585b`](https://github.com/capawesome-team/capacitor-mlkit/commit/6f9585b0960338c15a25c7331b7ae89227b02adb) ([#35](https://github.com/capawesome-team/capacitor-mlkit/pull/35)): fix!: improve `cornerPoints` calculation
+
+### Patch Changes
+
+- [`a77946f`](https://github.com/capawesome-team/capacitor-mlkit/commit/a77946f23adbc46ea4be6dce323ebe4f5b8bac8f): fix(ios): `scan(...)` method does not detect any barcodes
+
+* [`3261833`](https://github.com/capawesome-team/capacitor-mlkit/commit/326183314ccce0ea9837a604f2a5a39cee50521f): fix(android): `readBarcodesFromImage(...)` throws a null exception
+
 ## 0.0.3
 
 ### Patch Changes
