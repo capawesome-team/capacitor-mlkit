@@ -21,7 +21,7 @@ public class BarcodeScannerHelper {
     public static JSObject createBarcodeResultForBarcode(@NonNull Barcode barcode, @Nullable Point imageSize, @Nullable Point screenSize) {
         Point[] cornerPoints = barcode.getCornerPoints();
         JSArray cornerPointsResult = new JSArray();
-        if (cornerPoints != null || imageSize != null || screenSize != null) {
+        if (cornerPoints != null && imageSize != null && screenSize != null) {
             Point[] normalizedCornerPoints = normalizeCornerPoints(cornerPoints, imageSize, screenSize);
             for (int i = 0; i < normalizedCornerPoints.length; i++) {
                 JSArray cornerPointResult = new JSArray();
