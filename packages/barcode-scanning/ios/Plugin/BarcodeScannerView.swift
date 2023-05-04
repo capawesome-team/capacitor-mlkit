@@ -263,7 +263,7 @@ public protocol BarcodeScannerViewDelegate {
         return barcodes.filter { barcode in
             if let cornerPoints = barcode.cornerPoints, let imageSize = imageSize {
                 let normalizedCornerPoints = BarcodeScannerHelper.normalizeCornerPoints(cornerPoints: cornerPoints,
-                                                                                        imageSize: imageSize)
+                                                                                        imageSize: imageSize, scale: 1)
 
                 let topLeft = normalizedCornerPoints[0].cgPointValue
                 let topRight = normalizedCornerPoints[1].cgPointValue
