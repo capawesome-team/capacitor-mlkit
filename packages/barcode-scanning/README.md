@@ -557,14 +557,14 @@ Remove all listeners for this plugin.
 
 #### Barcode
 
-| Prop               | Type                                                                                  | Description                                                                      | Since |
-| ------------------ | ------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | ----- |
-| **`bytes`**        | <code>number[]</code>                                                                 | Raw bytes as it was encoded in the barcode.                                      | 0.0.1 |
-| **`cornerPoints`** | <code>[[number, number], [number, number], [number, number], [number, number]]</code> | The four corner points of the barcode in clockwise order starting with top-left. | 0.0.1 |
-| **`displayValue`** | <code>string</code>                                                                   | The barcode value in a human readable format.                                    | 0.0.1 |
-| **`format`**       | <code><a href="#barcodeformat">BarcodeFormat</a></code>                               | The barcode format.                                                              | 0.0.1 |
-| **`rawValue`**     | <code>string</code>                                                                   | The barcode value in a machine readable format.                                  | 0.0.1 |
-| **`valueType`**    | <code><a href="#barcodevaluetype">BarcodeValueType</a></code>                         | The barcode value type.                                                          | 0.0.1 |
+| Prop               | Type                                                                                  | Description                                                                                                                                                | Since |
+| ------------------ | ------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
+| **`bytes`**        | <code>number[]</code>                                                                 | Raw bytes as it was encoded in the barcode.                                                                                                                | 0.0.1 |
+| **`cornerPoints`** | <code>[[number, number], [number, number], [number, number], [number, number]]</code> | The four corner points of the barcode in clockwise order starting with top-left. This property is currently only supported by the `startScan(...)` method. | 0.0.1 |
+| **`displayValue`** | <code>string</code>                                                                   | The barcode value in a human readable format.                                                                                                              | 0.0.1 |
+| **`format`**       | <code><a href="#barcodeformat">BarcodeFormat</a></code>                               | The barcode format.                                                                                                                                        | 0.0.1 |
+| **`rawValue`**     | <code>string</code>                                                                   | The barcode value in a machine readable format.                                                                                                            | 0.0.1 |
+| **`valueType`**    | <code><a href="#barcodevaluetype">BarcodeValueType</a></code>                         | The barcode value type.                                                                                                                                    | 0.0.1 |
 
 
 #### ReadBarcodesFromImageOptions

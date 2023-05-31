@@ -308,6 +308,8 @@ export interface Barcode {
    * The four corner points of the barcode in clockwise
    * order starting with top-left.
    *
+   * This property is currently only supported by the `startScan(...)` method.
+   *
    * @since 0.0.1
    * @example [[34, 33], [264, 32], [263, 263], [33, 263]]
    * @experimental This property is experimental and may change in the future.
