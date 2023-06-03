@@ -33,6 +33,10 @@ import androidx.lifecycle.LifecycleOwner;
 import com.getcapacitor.Logger;
 import com.getcapacitor.PermissionState;
 import com.getcapacitor.PluginCall;
+import com.google.android.gms.common.moduleinstall.InstallStatusListener;
+import com.google.android.gms.common.moduleinstall.ModuleInstall;
+import com.google.android.gms.common.moduleinstall.ModuleInstallClient;
+import com.google.android.gms.common.moduleinstall.ModuleInstallRequest;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.mlkit.vision.barcode.BarcodeScannerOptions;
 import com.google.mlkit.vision.barcode.BarcodeScanning;
@@ -156,6 +160,7 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
     public void scan(ScanSettings scanSettings, ScanResultCallback callback) {
         GmsBarcodeScannerOptions options = buildGmsBarcodeScannerOptions(scanSettings);
         GmsBarcodeScanner scanner = GmsBarcodeScanning.getClient(plugin.getContext(), options);
+
         scanner
             .startScan()
             .addOnSuccessListener(
@@ -173,6 +178,38 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
                     callback.error(exception);
                 }
             );
+    }
+
+    public void isGoogleCodeScannerModuleAvailable(IsGoogleCodeScannerModuleAvailableResultCallback callback) {
+        GmsBarcodeScanner scanner = GmsBarcodeScanning.getClient(plugin.getContext());
+        ModuleInstallClient moduleInstallClient = ModuleInstall.getClient(plugin.getContext());
+        moduleInstallClient.areModulesAvailable(scanner).addOnSuccessListener(response -> {
+            if (response.areModulesAvailable()) {
+                // TODO
+            }
+        }).addOnFailureListener(ex -> {
+            // TODO
+        });
+    }
+
+    public void installGoogleCodeScannerModule(InstallGoogleCodeScannerModuleResultCallback callback) {
+        GmsBarcodeScanner scanner = GmsBarcodeScanning.getClient(plugin.getContext());
+        InstallStatusListener listener = new ModuleInstallProgressListener();
+        ModuleInstallRequest moduleInstallRequest =
+                ModuleInstallRequest.newBuilder()
+                        .addApi(scanner)
+                        .setListener(listener)
+                        .build();
+        ModuleInstallClient moduleInstallClient = ModuleInstall.getClient(plugin.getContext());
+        moduleInstallClient
+                .installModules(moduleInstallRequest)
+                .addOnSuccessListener(moduleInstallResponse -> {
+                    if (moduleInstallResponse.areModulesAlreadyInstalled()) {
+                        // TODO
+                    }
+                }).addOnFailureListener(ex -> {
+                    // TODO
+                });
     }
 
     public boolean isSupported() {
