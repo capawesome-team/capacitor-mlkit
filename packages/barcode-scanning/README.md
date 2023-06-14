@@ -70,8 +70,6 @@ Add the `NSCameraUsageDescription` key to the `ios/App/App/Info.plist` file, whi
 + <string>The app enables the scanning of various barcodes.</string>
 ```
 
-If you also use a `@capacitor-firebase/*` dependency in your project, then implement [this workaround](https://github.com/capawesome-team/capacitor-mlkit/issues/23#issuecomment-1470739611) to avoid conflict with the Cocoapods dependencies.
-
 ## Configuration
 
 No configuration required for this plugin.
