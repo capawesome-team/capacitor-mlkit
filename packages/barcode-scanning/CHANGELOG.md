@@ -1,5 +1,11 @@
 # Changelog
 
+## 5.0.1
+
+### Patch Changes
+
+- [`167da98`](https://github.com/capawesome-team/capacitor-mlkit/commit/167da98656f2f9369a2d70e658f572dc1b22ec9a) ([#40](https://github.com/capawesome-team/capacitor-mlkit/pull/40)): fix(ios): Cocoapods dependency conflicts with Firebase
+
 ## 5.0.0
 
 ### Major Changes
