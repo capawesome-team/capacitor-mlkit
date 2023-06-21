@@ -34,12 +34,11 @@ typealias MLKitBarcodeScanner = MLKitBarcodeScanning.BarcodeScanner
                 self.hideWebViewBackground()
                 webView.superview?.insertSubview(cameraView, belowSubview: webView)
                 self.cameraView = cameraView
-                completion()
+                completion(nil)
             } catch let error {
                 self.showWebViewBackground()
                 CAPLog.print(error.localizedDescription, error)
                 completion(error.localizedDescription)
-                return
             }
         }
     }
