@@ -1,5 +1,11 @@
 # Changelog
 
+## 5.0.2
+
+### Patch Changes
+
+- [`bf5b3bd`](https://github.com/capawesome-team/capacitor-mlkit/commit/bf5b3bde4c1f11b8930944bcc73832afd6abc820) ([#50](https://github.com/capawesome-team/capacitor-mlkit/pull/50)): fix(ios): resolve the `startScan(...)` method
+
 ## 5.0.1
 
 ### Patch Changes
