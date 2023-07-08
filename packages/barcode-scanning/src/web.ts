@@ -2,6 +2,7 @@ import { CapacitorException, ExceptionCode, WebPlugin } from '@capacitor/core';
 
 import type {
   BarcodeScannerPlugin,
+  IsGoogleBarcodeScannerModuleAvailableResult,
   IsSupportedResult,
   IsTorchAvailableResult,
   IsTorchEnabledResult,
@@ -59,6 +60,14 @@ export class BarcodeScannerWeb
   }
 
   async openSettings(): Promise<void> {
+    throw this.createUnavailableException();
+  }
+
+  async isGoogleBarcodeScannerModuleAvailable(): Promise<IsGoogleBarcodeScannerModuleAvailableResult> {
+    throw this.createUnavailableException();
+  }
+
+  async installGoogleBarcodeScannerModule(): Promise<void> {
     throw this.createUnavailableException();
   }
 

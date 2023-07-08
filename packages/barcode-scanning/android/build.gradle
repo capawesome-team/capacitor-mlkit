@@ -7,8 +7,8 @@ ext {
     androidxCameraCoreVersion = project.hasProperty('androidxCameraCoreVersion') ? rootProject.ext.androidxCameraCoreVersion : '1.1.0'
     androidxCameraLifecycleVersion = project.hasProperty('androidxCameraLifecycleVersion') ? rootProject.ext.androidxCameraLifecycleVersion : '1.1.0'
     androidxCameraViewVersion = project.hasProperty('androidxCameraViewVersion') ? rootProject.ext.androidxCameraViewVersion : '1.1.0'
-    mlkitBarcodeScanningVersion = project.hasProperty('mlkitBarcodeScanningVersion') ? rootProject.ext.mlkitBarcodeScanningVersion : '17.0.3'
-    playServicesCodeScannerVersion = project.hasProperty('playServicesCodeScannerVersion') ? rootProject.ext.playServicesCodeScannerVersion : '16.0.0-beta3'
+    mlkitBarcodeScanningVersion = project.hasProperty('mlkitBarcodeScanningVersion') ? rootProject.ext.mlkitBarcodeScanningVersion : '17.1.0'
+    playServicesCodeScannerVersion = project.hasProperty('playServicesCodeScannerVersion') ? rootProject.ext.playServicesCodeScannerVersion : '16.0.0'
 }
 
 buildscript {

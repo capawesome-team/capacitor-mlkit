@@ -37,6 +37,7 @@ import com.google.android.gms.common.moduleinstall.InstallStatusListener;
 import com.google.android.gms.common.moduleinstall.ModuleInstall;
 import com.google.android.gms.common.moduleinstall.ModuleInstallClient;
 import com.google.android.gms.common.moduleinstall.ModuleInstallRequest;
+import com.google.android.gms.common.moduleinstall.ModuleInstallStatusUpdate;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.mlkit.vision.barcode.BarcodeScannerOptions;
 import com.google.mlkit.vision.barcode.BarcodeScanning;
@@ -48,7 +49,9 @@ import com.google.mlkit.vision.common.InputImage;
 
 public class BarcodeScanner implements ImageAnalysis.Analyzer {
 
+    @NonNull
     private final BarcodeScannerPlugin plugin;
+
     private final Point displaySize;
 
     @Nullable
@@ -65,6 +68,9 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
 
     @Nullable
     private ScanSettings scanSettings;
+
+    @Nullable
+    private ModuleInstallProgressListener moduleInstallProgressListener;
 
     private boolean isTorchEnabled = false;
 
@@ -180,36 +186,45 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
             );
     }
 
-    public void isGoogleCodeScannerModuleAvailable(IsGoogleCodeScannerModuleAvailableResultCallback callback) {
+    public void isGoogleBarcodeScannerModuleAvailable(IsGoogleBarodeScannerModuleAvailableResultCallback callback) {
         GmsBarcodeScanner scanner = GmsBarcodeScanning.getClient(plugin.getContext());
-        ModuleInstallClient moduleInstallClient = ModuleInstall.getClient(plugin.getContext());
-        moduleInstallClient.areModulesAvailable(scanner).addOnSuccessListener(response -> {
-            if (response.areModulesAvailable()) {
-                // TODO
-            }
-        }).addOnFailureListener(ex -> {
-            // TODO
-        });
-    }
-
-    public void installGoogleCodeScannerModule(InstallGoogleCodeScannerModuleResultCallback callback) {
-        GmsBarcodeScanner scanner = GmsBarcodeScanning.getClient(plugin.getContext());
-        InstallStatusListener listener = new ModuleInstallProgressListener();
-        ModuleInstallRequest moduleInstallRequest =
-                ModuleInstallRequest.newBuilder()
-                        .addApi(scanner)
-                        .setListener(listener)
-                        .build();
         ModuleInstallClient moduleInstallClient = ModuleInstall.getClient(plugin.getContext());
         moduleInstallClient
-                .installModules(moduleInstallRequest)
-                .addOnSuccessListener(moduleInstallResponse -> {
+            .areModulesAvailable(scanner)
+            .addOnSuccessListener(
+                response -> {
+                    boolean isAvailable = response.areModulesAvailable();
+                    callback.success(isAvailable);
+                }
+            )
+            .addOnFailureListener(
+                exception -> {
+                    callback.error(exception);
+                }
+            );
+    }
+
+    public void installGoogleBarcodeScannerModule(InstallGoogleBarcodeScannerModuleResultCallback callback) {
+        GmsBarcodeScanner scanner = GmsBarcodeScanning.getClient(plugin.getContext());
+        InstallStatusListener listener = new ModuleInstallProgressListener(this);
+        ModuleInstallRequest moduleInstallRequest = ModuleInstallRequest.newBuilder().addApi(scanner).setListener(listener).build();
+        ModuleInstallClient moduleInstallClient = ModuleInstall.getClient(plugin.getContext());
+        moduleInstallClient
+            .installModules(moduleInstallRequest)
+            .addOnSuccessListener(
+                moduleInstallResponse -> {
                     if (moduleInstallResponse.areModulesAlreadyInstalled()) {
-                        // TODO
+                        callback.error(new Exception(BarcodeScannerPlugin.ERROR_GOOGLE_BARCODE_SCANNER_MODULE_ALREADY_INSTALLED));
+                    } else {
+                        callback.success();
                     }
-                }).addOnFailureListener(ex -> {
-                    // TODO
-                });
+                }
+            )
+            .addOnFailureListener(
+                exception -> {
+                    callback.error(exception);
+                }
+            );
     }
 
     public boolean isSupported() {
@@ -309,6 +324,19 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
                     image.close();
                 }
             );
+    }
+
+    public void handleGoogleBarcodeScannerModuleInstallProgress(
+        @ModuleInstallStatusUpdate.InstallState int state,
+        @Nullable Integer progress
+    ) {
+        plugin.notifyGoogleBarcodeScannerModuleInstallProgressListener(state, progress);
+        boolean isTerminateState = ModuleInstallProgressListener.isTerminateState(state);
+        if (isTerminateState && moduleInstallProgressListener != null) {
+            ModuleInstallClient moduleInstallClient = ModuleInstall.getClient(plugin.getContext());
+            moduleInstallClient.unregisterListener(moduleInstallProgressListener);
+            moduleInstallProgressListener = null;
+        }
     }
 
     private Point getDisplaySize() {
