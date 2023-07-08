@@ -178,6 +178,16 @@ const openSettings = async () => {
   await BarcodeScanner.openSettings();
 };
 
+const isGoogleBarcodeScannerModuleAvailable = async () => {
+  const { available } =
+    await BarcodeScanner.isGoogleBarcodeScannerModuleAvailable();
+  return available;
+};
+
+const installGoogleBarcodeScannerModule = async () => {
+  await BarcodeScanner.installGoogleBarcodeScannerModule();
+};
+
 const checkPermissions = async () => {
   const { camera } = await BarcodeScanner.checkPermissions();
   return camera;
@@ -232,28 +242,28 @@ If you can't see the camera view, make sure all elements in the DOM are not visi
 
 <docgen-index>
 
-- [`startScan(...)`](#startscan)
-- [`stopScan()`](#stopscan)
-- [`readBarcodesFromImage(...)`](#readbarcodesfromimage)
-- [`scan(...)`](#scan)
-- [`isSupported()`](#issupported)
-- [`enableTorch()`](#enabletorch)
-- [`disableTorch()`](#disabletorch)
-- [`toggleTorch()`](#toggletorch)
-- [`isTorchEnabled()`](#istorchenabled)
-- [`isTorchAvailable()`](#istorchavailable)
-- [`openSettings()`](#opensettings)
-- [`isGoogleBarcodeScannerModuleAvailable()`](#isgooglebarcodescannermoduleavailable)
-- [`installGoogleBarcodeScannerModule()`](#installgooglebarcodescannermodule)
-- [`checkPermissions()`](#checkpermissions)
-- [`requestPermissions()`](#requestpermissions)
-- [`addListener('barcodeScanned', ...)`](#addlistenerbarcodescanned)
-- [`addListener('scanError', ...)`](#addlistenerscanerror)
-- [`addListener('googleBarcodeScannerModuleInstallProgress', ...)`](#addlistenergooglebarcodescannermoduleinstallprogress)
-- [`removeAllListeners()`](#removealllisteners)
-- [Interfaces](#interfaces)
-- [Type Aliases](#type-aliases)
-- [Enums](#enums)
+* [`startScan(...)`](#startscan)
+* [`stopScan()`](#stopscan)
+* [`readBarcodesFromImage(...)`](#readbarcodesfromimage)
+* [`scan(...)`](#scan)
+* [`isSupported()`](#issupported)
+* [`enableTorch()`](#enabletorch)
+* [`disableTorch()`](#disabletorch)
+* [`toggleTorch()`](#toggletorch)
+* [`isTorchEnabled()`](#istorchenabled)
+* [`isTorchAvailable()`](#istorchavailable)
+* [`openSettings()`](#opensettings)
+* [`isGoogleBarcodeScannerModuleAvailable()`](#isgooglebarcodescannermoduleavailable)
+* [`installGoogleBarcodeScannerModule()`](#installgooglebarcodescannermodule)
+* [`checkPermissions()`](#checkpermissions)
+* [`requestPermissions()`](#requestpermissions)
+* [`addListener('barcodeScanned', ...)`](#addlistenerbarcodescanned)
+* [`addListener('scanError', ...)`](#addlistenerscanerror)
+* [`addListener('googleBarcodeScannerModuleInstallProgress', ...)`](#addlistenergooglebarcodescannermoduleinstallprogress)
+* [`removeAllListeners()`](#removealllisteners)
+* [Interfaces](#interfaces)
+* [Type Aliases](#type-aliases)
+* [Enums](#enums)
 
 </docgen-index>
 
@@ -276,7 +286,8 @@ Only available on Android and iOS.
 
 **Since:** 0.0.1
 
----
+--------------------
+
 
 ### stopScan()
 
@@ -290,7 +301,8 @@ Only available on Android and iOS.
 
 **Since:** 0.0.1
 
----
+--------------------
+
 
 ### readBarcodesFromImage(...)
 
@@ -310,7 +322,8 @@ Only available on Android and iOS.
 
 **Since:** 0.0.1
 
----
+--------------------
+
 
 ### scan(...)
 
@@ -323,7 +336,7 @@ Scan a barcode with a ready-to-use interface without WebView customization.
 On **Android**, this method is only available on devices with Google Play Services
 installed. Therefore, no camera permission is required.
 
-**Attention:** Before using this method on _Android_, first check if the Google <a href="#barcode">Barcode</a> Scanner module is available.
+**Attention:** Before using this method on *Android*, first check if the Google <a href="#barcode">Barcode</a> Scanner module is available.
 
 Only available on Android and iOS.
 
@@ -335,7 +348,8 @@ Only available on Android and iOS.
 
 **Since:** 0.0.1
 
----
+--------------------
+
 
 ### isSupported()
 
@@ -351,7 +365,8 @@ Available on Android and iOS.
 
 **Since:** 0.0.1
 
----
+--------------------
+
 
 ### enableTorch()
 
@@ -365,7 +380,8 @@ Only available on Android and iOS.
 
 **Since:** 0.0.1
 
----
+--------------------
+
 
 ### disableTorch()
 
@@ -379,7 +395,8 @@ Only available on Android and iOS.
 
 **Since:** 0.0.1
 
----
+--------------------
+
 
 ### toggleTorch()
 
@@ -393,7 +410,8 @@ Only available on Android and iOS.
 
 **Since:** 0.0.1
 
----
+--------------------
+
 
 ### isTorchEnabled()
 
@@ -409,7 +427,8 @@ Only available on Android and iOS.
 
 **Since:** 0.0.1
 
----
+--------------------
+
 
 ### isTorchAvailable()
 
@@ -425,7 +444,8 @@ Only available on Android and iOS.
 
 **Since:** 0.0.1
 
----
+--------------------
+
 
 ### openSettings()
 
@@ -439,7 +459,8 @@ Only available on Android and iOS.
 
 **Since:** 0.0.1
 
----
+--------------------
+
 
 ### isGoogleBarcodeScannerModuleAvailable()
 
@@ -455,7 +476,8 @@ Only available on Android.
 
 **Since:** 5.1.0
 
----
+--------------------
+
 
 ### installGoogleBarcodeScannerModule()
 
@@ -469,7 +491,8 @@ Only available on Android.
 
 **Since:** 5.1.0
 
----
+--------------------
+
 
 ### checkPermissions()
 
@@ -485,7 +508,8 @@ Only available on Android and iOS.
 
 **Since:** 0.0.1
 
----
+--------------------
+
 
 ### requestPermissions()
 
@@ -501,7 +525,8 @@ Only available on Android and iOS.
 
 **Since:** 0.0.1
 
----
+--------------------
+
 
 ### addListener('barcodeScanned', ...)
 
@@ -522,7 +547,8 @@ Available on Android and iOS.
 
 **Since:** 0.0.1
 
----
+--------------------
+
 
 ### addListener('scanError', ...)
 
@@ -543,7 +569,8 @@ Available on Android and iOS.
 
 **Since:** 0.0.1
 
----
+--------------------
+
 
 ### addListener('googleBarcodeScannerModuleInstallProgress', ...)
 
@@ -564,7 +591,8 @@ Available on Android.
 
 **Since:** 5.1.0
 
----
+--------------------
+
 
 ### removeAllListeners()
 
@@ -576,9 +604,11 @@ Remove all listeners for this plugin.
 
 **Since:** 0.0.1
 
----
+--------------------
+
 
 ### Interfaces
+
 
 #### StartScanOptions
 
@@ -587,11 +617,13 @@ Remove all listeners for this plugin.
 | **`formats`**    | <code>BarcodeFormat[]</code>                      | Improve the speed of the barcode scanner by configuring the barcode formats to scan for. | 0.0.1 |
 | **`lensFacing`** | <code><a href="#lensfacing">LensFacing</a></code> | Configure the camera (front or back) to use.                                             | 0.0.1 |
 
+
 #### ReadBarcodesFromImageResult
 
 | Prop           | Type                   | Description            | Since |
 | -------------- | ---------------------- | ---------------------- | ----- |
 | **`barcodes`** | <code>Barcode[]</code> | The detected barcodes. | 0.0.1 |
+
 
 #### Barcode
 
@@ -604,6 +636,7 @@ Remove all listeners for this plugin.
 | **`rawValue`**     | <code>string</code>                                                                   | The barcode value in a machine readable format.                                                                                                            | 0.0.1 |
 | **`valueType`**    | <code><a href="#barcodevaluetype">BarcodeValueType</a></code>                         | The barcode value type.                                                                                                                                    | 0.0.1 |
 
+
 #### ReadBarcodesFromImageOptions
 
 | Prop          | Type                         | Description                                                                              | Since |
@@ -611,11 +644,13 @@ Remove all listeners for this plugin.
 | **`formats`** | <code>BarcodeFormat[]</code> | Improve the speed of the barcode scanner by configuring the barcode formats to scan for. | 0.0.1 |
 | **`path`**    | <code>string</code>          | The local path to the image file.                                                        | 0.0.1 |
 
+
 #### ScanResult
 
 | Prop           | Type                   | Description            | Since |
 | -------------- | ---------------------- | ---------------------- | ----- |
 | **`barcodes`** | <code>Barcode[]</code> | The detected barcodes. | 0.0.1 |
+
 
 #### ScanOptions
 
@@ -623,11 +658,13 @@ Remove all listeners for this plugin.
 | ------------- | ---------------------------- | ---------------------------------------------------------------------------------------- | ----- |
 | **`formats`** | <code>BarcodeFormat[]</code> | Improve the speed of the barcode scanner by configuring the barcode formats to scan for. | 0.0.1 |
 
+
 #### IsSupportedResult
 
 | Prop            | Type                 | Description                                      | Since |
 | --------------- | -------------------- | ------------------------------------------------ | ----- |
 | **`supported`** | <code>boolean</code> | Whether or not the barcode scanner is supported. | 0.0.1 |
+
 
 #### IsTorchEnabledResult
 
@@ -635,11 +672,13 @@ Remove all listeners for this plugin.
 | ------------- | -------------------- | ------------------------------------ | ----- |
 | **`enabled`** | <code>boolean</code> | Whether or not the torch is enabled. | 0.0.1 |
 
+
 #### IsTorchAvailableResult
 
 | Prop            | Type                 | Description                            | Since |
 | --------------- | -------------------- | -------------------------------------- | ----- |
 | **`available`** | <code>boolean</code> | Whether or not the torch is available. | 0.0.1 |
+
 
 #### IsGoogleBarcodeScannerModuleAvailableResult
 
@@ -647,11 +686,13 @@ Remove all listeners for this plugin.
 | --------------- | -------------------- | ------------------------------------------------------------------------------------- | ----- |
 | **`available`** | <code>boolean</code> | Whether or not the Google <a href="#barcode">Barcode</a> Scanner module is available. | 5.1.0 |
 
+
 #### PermissionStatus
 
 | Prop         | Type                                                                    | Since |
 | ------------ | ----------------------------------------------------------------------- | ----- |
 | **`camera`** | <code><a href="#camerapermissionstate">CameraPermissionState</a></code> | 0.0.1 |
+
 
 #### PluginListenerHandle
 
@@ -659,17 +700,20 @@ Remove all listeners for this plugin.
 | ------------ | ----------------------------------------- |
 | **`remove`** | <code>() =&gt; Promise&lt;void&gt;</code> |
 
+
 #### BarcodeScannedEvent
 
 | Prop          | Type                                        | Description         | Since |
 | ------------- | ------------------------------------------- | ------------------- | ----- |
 | **`barcode`** | <code><a href="#barcode">Barcode</a></code> | A detected barcode. | 0.0.1 |
 
+
 #### ScanErrorEvent
 
 | Prop          | Type                | Description        | Since |
 | ------------- | ------------------- | ------------------ | ----- |
 | **`message`** | <code>string</code> | The error message. | 0.0.1 |
+
 
 #### GoogleBarcodeScannerModuleInstallProgressEvent
 
@@ -678,17 +722,22 @@ Remove all listeners for this plugin.
 | **`state`**    | <code><a href="#googlebarcodescannermoduleinstallstate">GoogleBarcodeScannerModuleInstallState</a></code> | The current state of the installation.                         | 5.1.0 |
 | **`progress`** | <code>number</code>                                                                                       | The progress of the installation in percent between 0 and 100. | 5.1.0 |
 
+
 ### Type Aliases
+
 
 #### CameraPermissionState
 
 <code><a href="#permissionstate">PermissionState</a> | 'limited'</code>
 
+
 #### PermissionState
 
 <code>'prompt' | 'prompt-with-rationale' | 'granted' | 'denied'</code>
 
+
 ### Enums
+
 
 #### BarcodeFormat
 
@@ -708,12 +757,14 @@ Remove all listeners for this plugin.
 | **`UpcA`**       | <code>'UPC_A'</code>       | Only available on Android and iOS. | 0.0.1 |
 | **`UpcE`**       | <code>'UPC_E'</code>       | Only available on Android and iOS. | 0.0.1 |
 
+
 #### LensFacing
 
 | Members     | Value                | Since |
 | ----------- | -------------------- | ----- |
 | **`Front`** | <code>'FRONT'</code> | 0.0.1 |
 | **`Back`**  | <code>'BACK'</code>  | 0.0.1 |
+
 
 #### BarcodeValueType
 
@@ -732,6 +783,7 @@ Remove all listeners for this plugin.
 | **`Url`**            | <code>'URL'</code>             | 0.0.1 |
 | **`Wifi`**           | <code>'WIFI'</code>            | 0.0.1 |
 | **`Unknown`**        | <code>'UNKNOWN'</code>         | 0.0.1 |
+
 
 #### GoogleBarcodeScannerModuleInstallState
 
