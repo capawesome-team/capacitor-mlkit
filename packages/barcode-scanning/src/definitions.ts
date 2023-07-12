@@ -108,6 +108,10 @@ export interface BarcodeScannerPlugin {
   /**
    * Install the Google Barcode Scanner module.
    *
+   * **Attention**: This only starts the installation.
+   * The `googleBarcodeScannerModuleInstallProgress` event listener will
+   * notify you when the installation is complete.
+   *
    * Only available on Android.
    *
    * @since 5.1.0

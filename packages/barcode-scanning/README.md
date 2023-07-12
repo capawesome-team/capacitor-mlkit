@@ -487,6 +487,10 @@ installGoogleBarcodeScannerModule() => Promise<void>
 
 Install the Google <a href="#barcode">Barcode</a> Scanner module.
 
+**Attention**: This only starts the installation.
+The `googleBarcodeScannerModuleInstallProgress` event listener will
+notify you when the installation is complete.
+
 Only available on Android.
 
 **Since:** 5.1.0
