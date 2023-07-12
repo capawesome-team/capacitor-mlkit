@@ -58,8 +58,8 @@ This plugin will use the following project variables (defined in your app’s `v
 - `$androidxCameraCoreVersion` version of `com.google.mlkit:barcode-scanning` (default: `1.1.0`)
 - `$androidxCameraLifecycleVersion` version of `com.google.mlkit:barcode-scanning` (default: `1.1.0`)
 - `$androidxCameraViewVersion` version of `com.google.mlkit:barcode-scanning` (default: `1.1.0`)
-- `$mlkitBarcodeScanningVersion` version of `com.google.mlkit:barcode-scanning` (default: `17.0.3`)
-- `$playServicesCodeScannerVersion` version of `com.google.mlkit:barcode-scanning` (default: `16.0.0-beta3`)
+- `$mlkitBarcodeScanningVersion` version of `com.google.mlkit:barcode-scanning` (default: `17.1.0`)
+- `$playServicesCodeScannerVersion` version of `com.google.mlkit:barcode-scanning` (default: `16.0.0`)
 
 ### iOS
 
@@ -176,6 +176,16 @@ const openSettings = async () => {
   await BarcodeScanner.openSettings();
 };
 
+const isGoogleBarcodeScannerModuleAvailable = async () => {
+  const { available } =
+    await BarcodeScanner.isGoogleBarcodeScannerModuleAvailable();
+  return available;
+};
+
+const installGoogleBarcodeScannerModule = async () => {
+  await BarcodeScanner.installGoogleBarcodeScannerModule();
+};
+
 const checkPermissions = async () => {
   const { camera } = await BarcodeScanner.checkPermissions();
   return camera;
@@ -241,10 +251,13 @@ If you can't see the camera view, make sure all elements in the DOM are not visi
 * [`isTorchEnabled()`](#istorchenabled)
 * [`isTorchAvailable()`](#istorchavailable)
 * [`openSettings()`](#opensettings)
+* [`isGoogleBarcodeScannerModuleAvailable()`](#isgooglebarcodescannermoduleavailable)
+* [`installGoogleBarcodeScannerModule()`](#installgooglebarcodescannermodule)
 * [`checkPermissions()`](#checkpermissions)
 * [`requestPermissions()`](#requestpermissions)
 * [`addListener('barcodeScanned', ...)`](#addlistenerbarcodescanned)
 * [`addListener('scanError', ...)`](#addlistenerscanerror)
+* [`addListener('googleBarcodeScannerModuleInstallProgress', ...)`](#addlistenergooglebarcodescannermoduleinstallprogress)
 * [`removeAllListeners()`](#removealllisteners)
 * [Interfaces](#interfaces)
 * [Type Aliases](#type-aliases)
@@ -318,7 +331,10 @@ scan(options?: ScanOptions | undefined) => Promise<ScanResult>
 
 Scan a barcode with a ready-to-use interface without WebView customization.
 
-On **Android**, no camera permission is required.
+On **Android**, this method is only available on devices with Google Play Services
+installed. Therefore, no camera permission is required.
+
+**Attention:** Before using this method on *Android*, first check if the Google <a href="#barcode">Barcode</a> Scanner module is available.
 
 Only available on Android and iOS.
 
@@ -444,6 +460,42 @@ Only available on Android and iOS.
 --------------------
 
 
+### isGoogleBarcodeScannerModuleAvailable()
+
+```typescript
+isGoogleBarcodeScannerModuleAvailable() => Promise<IsGoogleBarcodeScannerModuleAvailableResult>
+```
+
+Check if the Google <a href="#barcode">Barcode</a> Scanner module is available.
+
+Only available on Android.
+
+**Returns:** <code>Promise&lt;<a href="#isgooglebarcodescannermoduleavailableresult">IsGoogleBarcodeScannerModuleAvailableResult</a>&gt;</code>
+
+**Since:** 5.1.0
+
+--------------------
+
+
+### installGoogleBarcodeScannerModule()
+
+```typescript
+installGoogleBarcodeScannerModule() => Promise<void>
+```
+
+Install the Google <a href="#barcode">Barcode</a> Scanner module.
+
+**Attention**: This only starts the installation.
+The `googleBarcodeScannerModuleInstallProgress` event listener will
+notify you when the installation is complete.
+
+Only available on Android.
+
+**Since:** 5.1.0
+
+--------------------
+
+
 ### checkPermissions()
 
 ```typescript
@@ -518,6 +570,28 @@ Available on Android and iOS.
 **Returns:** <code>Promise&lt;<a href="#pluginlistenerhandle">PluginListenerHandle</a>&gt; & <a href="#pluginlistenerhandle">PluginListenerHandle</a></code>
 
 **Since:** 0.0.1
+
+--------------------
+
+
+### addListener('googleBarcodeScannerModuleInstallProgress', ...)
+
+```typescript
+addListener(eventName: 'googleBarcodeScannerModuleInstallProgress', listenerFunc: (event: GoogleBarcodeScannerModuleInstallProgressEvent) => void) => Promise<PluginListenerHandle> & PluginListenerHandle
+```
+
+Called when the Google <a href="#barcode">Barcode</a> Scanner module is installed.
+
+Available on Android.
+
+| Param              | Type                                                                                                                                          |
+| ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`eventName`**    | <code>'googleBarcodeScannerModuleInstallProgress'</code>                                                                                      |
+| **`listenerFunc`** | <code>(event: <a href="#googlebarcodescannermoduleinstallprogressevent">GoogleBarcodeScannerModuleInstallProgressEvent</a>) =&gt; void</code> |
+
+**Returns:** <code>Promise&lt;<a href="#pluginlistenerhandle">PluginListenerHandle</a>&gt; & <a href="#pluginlistenerhandle">PluginListenerHandle</a></code>
+
+**Since:** 5.1.0
 
 --------------------
 
@@ -608,6 +682,13 @@ Remove all listeners for this plugin.
 | **`available`** | <code>boolean</code> | Whether or not the torch is available. | 0.0.1 |
 
 
+#### IsGoogleBarcodeScannerModuleAvailableResult
+
+| Prop            | Type                 | Description                                                                           | Since |
+| --------------- | -------------------- | ------------------------------------------------------------------------------------- | ----- |
+| **`available`** | <code>boolean</code> | Whether or not the Google <a href="#barcode">Barcode</a> Scanner module is available. | 5.1.0 |
+
+
 #### PermissionStatus
 
 | Prop         | Type                                                                    | Since |
@@ -634,6 +715,14 @@ Remove all listeners for this plugin.
 | Prop          | Type                | Description        | Since |
 | ------------- | ------------------- | ------------------ | ----- |
 | **`message`** | <code>string</code> | The error message. | 0.0.1 |
+
+
+#### GoogleBarcodeScannerModuleInstallProgressEvent
+
+| Prop           | Type                                                                                                      | Description                                                    | Since |
+| -------------- | --------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------- | ----- |
+| **`state`**    | <code><a href="#googlebarcodescannermoduleinstallstate">GoogleBarcodeScannerModuleInstallState</a></code> | The current state of the installation.                         | 5.1.0 |
+| **`progress`** | <code>number</code>                                                                                       | The progress of the installation in percent between 0 and 100. | 5.1.0 |
 
 
 ### Type Aliases
@@ -696,6 +785,20 @@ Remove all listeners for this plugin.
 | **`Url`**            | <code>'URL'</code>             | 0.0.1 |
 | **`Wifi`**           | <code>'WIFI'</code>            | 0.0.1 |
 | **`Unknown`**        | <code>'UNKNOWN'</code>         | 0.0.1 |
+
+
+#### GoogleBarcodeScannerModuleInstallState
+
+| Members               | Value          | Since |
+| --------------------- | -------------- | ----- |
+| **`UNKNOWN`**         | <code>0</code> | 5.1.0 |
+| **`PENDING`**         | <code>1</code> | 5.1.0 |
+| **`DOWNLOADING`**     | <code>2</code> | 5.1.0 |
+| **`CANCELED`**        | <code>3</code> | 5.1.0 |
+| **`COMPLETED`**       | <code>4</code> | 5.1.0 |
+| **`FAILED`**          | <code>5</code> | 5.1.0 |
+| **`INSTALLING`**      | <code>6</code> | 5.1.0 |
+| **`DOWNLOAD_PAUSED`** | <code>7</code> | 5.1.0 |
 
 </docgen-api>
 

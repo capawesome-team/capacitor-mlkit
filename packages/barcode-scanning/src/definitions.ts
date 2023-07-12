@@ -30,7 +30,10 @@ export interface BarcodeScannerPlugin {
   /**
    * Scan a barcode with a ready-to-use interface without WebView customization.
    *
-   * On **Android**, no camera permission is required.
+   * On **Android**, this method is only available on devices with Google Play Services
+   * installed. Therefore, no camera permission is required.
+   *
+   * **Attention:** Before using this method on *Android*, first check if the Google Barcode Scanner module is available.
    *
    * Only available on Android and iOS.
    *
@@ -95,6 +98,26 @@ export interface BarcodeScannerPlugin {
    */
   openSettings(): Promise<void>;
   /**
+   * Check if the Google Barcode Scanner module is available.
+   *
+   * Only available on Android.
+   *
+   * @since 5.1.0
+   */
+  isGoogleBarcodeScannerModuleAvailable(): Promise<IsGoogleBarcodeScannerModuleAvailableResult>;
+  /**
+   * Install the Google Barcode Scanner module.
+   *
+   * **Attention**: This only starts the installation.
+   * The `googleBarcodeScannerModuleInstallProgress` event listener will
+   * notify you when the installation is complete.
+   *
+   * Only available on Android.
+   *
+   * @since 5.1.0
+   */
+  installGoogleBarcodeScannerModule(): Promise<void>;
+  /**
    * Check camera permission.
    *
    * Only available on Android and iOS.
@@ -131,6 +154,19 @@ export interface BarcodeScannerPlugin {
   addListener(
     eventName: 'scanError',
     listenerFunc: (event: ScanErrorEvent) => void,
+  ): Promise<PluginListenerHandle> & PluginListenerHandle;
+  /**
+   * Called when the Google Barcode Scanner module is installed.
+   *
+   * Available on Android.
+   *
+   * @since 5.1.0
+   */
+  addListener(
+    eventName: 'googleBarcodeScannerModuleInstallProgress',
+    listenerFunc: (
+      event: GoogleBarcodeScannerModuleInstallProgressEvent,
+    ) => void,
   ): Promise<PluginListenerHandle> & PluginListenerHandle;
   /**
    * Remove all listeners for this plugin.
@@ -255,6 +291,18 @@ export interface IsTorchAvailableResult {
 }
 
 /**
+ * @since 5.1.0
+ */
+export interface IsGoogleBarcodeScannerModuleAvailableResult {
+  /**
+   * Whether or not the Google Barcode Scanner module is available.
+   *
+   * @since 5.1.0
+   */
+  available: boolean;
+}
+
+/**
  * @since 0.0.1
  */
 export type CameraPermissionState = PermissionState | 'limited';
@@ -291,6 +339,24 @@ export interface ScanErrorEvent {
    * @since 0.0.1
    */
   message: string;
+}
+
+/**
+ * @since 5.1.0
+ */
+export interface GoogleBarcodeScannerModuleInstallProgressEvent {
+  /**
+   * The current state of the installation.
+   *
+   * @since 5.1.0
+   */
+  state: GoogleBarcodeScannerModuleInstallState;
+  /**
+   * The progress of the installation in percent between 0 and 100.
+   *
+   * @since 5.1.0
+   */
+  progress?: number;
 }
 
 /**
@@ -504,4 +570,42 @@ export enum LensFacing {
    * @since 0.0.1
    */
   Back = 'BACK',
+}
+
+/**
+ * @since 5.1.0
+ */
+export enum GoogleBarcodeScannerModuleInstallState {
+  /**
+   * @since 5.1.0
+   */
+  UNKNOWN = 0,
+  /**
+   * @since 5.1.0
+   */
+  PENDING = 1,
+  /**
+   * @since 5.1.0
+   */
+  DOWNLOADING = 2,
+  /**
+   * @since 5.1.0
+   */
+  CANCELED = 3,
+  /**
+   * @since 5.1.0
+   */
+  COMPLETED = 4,
+  /**
+   * @since 5.1.0
+   */
+  FAILED = 5,
+  /**
+   * @since 5.1.0
+   */
+  INSTALLING = 6,
+  /**
+   * @since 5.1.0
+   */
+  DOWNLOAD_PAUSED = 7,
 }
