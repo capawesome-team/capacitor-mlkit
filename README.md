@@ -18,7 +18,7 @@
 Capacitor ML Kit is a collection of Capacitor plugins that enable the use of the [ML Kit SDKs](https://developers.google.com/ml-kit) in Capacitor.[^1]
 
 - 🔋 Supports **Android and iOS**
-- ⚡️ **Capacitor 4** support
+- ⚡️ **Capacitor 5** support
 - 🦋 Consistent versioning (no more SDK versions conflicts)
 - 👁 Unified Typescript definitions
 - 📄 Full documentation
