@@ -1,6 +1,6 @@
 {
   "name": "@capacitor-mlkit/translation",
-  "version": "5.0.2",
+  "version": "5.0.3",
   "description": "Capacitor plugin for ML Kit Translation.",
   "main": "dist/plugin.cjs.js",
   "module": "dist/esm/index.js",

@@ -1,5 +1,11 @@
 # Changelog
 
+## 5.0.3
+
+### Patch Changes
+
+- [`a8e355f`](https://github.com/capawesome-team/capacitor-mlkit/commit/a8e355f3d8b2c83578f29fdaa39ca3e2d68d4917) ([#44](https://github.com/capawesome-team/capacitor-mlkit/pull/44)): fix(android): `scan failed` on some devices
+
 ## 5.0.2
 
 ### Patch Changes
