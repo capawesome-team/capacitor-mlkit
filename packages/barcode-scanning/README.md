@@ -48,6 +48,7 @@ You also need to add the following meta data **in** the `application` tag in you
 
 ```xml
 <meta-data android:name="com.google.mlkit.vision.DEPENDENCIES" android:value="barcode_ui"/>
+<!-- To use multiple models: android:value="face,model2,model3" -->
 ```
 
 #### Variables
