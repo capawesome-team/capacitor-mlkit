@@ -24,32 +24,40 @@ public class FaceDetection {
 
         plugin
             .getActivity()
-            .runOnUiThread(() -> {
-                // Detects human faces from the supplied image.
-                // A Task that asynchronously returns a List of detected Faces
-                faceDetector
-                    .process(image)
-                    .addOnSuccessListener(faces -> {
-                        // Closes the detector and releases its resources.
-                        // https://developers.google.com/android/reference/com/google/mlkit/vision/face/FaceDetector#close()
-                        faceDetector.close();
+            .runOnUiThread(
+                () -> {
+                    // Detects human faces from the supplied image.
+                    // A Task that asynchronously returns a List of detected Faces
+                    faceDetector
+                        .process(image)
+                        .addOnSuccessListener(
+                            faces -> {
+                                // Closes the detector and releases its resources.
+                                // https://developers.google.com/android/reference/com/google/mlkit/vision/face/FaceDetector#close()
+                                faceDetector.close();
 
-                        callback.success(faces);
-                    })
-                    .addOnCanceledListener(() -> {
-                        // Closes the detector and releases its resources.
-                        // https://developers.google.com/android/reference/com/google/mlkit/vision/face/FaceDetector#close()
-                        faceDetector.close();
+                                callback.success(faces);
+                            }
+                        )
+                        .addOnCanceledListener(
+                            () -> {
+                                // Closes the detector and releases its resources.
+                                // https://developers.google.com/android/reference/com/google/mlkit/vision/face/FaceDetector#close()
+                                faceDetector.close();
 
-                        callback.cancel();
-                    })
-                    .addOnFailureListener(exception -> {
-                        // Closes the detector and releases its resources.
-                        // https://developers.google.com/android/reference/com/google/mlkit/vision/face/FaceDetector#close()
-                        faceDetector.close();
+                                callback.cancel();
+                            }
+                        )
+                        .addOnFailureListener(
+                            exception -> {
+                                // Closes the detector and releases its resources.
+                                // https://developers.google.com/android/reference/com/google/mlkit/vision/face/FaceDetector#close()
+                                faceDetector.close();
 
-                        callback.error(exception);
-                    });
-            });
+                                callback.error(exception);
+                            }
+                        );
+                }
+            );
     }
 }
