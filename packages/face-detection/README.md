@@ -125,12 +125,12 @@ A landmark is a point on a detected face, such as an eye, nose, or mouth.
 | Prop           | Type                                                  | Description                                                                                      | Since |
 | -------------- | ----------------------------------------------------- | ------------------------------------------------------------------------------------------------ | ----- |
 | **`type`**     | <code><a href="#landmarktype">LandmarkType</a></code> | Gets the <a href="#facelandmark">FaceLandmark</a>.<a href="#landmarktype">LandmarkType</a> type. | 5.1.0 |
-| **`position`** | <code><a href="#pointf">PointF</a></code>             | Gets a 2D point for landmark position, where (0, 0) is the upper-left corner of the image.       | 5.1.0 |
+| **`position`** | <code><a href="#point">Point</a></code>               | Gets a 2D point for landmark position, where (0, 0) is the upper-left corner of the image.       | 5.1.0 |
 
 
-#### PointF
+#### Point
 
-<a href="#pointf">PointF</a> holds two float coordinates
+<a href="#point">Point</a> holds two coordinates
 
 | Prop    | Type                |
 | ------- | ------------------- |
@@ -146,7 +146,7 @@ A contour is a list of points on a detected face, such as the mouth.
 | Prop         | Type                                                | Description                                                                                         | Since |
 | ------------ | --------------------------------------------------- | --------------------------------------------------------------------------------------------------- | ----- |
 | **`type`**   | <code><a href="#contourtype">ContourType</a></code> | Gets the <a href="#facecontour">FaceContour</a>.<a href="#contourtype">ContourType</a> type.        | 5.1.0 |
-| **`points`** | <code>PointF[]</code>                               | Gets a list of 2D points for this face contour, where (0, 0) is the upper-left corner of the image. | 5.1.0 |
+| **`points`** | <code>Point[]</code>                                | Gets a list of 2D points for this face contour, where (0, 0) is the upper-left corner of the image. | 5.1.0 |
 
 
 #### ProcessImageOptions
@@ -167,71 +167,71 @@ A contour is a list of points on a detected face, such as the mouth.
 
 #### LandmarkType
 
-| Members            | Value           | Description                                                                                                                                                                                                            | Since |
-| ------------------ | --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
-| **`MOUTH_BOTTOM`** | <code>0</code>  | The center of the subject's bottom lip.                                                                                                                                                                                | 5.1.0 |
-| **`LEFT_CHEEK`**   | <code>1</code>  | The midpoint between the subject's left mouth corner and the outer corner of the subject's left eye. For full profile faces, this becomes the centroid of the nose base, nose tip, left ear lobe and left ear tip.     | 5.1.0 |
-| **`LEFT_EAR`**     | <code>3</code>  | The midpoint of the subject's left ear tip and left ear lobe.                                                                                                                                                          | 5.1.0 |
-| **`LEFT_EYE`**     | <code>4</code>  | The center of the subject's left eye cavity.                                                                                                                                                                           | 5.1.0 |
-| **`MOUTH_LEFT`**   | <code>5</code>  | The subject's left mouth corner where the lips meet.                                                                                                                                                                   | 5.1.0 |
-| **`NOSE_BASE`**    | <code>6</code>  | The midpoint between the subject's nostrils where the nose meets the face.                                                                                                                                             | 5.1.0 |
-| **`RIGHT_CHEEK`**  | <code>7</code>  | The midpoint between the subject's right mouth corner and the outer corner of the subject's right eye. For full profile faces, this becomes the centroid of the nose base, nose tip, right ear lobe and right ear tip. | 5.1.0 |
-| **`RIGHT_EAR`**    | <code>9</code>  | The midpoint of the subject's right ear tip and right ear lobe.                                                                                                                                                        | 5.1.0 |
-| **`RIGHT_EYE`**    | <code>10</code> | The center of the subject's right eye cavity.                                                                                                                                                                          | 5.1.0 |
-| **`MOUTH_RIGHT`**  | <code>11</code> | The subject's right mouth corner where the lips meet.                                                                                                                                                                  | 5.1.0 |
+| Members           | Value           | Description                                                                                                                                                                                                            | Since |
+| ----------------- | --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
+| **`MouthBottom`** | <code>0</code>  | The center of the subject's bottom lip.                                                                                                                                                                                | 5.1.0 |
+| **`LeftCheek`**   | <code>1</code>  | The midpoint between the subject's left mouth corner and the outer corner of the subject's left eye. For full profile faces, this becomes the centroid of the nose base, nose tip, left ear lobe and left ear tip.     | 5.1.0 |
+| **`LeftEar`**     | <code>3</code>  | The midpoint of the subject's left ear tip and left ear lobe.                                                                                                                                                          | 5.1.0 |
+| **`LeftEye`**     | <code>4</code>  | The center of the subject's left eye cavity.                                                                                                                                                                           | 5.1.0 |
+| **`MouthLeft`**   | <code>5</code>  | The subject's left mouth corner where the lips meet.                                                                                                                                                                   | 5.1.0 |
+| **`NoseBase`**    | <code>6</code>  | The midpoint between the subject's nostrils where the nose meets the face.                                                                                                                                             | 5.1.0 |
+| **`RightCheek`**  | <code>7</code>  | The midpoint between the subject's right mouth corner and the outer corner of the subject's right eye. For full profile faces, this becomes the centroid of the nose base, nose tip, right ear lobe and right ear tip. | 5.1.0 |
+| **`RightEar`**    | <code>9</code>  | The midpoint of the subject's right ear tip and right ear lobe.                                                                                                                                                        | 5.1.0 |
+| **`RightEye`**    | <code>10</code> | The center of the subject's right eye cavity.                                                                                                                                                                          | 5.1.0 |
+| **`MouthRight`**  | <code>11</code> | The subject's right mouth corner where the lips meet.                                                                                                                                                                  | 5.1.0 |
 
 
 #### ContourType
 
-| Members                    | Value           | Description                                        | Since |
-| -------------------------- | --------------- | -------------------------------------------------- | ----- |
-| **`FACE`**                 | <code>1</code>  | The outline of the subject's face.                 | 5.1.0 |
-| **`LEFT_EYEBROW_TOP`**     | <code>2</code>  | The top outline of the subject's left eyebrow.     | 5.1.0 |
-| **`LEFT_EYEBROW_BOTTOM`**  | <code>3</code>  | The bottom outline of the subject's left eyebrow.  | 5.1.0 |
-| **`RIGHT_EYEBROW_TOP`**    | <code>4</code>  | The top outline of the subject's right eyebrow.    | 5.1.0 |
-| **`RIGHT_EYEBROW_BOTTOM`** | <code>5</code>  | The bottom outline of the subject's right eyebrow. | 5.1.0 |
-| **`LEFT_EYE`**             | <code>6</code>  | The outline of the subject's left eye cavity.      | 5.1.0 |
-| **`RIGHT_EYE`**            | <code>7</code>  | The outline of the subject's right eye cavity.     | 5.1.0 |
-| **`UPPER_LIP_TOP`**        | <code>8</code>  | The top outline of the subject's upper lip.        | 5.1.0 |
-| **`UPPER_LIP_BOTTOM`**     | <code>9</code>  | The bottom outline of the subject's upper lip.     | 5.1.0 |
-| **`LOWER_LIP_TOP`**        | <code>10</code> | The top outline of the subject's lower lip.        | 5.1.0 |
-| **`LOWER_LIP_BOTTOM`**     | <code>11</code> | The bottom outline of the subject's lower lip.     | 5.1.0 |
-| **`NOSE_BRIDGE`**          | <code>12</code> | The outline of the subject's nose bridge.          | 5.1.0 |
-| **`NOSE_BOTTOM`**          | <code>13</code> | The outline of the subject's nose bridge.          | 5.1.0 |
-| **`LEFT_CHEEK`**           | <code>14</code> | The center of the left cheek.                      | 5.1.0 |
-| **`RIGHT_CHEEK`**          | <code>15</code> | The center of the right cheek.                     | 5.1.0 |
+| Members                  | Value           | Description                                        | Since |
+| ------------------------ | --------------- | -------------------------------------------------- | ----- |
+| **`Face`**               | <code>1</code>  | The outline of the subject's face.                 | 5.1.0 |
+| **`LeftEyebrowTop`**     | <code>2</code>  | The top outline of the subject's left eyebrow.     | 5.1.0 |
+| **`LeftEyebrowBottom`**  | <code>3</code>  | The bottom outline of the subject's left eyebrow.  | 5.1.0 |
+| **`RightEyebrowTop`**    | <code>4</code>  | The top outline of the subject's right eyebrow.    | 5.1.0 |
+| **`RightEyebrowBottom`** | <code>5</code>  | The bottom outline of the subject's right eyebrow. | 5.1.0 |
+| **`LeftEye`**            | <code>6</code>  | The outline of the subject's left eye cavity.      | 5.1.0 |
+| **`RightEye`**           | <code>7</code>  | The outline of the subject's right eye cavity.     | 5.1.0 |
+| **`UpperLipTop`**        | <code>8</code>  | The top outline of the subject's upper lip.        | 5.1.0 |
+| **`UpperLipBottom`**     | <code>9</code>  | The bottom outline of the subject's upper lip.     | 5.1.0 |
+| **`LowerLipTop`**        | <code>10</code> | The top outline of the subject's lower lip.        | 5.1.0 |
+| **`LowerLipBottom`**     | <code>11</code> | The bottom outline of the subject's lower lip.     | 5.1.0 |
+| **`NoseBridge`**         | <code>12</code> | The outline of the subject's nose bridge.          | 5.1.0 |
+| **`NoseBottom`**         | <code>13</code> | The outline of the subject's nose bridge.          | 5.1.0 |
+| **`LeftCheek`**          | <code>14</code> | The center of the left cheek.                      | 5.1.0 |
+| **`RightCheek`**         | <code>15</code> | The center of the right cheek.                     | 5.1.0 |
 
 
 #### PerformanceMode
 
 | Members        | Value          | Description                                                                                                                                                                                                                 | Since |
 | -------------- | -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
-| **`FAST`**     | <code>1</code> | Indicates a preference for speed in the options that may make an accuracy vs. speed trade-off. This will tend to detect fewer faces and may be less precise in determining values such as position, but will run faster.    | 5.1.0 |
-| **`ACCURATE`** | <code>2</code> | Indicates a preference for accuracy in the options that may make an accuracy vs. speed trade-off. This will tend to detect more faces and may be more precise in determining values such as position, at the cost of speed. | 5.1.0 |
+| **`Fast`**     | <code>1</code> | Indicates a preference for speed in the options that may make an accuracy vs. speed trade-off. This will tend to detect fewer faces and may be less precise in determining values such as position, but will run faster.    | 5.1.0 |
+| **`Accurate`** | <code>2</code> | Indicates a preference for accuracy in the options that may make an accuracy vs. speed trade-off. This will tend to detect more faces and may be more precise in determining values such as position, at the cost of speed. | 5.1.0 |
 
 
 #### LandmarkMode
 
 | Members    | Value          | Description                                                        | Since |
 | ---------- | -------------- | ------------------------------------------------------------------ | ----- |
-| **`NONE`** | <code>1</code> | Does not perform landmark detection.                               | 5.1.0 |
-| **`ALL`**  | <code>2</code> | Detects <a href="#facelandmark">FaceLandmark</a> for a given face. | 5.1.0 |
+| **`None`** | <code>1</code> | Does not perform landmark detection.                               | 5.1.0 |
+| **`All`**  | <code>2</code> | Detects <a href="#facelandmark">FaceLandmark</a> for a given face. | 5.1.0 |
 
 
 #### ContourMode
 
 | Members    | Value          | Description                                                                                                           | Since |
 | ---------- | -------------- | --------------------------------------------------------------------------------------------------------------------- | ----- |
-| **`NONE`** | <code>1</code> | Does not perform contour detection.                                                                                   | 5.1.0 |
-| **`ALL`**  | <code>2</code> | Detects <a href="#facecontour">FaceContour</a> for a given face. Note that it would return contours for up to 5 faces | 5.1.0 |
+| **`None`** | <code>1</code> | Does not perform contour detection.                                                                                   | 5.1.0 |
+| **`All`**  | <code>2</code> | Detects <a href="#facecontour">FaceContour</a> for a given face. Note that it would return contours for up to 5 faces | 5.1.0 |
 
 
 #### ClassificationMode
 
 | Members    | Value          | Description                                        | Since |
 | ---------- | -------------- | -------------------------------------------------- | ----- |
-| **`NONE`** | <code>1</code> | Does not perform classification.                   | 5.1.0 |
-| **`ALL`**  | <code>2</code> | Performs "eyes open" and "smiling" classification. | 5.1.0 |
+| **`None`** | <code>1</code> | Does not perform classification.                   | 5.1.0 |
+| **`All`**  | <code>2</code> | Performs "eyes open" and "smiling" classification. | 5.1.0 |
 
 </docgen-api>
 

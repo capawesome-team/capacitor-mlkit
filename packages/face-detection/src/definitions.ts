@@ -96,7 +96,7 @@ export enum PerformanceMode {
    * @since 5.1.0
    * @see https://developers.google.com/android/reference/com/google/mlkit/vision/face/FaceDetectorOptions#PERFORMANCE_MODE_FAST
    */
-  FAST = 1,
+  Fast = 1,
   /**
    * Indicates a preference for accuracy in the options that may make an accuracy vs. speed trade-off.
    * This will tend to detect more faces and may be more precise in determining values such as position, at the cost of speed.
@@ -104,7 +104,7 @@ export enum PerformanceMode {
    * @since 5.1.0
    * @see https://developers.google.com/android/reference/com/google/mlkit/vision/face/FaceDetectorOptions#public-static-final-int-performance_mode_accurate
    */
-  ACCURATE = 2,
+  Accurate = 2,
 }
 
 /**
@@ -121,14 +121,14 @@ export enum LandmarkMode {
    * @since 5.1.0
    * @see https://developers.google.com/android/reference/com/google/mlkit/vision/face/FaceDetectorOptions#public-static-final-int-landmark_mode_none
    */
-  NONE = 1,
+  None = 1,
   /**
    * Detects FaceLandmark for a given face.
    *
    * @since 5.1.0
    * @see https://developers.google.com/android/reference/com/google/mlkit/vision/face/FaceDetectorOptions#public-static-final-int-landmark_mode_all
    */
-  ALL = 2,
+  All = 2,
 }
 
 /**
@@ -145,7 +145,7 @@ export enum ContourMode {
    * @since 5.1.0
    * @see https://developers.google.com/android/reference/com/google/mlkit/vision/face/FaceDetectorOptions#public-static-final-int-contour_mode_none
    */
-  NONE = 1,
+  None = 1,
   /**
    * Detects FaceContour for a given face.
    * Note that it would return contours for up to 5 faces
@@ -153,7 +153,7 @@ export enum ContourMode {
    * @since 5.1.0
    * @see https://developers.google.com/android/reference/com/google/mlkit/vision/face/FaceDetectorOptions#public-static-final-int-contour_mode_all
    */
-  ALL = 2,
+  All = 2,
 }
 
 /**
@@ -170,14 +170,14 @@ export enum ClassificationMode {
    * @since 5.1.0
    * @see https://developers.google.com/android/reference/com/google/mlkit/vision/face/FaceDetectorOptions#public-static-final-int-classification_mode_none
    */
-  NONE = 1,
+  None = 1,
   /**
    * Performs "eyes open" and "smiling" classification.
    *
    * @since 5.1.0
    * @see https://developers.google.com/android/reference/com/google/mlkit/vision/face/FaceDetectorOptions#public-static-final-int-classification_mode_all
    */
-  ALL = 2,
+  All = 2,
 }
 
 /**
@@ -308,7 +308,7 @@ export interface FaceLandmark {
    *
    * @since 5.1.0
    */
-  position: PointF;
+  position: Point;
 }
 
 /**
@@ -330,16 +330,15 @@ export interface FaceContour {
    *
    * @since 5.1.0
    */
-  points: PointF[];
+  points: Point[];
 }
 
 /**
- * PointF holds two float coordinates
+ * Point holds two coordinates
  *
  * @since 5.1.0
- * @see https://developer.android.com/reference/android/graphics/PointF.html
  */
-export interface PointF {
+export interface Point {
   x: number;
   y: number;
 }
@@ -356,63 +355,63 @@ export enum LandmarkType {
    *
    * @since 5.1.0
    */
-  MOUTH_BOTTOM = 0,
+  MouthBottom = 0,
   /**
    * The midpoint between the subject's left mouth corner and the outer corner of the subject's left eye.
    * For full profile faces, this becomes the centroid of the nose base, nose tip, left ear lobe and left ear tip.
    *
    * @since 5.1.0
    */
-  LEFT_CHEEK = 1,
+  LeftCheek = 1,
   /**
    * The midpoint of the subject's left ear tip and left ear lobe.
    *
    * @since 5.1.0
    */
-  LEFT_EAR = 3,
+  LeftEar = 3,
   /**
    * The center of the subject's left eye cavity.
    *
    * @since 5.1.0
    */
-  LEFT_EYE = 4,
+  LeftEye = 4,
   /**
    * The subject's left mouth corner where the lips meet.
    *
    * @since 5.1.0
    */
-  MOUTH_LEFT = 5,
+  MouthLeft = 5,
   /**
    * The midpoint between the subject's nostrils where the nose meets the face.
    *
    * @since 5.1.0
    */
-  NOSE_BASE = 6,
+  NoseBase = 6,
   /**
    * The midpoint between the subject's right mouth corner and the outer corner of the subject's right eye.
    * For full profile faces, this becomes the centroid of the nose base, nose tip, right ear lobe and right ear tip.
    *
    * @since 5.1.0
    */
-  RIGHT_CHEEK = 7,
+  RightCheek = 7,
   /**
    * The midpoint of the subject's right ear tip and right ear lobe.
    *
    * @since 5.1.0
    */
-  RIGHT_EAR = 9,
+  RightEar = 9,
   /**
    * The center of the subject's right eye cavity.
    *
    * @since 5.1.0
    */
-  RIGHT_EYE = 10,
+  RightEye = 10,
   /**
    * The subject's right mouth corner where the lips meet.
    *
    * @since 5.1.0
    */
-  MOUTH_RIGHT = 11,
+  MouthRight = 11,
 }
 
 /**
@@ -427,89 +426,89 @@ export enum ContourType {
    *
    * @since 5.1.0
    */
-  FACE = 1,
+  Face = 1,
   /**
    * The top outline of the subject's left eyebrow.
    *
    * @since 5.1.0
    */
-  LEFT_EYEBROW_TOP = 2,
+  LeftEyebrowTop = 2,
   /**
    * The bottom outline of the subject's left eyebrow.
    *
    * @since 5.1.0
    */
-  LEFT_EYEBROW_BOTTOM = 3,
+  LeftEyebrowBottom = 3,
   /**
    * The top outline of the subject's right eyebrow.
    *
    * @since 5.1.0
    */
-  RIGHT_EYEBROW_TOP = 4,
+  RightEyebrowTop = 4,
   /**
    * The bottom outline of the subject's right eyebrow.
    *
    * @since 5.1.0
    */
-  RIGHT_EYEBROW_BOTTOM = 5,
+  RightEyebrowBottom = 5,
   /**
    * The outline of the subject's left eye cavity.
    *
    * @since 5.1.0
    */
-  LEFT_EYE = 6,
+  LeftEye = 6,
   /**
    * The outline of the subject's right eye cavity.
    *
    * @since 5.1.0
    */
-  RIGHT_EYE = 7,
+  RightEye = 7,
   /**
    * The top outline of the subject's upper lip.
    *
    * @since 5.1.0
    */
-  UPPER_LIP_TOP = 8,
+  UpperLipTop = 8,
   /**
    * The bottom outline of the subject's upper lip.
    *
    * @since 5.1.0
    */
-  UPPER_LIP_BOTTOM = 9,
+  UpperLipBottom = 9,
   /**
    * The top outline of the subject's lower lip.
    *
    * @since 5.1.0
    */
-  LOWER_LIP_TOP = 10,
+  LowerLipTop = 10,
   /**
    * The bottom outline of the subject's lower lip.
    *
    * @since 5.1.0
    */
-  LOWER_LIP_BOTTOM = 11,
+  LowerLipBottom = 11,
   /**
    * The outline of the subject's nose bridge.
    *
    * @since 5.1.0
    */
-  NOSE_BRIDGE = 12,
+  NoseBridge = 12,
   /**
    * The outline of the subject's nose bridge.
    *
    * @since 5.1.0
    */
-  NOSE_BOTTOM = 13,
+  NoseBottom = 13,
   /**
    * The center of the left cheek.
    *
    * @since 5.1.0
    */
-  LEFT_CHEEK = 14,
+  LeftCheek = 14,
   /**
    * The center of the right cheek.
    *
    * @since 5.1.0
    */
-  RIGHT_CHEEK = 15,
+  RightCheek = 15,
 }
