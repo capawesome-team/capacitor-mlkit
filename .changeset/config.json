@@ -6,7 +6,11 @@
   ],
   "commit": false,
   "fixed": [
-    ["@capacitor-mlkit/translation", "@capacitor-mlkit/barcode-scanning"]
+    [
+      "@capacitor-mlkit/barcode-scanning",
+      "@capacitor-mlkit/digital-ink-recognition",
+      "@capacitor-mlkit/translation"
+    ]
   ],
   "linked": [],
   "access": "public",
