@@ -1,11 +1,8 @@
 package io.capawesome.capacitorjs.plugins.mlkit.facedetection;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.PointF;
 import android.graphics.Rect;
 import android.net.Uri;
-import android.util.Base64;
 import com.getcapacitor.JSArray;
 import com.getcapacitor.JSObject;
 import com.getcapacitor.Logger;
@@ -46,81 +43,47 @@ public class FaceDetectionPlugin extends Plugin {
             if (path != null) {
                 image = InputImage.fromFilePath(getContext(), Uri.parse(path));
             } else {
-                String content = call.getString("image", null);
-                if (content != null) {
-                    final byte[] data = Base64.decode(content, Base64.DEFAULT);
-
-                    // Decode an immutable bitmap from the specified byte array.
-                    // https://developer.android.com/reference/android/graphics/BitmapFactory#decodeByteArray(byte[],%20int,%20int)
-                    Bitmap bitmap = BitmapFactory.decodeByteArray(
-                        // Byte array of compressed image data.
-                        data,
-                        // Offset into imageData for where the decoder should begin parsing.
-                        0,
-                        // The number of bytes, beginning at offset, to parse.
-                        data.length
-                    );
-
-                    // Creates an InputImage from a Bitmap.
-                    // https://developers.google.com/android/reference/com/google/mlkit/vision/common/InputImage#fromBitmap(android.graphics.Bitmap,%20int)
-                    image =
-                        InputImage.fromBitmap(
-                            // The input Bitmap.
-                            bitmap,
-                            // The image's counter-clockwise orientation degrees.
-                            0
-                        );
-                } else {
-                    call.reject("Must provide either a path or an image");
-                    return;
-                }
+                call.reject("Must provide a path");
+                return;
             }
 
             // Creates a new builder to build FaceDetectorOptions.
             // https://developers.google.com/android/reference/com/google/mlkit/vision/face/FaceDetectorOptions.Builder#FaceDetectorOptions.Builder()
             FaceDetectorOptions.Builder builder = new FaceDetectorOptions.Builder();
 
-            JSObject optionsObject = call.getObject("options", null);
-            if (optionsObject != null) {
-                if (optionsObject.has("performanceMode")) {
-                    Integer performanceMode = optionsObject.getInteger("performanceMode");
+            Integer performanceMode = call.getInt("performanceMode", null);
+            if (performanceMode != null) {
+                // Extended option for controlling additional accuracy / speed trade-offs in performing face detection.
+                builder.setPerformanceMode(performanceMode);
+            }
 
-                    // Extended option for controlling additional accuracy / speed trade-offs in performing face detection.
-                    builder.setPerformanceMode(performanceMode);
-                }
+            Integer landmarkMode = call.getInt("landmarkMode", null);
+            if (landmarkMode != null) {
+                // Sets whether to detect no landmarks or all landmarks.
+                builder.setLandmarkMode(landmarkMode);
+            }
+            Integer contourMode = call.getInt("contourMode", null);
+            if (contourMode != null) {
+                // Sets whether to detect no contours or all contours.
+                builder.setContourMode(contourMode);
+            }
 
-                if (optionsObject.has("landmarkMode")) {
-                    Integer landmarkMode = optionsObject.getInteger("landmarkMode");
+            Integer classificationMode = call.getInt("classificationMode", null);
+            if (classificationMode != null) {
+                // Indicates whether to run additional classifiers for characterizing attributes such as "smiling" and "eyes open".
+                builder.setClassificationMode(classificationMode);
+            }
 
-                    // Sets whether to detect no landmarks or all landmarks.
-                    builder.setLandmarkMode(landmarkMode);
-                }
-                if (optionsObject.has("contourMode")) {
-                    Integer contourMode = optionsObject.getInteger("contourMode");
+            Float minFaceSize = call.getFloat("minFaceSize", null);
+            if (minFaceSize != null) {
+                // Sets the smallest desired face size, expressed as a proportion of the width of the head to the image width.
+                builder.setMinFaceSize(minFaceSize);
+            }
 
-                    // Sets whether to detect no contours or all contours.
-                    builder.setContourMode(contourMode);
-                }
-
-                if (optionsObject.has("classificationMode")) {
-                    Integer classificationMode = optionsObject.getInteger("classificationMode");
-
-                    // Indicates whether to run additional classifiers for characterizing attributes such as "smiling" and "eyes open".
-                    builder.setClassificationMode(classificationMode);
-                }
-
-                if (optionsObject.has("minFaceSize")) {
-                    Double minFaceSize = optionsObject.getDouble("minFaceSize");
-
-                    // Sets the smallest desired face size, expressed as a proportion of the width of the head to the image width.
-                    builder.setMinFaceSize(minFaceSize.floatValue());
-                }
-
-                Boolean enableTracking = optionsObject.getBoolean("enableTracking", false);
-                if (enableTracking) {
-                    // Enables face tracking, which will maintain a consistent ID for each face when processing consecutive frames.
-                    builder.enableTracking();
-                }
+            Boolean enableTracking = call.getBoolean("enableTracking", null);
+            if (enableTracking != null) {
+                // Enables face tracking, which will maintain a consistent ID for each face when processing consecutive frames.
+                builder.enableTracking();
             }
 
             // Builds a face detector instance.
@@ -144,15 +107,6 @@ public class FaceDetectionPlugin extends Plugin {
                                 Rect bounds = face.getBoundingBox();
 
                                 JSObject boundsObject = new JSObject();
-
-                                // The X coordinate of the left side of the rectangle
-                                boundsObject.put("x", bounds.left);
-                                // The Y coordinate of the top of the rectangle
-                                boundsObject.put("y", bounds.top);
-                                // The rectangle's width.
-                                boundsObject.put("width", bounds.width());
-                                // The rectangle's height.
-                                boundsObject.put("height", bounds.height());
 
                                 boundsObject.put("left", bounds.left);
                                 boundsObject.put("top", bounds.top);
