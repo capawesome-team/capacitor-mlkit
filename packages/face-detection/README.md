@@ -49,6 +49,7 @@ const echo = async () => {
 
 * [`processImage(...)`](#processimage)
 * [Interfaces](#interfaces)
+* [Type Aliases](#type-aliases)
 * [Enums](#enums)
 
 </docgen-index>
@@ -82,28 +83,174 @@ Only available on Android and iOS.
 
 #### ProcessImageResult
 
-| Prop        | Type                   | Description         | Since |
-| ----------- | ---------------------- | ------------------- | ----- |
-| **`faces`** | <code>unknown[]</code> | The detected faces. | 5.1.0 |
+| Prop        | Type                | Description         | Since |
+| ----------- | ------------------- | ------------------- | ----- |
+| **`faces`** | <code>Face[]</code> | The detected faces. | 5.1.0 |
+
+
+#### Face
+
+Represents a face detected by `FaceDetector`.
+https://developers.google.com/android/reference/com/google/mlkit/vision/face/Face
+
+| Prop                          | Type                                  |
+| ----------------------------- | ------------------------------------- |
+| **`bounds`**                  | <code><a href="#rect">Rect</a></code> |
+| **`landmarks`**               | <code>FaceLandmark[]</code>           |
+| **`contours`**                | <code>FaceContour[]</code>            |
+| **`trackingId`**              | <code>number</code>                   |
+| **`headEulerAngleX`**         | <code>number</code>                   |
+| **`headEulerAngleY`**         | <code>number</code>                   |
+| **`headEulerAngleZ`**         | <code>number</code>                   |
+| **`smilingProbability`**      | <code>number</code>                   |
+| **`leftEyeOpenProbability`**  | <code>number</code>                   |
+| **`rightEyeOpenProbability`** | <code>number</code>                   |
+
+
+#### Rect
+
+<a href="#rect">Rect</a> holds four integer coordinates for a rectangle.
+https://developer.android.com/reference/android/graphics/Rect.html
+
+| Prop         | Type                |
+| ------------ | ------------------- |
+| **`left`**   | <code>number</code> |
+| **`top`**    | <code>number</code> |
+| **`right`**  | <code>number</code> |
+| **`bottom`** | <code>number</code> |
+| **`x`**      | <code>number</code> |
+| **`y`**      | <code>number</code> |
+| **`width`**  | <code>number</code> |
+| **`height`** | <code>number</code> |
+
+
+#### FaceLandmark
+
+Represent a face landmark.
+A landmark is a point on a detected face, such as an eye, nose, or mouth.
+https://developers.google.com/android/reference/com/google/mlkit/vision/face/FaceLandmark
+
+| Prop           | Type                                                  |
+| -------------- | ----------------------------------------------------- |
+| **`type`**     | <code><a href="#landmarktype">LandmarkType</a></code> |
+| **`position`** | <code><a href="#pointf">PointF</a></code>             |
+
+
+#### PointF
+
+<a href="#pointf">PointF</a> holds two float coordinates
+https://developer.android.com/reference/android/graphics/PointF.html
+
+| Prop    | Type                |
+| ------- | ------------------- |
+| **`x`** | <code>number</code> |
+| **`y`** | <code>number</code> |
+
+
+#### FaceContour
+
+Represent a face contour.
+A contour is a list of points on a detected face, such as the mouth.
+https://developers.google.com/android/reference/com/google/mlkit/vision/face/FaceContour
+
+| Prop         | Type                                                |
+| ------------ | --------------------------------------------------- |
+| **`type`**   | <code><a href="#contourtype">ContourType</a></code> |
+| **`points`** | <code>PointF[]</code>                               |
+
+
+#### FaceDetectorOptions
+
+https://developers.google.com/android/reference/com/google/mlkit/vision/face/FaceDetectorOptions
+
+| Prop                     | Type                                                              |
+| ------------------------ | ----------------------------------------------------------------- |
+| **`performanceMode`**    | <code><a href="#performancemode">PerformanceMode</a></code>       |
+| **`landmarkMode`**       | <code><a href="#landmarkmode">LandmarkMode</a></code>             |
+| **`contourMode`**        | <code><a href="#contourmode">ContourMode</a></code>               |
+| **`classificationMode`** | <code><a href="#classificationmode">ClassificationMode</a></code> |
+| **`minFaceSize`**        | <code>number</code>                                               |
+| **`enableTracking`**     | <code>boolean</code>                                              |
+
+
+### Type Aliases
 
 
 #### ProcessImageOptions
 
-| Prop                     | Type                                                              | Description                                 | Since |
-| ------------------------ | ----------------------------------------------------------------- | ------------------------------------------- | ----- |
-| **`path`**               | <code>string</code>                                               | The local path to the image file.           | 5.1.0 |
-| **`classificationMode`** | <code><a href="#classificationmode">ClassificationMode</a></code> | The classification mode for face detection. |       |
+<code>( | { /** * The local path to the image file. * * @since 5.1.0 */ path: string; } | { /** * Represents an image object (Base64 encoded). * * @since 5.1.0 */ image: string; } ) & { /** * The options for the face detector. */ options?: <a href="#facedetectoroptions">FaceDetectorOptions</a>; }</code>
 
 
 ### Enums
 
 
+#### LandmarkType
+
+| Members            | Value           |
+| ------------------ | --------------- |
+| **`MOUTH_BOTTOM`** | <code>0</code>  |
+| **`LEFT_CHEEK`**   | <code>1</code>  |
+| **`LEFT_EAR`**     | <code>3</code>  |
+| **`LEFT_EYE`**     | <code>4</code>  |
+| **`MOUTH_LEFT`**   | <code>5</code>  |
+| **`NOSE_BASE`**    | <code>6</code>  |
+| **`RIGHT_CHEEK`**  | <code>7</code>  |
+| **`RIGHT_EAR`**    | <code>9</code>  |
+| **`RIGHT_EYE`**    | <code>10</code> |
+| **`MOUTH_RIGHT`**  | <code>11</code> |
+
+
+#### ContourType
+
+| Members                    | Value           |
+| -------------------------- | --------------- |
+| **`FACE`**                 | <code>1</code>  |
+| **`LEFT_EYEBROW_TOP`**     | <code>2</code>  |
+| **`LEFT_EYEBROW_BOTTOM`**  | <code>3</code>  |
+| **`RIGHT_EYEBROW_TOP`**    | <code>4</code>  |
+| **`RIGHT_EYEBROW_BOTTOM`** | <code>5</code>  |
+| **`LEFT_EYE`**             | <code>6</code>  |
+| **`RIGHT_EYE`**            | <code>7</code>  |
+| **`UPPER_LIP_TOP`**        | <code>8</code>  |
+| **`UPPER_LIP_BOTTOM`**     | <code>9</code>  |
+| **`LOWER_LIP_TOP`**        | <code>10</code> |
+| **`LOWER_LIP_BOTTOM`**     | <code>11</code> |
+| **`NOSE_BRIDGE`**          | <code>12</code> |
+| **`NOSE_BOTTOM`**          | <code>13</code> |
+| **`LEFT_CHEEK`**           | <code>14</code> |
+| **`RIGHT_CHEEK`**          | <code>15</code> |
+
+
+#### PerformanceMode
+
+| Members        | Value          |
+| -------------- | -------------- |
+| **`FAST`**     | <code>1</code> |
+| **`ACCURATE`** | <code>2</code> |
+
+
+#### LandmarkMode
+
+| Members    | Value          |
+| ---------- | -------------- |
+| **`NONE`** | <code>1</code> |
+| **`ALL`**  | <code>2</code> |
+
+
+#### ContourMode
+
+| Members    | Value          |
+| ---------- | -------------- |
+| **`NONE`** | <code>1</code> |
+| **`ALL`**  | <code>2</code> |
+
+
 #### ClassificationMode
 
-| Members    | Value          | Description                                        | Since |
-| ---------- | -------------- | -------------------------------------------------- | ----- |
-| **`None`** | <code>1</code> | Performs no classification.                        | 5.1.0 |
-| **`All`**  | <code>2</code> | Performs "eyes open" and "smiling" classification. | 5.1.0 |
+| Members    | Value          |
+| ---------- | -------------- |
+| **`NONE`** | <code>1</code> |
+| **`ALL`**  | <code>2</code> |
 
 </docgen-api>
 
