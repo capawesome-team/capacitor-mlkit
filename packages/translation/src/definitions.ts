@@ -60,7 +60,7 @@ export interface DownloadModel {
    * The language to download the model for.
    *
    * @since 0.0.1
-   * @example "en-US"
+   * @example "en"
    */
   language: Language;
 }
