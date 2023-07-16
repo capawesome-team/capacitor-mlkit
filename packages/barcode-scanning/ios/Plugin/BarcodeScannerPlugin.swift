@@ -164,11 +164,11 @@ public class BarcodeScannerPlugin: CAPPlugin {
             call.resolve()
         })
     }
-    
+
     @objc func isGoogleBarcodeScannerModuleAvailable(_ call: CAPPluginCall) {
         call.reject("Not available on iOS")
     }
-    
+
     @objc func installGoogleBarcodeScannerModule(_ call: CAPPluginCall) {
         call.reject("Not available on iOS")
     }
