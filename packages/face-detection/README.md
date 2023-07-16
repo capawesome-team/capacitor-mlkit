@@ -151,16 +151,9 @@ A contour is a list of points on a detected face, such as the mouth.
 
 #### ProcessImageOptions
 
-| Prop          | Type                                                                | Description                        | Since |
-| ------------- | ------------------------------------------------------------------- | ---------------------------------- | ----- |
-| **`path`**    | <code>string</code>                                                 | The local path to the image file.  | 5.1.0 |
-| **`options`** | <code><a href="#facedetectoroptions">FaceDetectorOptions</a></code> | The options for the face detector. |       |
-
-
-#### FaceDetectorOptions
-
 | Prop                     | Type                                                              | Description                                                                                                                                                                                     | Since |
 | ------------------------ | ----------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
+| **`path`**               | <code>string</code>                                               | The local path to the image file.                                                                                                                                                               | 5.1.0 |
 | **`performanceMode`**    | <code><a href="#performancemode">PerformanceMode</a></code>       | Defines options to control accuracy / speed trade-offs in performing face detection.                                                                                                            | 5.1.0 |
 | **`landmarkMode`**       | <code><a href="#landmarkmode">LandmarkMode</a></code>             | Defines options to enable face landmarks or not.                                                                                                                                                | 5.1.0 |
 | **`contourMode`**        | <code><a href="#contourmode">ContourMode</a></code>               | Defines options to enable face contours or not.                                                                                                                                                 | 5.1.0 |

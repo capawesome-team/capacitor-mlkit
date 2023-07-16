@@ -19,29 +19,7 @@ export interface ProcessImageOptions {
    * @since 5.1.0
    */
   path: string;
-  /**
-   * The options for the face detector.
-   */
-  options?: FaceDetectorOptions;
-}
 
-/**
- * @since 5.1.0
- */
-export interface ProcessImageResult {
-  /**
-   * The detected faces.
-   *
-   * @since 5.1.0
-   */
-  faces: Face[];
-}
-
-/**
- * @since 5.1.0
- * @see https://developers.google.com/android/reference/com/google/mlkit/vision/face/FaceDetectorOptions
- */
-export interface FaceDetectorOptions {
   /**
    * Defines options to control accuracy / speed trade-offs in performing face detection.
    *
@@ -89,6 +67,18 @@ export interface FaceDetectorOptions {
    * @see https://developers.google.com/android/reference/com/google/mlkit/vision/face/FaceDetectorOptions.Builder#public-facedetectoroptions.builder-enabletracking
    */
   enableTracking?: boolean;
+}
+
+/**
+ * @since 5.1.0
+ */
+export interface ProcessImageResult {
+  /**
+   * The detected faces.
+   *
+   * @since 5.1.0
+   */
+  faces: Face[];
 }
 
 /**
