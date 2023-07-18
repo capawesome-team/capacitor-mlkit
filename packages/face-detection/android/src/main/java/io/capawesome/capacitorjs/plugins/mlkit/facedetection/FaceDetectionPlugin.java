@@ -21,6 +21,8 @@ import java.util.List;
 public class FaceDetectionPlugin extends Plugin {
 
     public static final String ERROR_PROCESS_IMAGE_CANCELED = "processImage canceled.";
+    public static final String ERROR_PATH_MISSING = "path must be provided.";
+    public static final String ERROR_LOAD_IMAGE_FAILED = "image could not be loaded.";
 
     private FaceDetection implementation;
 
@@ -41,9 +43,14 @@ public class FaceDetectionPlugin extends Plugin {
 
             String path = call.getString("path", null);
             if (path != null) {
-                image = InputImage.fromFilePath(getContext(), Uri.parse(path));
+                try {
+                    image = InputImage.fromFilePath(getContext(), Uri.parse(path));
+                } catch (Exception exception) {
+                    call.reject(ERROR_LOAD_IMAGE_FAILED);
+                    return;
+                }
             } else {
-                call.reject("Must provide a path");
+                call.reject(ERROR_PATH_MISSING);
                 return;
             }
 
