@@ -19,19 +19,19 @@ export interface ProcessImageOptions {
    * @since 5.1.0
    */
   path: string;
-
   /**
    * Defines options to control accuracy / speed trade-offs in performing face detection.
    *
    * @since 5.1.0
+   * @default PerformanceMode.Fast
    * @see https://developers.google.com/android/reference/com/google/mlkit/vision/face/FaceDetectorOptions.PerformanceMode
    */
   performanceMode?: PerformanceMode;
-
   /**
    * Defines options to enable face landmarks or not.
    *
    * @since 5.1.0
+   * @default LandmarkMode.None
    * @see https://developers.google.com/android/reference/com/google/mlkit/vision/face/FaceDetectorOptions.LandmarkMode
    */
   landmarkMode?: LandmarkMode;
@@ -39,31 +39,32 @@ export interface ProcessImageOptions {
    * Defines options to enable face contours or not.
    *
    * @since 5.1.0
+   * @default ContourMode.None
    * @see https://developers.google.com/android/reference/com/google/mlkit/vision/face/FaceDetectorOptions.ContourMode
    */
   contourMode?: ContourMode;
-
   /**
    * Defines options for characterizing attributes such as "smiling" * and "eyes open".
    *
    * @since 5.1.0
+   * @default ClassificationMode.None
    * @see https://developers.google.com/android/reference/com/google/mlkit/vision/face/FaceDetectorOptions.ClassificationMode
    */
   classificationMode?: ClassificationMode;
-
   /**
    * Sets the smallest desired face size, expressed as a proportion of the width of the head to the image width.
    *
    * @since 5.1.0
+   * @default 0.1
    * @see https://developers.google.com/android/reference/com/google/mlkit/vision/face/FaceDetectorOptions.Builder#public-facedetectoroptions.builder-setminfacesize-float-minfacesize
    */
   minFaceSize?: number;
-
   /**
    * Enables face tracking, which will maintain a consistent ID for each face when processing consecutive frames.
    * Tracking should be disabled for handling a series of non-consecutive still images.
    *
    * @since 5.1.0
+   * @default false
    * @see https://developers.google.com/android/reference/com/google/mlkit/vision/face/FaceDetectorOptions.Builder#public-facedetectoroptions.builder-enabletracking
    */
   enableTracking?: boolean;

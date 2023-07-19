@@ -1,10 +1,9 @@
 package io.capawesome.capacitorjs.plugins.mlkit.facedetection;
 
-import com.google.mlkit.vision.face.Face;
-import java.util.List;
+import io.capawesome.capacitorjs.plugins.mlkit.facedetection.classes.ProcessImageResult;
 
 public interface ProcessImageResultCallback {
-    void success(List<Face> faces);
+    void success(ProcessImageResult result);
     void cancel();
     void error(Exception exception);
 }
