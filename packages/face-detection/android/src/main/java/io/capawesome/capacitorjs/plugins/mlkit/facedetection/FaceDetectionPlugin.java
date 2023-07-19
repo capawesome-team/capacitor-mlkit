@@ -15,10 +15,9 @@ import com.google.mlkit.vision.face.Face;
 import com.google.mlkit.vision.face.FaceContour;
 import com.google.mlkit.vision.face.FaceDetectorOptions;
 import com.google.mlkit.vision.face.FaceLandmark;
-import java.util.List;
-
 import io.capawesome.capacitorjs.plugins.mlkit.facedetection.classes.ProcessImageOptions;
 import io.capawesome.capacitorjs.plugins.mlkit.facedetection.classes.ProcessImageResult;
+import java.util.List;
 
 @CapacitorPlugin(name = "FaceDetection")
 public class FaceDetectionPlugin extends Plugin {
@@ -58,7 +57,15 @@ public class FaceDetectionPlugin extends Plugin {
                 call.reject(ERROR_LOAD_IMAGE_FAILED);
                 return;
             }
-            ProcessImageOptions options = new ProcessImageOptions(image, performanceMode, landmarkMode, contourMode, classificationMode, minFaceSize, enableTracking);
+            ProcessImageOptions options = new ProcessImageOptions(
+                image,
+                performanceMode,
+                landmarkMode,
+                contourMode,
+                classificationMode,
+                minFaceSize,
+                enableTracking
+            );
 
             implementation.processImage(
                 options,

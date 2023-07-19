@@ -2,13 +2,11 @@ package io.capawesome.capacitorjs.plugins.mlkit.facedetection.classes;
 
 import android.graphics.PointF;
 import android.graphics.Rect;
-
 import com.getcapacitor.JSArray;
 import com.getcapacitor.JSObject;
 import com.google.mlkit.vision.face.Face;
 import com.google.mlkit.vision.face.FaceContour;
 import com.google.mlkit.vision.face.FaceLandmark;
-
 import java.util.List;
 
 public class ProcessImageResult {

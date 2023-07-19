@@ -1,14 +1,11 @@
 package io.capawesome.capacitorjs.plugins.mlkit.facedetection;
 
 import android.net.Uri;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
 import com.google.mlkit.vision.common.InputImage;
 import com.google.mlkit.vision.face.FaceDetector;
 import com.google.mlkit.vision.face.FaceDetectorOptions;
-
 import io.capawesome.capacitorjs.plugins.mlkit.facedetection.classes.ProcessImageOptions;
 import io.capawesome.capacitorjs.plugins.mlkit.facedetection.classes.ProcessImageResult;
 
@@ -50,9 +47,7 @@ public class FaceDetection {
         }
         FaceDetectorOptions faceDetectorOptions = builder.build();
 
-        final FaceDetector faceDetector = com.google.mlkit.vision.face.FaceDetection.getClient(
-                faceDetectorOptions
-        );
+        final FaceDetector faceDetector = com.google.mlkit.vision.face.FaceDetection.getClient(faceDetectorOptions);
         plugin
             .getActivity()
             .runOnUiThread(

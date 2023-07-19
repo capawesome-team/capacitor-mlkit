@@ -4,15 +4,33 @@ import com.google.mlkit.vision.common.InputImage;
 import com.google.mlkit.vision.face.FaceDetectorOptions;
 
 public class ProcessImageOptions {
+
     private InputImage inputImage;
-    private @FaceDetectorOptions.PerformanceMode int performanceMode;
-    private @FaceDetectorOptions.LandmarkMode int landmarkMode;
-    private @FaceDetectorOptions.ContourMode int contourMode;
-    private @FaceDetectorOptions.ClassificationMode int classificationMode;
+
+    @FaceDetectorOptions.PerformanceMode
+    private int performanceMode;
+
+    @FaceDetectorOptions.LandmarkMode
+    private int landmarkMode;
+
+    @FaceDetectorOptions.ContourMode
+    private int contourMode;
+
+    @FaceDetectorOptions.ClassificationMode
+    private int classificationMode;
+
     private float minFaceSize;
     private boolean enableTracking;
 
-    public ProcessImageOptions(InputImage inputImage, @FaceDetectorOptions.PerformanceMode int performanceMode, @FaceDetectorOptions.LandmarkMode int landmarkMode, @FaceDetectorOptions.ContourMode int contourMode, @FaceDetectorOptions.ClassificationMode int classificationMode, float minFaceSize, boolean enableTracking) {
+    public ProcessImageOptions(
+        InputImage inputImage,
+        @FaceDetectorOptions.PerformanceMode int performanceMode,
+        @FaceDetectorOptions.LandmarkMode int landmarkMode,
+        @FaceDetectorOptions.ContourMode int contourMode,
+        @FaceDetectorOptions.ClassificationMode int classificationMode,
+        float minFaceSize,
+        boolean enableTracking
+    ) {
         this.inputImage = inputImage;
         this.performanceMode = performanceMode;
         this.landmarkMode = landmarkMode;
