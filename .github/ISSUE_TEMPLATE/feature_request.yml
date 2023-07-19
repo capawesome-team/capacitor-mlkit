@@ -4,6 +4,13 @@ description: Suggest an idea for this project
 labels: ["feature", "needs: triage"]
 
 body:
+  - type: checkboxes
+    attributes:
+      label: Plugin(s)
+      description: Select the plugins that this feature request affects.
+      options:
+        - label: Barcode Scanning
+        - label: Translation
   - type: textarea
     attributes:
       label: Current problem
