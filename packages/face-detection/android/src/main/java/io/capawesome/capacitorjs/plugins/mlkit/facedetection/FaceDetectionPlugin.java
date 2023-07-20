@@ -22,6 +22,7 @@ import java.util.List;
 @CapacitorPlugin(name = "FaceDetection")
 public class FaceDetectionPlugin extends Plugin {
 
+    public static final String TAG = "FaceDetection";
     public static final String ERROR_PROCESS_IMAGE_CANCELED = "processImage canceled.";
     public static final String ERROR_PATH_MISSING = "path must be provided.";
     public static final String ERROR_LOAD_IMAGE_FAILED = "image could not be loaded.";
@@ -33,7 +34,7 @@ public class FaceDetectionPlugin extends Plugin {
         try {
             implementation = new FaceDetection(this);
         } catch (Exception exception) {
-            Logger.error(exception.getMessage(), exception);
+            Logger.error(TAG, exception.getMessage(), exception);
         }
     }
 
@@ -83,14 +84,14 @@ public class FaceDetectionPlugin extends Plugin {
                     @Override
                     public void error(Exception exception) {
                         String message = exception.getMessage();
-                        Logger.error(message, exception);
+                        Logger.error(TAG, message, exception);
                         call.reject(message);
                     }
                 }
             );
         } catch (Exception exception) {
             String message = exception.getMessage();
-            Logger.error(message, exception);
+            Logger.error(TAG, message, exception);
             call.reject(message);
         }
     }

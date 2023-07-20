@@ -42,8 +42,7 @@ public class ProcessImageResult {
         result.put("bounds", boundsResult);
 
         JSArray landmarksResult = new JSArray();
-        List<FaceLandmark> landmarks = face.getAllLandmarks();
-        for (FaceLandmark landmark : landmarks) {
+        for (FaceLandmark landmark : face.getAllLandmarks()) {
             JSObject landmarkResult = this.createLandmarkResult(landmark);
             landmarksResult.put(landmarkResult);
         }
@@ -52,8 +51,7 @@ public class ProcessImageResult {
         }
 
         JSArray contoursResult = new JSArray();
-        List<FaceContour> contours = face.getAllContours();
-        for (FaceContour contour : contours) {
+        for (FaceContour contour : face.getAllContours()) {
             List<PointF> points = contour.getPoints();
             JSArray pointsResult = new JSArray();
             for (PointF point : points) {
