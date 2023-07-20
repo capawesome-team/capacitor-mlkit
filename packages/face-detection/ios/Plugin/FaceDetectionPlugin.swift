@@ -30,12 +30,12 @@ public class FaceDetectionPlugin: CAPPlugin {
         let classificationMode = call.getInt("classificationMode", FaceDetectorClassificationMode.none.rawValue)
         let minFaceSize = call.getFloat("minFaceSize", 0.1)
         let enableTracking = call.getBool("enableTracking", false)
-        
+
         guard let visionImage = implementation?.createVisionImageFromFilePath(path) else {
             call.reject(errorLoadImageFailed)
             return
         }
-        
+
         let options = ProcessImageOptions(visionImage: visionImage, performanceMode: performanceMode, landmarkMode: landmarkMode, contourMode: contourMode, classificationMode: classificationMode, minFaceSize: minFaceSize, enableTracking: enableTracking)
 
         implementation?.processImage(options, completion: { result, error in

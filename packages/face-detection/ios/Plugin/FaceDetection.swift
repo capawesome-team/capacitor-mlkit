@@ -8,7 +8,7 @@ import MLKitFaceDetection
     init(plugin: FaceDetectionPlugin) {
         self.plugin = plugin
     }
-    
+
     @objc func createVisionImageFromFilePath(_ path: String) -> VisionImage? {
         guard let url = URL.init(string: path) else {
             return nil
@@ -33,7 +33,7 @@ import MLKitFaceDetection
         let classificationMode = options.getClassificationMode()
         let minFaceSize = options.getMinFaceSize()
         let enableTracking = options.isTrackingEnabled()
-        
+
         let faceDetectorOptions: FaceDetectorOptions = FaceDetectorOptions()
         faceDetectorOptions.performanceMode = FaceDetectorPerformanceMode(rawValue: performanceMode)
         faceDetectorOptions.landmarkMode = FaceDetectorLandmarkMode(rawValue: landmarkMode)
@@ -41,7 +41,7 @@ import MLKitFaceDetection
         faceDetectorOptions.classificationMode = FaceDetectorClassificationMode(rawValue: classificationMode)
         faceDetectorOptions.minFaceSize = CGFloat(minFaceSize)
         faceDetectorOptions.isTrackingEnabled = enableTracking
-        
+
         let faceDetector = FaceDetector.faceDetector(
             options: faceDetectorOptions
         )
