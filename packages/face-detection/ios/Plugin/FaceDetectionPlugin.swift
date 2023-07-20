@@ -36,7 +36,8 @@ public class FaceDetectionPlugin: CAPPlugin {
             return
         }
 
-        let options = ProcessImageOptions(visionImage: visionImage, performanceMode: performanceMode, landmarkMode: landmarkMode, contourMode: contourMode, classificationMode: classificationMode, minFaceSize: minFaceSize, enableTracking: enableTracking)
+        let options = ProcessImageOptions(visionImage: visionImage, performanceMode: performanceMode, landmarkMode: landmarkMode,
+                                          contourMode: contourMode, classificationMode: classificationMode, minFaceSize: minFaceSize, enableTracking: enableTracking)
 
         implementation?.processImage(options, completion: { result, error in
             if let error = error {
