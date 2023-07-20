@@ -10,6 +10,7 @@ body:
       description: Select the plugins that this feature request affects.
       options:
         - label: Barcode Scanning
+        - label: Face Detection
         - label: Translation
   - type: textarea
     attributes:
