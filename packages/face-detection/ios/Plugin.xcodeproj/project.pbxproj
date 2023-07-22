@@ -9,16 +9,15 @@
 /* Begin PBXBuildFile section */
 		03FC29A292ACC40490383A1F /* Pods_Plugin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B2A61DA5A1F2DD4F959604D /* Pods_Plugin.framework */; };
 		20C0B05DCFC8E3958A738AF2 /* Pods_PluginTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6753A823D3815DB436415E3 /* Pods_PluginTests.framework */; };
-		2F98D68224C9AAE500613A4C /* BarcodeScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F98D68124C9AAE400613A4C /* BarcodeScanner.swift */; };
+		2F98D68224C9AAE500613A4C /* FaceDetection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F98D68124C9AAE400613A4C /* FaceDetection.swift */; };
 		50ADFF92201F53D600D50D53 /* Plugin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50ADFF88201F53D600D50D53 /* Plugin.framework */; };
-		50ADFF97201F53D600D50D53 /* BarcodeScannerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50ADFF96201F53D600D50D53 /* BarcodeScannerTests.swift */; };
-		50ADFF99201F53D600D50D53 /* BarcodeScannerPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ADFF8B201F53D600D50D53 /* BarcodeScannerPlugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		50ADFF97201F53D600D50D53 /* FaceDetectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50ADFF96201F53D600D50D53 /* FaceDetectionTests.swift */; };
+		50ADFF99201F53D600D50D53 /* FaceDetectionPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ADFF8B201F53D600D50D53 /* FaceDetectionPlugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		50ADFFA42020D75100D50D53 /* Capacitor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50ADFFA52020D75100D50D53 /* Capacitor.framework */; };
-		50ADFFA82020EE4F00D50D53 /* BarcodeScannerPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 50ADFFA72020EE4F00D50D53 /* BarcodeScannerPlugin.m */; };
-		50E1A94820377CB70090CE1A /* BarcodeScannerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E1A94720377CB70090CE1A /* BarcodeScannerPlugin.swift */; };
-		7C39C34F29A0BB4600AE60BB /* ScanSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C39C34E29A0BB4600AE60BB /* ScanSettings.swift */; };
-		7C8E4B5E2998FE7B00A35D56 /* BarcodeScannerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8E4B5D2998FE7B00A35D56 /* BarcodeScannerHelper.swift */; };
-		7CD8CBAE299902D90039652D /* BarcodeScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD8CBAD299902D80039652D /* BarcodeScannerView.swift */; };
+		50ADFFA82020EE4F00D50D53 /* FaceDetectionPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 50ADFFA72020EE4F00D50D53 /* FaceDetectionPlugin.m */; };
+		50E1A94820377CB70090CE1A /* FaceDetectionPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E1A94720377CB70090CE1A /* FaceDetectionPlugin.swift */; };
+		7CCB321B2A694ABD007D3E86 /* ProcessImageOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCB321A2A694ABD007D3E86 /* ProcessImageOptions.swift */; };
+		7CCB321D2A694AC8007D3E86 /* ProcessImageResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCB321C2A694AC8007D3E86 /* ProcessImageResult.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,21 +31,20 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		2F98D68124C9AAE400613A4C /* BarcodeScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarcodeScanner.swift; sourceTree = "<group>"; };
+		2F98D68124C9AAE400613A4C /* FaceDetection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FaceDetection.swift; sourceTree = "<group>"; };
 		3B2A61DA5A1F2DD4F959604D /* Pods_Plugin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Plugin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		50ADFF88201F53D600D50D53 /* Plugin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Plugin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		50ADFF8B201F53D600D50D53 /* BarcodeScannerPlugin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BarcodeScannerPlugin.h; sourceTree = "<group>"; };
+		50ADFF8B201F53D600D50D53 /* FaceDetectionPlugin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FaceDetectionPlugin.h; sourceTree = "<group>"; };
 		50ADFF8C201F53D600D50D53 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		50ADFF91201F53D600D50D53 /* PluginTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PluginTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		50ADFF96201F53D600D50D53 /* BarcodeScannerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeScannerTests.swift; sourceTree = "<group>"; };
+		50ADFF96201F53D600D50D53 /* FaceDetectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceDetectionTests.swift; sourceTree = "<group>"; };
 		50ADFF98201F53D600D50D53 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		50ADFFA52020D75100D50D53 /* Capacitor.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Capacitor.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		50ADFFA72020EE4F00D50D53 /* BarcodeScannerPlugin.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BarcodeScannerPlugin.m; sourceTree = "<group>"; };
-		50E1A94720377CB70090CE1A /* BarcodeScannerPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarcodeScannerPlugin.swift; sourceTree = "<group>"; };
+		50ADFFA72020EE4F00D50D53 /* FaceDetectionPlugin.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FaceDetectionPlugin.m; sourceTree = "<group>"; };
+		50E1A94720377CB70090CE1A /* FaceDetectionPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FaceDetectionPlugin.swift; sourceTree = "<group>"; };
 		5E23F77F099397094342571A /* Pods-Plugin.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Plugin.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Plugin/Pods-Plugin.debug.xcconfig"; sourceTree = "<group>"; };
-		7C39C34E29A0BB4600AE60BB /* ScanSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanSettings.swift; sourceTree = "<group>"; };
-		7C8E4B5D2998FE7B00A35D56 /* BarcodeScannerHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeScannerHelper.swift; sourceTree = "<group>"; };
-		7CD8CBAD299902D80039652D /* BarcodeScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeScannerView.swift; sourceTree = "<group>"; };
+		7CCB321A2A694ABD007D3E86 /* ProcessImageOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessImageOptions.swift; sourceTree = "<group>"; };
+		7CCB321C2A694AC8007D3E86 /* ProcessImageResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessImageResult.swift; sourceTree = "<group>"; };
 		91781294A431A2A7CC6EB714 /* Pods-Plugin.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Plugin.release.xcconfig"; path = "Pods/Target Support Files/Pods-Plugin/Pods-Plugin.release.xcconfig"; sourceTree = "<group>"; };
 		96ED1B6440D6672E406C8D19 /* Pods-PluginTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PluginTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PluginTests/Pods-PluginTests.debug.xcconfig"; sourceTree = "<group>"; };
 		F65BB2953ECE002E1EF3E424 /* Pods-PluginTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PluginTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PluginTests/Pods-PluginTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -98,14 +96,12 @@
 		50ADFF8A201F53D600D50D53 /* Plugin */ = {
 			isa = PBXGroup;
 			children = (
-				50E1A94720377CB70090CE1A /* BarcodeScannerPlugin.swift */,
-				2F98D68124C9AAE400613A4C /* BarcodeScanner.swift */,
-				50ADFF8B201F53D600D50D53 /* BarcodeScannerPlugin.h */,
-				50ADFFA72020EE4F00D50D53 /* BarcodeScannerPlugin.m */,
+				7CCB32192A694A9B007D3E86 /* Classes */,
+				50E1A94720377CB70090CE1A /* FaceDetectionPlugin.swift */,
+				2F98D68124C9AAE400613A4C /* FaceDetection.swift */,
+				50ADFF8B201F53D600D50D53 /* FaceDetectionPlugin.h */,
+				50ADFFA72020EE4F00D50D53 /* FaceDetectionPlugin.m */,
 				50ADFF8C201F53D600D50D53 /* Info.plist */,
-				7C8E4B5D2998FE7B00A35D56 /* BarcodeScannerHelper.swift */,
-				7CD8CBAD299902D80039652D /* BarcodeScannerView.swift */,
-				7C39C34E29A0BB4600AE60BB /* ScanSettings.swift */,
 			);
 			path = Plugin;
 			sourceTree = "<group>";
@@ -113,10 +109,19 @@
 		50ADFF95201F53D600D50D53 /* PluginTests */ = {
 			isa = PBXGroup;
 			children = (
-				50ADFF96201F53D600D50D53 /* BarcodeScannerTests.swift */,
+				50ADFF96201F53D600D50D53 /* FaceDetectionTests.swift */,
 				50ADFF98201F53D600D50D53 /* Info.plist */,
 			);
 			path = PluginTests;
+			sourceTree = "<group>";
+		};
+		7CCB32192A694A9B007D3E86 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				7CCB321A2A694ABD007D3E86 /* ProcessImageOptions.swift */,
+				7CCB321C2A694AC8007D3E86 /* ProcessImageResult.swift */,
+			);
+			path = Classes;
 			sourceTree = "<group>";
 		};
 		8C8E7744173064A9F6D438E3 /* Pods */ = {
@@ -147,7 +152,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				50ADFF99201F53D600D50D53 /* BarcodeScannerPlugin.h in Headers */,
+				50ADFF99201F53D600D50D53 /* FaceDetectionPlugin.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -163,6 +168,7 @@
 				50ADFF84201F53D600D50D53 /* Frameworks */,
 				50ADFF85201F53D600D50D53 /* Headers */,
 				50ADFF86201F53D600D50D53 /* Resources */,
+				3B0E4BAD69514EC597992AF4 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -182,6 +188,7 @@
 				50ADFF8E201F53D600D50D53 /* Frameworks */,
 				50ADFF8F201F53D600D50D53 /* Resources */,
 				8E97F58B69A94C6503FC9C85 /* [CP] Embed Pods Frameworks */,
+				0C7B3DB748421C77DFA43B69 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -270,6 +277,42 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		0C7B3DB748421C77DFA43B69 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PluginTests/Pods-PluginTests-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/MLKitFaceDetection/GoogleMVFaceDetectorResources.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMVFaceDetectorResources.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PluginTests/Pods-PluginTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3B0E4BAD69514EC597992AF4 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Plugin/Pods-Plugin-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/MLKitFaceDetection/GoogleMVFaceDetectorResources.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMVFaceDetectorResources.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Plugin/Pods-Plugin-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		8E97F58B69A94C6503FC9C85 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -327,12 +370,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				50E1A94820377CB70090CE1A /* BarcodeScannerPlugin.swift in Sources */,
-				2F98D68224C9AAE500613A4C /* BarcodeScanner.swift in Sources */,
-				50ADFFA82020EE4F00D50D53 /* BarcodeScannerPlugin.m in Sources */,
-				7CD8CBAE299902D90039652D /* BarcodeScannerView.swift in Sources */,
-				7C8E4B5E2998FE7B00A35D56 /* BarcodeScannerHelper.swift in Sources */,
-				7C39C34F29A0BB4600AE60BB /* ScanSettings.swift in Sources */,
+				7CCB321D2A694AC8007D3E86 /* ProcessImageResult.swift in Sources */,
+				50E1A94820377CB70090CE1A /* FaceDetectionPlugin.swift in Sources */,
+				2F98D68224C9AAE500613A4C /* FaceDetection.swift in Sources */,
+				7CCB321B2A694ABD007D3E86 /* ProcessImageOptions.swift in Sources */,
+				50ADFFA82020EE4F00D50D53 /* FaceDetectionPlugin.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -340,7 +382,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				50ADFF97201F53D600D50D53 /* BarcodeScannerTests.swift in Sources */,
+				50ADFF97201F53D600D50D53 /* FaceDetectionTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

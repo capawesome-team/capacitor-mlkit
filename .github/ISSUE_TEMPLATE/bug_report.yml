@@ -10,6 +10,7 @@ body:
       description: Select the plugins that this bug affects.
       options:
         - label: Barcode Scanning
+        - label: Face Detection
         - label: Translation
   - type: checkboxes
     attributes:
