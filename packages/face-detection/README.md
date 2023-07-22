@@ -36,10 +36,18 @@ A working example can be found here: [robingenz/capacitor-mlkit-plugin-demo](htt
 ## Usage
 
 ```typescript
-import { FaceDetection } from '@capacitor-mlkit/face-detection';
+import { FaceDetection, PerformanceMode, LandmarkMode, ContourMode, ClassificationMode } from '@capacitor-mlkit/face-detection';
 
-const echo = async () => {
-  await FaceDetection.echo();
+const processImage = async () => {
+  await FaceDetection.processImage({
+    path: 'path/to/image.jpg',
+    performanceMode: PerformanceMode.Fast,
+    landmarkMode: LandmarkMode.All,
+    contourMode: ContourMode.All,
+    classificationMode: ClassificationMode.All,
+    minFaceSize: 0.1,
+    enableTracking: false,
+  });
 };
 ```
 
