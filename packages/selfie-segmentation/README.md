@@ -1,6 +1,6 @@
 # @capacitor-mlkit/selfie-segmentation
 
-Unofficial Capacitor plugin for [ML Kit Face Segmentation](https://developers.google.com/ml-kit/vision/selfie-segmentation).[^1]
+Unofficial Capacitor plugin for [ML Kit Selfie Segmentation](https://developers.google.com/ml-kit/vision/selfie-segmentation).[^1]
 
 ## Installation
 
@@ -80,10 +80,10 @@ Only available on Android and iOS.
 
 #### ProcessImageOptions
 
-| Prop              | Type                 | Description                                                                         | Since |
-| ----------------- | -------------------- | ----------------------------------------------------------------------------------- | ----- |
-| **`path`**        | <code>string</code>  | The local path to the image file.                                                   | 5.2.0 |
-| **`rawSizeMask`** | <code>boolean</code> | Asks the segmenter to return the raw size mask which matches the model output size. | 5.2.0 |
+| Prop                    | Type                 | Description                                                                         | Since |
+| ----------------------- | -------------------- | ----------------------------------------------------------------------------------- | ----- |
+| **`path`**              | <code>string</code>  | The local path to the image file.                                                   | 5.2.0 |
+| **`enableRawSizeMask`** | <code>boolean</code> | Asks the segmenter to return the raw size mask which matches the model output size. | 5.2.0 |
 
 </docgen-api>
 
