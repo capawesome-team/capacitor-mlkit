@@ -80,10 +80,10 @@ Only available on Android and iOS.
 
 #### ProcessImageOptions
 
-| Prop                    | Type                 | Description                                                                         | Since |
-| ----------------------- | -------------------- | ----------------------------------------------------------------------------------- | ----- |
-| **`path`**              | <code>string</code>  | The local path to the image file.                                                   | 5.2.0 |
-| **`enableRawSizeMask`** | <code>boolean</code> | Asks the segmenter to return the raw size mask which matches the model output size. | 5.2.0 |
+| Prop                    | Type                 | Description                                                                         | Default            | Since |
+| ----------------------- | -------------------- | ----------------------------------------------------------------------------------- | ------------------ | ----- |
+| **`path`**              | <code>string</code>  | The local path to the image file.                                                   |                    | 5.2.0 |
+| **`enableRawSizeMask`** | <code>boolean</code> | Asks the segmenter to return the raw size mask which matches the model output size. | <code>false</code> | 5.2.0 |
 
 </docgen-api>
 
