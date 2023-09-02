@@ -25,7 +25,7 @@ export interface ProcessImageOptions {
    *
    * @since 5.2.0
    */
-  rawSizeMask?: boolean;
+  enableRawSizeMask?: boolean;
 }
 
 /**
