@@ -9,6 +9,7 @@
     [
       "@capacitor-mlkit/barcode-scanning",
       "@capacitor-mlkit/face-detection",
+      "@capacitor-mlkit/selfie-segmentation",
       "@capacitor-mlkit/translation"
     ]
   ],
