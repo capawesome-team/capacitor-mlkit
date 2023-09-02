@@ -1,13 +1,25 @@
-import { WebPlugin } from '@capacitor/core';
+import { CapacitorException, ExceptionCode, WebPlugin } from '@capacitor/core';
 
-import type { SelfieSegmentationPlugin } from './definitions';
+import type {
+  SelfieSegmentationPlugin,
+  ProcessImageOptions,
+  ProcessImageResult,
+} from './definitions';
 
 export class SelfieSegmentationWeb
   extends WebPlugin
   implements SelfieSegmentationPlugin
 {
-  async echo(options: { value: string }): Promise<{ value: string }> {
-    console.log('ECHO', options);
-    return options;
+  public async processImage(
+    _options: ProcessImageOptions,
+  ): Promise<ProcessImageResult> {
+    throw this.createUnavailableException();
+  }
+
+  private createUnavailableException(): CapacitorException {
+    return new CapacitorException(
+      'This Selfie Segmentation plugin method is not available on this platform.',
+      ExceptionCode.Unavailable,
+    );
   }
 }

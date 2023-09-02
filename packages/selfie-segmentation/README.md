@@ -37,26 +37,53 @@ const echo = async () => {
 
 <docgen-index>
 
-* [`echo(...)`](#echo)
+* [`processImage(...)`](#processimage)
+* [Interfaces](#interfaces)
 
 </docgen-index>
 
 <docgen-api>
 <!--Update the source file JSDoc comments and rerun docgen to update the docs below-->
 
-### echo(...)
+### processImage(...)
 
 ```typescript
-echo(options: { value: string; }) => Promise<{ value: string; }>
+processImage(options: ProcessImageOptions) => Promise<ProcessImageResult>
 ```
 
-| Param         | Type                            |
-| ------------- | ------------------------------- |
-| **`options`** | <code>{ value: string; }</code> |
+Performs segmentation on an input image.
 
-**Returns:** <code>Promise&lt;{ value: string; }&gt;</code>
+Only available on Android and iOS.
+
+| Param         | Type                                                                |
+| ------------- | ------------------------------------------------------------------- |
+| **`options`** | <code><a href="#processimageoptions">ProcessImageOptions</a></code> |
+
+**Returns:** <code>Promise&lt;<a href="#processimageresult">ProcessImageResult</a>&gt;</code>
+
+**Since:** 5.2.0
 
 --------------------
+
+
+### Interfaces
+
+
+#### ProcessImageResult
+
+| Prop         | Type                  | Description                                                                                                                                                                 | Since |
+| ------------ | --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
+| **`mask`**   | <code>number[]</code> | Returns a mask that indicates the foreground and background segmentation. This mask’s dimensions could vary, depending on whether a raw size mask is requested via options. | 5.2.0 |
+| **`width`**  | <code>number</code>   | Returns the width of the mask.                                                                                                                                              | 5.2.0 |
+| **`height`** | <code>number</code>   | Returns the height of the mask.                                                                                                                                             | 5.2.0 |
+
+
+#### ProcessImageOptions
+
+| Prop              | Type                 | Description                                                                         | Since |
+| ----------------- | -------------------- | ----------------------------------------------------------------------------------- | ----- |
+| **`path`**        | <code>string</code>  | The local path to the image file.                                                   | 5.2.0 |
+| **`rawSizeMask`** | <code>boolean</code> | Asks the segmenter to return the raw size mask which matches the model output size. | 5.2.0 |
 
 </docgen-api>
 
