@@ -24,6 +24,7 @@ export interface ProcessImageOptions {
    * Asks the segmenter to return the raw size mask which matches the model output size.
    *
    * @since 5.2.0
+   * @default false
    */
   enableRawSizeMask?: boolean;
 }
