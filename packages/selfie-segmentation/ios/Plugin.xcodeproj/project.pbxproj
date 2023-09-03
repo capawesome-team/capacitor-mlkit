@@ -10,6 +10,8 @@
 		03FC29A292ACC40490383A1F /* Pods_Plugin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B2A61DA5A1F2DD4F959604D /* Pods_Plugin.framework */; };
 		20C0B05DCFC8E3958A738AF2 /* Pods_PluginTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6753A823D3815DB436415E3 /* Pods_PluginTests.framework */; };
 		2F98D68224C9AAE500613A4C /* SelfieSegmentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F98D68124C9AAE400613A4C /* SelfieSegmentation.swift */; };
+		4A4E0DE52AA478A800BED263 /* ProcessImageOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4E0DE32AA478A800BED263 /* ProcessImageOptions.swift */; };
+		4A4E0DE62AA478A800BED263 /* ProcessImageResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4E0DE42AA478A800BED263 /* ProcessImageResult.swift */; };
 		50ADFF92201F53D600D50D53 /* Plugin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50ADFF88201F53D600D50D53 /* Plugin.framework */; };
 		50ADFF97201F53D600D50D53 /* SelfieSegmentationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50ADFF96201F53D600D50D53 /* SelfieSegmentationTests.swift */; };
 		50ADFF99201F53D600D50D53 /* SelfieSegmentationPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ADFF8B201F53D600D50D53 /* SelfieSegmentationPlugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -31,6 +33,8 @@
 /* Begin PBXFileReference section */
 		2F98D68124C9AAE400613A4C /* SelfieSegmentation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelfieSegmentation.swift; sourceTree = "<group>"; };
 		3B2A61DA5A1F2DD4F959604D /* Pods_Plugin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Plugin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4A4E0DE32AA478A800BED263 /* ProcessImageOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProcessImageOptions.swift; path = Classes/ProcessImageOptions.swift; sourceTree = "<group>"; };
+		4A4E0DE42AA478A800BED263 /* ProcessImageResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProcessImageResult.swift; path = Classes/ProcessImageResult.swift; sourceTree = "<group>"; };
 		50ADFF88201F53D600D50D53 /* Plugin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Plugin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		50ADFF8B201F53D600D50D53 /* SelfieSegmentationPlugin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SelfieSegmentationPlugin.h; sourceTree = "<group>"; };
 		50ADFF8C201F53D600D50D53 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -69,6 +73,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4A4E0DE22AA4788400BED263 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				4A4E0DE32AA478A800BED263 /* ProcessImageOptions.swift */,
+				4A4E0DE42AA478A800BED263 /* ProcessImageResult.swift */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
 		50ADFF7E201F53D600D50D53 = {
 			isa = PBXGroup;
 			children = (
@@ -92,6 +105,7 @@
 		50ADFF8A201F53D600D50D53 /* Plugin */ = {
 			isa = PBXGroup;
 			children = (
+				4A4E0DE22AA4788400BED263 /* Classes */,
 				50E1A94720377CB70090CE1A /* SelfieSegmentationPlugin.swift */,
 				2F98D68124C9AAE400613A4C /* SelfieSegmentation.swift */,
 				50ADFF8B201F53D600D50D53 /* SelfieSegmentationPlugin.h */,
@@ -364,8 +378,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A4E0DE62AA478A800BED263 /* ProcessImageResult.swift in Sources */,
 				50E1A94820377CB70090CE1A /* SelfieSegmentationPlugin.swift in Sources */,
 				2F98D68224C9AAE500613A4C /* SelfieSegmentation.swift in Sources */,
+				4A4E0DE52AA478A800BED263 /* ProcessImageOptions.swift in Sources */,
 				50ADFFA82020EE4F00D50D53 /* SelfieSegmentationPlugin.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -7,12 +7,39 @@ import Capacitor
  */
 @objc(SelfieSegmentationPlugin)
 public class SelfieSegmentationPlugin: CAPPlugin {
-    private let implementation = SelfieSegmentation()
+    public let tag = "SelfieSegmentation"
+    public let errorPathMissing = "path must be provided."
+    public let errorLoadImageFailed = "image could not be loaded."
 
-    @objc func echo(_ call: CAPPluginCall) {
-        let value = call.getString("value") ?? ""
-        call.resolve([
-            "value": implementation.echo(value)
-        ])
+    private var implementation: SelfieSegmentation?
+
+    override public func load() {
+        implementation = SelfieSegmentation(plugin: self)
+    }
+
+    @objc func processImage(_ call: CAPPluginCall) {
+        guard let path = call.getString("path") else {
+            call.reject(errorPathMissing)
+            return
+        }
+        let enableRawSizeMask = call.getBool("enableRawSizeMask", false)
+
+        guard let visionImage = implementation?.createVisionImageFromFilePath(path) else {
+            call.reject(errorLoadImageFailed)
+            return
+        }
+
+        let options = ProcessImageOptions(visionImage: visionImage, enableRawSizeMask: enableRawSizeMask)
+
+        implementation?.processImage(options, completion: { result, error in
+            if let error = error {
+                CAPLog.print("[", self.tag, "] ", error)
+                call.reject(error.localizedDescription, nil, error)
+                return
+            }
+            if let result = result?.toJSObject() as? JSObject {
+                call.resolve(result)
+            }
+        })
     }
 }
