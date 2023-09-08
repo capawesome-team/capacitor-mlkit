@@ -71,19 +71,20 @@ Only available on Android and iOS.
 
 #### ProcessImageResult
 
-| Prop         | Type                  | Description                                                                                                                                                                 | Since |
-| ------------ | --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
-| **`mask`**   | <code>number[]</code> | Returns a mask that indicates the foreground and background segmentation. This mask’s dimensions could vary, depending on whether a raw size mask is requested via options. | 5.2.0 |
-| **`width`**  | <code>number</code>   | Returns the width of the mask.                                                                                                                                              | 5.2.0 |
-| **`height`** | <code>number</code>   | Returns the height of the mask.                                                                                                                                             | 5.2.0 |
+| Prop         | Type                | Description                           | Since |
+| ------------ | ------------------- | ------------------------------------- | ----- |
+| **`path`**   | <code>string</code> | The path to the segmented image file. | 5.2.0 |
+| **`width`**  | <code>number</code> | Returns the width of the image file.  | 5.2.0 |
+| **`height`** | <code>number</code> | Returns the height of the image file. | 5.2.0 |
 
 
 #### ProcessImageOptions
 
-| Prop                    | Type                 | Description                                                                         | Default            | Since |
-| ----------------------- | -------------------- | ----------------------------------------------------------------------------------- | ------------------ | ----- |
-| **`path`**              | <code>string</code>  | The local path to the image file.                                                   |                    | 5.2.0 |
-| **`enableRawSizeMask`** | <code>boolean</code> | Asks the segmenter to return the raw size mask which matches the model output size. | <code>false</code> | 5.2.0 |
+| Prop         | Type                | Description                       | Since |
+| ------------ | ------------------- | --------------------------------- | ----- |
+| **`path`**   | <code>string</code> | The local path to the image file. | 5.2.0 |
+| **`width`**  | <code>number</code> | Scale the image to this width.    | 5.2.0 |
+| **`height`** | <code>number</code> | Scale the image to this height.   | 5.2.0 |
 
 </docgen-api>
 

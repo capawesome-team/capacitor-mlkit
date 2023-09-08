@@ -36,14 +36,16 @@ public class SelfieSegmentationPlugin extends Plugin {
                 call.reject(ERROR_PATH_MISSING);
                 return;
             }
-            Boolean enableRawSizeMask = call.getBoolean("enableRawSizeMask", false);
+
+            Integer width = call.getInt("width", null);
+            Integer height = call.getInt("height", null);
 
             InputImage image = implementation.createInputImageFromFilePath(path);
             if (image == null) {
                 call.reject(ERROR_LOAD_IMAGE_FAILED);
                 return;
             }
-            ProcessImageOptions options = new ProcessImageOptions(image, enableRawSizeMask);
+            ProcessImageOptions options = new ProcessImageOptions(image, width, height);
 
             implementation.processImage(
                 options,

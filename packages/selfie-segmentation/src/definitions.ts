@@ -21,36 +21,39 @@ export interface ProcessImageOptions {
   path: string;
 
   /**
-   * Asks the segmenter to return the raw size mask which matches the model output size.
+   * Scale the image to this width.
    *
    * @since 5.2.0
-   * @default false
    */
-  enableRawSizeMask?: boolean;
+  width?: number;
+
+  /**
+   * Scale the image to this height.
+   *
+   * @since 5.2.0
+   */
+  height?: number;
 }
 
 /**
  * @since 5.2.0
- * @see https://developers.google.com/android/reference/com/google/mlkit/vision/segmentation/SegmentationMask
  */
 export interface ProcessImageResult {
   /**
-   * Returns a mask that indicates the foreground and background segmentation.
-   *
-   * This mask’s dimensions could vary, depending on whether a raw size mask is requested via options.
+   * The path to the segmented image file.
    *
    * @since 5.2.0
    */
-  mask: number[];
+  path: string;
 
   /**
-   * Returns the width of the mask.
+   * Returns the width of the image file.
    *
    * @since 5.2.0
    */
   width: number;
   /**
-   * Returns the height of the mask.
+   * Returns the height of the image file.
    *
    * @since 5.2.0
    */

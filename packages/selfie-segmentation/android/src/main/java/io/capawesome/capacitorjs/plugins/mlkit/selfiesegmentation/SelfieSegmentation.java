@@ -1,5 +1,6 @@
 package io.capawesome.capacitorjs.plugins.mlkit.selfiesegmentation;
 
+import android.graphics.Bitmap;
 import android.net.Uri;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -9,6 +10,14 @@ import com.google.mlkit.vision.segmentation.Segmenter;
 import com.google.mlkit.vision.segmentation.selfie.SelfieSegmenterOptions;
 import io.capawesome.capacitorjs.plugins.mlkit.selfiesegmentation.classes.ProcessImageOptions;
 import io.capawesome.capacitorjs.plugins.mlkit.selfiesegmentation.classes.ProcessImageResult;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Objects;
 
 public class SelfieSegmentation {
 
@@ -30,13 +39,10 @@ public class SelfieSegmentation {
 
     public void processImage(ProcessImageOptions options, ProcessImageResultCallback callback) {
         InputImage inputImage = options.getInputImage();
-        boolean enableRawSizeMask = options.isRawSizeMaskEnabled();
 
         SelfieSegmenterOptions.Builder builder = new SelfieSegmenterOptions.Builder();
         builder.setDetectorMode(SelfieSegmenterOptions.SINGLE_IMAGE_MODE);
-        if (enableRawSizeMask) {
-            builder.enableRawSizeMask();
-        }
+        //        builder.enableRawSizeMask();
         SelfieSegmenterOptions selfieSegmenterOptions = builder.build();
 
         final Segmenter segmenter = Segmentation.getClient(selfieSegmenterOptions);
@@ -47,10 +53,68 @@ public class SelfieSegmentation {
                     segmenter
                         .process(inputImage)
                         .addOnSuccessListener(
-                            mask -> {
+                            segmentationMask -> {
                                 segmenter.close();
-                                ProcessImageResult result = new ProcessImageResult(mask);
-                                callback.success(result);
+
+                                ByteBuffer mask = segmentationMask.getBuffer();
+                                // int maskWidth = segmentationMask.getWidth();
+                                // int maskHeight = segmentationMask.getHeight();
+
+                                Bitmap mPictureBitmap = inputImage.getBitmapInternal();
+                                Objects.requireNonNull(mPictureBitmap).setHasAlpha(true);
+
+                                ByteBuffer pixels = ByteBuffer.allocateDirect(mPictureBitmap.getAllocationByteCount());
+                                mPictureBitmap.copyPixelsToBuffer(pixels);
+
+                                final boolean bigEndian = pixels.order() == ByteOrder.BIG_ENDIAN;
+                                final int ALPHA = bigEndian ? 3 : 0;
+                                final int RED = bigEndian ? 2 : 1;
+                                final int GREEN = bigEndian ? 1 : 2;
+                                final int BLUE = bigEndian ? 0 : 3;
+
+                                for (int i = 0; i < pixels.capacity() >> 2; i++) {
+                                    float confidence = mask.getFloat();
+
+                                    if (confidence >= 0.9f) {
+                                        // byte alpha = pixels.get((i << 2) + ALPHA);
+                                        byte red = pixels.get((i << 2) + RED);
+                                        byte green = pixels.get((i << 2) + GREEN);
+                                        byte blue = pixels.get((i << 2) + BLUE);
+
+                                        pixels.put((i << 2) + ALPHA, (byte) (0xff));
+                                        pixels.put((i << 2) + RED, (byte) (red * confidence));
+                                        pixels.put((i << 2) + GREEN, (byte) (green * confidence));
+                                        pixels.put((i << 2) + BLUE, (byte) (blue * confidence));
+                                    } else {
+                                        pixels.putInt(i << 2, 0x00000000); // transparent
+                                    }
+                                }
+
+                                mPictureBitmap.copyPixelsFromBuffer(pixels.rewind());
+
+                                // Reset byteBuffer pointer to beginning
+                                mask.rewind();
+
+                                // Create an image file name
+                                String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+                                String imageFileName = "PNG_" + timeStamp + "_";
+
+                                try {
+                                    File image = File.createTempFile(imageFileName, ".png");
+
+                                    OutputStream stream = new FileOutputStream(image);
+                                    mPictureBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                                    stream.close();
+
+                                    ProcessImageResult result = new ProcessImageResult(
+                                        image.getAbsolutePath(),
+                                        mPictureBitmap.getWidth(),
+                                        mPictureBitmap.getHeight()
+                                    );
+                                    callback.success(result);
+                                } catch (Exception exception) {
+                                    callback.error(exception);
+                                }
                             }
                         )
                         .addOnCanceledListener(
