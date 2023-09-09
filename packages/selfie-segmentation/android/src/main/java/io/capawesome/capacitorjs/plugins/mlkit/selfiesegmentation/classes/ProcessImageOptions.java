@@ -17,7 +17,10 @@ public class ProcessImageOptions {
     public InputImage getInputImage() {
         return inputImage;
     }
-    public Float getConfidence() { return confidence; };
+
+    public Float getConfidence() {
+        return confidence;
+    }
 
     private InputImage scaledImage(InputImage inputImage, Integer width, Integer height) {
         float scaleX = (width != null) ? width * 1f / inputImage.getWidth() : 0f;
