@@ -27,11 +27,10 @@ import MLKitSegmentationSelfie
 
     @objc func processImage(_ options: ProcessImageOptions, completion: @escaping (ProcessImageResult?, Error?) -> Void) {
         let visionImage = options.getVisionImage()
-        let enableRawSizeMask = options.shouldEnableRawSizeMask()
 
         let selfieSegmenterOptions: SelfieSegmenterOptions = SelfieSegmenterOptions()
         selfieSegmenterOptions.segmenterMode = .singleImage
-        selfieSegmenterOptions.shouldEnableRawSizeMask = enableRawSizeMask
+        selfieSegmenterOptions.shouldEnableRawSizeMask = true
 
         let segmenter = Segmenter.segmenter(
             options: selfieSegmenterOptions

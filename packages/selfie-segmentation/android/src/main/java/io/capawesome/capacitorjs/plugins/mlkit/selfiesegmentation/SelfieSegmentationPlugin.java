@@ -13,9 +13,12 @@ import io.capawesome.capacitorjs.plugins.mlkit.selfiesegmentation.classes.Proces
 public class SelfieSegmentationPlugin extends Plugin {
 
     public static final String TAG = "SelfieSegmentation";
+
     public static final String ERROR_PROCESS_IMAGE_CANCELED = "processImage canceled.";
     public static final String ERROR_PATH_MISSING = "path must be provided.";
     public static final String ERROR_LOAD_IMAGE_FAILED = "image could not be loaded.";
+
+    public static final float CONFIDENCE = 0.9f;
 
     private SelfieSegmentation implementation;
 
@@ -36,14 +39,18 @@ public class SelfieSegmentationPlugin extends Plugin {
                 call.reject(ERROR_PATH_MISSING);
                 return;
             }
-            Boolean enableRawSizeMask = call.getBoolean("enableRawSizeMask", false);
+
+            Integer width = call.getInt("width", null);
+            Integer height = call.getInt("height", null);
+
+            Float confidence = call.getFloat("confidence", CONFIDENCE);
 
             InputImage image = implementation.createInputImageFromFilePath(path);
             if (image == null) {
                 call.reject(ERROR_LOAD_IMAGE_FAILED);
                 return;
             }
-            ProcessImageOptions options = new ProcessImageOptions(image, enableRawSizeMask);
+            ProcessImageOptions options = new ProcessImageOptions(image, width, height, confidence);
 
             implementation.processImage(
                 options,

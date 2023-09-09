@@ -22,14 +22,13 @@ public class SelfieSegmentationPlugin: CAPPlugin {
             call.reject(errorPathMissing)
             return
         }
-        let enableRawSizeMask = call.getBool("enableRawSizeMask", false)
 
         guard let visionImage = implementation?.createVisionImageFromFilePath(path) else {
             call.reject(errorLoadImageFailed)
             return
         }
 
-        let options = ProcessImageOptions(visionImage: visionImage, enableRawSizeMask: enableRawSizeMask)
+        let options = ProcessImageOptions(visionImage: visionImage)
 
         implementation?.processImage(options, completion: { result, error in
             if let error = error {
