@@ -22,13 +22,14 @@ export interface ProcessImageOptions {
 
   /**
    * Scale the image to this width.
+   * If no `height` is given, it will respect the aspect ratio.
    *
    * @since 5.2.0
    */
   width?: number;
-
   /**
    * Scale the image to this height.
+   * If no `width` is given, it will respect the aspect ratio.
    *
    * @since 5.2.0
    */

@@ -1,5 +1,6 @@
 package io.capawesome.capacitorjs.plugins.mlkit.selfiesegmentation;
 
+import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import androidx.annotation.NonNull;
@@ -43,14 +44,14 @@ public class SelfieSegmentation {
 
         SelfieSegmenterOptions.Builder builder = new SelfieSegmenterOptions.Builder();
         builder.setDetectorMode(SelfieSegmenterOptions.SINGLE_IMAGE_MODE);
-        //        builder.enableRawSizeMask();
         SelfieSegmenterOptions selfieSegmenterOptions = builder.build();
 
         final Segmenter segmenter = Segmentation.getClient(selfieSegmenterOptions);
+
         plugin
             .getActivity()
             .runOnUiThread(
-                () -> {
+                () ->
                     segmenter
                         .process(inputImage)
                         .addOnSuccessListener(
@@ -58,14 +59,12 @@ public class SelfieSegmentation {
                                 segmenter.close();
 
                                 ByteBuffer mask = segmentationMask.getBuffer();
-                                // int maskWidth = segmentationMask.getWidth();
-                                // int maskHeight = segmentationMask.getHeight();
 
-                                Bitmap mPictureBitmap = inputImage.getBitmapInternal();
-                                Objects.requireNonNull(mPictureBitmap).setHasAlpha(true);
+                                Bitmap bitmap = inputImage.getBitmapInternal();
+                                Objects.requireNonNull(bitmap).setHasAlpha(true);
 
-                                ByteBuffer pixels = ByteBuffer.allocateDirect(mPictureBitmap.getAllocationByteCount());
-                                mPictureBitmap.copyPixelsToBuffer(pixels);
+                                ByteBuffer pixels = ByteBuffer.allocateDirect(bitmap.getAllocationByteCount());
+                                bitmap.copyPixelsToBuffer(pixels);
 
                                 final boolean bigEndian = pixels.order() == ByteOrder.BIG_ENDIAN;
                                 final int ALPHA = bigEndian ? 3 : 0;
@@ -77,7 +76,6 @@ public class SelfieSegmentation {
                                     float confidence = mask.getFloat();
 
                                     if (confidence >= threshold) {
-                                        // byte alpha = pixels.get((i << 2) + ALPHA);
                                         byte red = pixels.get((i << 2) + RED);
                                         byte green = pixels.get((i << 2) + GREEN);
                                         byte blue = pixels.get((i << 2) + BLUE);
@@ -91,12 +89,10 @@ public class SelfieSegmentation {
                                     }
                                 }
 
-                                mPictureBitmap.copyPixelsFromBuffer(pixels.rewind());
-
-                                // Reset byteBuffer pointer to beginning
-                                mask.rewind();
+                                bitmap.copyPixelsFromBuffer(pixels.rewind());
 
                                 // Create an image file name
+                                @SuppressLint("SimpleDateFormat")
                                 String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                                 String imageFileName = "PNG_" + timeStamp + "_";
 
@@ -104,14 +100,15 @@ public class SelfieSegmentation {
                                     File image = File.createTempFile(imageFileName, ".png");
 
                                     OutputStream stream = new FileOutputStream(image);
-                                    mPictureBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
                                     stream.close();
 
                                     ProcessImageResult result = new ProcessImageResult(
                                         image.getAbsolutePath(),
-                                        mPictureBitmap.getWidth(),
-                                        mPictureBitmap.getHeight()
+                                        bitmap.getWidth(),
+                                        bitmap.getHeight()
                                     );
+
                                     callback.success(result);
                                 } catch (Exception exception) {
                                     callback.error(exception);
@@ -129,8 +126,7 @@ public class SelfieSegmentation {
                                 segmenter.close();
                                 callback.error(exception);
                             }
-                        );
-                }
+                        )
             );
     }
 }
