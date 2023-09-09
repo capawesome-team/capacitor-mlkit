@@ -33,6 +33,14 @@ export interface ProcessImageOptions {
    * @since 5.2.0
    */
   height?: number;
+
+  /**
+   * Sets the confidence threshold.
+   *
+   * @since 5.2.0
+   * @default 0.9
+   */
+  confidence?: number;
 }
 
 /**

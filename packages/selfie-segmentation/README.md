@@ -80,11 +80,12 @@ Only available on Android and iOS.
 
 #### ProcessImageOptions
 
-| Prop         | Type                | Description                       | Since |
-| ------------ | ------------------- | --------------------------------- | ----- |
-| **`path`**   | <code>string</code> | The local path to the image file. | 5.2.0 |
-| **`width`**  | <code>number</code> | Scale the image to this width.    | 5.2.0 |
-| **`height`** | <code>number</code> | Scale the image to this height.   | 5.2.0 |
+| Prop             | Type                | Description                       | Default          | Since |
+| ---------------- | ------------------- | --------------------------------- | ---------------- | ----- |
+| **`path`**       | <code>string</code> | The local path to the image file. |                  | 5.2.0 |
+| **`width`**      | <code>number</code> | Scale the image to this width.    |                  | 5.2.0 |
+| **`height`**     | <code>number</code> | Scale the image to this height.   |                  | 5.2.0 |
+| **`confidence`** | <code>number</code> | Sets the confidence threshold.    | <code>0.9</code> | 5.2.0 |
 
 </docgen-api>
 

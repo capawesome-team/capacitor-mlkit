@@ -6,14 +6,18 @@ import com.google.mlkit.vision.common.InputImage;
 public class ProcessImageOptions {
 
     private InputImage inputImage;
+    private Float confidence;
 
-    public ProcessImageOptions(InputImage inputImage, Integer width, Integer height) {
+    public ProcessImageOptions(InputImage inputImage, Integer width, Integer height, Float confidence) {
         this.inputImage = scaledImage(inputImage, width, height);
+
+        this.confidence = confidence;
     }
 
     public InputImage getInputImage() {
         return inputImage;
     }
+    public Float getConfidence() { return confidence; };
 
     private InputImage scaledImage(InputImage inputImage, Integer width, Integer height) {
         float scaleX = (width != null) ? width * 1f / inputImage.getWidth() : 0f;

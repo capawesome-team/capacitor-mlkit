@@ -39,6 +39,7 @@ public class SelfieSegmentation {
 
     public void processImage(ProcessImageOptions options, ProcessImageResultCallback callback) {
         InputImage inputImage = options.getInputImage();
+        Float threshold = options.getConfidence();
 
         SelfieSegmenterOptions.Builder builder = new SelfieSegmenterOptions.Builder();
         builder.setDetectorMode(SelfieSegmenterOptions.SINGLE_IMAGE_MODE);
@@ -75,7 +76,7 @@ public class SelfieSegmentation {
                                 for (int i = 0; i < pixels.capacity() >> 2; i++) {
                                     float confidence = mask.getFloat();
 
-                                    if (confidence >= 0.9f) {
+                                    if (confidence >= threshold) {
                                         // byte alpha = pixels.get((i << 2) + ALPHA);
                                         byte red = pixels.get((i << 2) + RED);
                                         byte green = pixels.get((i << 2) + GREEN);

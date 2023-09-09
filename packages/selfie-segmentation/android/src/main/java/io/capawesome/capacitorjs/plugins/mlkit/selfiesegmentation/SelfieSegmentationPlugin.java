@@ -40,12 +40,14 @@ public class SelfieSegmentationPlugin extends Plugin {
             Integer width = call.getInt("width", null);
             Integer height = call.getInt("height", null);
 
+            Float confidence = call.getFloat("confidence", 0.9f);
+
             InputImage image = implementation.createInputImageFromFilePath(path);
             if (image == null) {
                 call.reject(ERROR_LOAD_IMAGE_FAILED);
                 return;
             }
-            ProcessImageOptions options = new ProcessImageOptions(image, width, height);
+            ProcessImageOptions options = new ProcessImageOptions(image, width, height, confidence);
 
             implementation.processImage(
                 options,
