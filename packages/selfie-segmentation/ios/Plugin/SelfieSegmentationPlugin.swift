@@ -10,7 +10,8 @@ public class SelfieSegmentationPlugin: CAPPlugin {
     public let tag = "SelfieSegmentation"
 
     public let errorPathMissing = "path must be provided."
-    public let errorLoadImageFailed = "image could not be loaded."
+    public let errorLoadImageFailed = "The image could not be loaded."
+    public let errorWriteFileFailed = "The result could not be created."
 
     public let defaultConfidence: Float = 0.9
 
@@ -49,7 +50,11 @@ public class SelfieSegmentationPlugin: CAPPlugin {
             }
 
             if let result = result {
-                call.resolve(result.toJSObject())
+                do {
+                    call.resolve(try result.toJSObject())
+                } catch {
+                    call.reject(self.errorWriteFileFailed)
+                }
             }
         })
     }

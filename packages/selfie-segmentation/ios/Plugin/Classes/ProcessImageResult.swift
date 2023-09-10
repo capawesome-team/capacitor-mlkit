@@ -8,21 +8,19 @@ import Capacitor
         self.image = image
     }
 
-    func toJSObject() -> JSObject {
+    func toJSObject() throws -> JSObject {
         var result = JSObject()
 
         if let data = image.pngData() {
-            do {
-                let path = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0]
-                let name = "photo-"+UUID().uuidString+".png"
-                let url = path.appendingPathComponent(name)
-                try data.write(to: url)
-
-                result["path"] = url.absoluteString
-            } catch {
-                result["path"] = "data:image/png;base64," + data.base64EncodedString()
+            let uniqueFileNameWithExtension = UUID().uuidString + ".png"
+            var directory = URL(fileURLWithPath: NSTemporaryDirectory())
+            if let cachesDirectory = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first {
+                directory = cachesDirectory
             }
+            let url = directory.appendingPathComponent(uniqueFileNameWithExtension)
+            try data.write(to: url)
 
+            result["path"] = url.absoluteString
             result["width"] = Int(image.size.width)
             result["height"] = Int(image.size.height)
         }

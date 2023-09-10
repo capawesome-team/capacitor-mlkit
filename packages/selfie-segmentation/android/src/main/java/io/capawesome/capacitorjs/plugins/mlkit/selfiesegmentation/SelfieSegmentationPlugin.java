@@ -16,7 +16,7 @@ public class SelfieSegmentationPlugin extends Plugin {
 
     public static final String ERROR_PROCESS_IMAGE_CANCELED = "processImage canceled.";
     public static final String ERROR_PATH_MISSING = "path must be provided.";
-    public static final String ERROR_LOAD_IMAGE_FAILED = "image could not be loaded.";
+    public static final String ERROR_LOAD_IMAGE_FAILED = "The image could not be loaded.";
 
     public static final float CONFIDENCE = 0.9f;
 
