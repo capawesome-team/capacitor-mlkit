@@ -39,7 +39,7 @@ A working example can be found here: [robingenz/capacitor-mlkit-plugin-demo](htt
 import { FaceDetection, PerformanceMode, LandmarkMode, ContourMode, ClassificationMode } from '@capacitor-mlkit/face-detection';
 
 const processImage = async () => {
-  await FaceDetection.processImage({
+  const { faces } = await FaceDetection.processImage({
     path: 'path/to/image.jpg',
     performanceMode: PerformanceMode.Fast,
     landmarkMode: LandmarkMode.All,
@@ -48,6 +48,7 @@ const processImage = async () => {
     minFaceSize: 0.1,
     enableTracking: false,
   });
+  return faces;
 };
 ```
 

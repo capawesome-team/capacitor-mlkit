@@ -28,8 +28,12 @@ A working example can be found here: [robingenz/capacitor-mlkit-plugin-demo](htt
 ```typescript
 import { SelfieSegmentation } from '@capacitor-mlkit/selfie-segmentation';
 
-const echo = async () => {
-  await SelfieSegmentation.echo();
+const processImage = async () => {
+  const { path } = await SelfieSegmentation.processImage({
+    path: 'path/to/image.jpg',
+    confidence: 0.7,
+  });
+  return path;
 };
 ```
 

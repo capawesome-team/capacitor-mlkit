@@ -54,7 +54,6 @@ export interface ProcessImageResult {
    * @since 5.2.0
    */
   path: string;
-
   /**
    * Returns the width of the image file.
    *
