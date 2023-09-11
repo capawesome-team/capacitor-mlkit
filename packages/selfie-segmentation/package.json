@@ -1,7 +1,7 @@
 {
-  "name": "@capacitor-mlkit/face-detection",
+  "name": "@capacitor-mlkit/selfie-segmentation",
   "version": "5.1.0",
-  "description": "Capacitor plugin for ML Kit Face Detection.",
+  "description": "Capacitor plugin for ML Kit Selfie Segmentation.",
   "main": "dist/plugin.cjs.js",
   "module": "dist/esm/index.js",
   "types": "dist/esm/index.d.ts",
@@ -11,7 +11,7 @@
     "android/build.gradle",
     "dist/",
     "ios/Plugin/",
-    "CapacitorMlkitFaceDetection.podspec"
+    "CapacitorMlkitSelfieSegmentation.podspec"
   ],
   "author": "Robin Genz <mail@robingenz.dev>",
   "license": "Apache-2.0",
@@ -48,7 +48,7 @@
     "eslint": "eslint . --ext ts",
     "prettier": "prettier \"**/*.{css,html,ts,js,java}\"",
     "swiftlint": "node-swiftlint",
-    "docgen": "docgen --api FaceDetectionPlugin --output-readme README.md --output-json dist/docs.json",
+    "docgen": "docgen --api SelfieSegmentationPlugin --output-readme README.md --output-json dist/docs.json",
     "build": "npm run clean && npm run docgen && tsc && rollup -c rollup.config.js",
     "clean": "rimraf ./dist",
     "watch": "tsc --watch",

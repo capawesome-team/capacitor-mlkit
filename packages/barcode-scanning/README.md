@@ -1,6 +1,6 @@
 # @capacitor-mlkit/barcode-scanning
 
-Unofficial Capacitor plugin for [ML Kit Barcode scanning](https://developers.google.com/ml-kit/vision/barcode-scanning).[^1][^2]
+Unofficial Capacitor plugin for [ML Kit Barcode Scanning](https://developers.google.com/ml-kit/vision/barcode-scanning).[^1][^2]
 
 ## Features
 
