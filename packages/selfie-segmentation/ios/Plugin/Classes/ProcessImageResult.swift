@@ -1,47 +1,30 @@
 import Foundation
 import Capacitor
-import MLKitVision
-import MLKitSegmentationSelfie
 
 @objc class ProcessImageResult: NSObject {
-    let segmentationMask: SegmentationMask
+    let image: UIImage
 
-    init(segmentationMask: SegmentationMask) {
-        self.segmentationMask = segmentationMask
+    init(image: UIImage) {
+        self.image = image
     }
 
-    func toJSObject() -> JSObject {
-        let (maskResult, maskWidth, maskHeight) = createMaskResult(mask: segmentationMask)
-
+    func toJSObject() throws -> JSObject {
         var result = JSObject()
-        result["mask"] = maskResult
-        result["width"] = maskWidth
-        result["height"] = maskHeight
 
-        return result
-    }
-
-    private func createMaskResult(mask: SegmentationMask) -> (JSArray, Int, Int) {
-        var result = JSArray()
-
-        let maskWidth = CVPixelBufferGetWidth(mask.buffer)
-        let maskHeight = CVPixelBufferGetHeight(mask.buffer)
-
-        CVPixelBufferLockBaseAddress(mask.buffer, CVPixelBufferLockFlags.readOnly)
-        let maskBytesPerRow = CVPixelBufferGetBytesPerRow(mask.buffer)
-        var maskAddress =
-            CVPixelBufferGetBaseAddress(mask.buffer)!.bindMemory(
-                to: Float32.self, capacity: maskBytesPerRow * maskHeight)
-
-        for _ in 0...(maskHeight - 1) {
-            for col in 0...(maskWidth - 1) {
-                // Gets the confidence of the pixel in the mask being in the foreground.
-                let foregroundConfidence: Float32 = maskAddress[col]
-                result.append(foregroundConfidence)
+        if let data = image.pngData() {
+            let uniqueFileNameWithExtension = UUID().uuidString + ".png"
+            var directory = URL(fileURLWithPath: NSTemporaryDirectory())
+            if let cachesDirectory = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first {
+                directory = cachesDirectory
             }
-            maskAddress += maskBytesPerRow / MemoryLayout<Float32>.size
+            let url = directory.appendingPathComponent(uniqueFileNameWithExtension)
+            try data.write(to: url)
+
+            result["path"] = url.absoluteString
+            result["width"] = Int(image.size.width)
+            result["height"] = Int(image.size.height)
         }
 
-        return (result, maskWidth, maskHeight)
+        return result
     }
 }
