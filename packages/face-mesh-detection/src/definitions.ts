@@ -1,3 +1,11 @@
 export interface FaceMeshDetectionPlugin {
-  echo(options: { value: string }): Promise<{ value: string }>;
+  processImage(options: ProcessImageOptions): Promise<ProcessImageResult>;
+}
+
+export interface ProcessImageOptions {
+  path: string;
+}
+
+export interface ProcessImageResult {
+  faceMeshes: any[];
 }
