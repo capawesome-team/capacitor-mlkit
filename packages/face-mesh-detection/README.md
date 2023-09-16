@@ -173,10 +173,10 @@ This plugin uses the [Google ML Kit](https://developers.google.com/ml-kit):
 
 ## Changelog
 
-See [CHANGELOG.md](https://github.com/capawesome-team/capacitor-mlkit/blob/main/packages/face-detection/CHANGELOG.md).
+See [CHANGELOG.md](https://github.com/capawesome-team/capacitor-mlkit/blob/main/packages/face-mesh-detection/CHANGELOG.md).
 
 ## License
 
-See [LICENSE](https://github.com/capawesome-team/capacitor-mlkit/blob/main/packages/face-detection/LICENSE).
+See [LICENSE](https://github.com/capawesome-team/capacitor-mlkit/blob/main/packages/face-mesh-detection/LICENSE).
 
 [^1]: This project is not affiliated with, endorsed by, sponsored by, or approved by Google LLC or any of their affiliates or subsidiaries.
