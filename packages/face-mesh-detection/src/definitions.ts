@@ -96,7 +96,7 @@ export interface FaceMesh {
    *
    * @since 5.3.0
    */
-  points?: FaceMeshPoint[];
+  faceMeshPoints?: FaceMeshPoint[];
   /**
    * Returns a list of `Triangle` representing logical triangle surfaces of detected face.
    *
