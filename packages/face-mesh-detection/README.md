@@ -41,6 +41,7 @@ const echo = async () => {
 
 * [`processImage(...)`](#processimage)
 * [Interfaces](#interfaces)
+* [Enums](#enums)
 
 </docgen-index>
 
@@ -53,11 +54,17 @@ const echo = async () => {
 processImage(options: ProcessImageOptions) => Promise<ProcessImageResult>
 ```
 
+Detects face mesh from the supplied image.
+
+Only available on Android.
+
 | Param         | Type                                                                |
 | ------------- | ------------------------------------------------------------------- |
 | **`options`** | <code><a href="#processimageoptions">ProcessImageOptions</a></code> |
 
 **Returns:** <code>Promise&lt;<a href="#processimageresult">ProcessImageResult</a>&gt;</code>
+
+**Since:** 5.3.0
 
 --------------------
 
@@ -67,16 +74,92 @@ processImage(options: ProcessImageOptions) => Promise<ProcessImageResult>
 
 #### ProcessImageResult
 
-| Prop             | Type               |
-| ---------------- | ------------------ |
-| **`faceMeshes`** | <code>any[]</code> |
+| Prop            | Type                    | Description              | Since |
+| --------------- | ----------------------- | ------------------------ | ----- |
+| **`faceMeshs`** | <code>FaceMesh[]</code> | The detected face meshs. | 5.3.0 |
+
+
+#### FaceMesh
+
+Represents a face mesh detected by `FaceMeshDetector`.
+
+When `BoundingBoxOnly` is selected, <a href="#facemesh">`FaceMesh`</a> only contains valid bounding box.
+
+When <a href="#facemesh">`FaceMesh`</a> is selected, <a href="#facemesh">`FaceMesh`</a> also contains a group of 468 3D face mesh points and related triangle information.
+Each point is represented by <a href="#facemeshpoint">`FaceMeshPoint`</a> describing a specific position in detected face.
+The triangle information is a group of 3 `FaceMeshPoint`s representing a valid surface on Face (e.g. a valid small surface on nose tip).
+
+| Prop            | Type                                  | Description                                                                                                                                                                                                                                                                                                                                        | Since |
+| --------------- | ------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
+| **`bounds`**    | <code><a href="#rect">Rect</a></code> | Returns the axis-aligned bounding rectangle of the detected face mesh.                                                                                                                                                                                                                                                                             | 5.3.0 |
+| **`points`**    | <code>FaceMeshPoint[]</code>          | Returns a list of <a href="#facemeshpoint">`FaceMeshPoint`</a> representing the whole detected face.                                                                                                                                                                                                                                               | 5.3.0 |
+| **`triangles`** | <code>Triangle[]</code>               | Returns a list of <a href="#triangle">`Triangle`</a> representing logical triangle surfaces of detected face. Each <a href="#triangle">`Triangle`</a> contains 3 <a href="#facemeshpoint">`FaceMeshPoint`</a>, representing 3 points of the triangle surface. The sequence of the 3 points are constant and always counter clockwise in face mesh. | 5.3.0 |
+
+
+#### Rect
+
+<a href="#rect">Rect</a> holds four integer coordinates for a rectangle.
+
+| Prop         | Type                | Description                                         | Since |
+| ------------ | ------------------- | --------------------------------------------------- | ----- |
+| **`left`**   | <code>number</code> | The X coordinate of the left side of the rectangle  | 5.3.0 |
+| **`top`**    | <code>number</code> | The Y coordinate of the top of the rectangle        | 5.3.0 |
+| **`right`**  | <code>number</code> | The X coordinate of the right side of the rectangle | 5.3.0 |
+| **`bottom`** | <code>number</code> | The Y coordinate of the bottom of the rectangle     | 5.3.0 |
+
+
+#### FaceMeshPoint
+
+Represents a 3D point in face mesh.
+
+The index is an unique ID meaning a fixed position on face, ranging from 0 to 467.
+
+In <a href="#point3d">`Point3D`</a>, `x` and `y` are pixel location of detected face in `InputImage`.
+`z` is also scaled to image size, while the origin will be somewhere in the center of all 468 face mesh points.
+
+| Prop           | Type                   | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | Since |
+| -------------- | ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
+| **`index`**    | <code>number</code>    | Gets the index of the face mesh point, ranging from 0 to 467. For each specific point, the index is a constant value.                                                                                                                                                                                                                                                                                                                                                                                       | 5.3.0 |
+| **`position`** | <code>Point3D[]</code> | Gets a 3D point in face mesh. Inside <a href="#point3d">`Point3D`</a>, `X` and `Y` means a 2D position in original image. More information on the `Z` value: - The unit of measure for the `Z` value is the same as `X` and `Y`. - The smaller the `Z` value, the closer that landmark is to the camera. - The `Z` origin is approximately at the center of all 468 face mesh points. `Z` value will be negative if the point is close to camera and will be positive if the point is away from the camera. | 5.3.0 |
+
+
+#### Point3D
+
+Represents a 3D point.
+
+| Prop    | Type                | Description                       | Since |
+| ------- | ------------------- | --------------------------------- | ----- |
+| **`x`** | <code>number</code> | Returns the X value of the point. | 5.3.0 |
+| **`y`** | <code>number</code> | Returns the Y value of the point. | 5.3.0 |
+| **`z`** | <code>number</code> | Returns the Z value of the point. | 5.3.0 |
+
+
+#### Triangle
+
+Represents a triangle with 3 generic points.
+
+| Prop         | Type                         | Description                                                       | Since |
+| ------------ | ---------------------------- | ----------------------------------------------------------------- | ----- |
+| **`points`** | <code>FaceMeshPoint[]</code> | Returns all points inside the <a href="#triangle">`Triangle`</a>. | 5.3.0 |
 
 
 #### ProcessImageOptions
 
-| Prop       | Type                |
-| ---------- | ------------------- |
-| **`path`** | <code>string</code> |
+| Prop          | Type                                        | Description                                                                                                                                                                                                                                                                                                                                                                                                                          | Default                       | Since |
+| ------------- | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------- | ----- |
+| **`path`**    | <code>string</code>                         | The local path to the image file.                                                                                                                                                                                                                                                                                                                                                                                                    |                               | 5.3.0 |
+| **`useCase`** | <code><a href="#usecase">UseCase</a></code> | Sets the use case. When `BoundingBoxOnly` is selected, the returned <a href="#facemesh">`FaceMesh`</a> only contains bounding box. When <a href="#facemesh">`FaceMesh`</a> is selected, the returned <a href="#facemesh">`FaceMesh`</a> contains bounding box as well as 468 <a href="#facemeshpoint">`FaceMeshPoint`</a> and triangle information. It detects at most 2 faces in this case and it is slower than `BoundingBoxOnly`. | <code>UseCase.FaceMesh</code> | 5.3.0 |
+
+
+### Enums
+
+
+#### UseCase
+
+| Members               | Value          | Description                                                                                 | Since |
+| --------------------- | -------------- | ------------------------------------------------------------------------------------------- | ----- |
+| **`BoundingBoxOnly`** | <code>0</code> | Return bounding box for detected face.                                                      | 5.3.0 |
+| **`FaceMesh`**        | <code>1</code> | Return face mesh info for detected face. It returns at most 2 `FaceMesh`s in this use case. | 5.3.0 |
 
 </docgen-api>
 
