@@ -28,10 +28,14 @@ A working example can be found here: [robingenz/capacitor-mlkit-plugin-demo](htt
 ## Usage
 
 ```typescript
-import { FaceMeshDetection } from '@capacitor-mlkit/face-mesh-detection';
+import { FaceMeshDetection, UseCase } from '@capacitor-mlkit/face-mesh-detection';
 
-const echo = async () => {
-  await FaceMeshDetection.echo();
+const processImage = async () => {
+  const { faceMeshs } = await FaceMeshDetection.processImage({
+    path: 'path/to/image.jpg',
+    useCase: UseCase.FaceMesh,
+  });
+  return faceMeshs;
 };
 ```
 
@@ -101,12 +105,12 @@ The triangle information is a group of 3 `FaceMeshPoint`s representing a valid s
 
 <a href="#rect">Rect</a> holds four integer coordinates for a rectangle.
 
-| Prop         | Type                | Description                                         | Since |
-| ------------ | ------------------- | --------------------------------------------------- | ----- |
-| **`left`**   | <code>number</code> | The X coordinate of the left side of the rectangle  | 5.3.0 |
-| **`top`**    | <code>number</code> | The Y coordinate of the top of the rectangle        | 5.3.0 |
-| **`right`**  | <code>number</code> | The X coordinate of the right side of the rectangle | 5.3.0 |
-| **`bottom`** | <code>number</code> | The Y coordinate of the bottom of the rectangle     | 5.3.0 |
+| Prop         | Type                | Description                                          | Since |
+| ------------ | ------------------- | ---------------------------------------------------- | ----- |
+| **`left`**   | <code>number</code> | The X coordinate of the left side of the rectangle.  | 5.3.0 |
+| **`top`**    | <code>number</code> | The Y coordinate of the top of the rectangle.        | 5.3.0 |
+| **`right`**  | <code>number</code> | The X coordinate of the right side of the rectangle. | 5.3.0 |
+| **`bottom`** | <code>number</code> | The Y coordinate of the bottom of the rectangle.     | 5.3.0 |
 
 
 #### Contours

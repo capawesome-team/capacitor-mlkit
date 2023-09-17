@@ -19,7 +19,6 @@ export interface ProcessImageOptions {
    * @since 5.3.0
    */
   path: string;
-
   /**
    * Sets the use case.
    *
@@ -90,14 +89,12 @@ export interface FaceMesh {
    * @since 5.3.0
    */
   bounds: Rect;
-
   /**
    * Returns contours with a list of `FaceMeshPoint` representing the detected face.
    *
    * @since 5.3.0
    */
   contours?: Contours;
-
   /**
    * Returns a list of `FaceMeshPoint` representing the whole detected face.
    *
@@ -123,25 +120,25 @@ export interface FaceMesh {
  */
 export interface Rect {
   /**
-   * The X coordinate of the left side of the rectangle
+   * The X coordinate of the left side of the rectangle.
    *
    * @since 5.3.0
    */
   left: number;
   /**
-   * The Y coordinate of the top of the rectangle
+   * The Y coordinate of the top of the rectangle.
    *
    * @since 5.3.0
    */
   top: number;
   /**
-   * The X coordinate of the right side of the rectangle
+   * The X coordinate of the right side of the rectangle.
    *
    * @since 5.3.0
    */
   right: number;
   /**
-   * The Y coordinate of the bottom of the rectangle
+   * The Y coordinate of the bottom of the rectangle.
    *
    * @since 5.3.0
    */
