@@ -265,25 +265,25 @@ export interface Face {
  */
 export interface Rect {
   /**
-   * The X coordinate of the left side of the rectangle
+   * The X coordinate of the left side of the rectangle.
    *
    * @since 5.1.0
    */
   left: number;
   /**
-   * The Y coordinate of the top of the rectangle
+   * The Y coordinate of the top of the rectangle.
    *
    * @since 5.1.0
    */
   top: number;
   /**
-   * The X coordinate of the right side of the rectangle
+   * The X coordinate of the right side of the rectangle.
    *
    * @since 5.1.0
    */
   right: number;
   /**
-   * The Y coordinate of the bottom of the rectangle
+   * The Y coordinate of the bottom of the rectangle.
    *
    * @since 5.1.0
    */

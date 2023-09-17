@@ -118,12 +118,12 @@ Represents a face detected by `FaceDetector`.
 
 <a href="#rect">Rect</a> holds four integer coordinates for a rectangle.
 
-| Prop         | Type                | Description                                         | Since |
-| ------------ | ------------------- | --------------------------------------------------- | ----- |
-| **`left`**   | <code>number</code> | The X coordinate of the left side of the rectangle  | 5.1.0 |
-| **`top`**    | <code>number</code> | The Y coordinate of the top of the rectangle        | 5.1.0 |
-| **`right`**  | <code>number</code> | The X coordinate of the right side of the rectangle | 5.1.0 |
-| **`bottom`** | <code>number</code> | The Y coordinate of the bottom of the rectangle     | 5.1.0 |
+| Prop         | Type                | Description                                          | Since |
+| ------------ | ------------------- | ---------------------------------------------------- | ----- |
+| **`left`**   | <code>number</code> | The X coordinate of the left side of the rectangle.  | 5.1.0 |
+| **`top`**    | <code>number</code> | The Y coordinate of the top of the rectangle.        | 5.1.0 |
+| **`right`**  | <code>number</code> | The X coordinate of the right side of the rectangle. | 5.1.0 |
+| **`bottom`** | <code>number</code> | The Y coordinate of the bottom of the rectangle.     | 5.1.0 |
 
 
 #### FaceLandmark
