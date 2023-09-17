@@ -9,10 +9,7 @@ import Capacitor
 public class FaceMeshDetectionPlugin: CAPPlugin {
     private let implementation = FaceMeshDetection()
 
-    @objc func echo(_ call: CAPPluginCall) {
-        let value = call.getString("value") ?? ""
-        call.resolve([
-            "value": implementation.echo(value)
-        ])
+    @objc func processImage(_ call: CAPPluginCall) {
+        call.reject("Not available on iOS")
     }
 }
