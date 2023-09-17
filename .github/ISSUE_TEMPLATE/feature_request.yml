@@ -11,6 +11,8 @@ body:
       options:
         - label: Barcode Scanning
         - label: Face Detection
+        - label: Face Mesh Detection
+        - label: Selfie Segmentation
         - label: Translation
   - type: textarea
     attributes:
