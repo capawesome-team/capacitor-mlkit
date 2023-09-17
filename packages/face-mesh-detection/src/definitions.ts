@@ -63,7 +63,7 @@ export enum UseCase {
   BoundingBoxOnly = 0,
   /**
    * Return face mesh info for detected face.
-   * It returns at most 2 `FaceMesh`s in this use case.
+   * It detects at most 2 faces in this use case.
    *
    * @since 5.3.0
    * @see https://developers.google.com/android/reference/com/google/mlkit/vision/facemesh/FaceMeshDetectorOptions#public-static-final-int-face_mesh
@@ -230,11 +230,11 @@ export enum ContourType {
    */
   FaceOval = 1,
   /**
-   * The outline of the subject's left eye cavity.
+   * The top outline of the subject's left eyebrow.
    *
    * @since 5.3.0
    */
-  LeftEye = 6,
+  LeftEyebrowTop = 2,
   /**
    * The bottom outline of the subject's left eyebrow.
    *
@@ -242,35 +242,11 @@ export enum ContourType {
    */
   LeftEyebrowBottom = 3,
   /**
-   * The top outline of the subject's left eyebrow.
+   * The top outline of the subject's right eyebrow.
    *
    * @since 5.3.0
    */
-  LeftEyebrowTop = 2,
-  /**
-   * The bottom outline of the subject's lower lip.
-   *
-   * @since 5.3.0
-   */
-  LowerLipBottom = 11,
-  /**
-   * The top outline of the subject's lower lip.
-   *
-   * @since 5.3.0
-   */
-  LowerLipTop = 10,
-  /**
-   * The outline of the subject's nose bridge.
-   *
-   * @since 5.3.0
-   */
-  NoseBridge = 12,
-  /**
-   * The outline of the subject's right eye cavity.
-   *
-   * @since 5.3.0
-   */
-  RightEye = 7,
+  RightEyebrowTop = 4,
   /**
    * The bottom outline of the subject's right eyebrow.
    *
@@ -278,11 +254,23 @@ export enum ContourType {
    */
   RightEyebrowBottom = 5,
   /**
-   * The top outline of the subject's right eyebrow.
+   * The outline of the subject's left eye cavity.
    *
    * @since 5.3.0
    */
-  RightEyebrowTop = 4,
+  LeftEye = 6,
+  /**
+   * The outline of the subject's right eye cavity.
+   *
+   * @since 5.3.0
+   */
+  RightEye = 7,
+  /**
+   * The top outline of the subject's upper lip.
+   *
+   * @since 5.3.0
+   */
+  UpperLipTop = 8,
   /**
    * The bottom outline of the subject's upper lip.
    *
@@ -290,9 +278,21 @@ export enum ContourType {
    */
   UpperLipBottom = 9,
   /**
-   * The top outline of the subject's upper lip.
+   * The top outline of the subject's lower lip.
    *
    * @since 5.3.0
    */
-  UpperLipTop = 8,
+  LowerLipTop = 10,
+  /**
+   * The bottom outline of the subject's lower lip.
+   *
+   * @since 5.3.0
+   */
+  LowerLipBottom = 11,
+  /**
+   * The outline of the subject's nose bridge.
+   *
+   * @since 5.3.0
+   */
+  NoseBridge = 12,
 }

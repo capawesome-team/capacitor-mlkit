@@ -18,7 +18,7 @@ export class FaceMeshDetectionWeb
 
   private createUnavailableException(): CapacitorException {
     return new CapacitorException(
-      'This Selfie Segmentation plugin method is not available on this platform.',
+      'This Face Mesh Detection plugin method is not available on this platform.',
       ExceptionCode.Unavailable,
     );
   }

@@ -156,10 +156,10 @@ Represents a triangle with 3 generic points.
 
 #### UseCase
 
-| Members               | Value          | Description                                                                                 | Since |
-| --------------------- | -------------- | ------------------------------------------------------------------------------------------- | ----- |
-| **`BoundingBoxOnly`** | <code>0</code> | Return bounding box for detected face.                                                      | 5.3.0 |
-| **`FaceMesh`**        | <code>1</code> | Return face mesh info for detected face. It returns at most 2 `FaceMesh`s in this use case. | 5.3.0 |
+| Members               | Value          | Description                                                                           | Since |
+| --------------------- | -------------- | ------------------------------------------------------------------------------------- | ----- |
+| **`BoundingBoxOnly`** | <code>0</code> | Return bounding box for detected face.                                                | 5.3.0 |
+| **`FaceMesh`**        | <code>1</code> | Return face mesh info for detected face. It detects at most 2 faces in this use case. | 5.3.0 |
 
 </docgen-api>
 
