@@ -89,11 +89,12 @@ When <a href="#facemesh">`FaceMesh`</a> is selected, <a href="#facemesh">`FaceMe
 Each point is represented by <a href="#facemeshpoint">`FaceMeshPoint`</a> describing a specific position in detected face.
 The triangle information is a group of 3 `FaceMeshPoint`s representing a valid surface on Face (e.g. a valid small surface on nose tip).
 
-| Prop                 | Type                                  | Description                                                                                                                                                                                                                                                                                                                                        | Since |
-| -------------------- | ------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
-| **`bounds`**         | <code><a href="#rect">Rect</a></code> | Returns the axis-aligned bounding rectangle of the detected face mesh.                                                                                                                                                                                                                                                                             | 5.3.0 |
-| **`faceMeshPoints`** | <code>FaceMeshPoint[]</code>          | Returns a list of <a href="#facemeshpoint">`FaceMeshPoint`</a> representing the whole detected face.                                                                                                                                                                                                                                               | 5.3.0 |
-| **`triangles`**      | <code>Triangle[]</code>               | Returns a list of <a href="#triangle">`Triangle`</a> representing logical triangle surfaces of detected face. Each <a href="#triangle">`Triangle`</a> contains 3 <a href="#facemeshpoint">`FaceMeshPoint`</a>, representing 3 points of the triangle surface. The sequence of the 3 points are constant and always counter clockwise in face mesh. | 5.3.0 |
+| Prop                 | Type                                          | Description                                                                                                                                                                                                                                                                                                                                        | Since |
+| -------------------- | --------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
+| **`bounds`**         | <code><a href="#rect">Rect</a></code>         | Returns the axis-aligned bounding rectangle of the detected face mesh.                                                                                                                                                                                                                                                                             | 5.3.0 |
+| **`contours`**       | <code><a href="#contours">Contours</a></code> | Returns contours with a list of <a href="#facemeshpoint">`FaceMeshPoint`</a> representing the detected face.                                                                                                                                                                                                                                       | 5.3.0 |
+| **`faceMeshPoints`** | <code>FaceMeshPoint[]</code>                  | Returns a list of <a href="#facemeshpoint">`FaceMeshPoint`</a> representing the whole detected face.                                                                                                                                                                                                                                               | 5.3.0 |
+| **`triangles`**      | <code>Triangle[]</code>                       | Returns a list of <a href="#triangle">`Triangle`</a> representing logical triangle surfaces of detected face. Each <a href="#triangle">`Triangle`</a> contains 3 <a href="#facemeshpoint">`FaceMeshPoint`</a>, representing 3 points of the triangle surface. The sequence of the 3 points are constant and always counter clockwise in face mesh. | 5.3.0 |
 
 
 #### Rect
@@ -108,6 +109,26 @@ The triangle information is a group of 3 `FaceMeshPoint`s representing a valid s
 | **`bottom`** | <code>number</code> | The Y coordinate of the bottom of the rectangle     | 5.3.0 |
 
 
+#### Contours
+
+Represents contours with their face mesh points.
+
+| Prop                     | Type                         | Description                                              | Since |
+| ------------------------ | ---------------------------- | -------------------------------------------------------- | ----- |
+| **`faceOval`**           | <code>FaceMeshPoint[]</code> | Returns all points for the `FaceOval` contour.           | 5.3.0 |
+| **`leftEyebrowTop`**     | <code>FaceMeshPoint[]</code> | Returns all points for the `LeftEyebrowTop` contour.     | 5.3.0 |
+| **`leftEyebrowBottom`**  | <code>FaceMeshPoint[]</code> | Returns all points for the `LeftEyebrowBottom` contour.  | 5.3.0 |
+| **`rightEyebrowTop`**    | <code>FaceMeshPoint[]</code> | Returns all points for the `RightEyebrowTop` contour.    | 5.3.0 |
+| **`rightEyebrowBottom`** | <code>FaceMeshPoint[]</code> | Returns all points for the `RightEyebrowBottom` contour. | 5.3.0 |
+| **`leftEye`**            | <code>FaceMeshPoint[]</code> | Returns all points for the `LeftEye` contour.            | 5.3.0 |
+| **`rightEye`**           | <code>FaceMeshPoint[]</code> | Returns all points for the `RightEye` contour.           | 5.3.0 |
+| **`upperLipTop`**        | <code>FaceMeshPoint[]</code> | Returns all points for the `UpperLipTop` contour.        | 5.3.0 |
+| **`upperLipBottom`**     | <code>FaceMeshPoint[]</code> | Returns all points for the `UpperLipBottom` contour.     | 5.3.0 |
+| **`lowerLipTop`**        | <code>FaceMeshPoint[]</code> | Returns all points for the `LowerLipTop` contour.        | 5.3.0 |
+| **`lowerLipBottom`**     | <code>FaceMeshPoint[]</code> | Returns all points for the `LowerLipBottom` contour.     | 5.3.0 |
+| **`noseBridge`**         | <code>FaceMeshPoint[]</code> | Returns all points for the `NoseBridge` contour.         | 5.3.0 |
+
+
 #### FaceMeshPoint
 
 Represents a 3D point in face mesh.
@@ -117,10 +138,10 @@ The index is an unique ID meaning a fixed position on face, ranging from 0 to 46
 In <a href="#point3d">`Point3D`</a>, `x` and `y` are pixel location of detected face in `InputImage`.
 `z` is also scaled to image size, while the origin will be somewhere in the center of all 468 face mesh points.
 
-| Prop           | Type                   | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | Since |
-| -------------- | ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
-| **`index`**    | <code>number</code>    | Gets the index of the face mesh point, ranging from 0 to 467. For each specific point, the index is a constant value.                                                                                                                                                                                                                                                                                                                                                                                       | 5.3.0 |
-| **`position`** | <code>Point3D[]</code> | Gets a 3D point in face mesh. Inside <a href="#point3d">`Point3D`</a>, `X` and `Y` means a 2D position in original image. More information on the `Z` value: - The unit of measure for the `Z` value is the same as `X` and `Y`. - The smaller the `Z` value, the closer that landmark is to the camera. - The `Z` origin is approximately at the center of all 468 face mesh points. `Z` value will be negative if the point is close to camera and will be positive if the point is away from the camera. | 5.3.0 |
+| Prop        | Type                                        | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | Since |
+| ----------- | ------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
+| **`index`** | <code>number</code>                         | Gets the index of the face mesh point, ranging from 0 to 467. For each specific point, the index is a constant value.                                                                                                                                                                                                                                                                                                                                                                                       | 5.3.0 |
+| **`point`** | <code><a href="#point3d">Point3D</a></code> | Gets a 3D point in face mesh. Inside <a href="#point3d">`Point3D`</a>, `X` and `Y` means a 2D position in original image. More information on the `Z` value: - The unit of measure for the `Z` value is the same as `X` and `Y`. - The smaller the `Z` value, the closer that landmark is to the camera. - The `Z` origin is approximately at the center of all 468 face mesh points. `Z` value will be negative if the point is close to camera and will be positive if the point is away from the camera. | 5.3.0 |
 
 
 #### Point3D

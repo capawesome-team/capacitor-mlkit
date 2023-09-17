@@ -13,6 +13,22 @@ public class ProcessImageResult {
 
     private final List<FaceMesh> faceMeshs;
 
+    @FaceMesh.ContourType
+    private final int[] contourTypes = {
+        FaceMesh.FACE_OVAL,
+        FaceMesh.LEFT_EYEBROW_TOP,
+        FaceMesh.LEFT_EYEBROW_BOTTOM,
+        FaceMesh.RIGHT_EYEBROW_TOP,
+        FaceMesh.RIGHT_EYEBROW_BOTTOM,
+        FaceMesh.LEFT_EYE,
+        FaceMesh.RIGHT_EYE,
+        FaceMesh.UPPER_LIP_TOP,
+        FaceMesh.UPPER_LIP_BOTTOM,
+        FaceMesh.LOWER_LIP_TOP,
+        FaceMesh.LOWER_LIP_BOTTOM,
+        FaceMesh.NOSE_BRIDGE
+    };
+
     public ProcessImageResult(List<FaceMesh> faceMeshs) {
         this.faceMeshs = faceMeshs;
     }
@@ -41,6 +57,26 @@ public class ProcessImageResult {
         JSObject boundsResult = this.createBoundsResult(boundingBox);
         result.put("bounds", boundsResult);
 
+        JSObject contoursResult = new JSObject();
+        for (int contourType : contourTypes) {
+            JSArray faceMeshPointsResult = new JSArray();
+            List<FaceMeshPoint> faceMeshPoints = faceMesh.getPoints(contourType);
+            for (FaceMeshPoint faceMeshPoint : faceMeshPoints) {
+                int index = faceMeshPoint.getIndex();
+                PointF3D position = faceMeshPoint.getPosition();
+
+                JSObject faceMeshPointResult = this.createFaceMeshPointResult(index, position);
+                faceMeshPointsResult.put(faceMeshPointResult);
+            }
+
+            if (faceMeshPointsResult.length() > 0) {
+                contoursResult.put(contourType(contourType), faceMeshPointsResult);
+            }
+        }
+        if (contoursResult.length() > 0) {
+            result.put("contours", contoursResult);
+        }
+
         JSArray faceMeshPointsResult = new JSArray();
         List<FaceMeshPoint> faceMeshPoints = faceMesh.getAllPoints();
         for (FaceMeshPoint faceMeshPoint : faceMeshPoints) {
@@ -53,15 +89,6 @@ public class ProcessImageResult {
         if (faceMeshPointsResult.length() > 0) {
             result.put("faceMeshPoints", faceMeshPointsResult);
         }
-
-        //        JSArray contoursResult = new JSArray();
-        //        if (pointsResult.length() > 0) {
-        //            JSObject contourResult = this.createContourResult(contour, pointsResult);
-        //            contoursResult.put(contourResult);
-        //        }
-        //        if (contoursResult.length() > 0) {
-        //            result.put("contours", contoursResult);
-        //        }
 
         JSArray trianglesResult = new JSArray();
         List<Triangle<FaceMeshPoint>> triangles = faceMesh.getAllTriangles();
@@ -102,21 +129,46 @@ public class ProcessImageResult {
     private JSObject createFaceMeshPointResult(int index, PointF3D point) {
         JSObject result = new JSObject();
         result.put("index", index);
-        result.put("position", createPositionResult(point));
+        result.put("point", createPointResult(point));
         return result;
     }
 
-    private JSObject createPositionResult(PointF3D point) {
+    private JSObject createPointResult(PointF3D point) {
         JSObject result = new JSObject();
         result.put("x", point.getX());
         result.put("y", point.getY());
         result.put("z", point.getZ());
         return result;
     }
-    //    private JSObject createContourResult(FaceContour contour, JSArray pointsResult) {
-    //        JSObject result = new JSObject();
-    //        result.put("type", contour.getFaceContourType());
-    //        result.put("points", pointsResult);
-    //        return result;
-    //    }
+
+    private String contourType(@FaceMesh.ContourType int contourType) {
+        switch (contourType) {
+            case FaceMesh.FACE_OVAL:
+                return "faceOval";
+            case FaceMesh.LEFT_EYEBROW_TOP:
+                return "leftEyebrowTop";
+            case FaceMesh.LEFT_EYEBROW_BOTTOM:
+                return "leftEyebrowBottom";
+            case FaceMesh.RIGHT_EYEBROW_TOP:
+                return "rightEyebrowTop";
+            case FaceMesh.RIGHT_EYEBROW_BOTTOM:
+                return "rightEyebrowBottom";
+            case FaceMesh.LEFT_EYE:
+                return "leftEye";
+            case FaceMesh.RIGHT_EYE:
+                return "rightEye";
+            case FaceMesh.UPPER_LIP_TOP:
+                return "upperLipTop";
+            case FaceMesh.UPPER_LIP_BOTTOM:
+                return "upperLipBottom";
+            case FaceMesh.LOWER_LIP_TOP:
+                return "lowerLipTop";
+            case FaceMesh.LOWER_LIP_BOTTOM:
+                return "lowerLipBottom";
+            case FaceMesh.NOSE_BRIDGE:
+                return "noseBridge";
+            default:
+                return "";
+        }
+    }
 }

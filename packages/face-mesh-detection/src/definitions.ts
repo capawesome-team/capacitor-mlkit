@@ -92,6 +92,13 @@ export interface FaceMesh {
   bounds: Rect;
 
   /**
+   * Returns contours with a list of `FaceMeshPoint` representing the detected face.
+   *
+   * @since 5.3.0
+   */
+  contours?: Contours;
+
+  /**
    * Returns a list of `FaceMeshPoint` representing the whole detected face.
    *
    * @since 5.3.0
@@ -173,7 +180,7 @@ export interface FaceMeshPoint {
    *
    * @since 5.3.0
    */
-  position: Point3D[];
+  point: Point3D;
 }
 
 /**
@@ -217,82 +224,81 @@ export interface Triangle {
 }
 
 /**
- * Type of face contour.
+ * Represents contours with their face mesh points.
  *
  * @since 5.3.0
- * @see https://developers.google.com/android/reference/com/google/mlkit/vision/facemesh/FaceMesh.ContourType
  */
-export enum ContourType {
+export interface Contours {
   /**
-   * The outline of the subject's face.
+   * Returns all points for the `FaceOval` contour.
    *
    * @since 5.3.0
    */
-  FaceOval = 1,
+  faceOval?: FaceMeshPoint[];
   /**
-   * The top outline of the subject's left eyebrow.
+   * Returns all points for the `LeftEyebrowTop` contour.
    *
    * @since 5.3.0
    */
-  LeftEyebrowTop = 2,
+  leftEyebrowTop?: FaceMeshPoint[];
   /**
-   * The bottom outline of the subject's left eyebrow.
+   * Returns all points for the `LeftEyebrowBottom` contour.
    *
    * @since 5.3.0
    */
-  LeftEyebrowBottom = 3,
+  leftEyebrowBottom?: FaceMeshPoint[];
   /**
-   * The top outline of the subject's right eyebrow.
+   * Returns all points for the `RightEyebrowTop` contour.
    *
    * @since 5.3.0
    */
-  RightEyebrowTop = 4,
+  rightEyebrowTop?: FaceMeshPoint[];
   /**
-   * The bottom outline of the subject's right eyebrow.
+   * Returns all points for the `RightEyebrowBottom` contour.
    *
    * @since 5.3.0
    */
-  RightEyebrowBottom = 5,
+  rightEyebrowBottom?: FaceMeshPoint[];
   /**
-   * The outline of the subject's left eye cavity.
+   * Returns all points for the `LeftEye` contour.
    *
    * @since 5.3.0
    */
-  LeftEye = 6,
+  leftEye?: FaceMeshPoint[];
   /**
-   * The outline of the subject's right eye cavity.
+   * Returns all points for the `RightEye` contour.
    *
    * @since 5.3.0
    */
-  RightEye = 7,
+  rightEye?: FaceMeshPoint[];
   /**
-   * The top outline of the subject's upper lip.
+   * Returns all points for the `UpperLipTop` contour.
    *
    * @since 5.3.0
    */
-  UpperLipTop = 8,
+  upperLipTop?: FaceMeshPoint[];
   /**
-   * The bottom outline of the subject's upper lip.
+   * Returns all points for the `UpperLipBottom` contour.
    *
    * @since 5.3.0
    */
-  UpperLipBottom = 9,
+  upperLipBottom?: FaceMeshPoint[];
   /**
-   * The top outline of the subject's lower lip.
+   * Returns all points for the `LowerLipTop` contour.
    *
    * @since 5.3.0
    */
-  LowerLipTop = 10,
+  lowerLipTop?: FaceMeshPoint[];
   /**
-   * The bottom outline of the subject's lower lip.
+   * Returns all points for the `LowerLipBottom` contour.
    *
    * @since 5.3.0
    */
-  LowerLipBottom = 11,
+  lowerLipBottom?: FaceMeshPoint[];
   /**
-   * The outline of the subject's nose bridge.
+   * Returns all points for the `NoseBridge` contour.
    *
    * @since 5.3.0
    */
-  NoseBridge = 12,
+  noseBridge?: FaceMeshPoint[];
 }
