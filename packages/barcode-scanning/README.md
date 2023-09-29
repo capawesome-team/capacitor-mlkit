@@ -198,7 +198,7 @@ const requestPermissions = async () => {
 };
 ```
 
-An example of the CSS class `barcode-scanner-active` **with** Ionic could be:
+An example of the CSS class `barcode-scanner-active` **with** Ionic Framework could be:
 
 ```css
 // Hide all elements
@@ -221,7 +221,7 @@ body.barcode-scanner-active {
 }
 ```
 
-An example of the CSS class `barcode-scanner-active` **without** Ionic could be:
+An example of the CSS class `barcode-scanner-active` **without** Ionic Framework could be:
 
 ```css
 // Hide all elements
