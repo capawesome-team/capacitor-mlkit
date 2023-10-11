@@ -335,7 +335,8 @@ Scan a barcode with a ready-to-use interface without WebView customization.
 On **Android**, this method is only available on devices with Google Play Services
 installed. Therefore, no camera permission is required.
 
-**Attention:** Before using this method on *Android*, first check if the Google <a href="#barcode">Barcode</a> Scanner module is available.
+**Attention:** Before using this method on *Android*, first check if the Google <a href="#barcode">Barcode</a> Scanner module is available
+by using `isGoogleBarcodeScannerModuleAvailable()`.
 
 Only available on Android and iOS.
 
@@ -468,6 +469,8 @@ isGoogleBarcodeScannerModuleAvailable() => Promise<IsGoogleBarcodeScannerModuleA
 ```
 
 Check if the Google <a href="#barcode">Barcode</a> Scanner module is available.
+
+If the Google <a href="#barcode">Barcode</a> Scanner module is not available, you can install it by using `installGoogleBarcodeScannerModule()`.
 
 Only available on Android.
 

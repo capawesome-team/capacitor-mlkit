@@ -33,7 +33,8 @@ export interface BarcodeScannerPlugin {
    * On **Android**, this method is only available on devices with Google Play Services
    * installed. Therefore, no camera permission is required.
    *
-   * **Attention:** Before using this method on *Android*, first check if the Google Barcode Scanner module is available.
+   * **Attention:** Before using this method on *Android*, first check if the Google Barcode Scanner module is available
+   * by using `isGoogleBarcodeScannerModuleAvailable()`.
    *
    * Only available on Android and iOS.
    *
@@ -99,6 +100,8 @@ export interface BarcodeScannerPlugin {
   openSettings(): Promise<void>;
   /**
    * Check if the Google Barcode Scanner module is available.
+   *
+   * If the Google Barcode Scanner module is not available, you can install it by using `installGoogleBarcodeScannerModule()`.
    *
    * Only available on Android.
    *
