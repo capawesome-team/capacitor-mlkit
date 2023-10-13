@@ -141,7 +141,6 @@ const scanSingleBarcode = async () => {
 const scan = async () => {
   const { barcodes } = await BarcodeScanner.scan({
     formats: [BarcodeFormat.QrCode],
-    lensFacing: LensFacing.Back,
   });
   return barcodes;
 };
