@@ -666,9 +666,9 @@ Remove all listeners for this plugin.
 
 #### IsSupportedResult
 
-| Prop            | Type                 | Description                                      | Since |
-| --------------- | -------------------- | ------------------------------------------------ | ----- |
-| **`supported`** | <code>boolean</code> | Whether or not the barcode scanner is supported. | 0.0.1 |
+| Prop            | Type                 | Description                                                                             | Since |
+| --------------- | -------------------- | --------------------------------------------------------------------------------------- | ----- |
+| **`supported`** | <code>boolean</code> | Whether or not the barcode scanner is supported by checking if the device has a camera. | 0.0.1 |
 
 
 #### IsTorchEnabledResult

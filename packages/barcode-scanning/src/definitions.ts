@@ -259,7 +259,7 @@ export interface ScanResult {
  */
 export interface IsSupportedResult {
   /**
-   * Whether or not the barcode scanner is supported.
+   * Whether or not the barcode scanner is supported by checking if the device has a camera.
    *
    * @since 0.0.1
    * @example true
