@@ -36,9 +36,11 @@ This is an Apache-2.0-licensed open source project.
 It can grow thanks to the support by these awesome people.
 If you'd like to join them, please read more [here](https://github.com/sponsors/capawesome-team).
 
-<!-- gold-sponsors --><!-- gold-sponsors -->
-<!-- silver-sponsors --><!-- silver-sponsors -->
-<!-- bronze-sponsors --><!-- bronze-sponsors -->
+<p align="center">
+  <a href="https://raw.githubusercontent.com/capawesome-team/static/main/images/sponsors/sponsors.svg">
+    <img src="https://raw.githubusercontent.com/capawesome-team/static/main/images/sponsors/sponsors.svg" />
+  </a>
+</p>
 
 ## Installation
 
