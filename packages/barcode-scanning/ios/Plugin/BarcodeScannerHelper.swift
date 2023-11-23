@@ -39,7 +39,14 @@ public class BarcodeScannerHelper {
                 cornerPointsResult.append(value)
             }
         }
-
+        else if let cornerPoints = barcode.cornerPoints {
+            for cornerPoint in cornerPoints {
+                var value = [Int]()
+                value.append(Int(cornerPoint.cgPointValue.x))
+                value.append(Int(cornerPoint.cgPointValue.y))
+                cornerPointsResult.append(value)
+            }
+        }
         var result = JSObject()
         if let rawData = barcode.rawData {
             result["bytes"] = convertDataToJsonArray(rawData)
