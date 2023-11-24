@@ -30,7 +30,14 @@ public class BarcodeScannerHelper {
                 cornerPointsResult.put(cornerPointResult);
             }
         }
-
+        else if (cornerPoints != null) {
+            for (int i = 0; i < cornerPoints.length; i++) {
+                JSArray cornerPointResult = new JSArray();
+                cornerPointResult.put(cornerPoints[i].x);
+                cornerPointResult.put(cornerPoints[i].y);
+                cornerPointsResult.put(cornerPointResult);
+            }
+        }
         JSObject result = new JSObject();
         result.put("bytes", convertByteArrayToJsonArray(barcode.getRawBytes()));
         if (cornerPoints != null) {
