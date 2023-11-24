@@ -5,7 +5,15 @@
     { "repo": "capawesome-team/capacitor-mlkit" }
   ],
   "commit": false,
-  "fixed": [["@capacitor-mlkit/translation"]],
+  "fixed": [
+    [
+      "@capacitor-mlkit/barcode-scanning",
+      "@capacitor-mlkit/face-detection",
+      "@capacitor-mlkit/face-mesh-detection",
+      "@capacitor-mlkit/selfie-segmentation",
+      "@capacitor-mlkit/translation"
+    ]
+  ],
   "linked": [],
   "access": "public",
   "baseBranch": "main",
