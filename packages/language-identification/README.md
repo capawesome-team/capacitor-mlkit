@@ -50,8 +50,10 @@ const deleteDownloadedModel = async () => {
 
 ## Changelog
 
-See [CHANGELOG.md](/packages/language-identification/CHANGELOG.md).
+See [CHANGELOG.md](https://github.com/capawesome-team/capacitor-mlkit/blob/main/packages/language-identification/CHANGELOG.md).
 
 ## License
 
-See [LICENSE](/packages/language-identification/LICENSE).
+See [LICENSE](https://github.com/capawesome-team/capacitor-mlkit/blob/main/packages/language-identification/LICENSE).
+
+[^1]: This project is not affiliated with, endorsed by, sponsored by, or approved by Google LLC or any of their affiliates or subsidiaries.
