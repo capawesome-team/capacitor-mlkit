@@ -49,6 +49,11 @@ public protocol BarcodeScannerViewDelegate {
         } else {
             throw RuntimeError(implementation.plugin.errorCannotAddCaptureInput)
         }
+        if let zoomRatio = settings.zoomRatio {
+            try captureDevice.lockForConfiguration()
+            captureDevice.videoZoomFactor = zoomRatio
+            captureDevice.unlockForConfiguration()
+        }
         let deviceOutput = AVCaptureVideoDataOutput()
         deviceOutput.videoSettings = [kCVPixelBufferPixelFormatTypeKey as String: Int(kCVPixelFormatType_32BGRA)]
         deviceOutput.alwaysDiscardsLateVideoFrames = true
