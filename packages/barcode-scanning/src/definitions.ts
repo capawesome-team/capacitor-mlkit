@@ -228,12 +228,6 @@ export interface StartScanOptions {
    * @since 0.0.1
    */
   lensFacing?: LensFacing;
-  /**
-   * The initial zoom ratio of the camera.
-   *
-   * @since 5.4.0
-   */
-  zoomRatio?: number;
 }
 
 /**

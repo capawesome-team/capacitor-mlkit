@@ -15,6 +15,4 @@ public class ScanSettings {
     @Nullable
     @CameraSelector.LensFacing
     public Integer lensFacing;
-
-    public Float zoomRatio;
 }

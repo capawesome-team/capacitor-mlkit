@@ -72,12 +72,9 @@ public class BarcodeScannerPlugin extends Plugin {
             String lensFacingOption = call.getString("lensFacing", "BACK");
             int lensFacing = lensFacingOption.equals("FRONT") ? CameraSelector.LENS_FACING_FRONT : CameraSelector.LENS_FACING_BACK;
 
-            Float zoomRatio = call.getFloat("zoomRatio");
-
             ScanSettings scanSettings = new ScanSettings();
             scanSettings.formats = formats;
             scanSettings.lensFacing = lensFacing;
-            scanSettings.zoomRatio = zoomRatio;
 
             boolean granted = implementation.requestCameraPermissionIfNotDetermined(call);
             if (!granted) {

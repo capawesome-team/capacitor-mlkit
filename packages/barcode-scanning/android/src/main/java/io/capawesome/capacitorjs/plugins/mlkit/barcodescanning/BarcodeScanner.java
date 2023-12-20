@@ -111,9 +111,6 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
                     // Start the camera
                     camera =
                         processCameraProvider.bindToLifecycle((LifecycleOwner) plugin.getContext(), cameraSelector, preview, imageAnalysis);
-                    if (this.scanSettings.zoomRatio != null) {
-                        camera.getCameraControl().setZoomRatio(this.scanSettings.zoomRatio);
-                    }
 
                     callback.success();
                 } catch (Exception exception) {
