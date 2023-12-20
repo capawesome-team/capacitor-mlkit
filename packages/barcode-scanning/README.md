@@ -172,6 +172,25 @@ const isTorchAvailable = async () => {
   return available;
 };
 
+const setZoomRatio = async () => {
+  await BarcodeScanner.setZoomRatio({ zoomRatio: 0.5 });
+};
+
+const getZoomRatio = async () => {
+  const { zoomRatio } = await BarcodeScanner.getZoomRatio();
+  return zoomRatio;
+};
+
+const getMinZoomRatio = async () => {
+  const { zoomRatio } = await BarcodeScanner.getMinZoomRatio();
+  return zoomRatio;
+};
+
+const getMaxZoomRatio = async () => {
+  const { zoomRatio } = await BarcodeScanner.getMaxZoomRatio();
+  return zoomRatio;
+};
+
 const openSettings = async () => {
   await BarcodeScanner.openSettings();
 };
@@ -240,28 +259,72 @@ If you can't see the camera view, make sure all elements in the DOM are not visi
 
 <docgen-index>
 
-* [`startScan(...)`](#startscan)
-* [`stopScan()`](#stopscan)
-* [`readBarcodesFromImage(...)`](#readbarcodesfromimage)
-* [`scan(...)`](#scan)
-* [`isSupported()`](#issupported)
-* [`enableTorch()`](#enabletorch)
-* [`disableTorch()`](#disabletorch)
-* [`toggleTorch()`](#toggletorch)
-* [`isTorchEnabled()`](#istorchenabled)
-* [`isTorchAvailable()`](#istorchavailable)
-* [`openSettings()`](#opensettings)
-* [`isGoogleBarcodeScannerModuleAvailable()`](#isgooglebarcodescannermoduleavailable)
-* [`installGoogleBarcodeScannerModule()`](#installgooglebarcodescannermodule)
-* [`checkPermissions()`](#checkpermissions)
-* [`requestPermissions()`](#requestpermissions)
-* [`addListener('barcodeScanned', ...)`](#addlistenerbarcodescanned)
-* [`addListener('scanError', ...)`](#addlistenerscanerror)
-* [`addListener('googleBarcodeScannerModuleInstallProgress', ...)`](#addlistenergooglebarcodescannermoduleinstallprogress)
-* [`removeAllListeners()`](#removealllisteners)
-* [Interfaces](#interfaces)
-* [Type Aliases](#type-aliases)
-* [Enums](#enums)
+- [@capacitor-mlkit/barcode-scanning](#capacitor-mlkitbarcode-scanning)
+  - [Features](#features)
+  - [Demo](#demo)
+  - [Guides](#guides)
+  - [Installation](#installation)
+    - [Android](#android)
+      - [Variables](#variables)
+    - [iOS](#ios)
+  - [Configuration](#configuration)
+  - [Demo](#demo-1)
+  - [Usage](#usage)
+  - [API](#api)
+    - [startScan(...)](#startscan)
+    - [stopScan()](#stopscan)
+    - [readBarcodesFromImage(...)](#readbarcodesfromimage)
+    - [scan(...)](#scan)
+    - [isSupported()](#issupported)
+    - [enableTorch()](#enabletorch)
+    - [disableTorch()](#disabletorch)
+    - [toggleTorch()](#toggletorch)
+    - [isTorchEnabled()](#istorchenabled)
+    - [isTorchAvailable()](#istorchavailable)
+    - [setZoomRatio(...)](#setzoomratio)
+    - [getZoomRatio()](#getzoomratio)
+    - [getMinZoomRatio()](#getminzoomratio)
+    - [getMaxZoomRatio()](#getmaxzoomratio)
+    - [openSettings()](#opensettings)
+    - [isGoogleBarcodeScannerModuleAvailable()](#isgooglebarcodescannermoduleavailable)
+    - [installGoogleBarcodeScannerModule()](#installgooglebarcodescannermodule)
+    - [checkPermissions()](#checkpermissions)
+    - [requestPermissions()](#requestpermissions)
+    - [addListener('barcodeScanned', ...)](#addlistenerbarcodescanned-)
+    - [addListener('scanError', ...)](#addlistenerscanerror-)
+    - [addListener('googleBarcodeScannerModuleInstallProgress', ...)](#addlistenergooglebarcodescannermoduleinstallprogress-)
+    - [removeAllListeners()](#removealllisteners)
+    - [Interfaces](#interfaces)
+      - [StartScanOptions](#startscanoptions)
+      - [ReadBarcodesFromImageResult](#readbarcodesfromimageresult)
+      - [Barcode](#barcode)
+      - [ReadBarcodesFromImageOptions](#readbarcodesfromimageoptions)
+      - [ScanResult](#scanresult)
+      - [ScanOptions](#scanoptions)
+      - [IsSupportedResult](#issupportedresult)
+      - [IsTorchEnabledResult](#istorchenabledresult)
+      - [IsTorchAvailableResult](#istorchavailableresult)
+      - [SetZoomRatioOptions](#setzoomratiooptions)
+      - [GetZoomRatioResult](#getzoomratioresult)
+      - [GetMinZoomRatioResult](#getminzoomratioresult)
+      - [GetMaxZoomRatioResult](#getmaxzoomratioresult)
+      - [IsGoogleBarcodeScannerModuleAvailableResult](#isgooglebarcodescannermoduleavailableresult)
+      - [PermissionStatus](#permissionstatus)
+      - [PluginListenerHandle](#pluginlistenerhandle)
+      - [BarcodeScannedEvent](#barcodescannedevent)
+      - [ScanErrorEvent](#scanerrorevent)
+      - [GoogleBarcodeScannerModuleInstallProgressEvent](#googlebarcodescannermoduleinstallprogressevent)
+    - [Type Aliases](#type-aliases)
+      - [CameraPermissionState](#camerapermissionstate)
+      - [PermissionState](#permissionstate)
+    - [Enums](#enums)
+      - [BarcodeFormat](#barcodeformat)
+      - [LensFacing](#lensfacing)
+      - [BarcodeValueType](#barcodevaluetype)
+      - [GoogleBarcodeScannerModuleInstallState](#googlebarcodescannermoduleinstallstate)
+  - [Terms \& Privacy](#terms--privacy)
+  - [Changelog](#changelog)
+  - [License](#license)
 
 </docgen-index>
 
@@ -446,6 +509,76 @@ Only available on Android and iOS.
 --------------------
 
 
+### setZoomRatio(...)
+
+```typescript
+setZoomRatio(options: SetZoomRatioOptions) => Promise<void>
+```
+
+Set the zoom ratio of the camera.
+
+Only available on Android and iOS.
+
+| Param         | Type                                                                |
+| ------------- | ------------------------------------------------------------------- |
+| **`options`** | <code><a href="#setzoomratiooptions">SetZoomRatioOptions</a></code> |
+
+**Since:** 5.4.0
+
+--------------------
+
+
+### getZoomRatio()
+
+```typescript
+getZoomRatio() => Promise<GetZoomRatioResult>
+```
+
+Get the zoom ratio of the camera.
+
+Only available on Android and iOS.
+
+**Returns:** <code>Promise&lt;<a href="#getzoomratioresult">GetZoomRatioResult</a>&gt;</code>
+
+**Since:** 5.4.0
+
+--------------------
+
+
+### getMinZoomRatio()
+
+```typescript
+getMinZoomRatio() => Promise<GetMinZoomRatioResult>
+```
+
+Get the minimum zoom ratio of the camera.
+
+Only available on Android and iOS.
+
+**Returns:** <code>Promise&lt;<a href="#getminzoomratioresult">GetMinZoomRatioResult</a>&gt;</code>
+
+**Since:** 5.4.0
+
+--------------------
+
+
+### getMaxZoomRatio()
+
+```typescript
+getMaxZoomRatio() => Promise<GetMaxZoomRatioResult>
+```
+
+Get the maximum zoom ratio of the camera.
+
+Only available on Android and iOS.
+
+**Returns:** <code>Promise&lt;<a href="#getmaxzoomratioresult">GetMaxZoomRatioResult</a>&gt;</code>
+
+**Since:** 5.4.0
+
+--------------------
+
+
 ### openSettings()
 
 ```typescript
@@ -621,6 +754,7 @@ Remove all listeners for this plugin.
 | ---------------- | ------------------------------------------------- | ---------------------------------------------------------------------------------------- | ----- |
 | **`formats`**    | <code>BarcodeFormat[]</code>                      | Improve the speed of the barcode scanner by configuring the barcode formats to scan for. | 0.0.1 |
 | **`lensFacing`** | <code><a href="#lensfacing">LensFacing</a></code> | Configure the camera (front or back) to use.                                             | 0.0.1 |
+| **`zoomRatio`**  | <code>number</code>                               | The initial zoom ratio of the camera.                                                    | 5.4.0 |
 
 
 #### ReadBarcodesFromImageResult
@@ -683,6 +817,34 @@ Remove all listeners for this plugin.
 | Prop            | Type                 | Description                            | Since |
 | --------------- | -------------------- | -------------------------------------- | ----- |
 | **`available`** | <code>boolean</code> | Whether or not the torch is available. | 0.0.1 |
+
+
+#### SetZoomRatioOptions
+
+| Prop            | Type                | Description            | Since |
+| --------------- | ------------------- | ---------------------- | ----- |
+| **`zoomRatio`** | <code>number</code> | The zoom ratio to set. | 5.4.0 |
+
+
+#### GetZoomRatioResult
+
+| Prop            | Type                | Description     | Since |
+| --------------- | ------------------- | --------------- | ----- |
+| **`zoomRatio`** | <code>number</code> | The zoom ratio. | 5.4.0 |
+
+
+#### GetMinZoomRatioResult
+
+| Prop            | Type                | Description             | Since |
+| --------------- | ------------------- | ----------------------- | ----- |
+| **`zoomRatio`** | <code>number</code> | The minimum zoom ratio. | 5.4.0 |
+
+
+#### GetMaxZoomRatioResult
+
+| Prop            | Type                | Description             | Since |
+| --------------- | ------------------- | ----------------------- | ----- |
+| **`zoomRatio`** | <code>number</code> | The maximum zoom ratio. | 5.4.0 |
 
 
 #### IsGoogleBarcodeScannerModuleAvailableResult
