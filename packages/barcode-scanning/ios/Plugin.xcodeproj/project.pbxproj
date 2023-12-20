@@ -18,6 +18,11 @@
 		50E1A94820377CB70090CE1A /* BarcodeScannerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E1A94720377CB70090CE1A /* BarcodeScannerPlugin.swift */; };
 		7C39C34F29A0BB4600AE60BB /* ScanSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C39C34E29A0BB4600AE60BB /* ScanSettings.swift */; };
 		7C8E4B5E2998FE7B00A35D56 /* BarcodeScannerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8E4B5D2998FE7B00A35D56 /* BarcodeScannerHelper.swift */; };
+		7C9BA37D2B3350D300A5BED8 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9BA37C2B3350D300A5BED8 /* Result.swift */; };
+		7C9BA37F2B33510600A5BED8 /* SetZoomRatioOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9BA37E2B33510600A5BED8 /* SetZoomRatioOptions.swift */; };
+		7C9BA3812B33511100A5BED8 /* GetMaxZoomRatioResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9BA3802B33511100A5BED8 /* GetMaxZoomRatioResult.swift */; };
+		7C9BA3832B33511800A5BED8 /* GetMinZoomRatioResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9BA3822B33511800A5BED8 /* GetMinZoomRatioResult.swift */; };
+		7C9BA3852B33512000A5BED8 /* GetZoomRatioResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9BA3842B33512000A5BED8 /* GetZoomRatioResult.swift */; };
 		7CD8CBAE299902D90039652D /* BarcodeScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD8CBAD299902D80039652D /* BarcodeScannerView.swift */; };
 /* End PBXBuildFile section */
 
@@ -46,6 +51,11 @@
 		5E23F77F099397094342571A /* Pods-Plugin.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Plugin.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Plugin/Pods-Plugin.debug.xcconfig"; sourceTree = "<group>"; };
 		7C39C34E29A0BB4600AE60BB /* ScanSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanSettings.swift; sourceTree = "<group>"; };
 		7C8E4B5D2998FE7B00A35D56 /* BarcodeScannerHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeScannerHelper.swift; sourceTree = "<group>"; };
+		7C9BA37C2B3350D300A5BED8 /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
+		7C9BA37E2B33510600A5BED8 /* SetZoomRatioOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetZoomRatioOptions.swift; sourceTree = "<group>"; };
+		7C9BA3802B33511100A5BED8 /* GetMaxZoomRatioResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetMaxZoomRatioResult.swift; sourceTree = "<group>"; };
+		7C9BA3822B33511800A5BED8 /* GetMinZoomRatioResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetMinZoomRatioResult.swift; sourceTree = "<group>"; };
+		7C9BA3842B33512000A5BED8 /* GetZoomRatioResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetZoomRatioResult.swift; sourceTree = "<group>"; };
 		7CD8CBAD299902D80039652D /* BarcodeScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeScannerView.swift; sourceTree = "<group>"; };
 		91781294A431A2A7CC6EB714 /* Pods-Plugin.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Plugin.release.xcconfig"; path = "Pods/Target Support Files/Pods-Plugin/Pods-Plugin.release.xcconfig"; sourceTree = "<group>"; };
 		96ED1B6440D6672E406C8D19 /* Pods-PluginTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PluginTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PluginTests/Pods-PluginTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -98,6 +108,8 @@
 		50ADFF8A201F53D600D50D53 /* Plugin */ = {
 			isa = PBXGroup;
 			children = (
+				7C9BA3792B3350B100A5BED8 /* Classes */,
+				7C9BA37B2B3350C600A5BED8 /* Protocols */,
 				50E1A94720377CB70090CE1A /* BarcodeScannerPlugin.swift */,
 				2F98D68124C9AAE400613A4C /* BarcodeScanner.swift */,
 				50ADFF8B201F53D600D50D53 /* BarcodeScannerPlugin.h */,
@@ -117,6 +129,41 @@
 				50ADFF98201F53D600D50D53 /* Info.plist */,
 			);
 			path = PluginTests;
+			sourceTree = "<group>";
+		};
+		7C9BA3782B3350AB00A5BED8 /* Options */ = {
+			isa = PBXGroup;
+			children = (
+				7C9BA37E2B33510600A5BED8 /* SetZoomRatioOptions.swift */,
+			);
+			path = Options;
+			sourceTree = "<group>";
+		};
+		7C9BA3792B3350B100A5BED8 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				7C9BA37A2B3350B800A5BED8 /* Results */,
+				7C9BA3782B3350AB00A5BED8 /* Options */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		7C9BA37A2B3350B800A5BED8 /* Results */ = {
+			isa = PBXGroup;
+			children = (
+				7C9BA3802B33511100A5BED8 /* GetMaxZoomRatioResult.swift */,
+				7C9BA3822B33511800A5BED8 /* GetMinZoomRatioResult.swift */,
+				7C9BA3842B33512000A5BED8 /* GetZoomRatioResult.swift */,
+			);
+			path = Results;
+			sourceTree = "<group>";
+		};
+		7C9BA37B2B3350C600A5BED8 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				7C9BA37C2B3350D300A5BED8 /* Result.swift */,
+			);
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 		8C8E7744173064A9F6D438E3 /* Pods */ = {
@@ -327,12 +374,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7C9BA37F2B33510600A5BED8 /* SetZoomRatioOptions.swift in Sources */,
+				7C9BA3832B33511800A5BED8 /* GetMinZoomRatioResult.swift in Sources */,
 				50E1A94820377CB70090CE1A /* BarcodeScannerPlugin.swift in Sources */,
+				7C9BA3812B33511100A5BED8 /* GetMaxZoomRatioResult.swift in Sources */,
 				2F98D68224C9AAE500613A4C /* BarcodeScanner.swift in Sources */,
 				50ADFFA82020EE4F00D50D53 /* BarcodeScannerPlugin.m in Sources */,
 				7CD8CBAE299902D90039652D /* BarcodeScannerView.swift in Sources */,
+				7C9BA37D2B3350D300A5BED8 /* Result.swift in Sources */,
 				7C8E4B5E2998FE7B00A35D56 /* BarcodeScannerHelper.swift in Sources */,
 				7C39C34F29A0BB4600AE60BB /* ScanSettings.swift in Sources */,
+				7C9BA3852B33512000A5BED8 /* GetZoomRatioResult.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

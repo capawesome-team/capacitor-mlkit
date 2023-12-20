@@ -14,6 +14,10 @@ CAP_PLUGIN(BarcodeScannerPlugin, "BarcodeScanner",
            CAP_PLUGIN_METHOD(toggleTorch, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(isTorchEnabled, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(isTorchAvailable, CAPPluginReturnPromise);
+           CAP_PLUGIN_METHOD(setZoomRatio, CAPPluginReturnPromise);
+           CAP_PLUGIN_METHOD(getZoomRatio, CAPPluginReturnPromise);
+           CAP_PLUGIN_METHOD(getMinZoomRatio, CAPPluginReturnPromise);
+           CAP_PLUGIN_METHOD(getMaxZoomRatio, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(openSettings, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(isGoogleBarcodeScannerModuleAvailable, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(installGoogleBarcodeScannerModule, CAPPluginReturnPromise);
