@@ -12,6 +12,7 @@ import MLKitBarcodeScanning
  */
 @objc(BarcodeScannerPlugin)
 public class BarcodeScannerPlugin: CAPPlugin {
+    public let tag = "BarcodeScanner"
     public let errorPathMissing = "path must be provided."
     public let errorFileNotExist = "File does not exist."
     public let errorInvalidImage = "The file is no valid image."
@@ -19,6 +20,7 @@ public class BarcodeScannerPlugin: CAPPlugin {
     public let errorCannotAddCaptureInput = "Cannot add input to capture session."
     public let errorCannotAddCaptureOutput = "Cannot add output to capture session."
     public let errorScanCanceled = "scan canceled."
+    public let errorZoomRatioMissing = "zoomRatio must be provided."
     public let errorPermissionDenied = "User denied access to camera."
     public let errorOpenSettingsFailed = "Cannot open settings."
     public let barcodeScannedEvent = "barcodeScanned"
@@ -153,6 +155,53 @@ public class BarcodeScannerPlugin: CAPPlugin {
         call.resolve([
             "available": implementation?.isTorchAvailable() ?? false
         ])
+    }
+
+    @objc func setZoomRatio(_ call: CAPPluginCall) {
+        guard let zoomRatio = call.getFloat("zoomRatio") else {
+            call.reject(errorZoomRatioMissing)
+            return
+        }
+
+        let options = SetZoomRatioOptions(zoomRatio: zoomRatio)
+
+        do {
+            try implementation?.setZoomRatio(options)
+            call.resolve()
+        } catch {
+            CAPLog.print("[", self.tag, "] ", error)
+            call.reject(error.localizedDescription)
+        }
+    }
+
+    @objc func getZoomRatio(_ call: CAPPluginCall) {
+        guard let result = implementation?.getZoomRatio() else {
+            call.reject(errorNoCaptureDeviceAvailable)
+            return
+        }
+        if let result = result.toJSObject() as? JSObject {
+            call.resolve(result)
+        }
+    }
+
+    @objc func getMinZoomRatio(_ call: CAPPluginCall) {
+        guard let result = implementation?.getMinZoomRatio() else {
+            call.reject(errorNoCaptureDeviceAvailable)
+            return
+        }
+        if let result = result.toJSObject() as? JSObject {
+            call.resolve(result)
+        }
+    }
+
+    @objc func getMaxZoomRatio(_ call: CAPPluginCall) {
+        guard let result = implementation?.getMaxZoomRatio() else {
+            call.reject(errorNoCaptureDeviceAvailable)
+            return
+        }
+        if let result = result.toJSObject() as? JSObject {
+            call.resolve(result)
+        }
     }
 
     @objc func openSettings(_ call: CAPPluginCall) {

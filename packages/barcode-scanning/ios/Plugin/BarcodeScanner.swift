@@ -149,6 +149,38 @@ typealias MLKitBarcodeScanner = MLKitBarcodeScanning.BarcodeScanner
         return device.hasTorch
     }
 
+    @objc public func setZoomRatio(_ options: SetZoomRatioOptions) throws {
+        let zoomRatio = options.getZoomRatio()
+
+        guard let device = AVCaptureDevice.default(for: AVMediaType.video) else {
+            return
+        }
+        try device.lockForConfiguration()
+        device.videoZoomFactor = zoomRatio
+        device.unlockForConfiguration()
+    }
+
+    @objc public func getZoomRatio() -> GetZoomRatioResult? {
+        guard let device = AVCaptureDevice.default(for: AVMediaType.video) else {
+            return nil
+        }
+        return GetZoomRatioResult(zoomRatio: device.videoZoomFactor)
+    }
+
+    @objc public func getMinZoomRatio() -> GetMinZoomRatioResult? {
+        guard let device = AVCaptureDevice.default(for: AVMediaType.video) else {
+            return nil
+        }
+        return GetMinZoomRatioResult(zoomRatio: device.minAvailableVideoZoomFactor)
+    }
+
+    @objc public func getMaxZoomRatio() -> GetMaxZoomRatioResult? {
+        guard let device = AVCaptureDevice.default(for: AVMediaType.video) else {
+            return nil
+        }
+        return GetMaxZoomRatioResult(zoomRatio: device.maxAvailableVideoZoomFactor)
+    }
+
     @objc func openSettings(completion: @escaping (Error?) -> Void) {
         let url = URL(string: UIApplication.openSettingsURLString)
         DispatchQueue.main.async {

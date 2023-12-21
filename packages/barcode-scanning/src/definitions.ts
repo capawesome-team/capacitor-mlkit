@@ -91,6 +91,38 @@ export interface BarcodeScannerPlugin {
    */
   isTorchAvailable(): Promise<IsTorchAvailableResult>;
   /**
+   * Set the zoom ratio of the camera.
+   *
+   * Only available on Android and iOS.
+   *
+   * @since 5.4.0
+   */
+  setZoomRatio(options: SetZoomRatioOptions): Promise<void>;
+  /**
+   * Get the zoom ratio of the camera.
+   *
+   * Only available on Android and iOS.
+   *
+   * @since 5.4.0
+   */
+  getZoomRatio(): Promise<GetZoomRatioResult>;
+  /**
+   * Get the minimum zoom ratio of the camera.
+   *
+   * Only available on Android and iOS.
+   *
+   * @since 5.4.0
+   */
+  getMinZoomRatio(): Promise<GetMinZoomRatioResult>;
+  /**
+   * Get the maximum zoom ratio of the camera.
+   *
+   * Only available on Android and iOS.
+   *
+   * @since 5.4.0
+   */
+  getMaxZoomRatio(): Promise<GetMaxZoomRatioResult>;
+  /**
    * Open the settings of the app so that the user can grant the camera permission.
    *
    * Only available on Android and iOS.
@@ -291,6 +323,54 @@ export interface IsTorchAvailableResult {
    * @example true
    */
   available: boolean;
+}
+
+/**
+ * @since 5.4.0
+ */
+export interface SetZoomRatioOptions {
+  /**
+   * The zoom ratio to set.
+   *
+   * @since 5.4.0
+   */
+  zoomRatio: number;
+}
+
+/**
+ * @since 5.4.0
+ */
+export interface GetZoomRatioResult {
+  /**
+   * The zoom ratio.
+   *
+   * @since 5.4.0
+   */
+  zoomRatio: number;
+}
+
+/**
+ * @since 5.4.0
+ */
+export interface GetMinZoomRatioResult {
+  /**
+   * The minimum zoom ratio.
+   *
+   * @since 5.4.0
+   */
+  zoomRatio: number;
+}
+
+/**
+ * @since 5.4.0
+ */
+export interface GetMaxZoomRatioResult {
+  /**
+   * The maximum zoom ratio.
+   *
+   * @since 5.4.0
+   */
+  zoomRatio: number;
 }
 
 /**

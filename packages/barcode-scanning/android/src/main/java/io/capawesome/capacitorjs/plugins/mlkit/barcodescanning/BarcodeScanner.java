@@ -8,15 +8,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.graphics.Matrix;
 import android.graphics.Point;
-import android.graphics.Rect;
 import android.media.Image;
 import android.net.Uri;
 import android.provider.Settings;
-import android.util.Size;
 import android.view.Display;
-import android.view.View;
 import android.view.WindowManager;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,11 +22,9 @@ import androidx.camera.core.ImageAnalysis;
 import androidx.camera.core.ImageProxy;
 import androidx.camera.core.Preview;
 import androidx.camera.lifecycle.ProcessCameraProvider;
-import androidx.camera.view.CameraController;
 import androidx.camera.view.PreviewView;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LifecycleOwner;
-import com.getcapacitor.Logger;
 import com.getcapacitor.PermissionState;
 import com.getcapacitor.PluginCall;
 import com.google.android.gms.common.moduleinstall.InstallStatusListener;
@@ -46,6 +40,10 @@ import com.google.mlkit.vision.codescanner.GmsBarcodeScanner;
 import com.google.mlkit.vision.codescanner.GmsBarcodeScannerOptions;
 import com.google.mlkit.vision.codescanner.GmsBarcodeScanning;
 import com.google.mlkit.vision.common.InputImage;
+import io.capawesome.capacitorjs.plugins.mlkit.barcodescanning.classes.options.SetZoomRatioOptions;
+import io.capawesome.capacitorjs.plugins.mlkit.barcodescanning.classes.results.GetMaxZoomRatioResult;
+import io.capawesome.capacitorjs.plugins.mlkit.barcodescanning.classes.results.GetMinZoomRatioResult;
+import io.capawesome.capacitorjs.plugins.mlkit.barcodescanning.classes.results.GetZoomRatioResult;
 
 public class BarcodeScanner implements ImageAnalysis.Analyzer {
 
@@ -113,6 +111,7 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
                     // Start the camera
                     camera =
                         processCameraProvider.bindToLifecycle((LifecycleOwner) plugin.getContext(), cameraSelector, preview, imageAnalysis);
+
                     callback.success();
                 } catch (Exception exception) {
                     callback.error(exception);
@@ -263,6 +262,41 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
         return plugin.getContext().getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
     }
 
+    public void setZoomRatio(SetZoomRatioOptions options) {
+        float zoomRatio = options.getZoomRatio();
+        if (camera == null) {
+            return;
+        }
+        camera.getCameraControl().setZoomRatio(zoomRatio);
+    }
+
+    @Nullable
+    public GetZoomRatioResult getZoomRatio() {
+        if (camera == null) {
+            return null;
+        }
+        float zoomRatio = camera.getCameraInfo().getZoomState().getValue().getZoomRatio();
+        return new GetZoomRatioResult(zoomRatio);
+    }
+
+    @Nullable
+    public GetMinZoomRatioResult getMinZoomRatio() {
+        if (camera == null) {
+            return null;
+        }
+        float minZoomRatio = camera.getCameraInfo().getZoomState().getValue().getMinZoomRatio();
+        return new GetMinZoomRatioResult(minZoomRatio);
+    }
+
+    @Nullable
+    public GetMaxZoomRatioResult getMaxZoomRatio() {
+        if (camera == null) {
+            return null;
+        }
+        float maxZoomRatio = camera.getCameraInfo().getZoomState().getValue().getMaxZoomRatio();
+        return new GetMaxZoomRatioResult(maxZoomRatio);
+    }
+
     public void openSettings(PluginCall call) {
         Uri uri = Uri.fromParts("package", plugin.getAppId(), null);
         Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, uri);
@@ -287,6 +321,10 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
             requestCameraPermission(call);
             return false;
         }
+    }
+
+    public boolean isCameraActive() {
+        return camera != null;
     }
 
     @Override
