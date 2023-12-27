@@ -469,6 +469,12 @@ export interface Barcode {
     [number, number],
     [number, number],
   ];
+
+  /**
+   * The screen size that the coordinates are relative to.
+   */
+  screenSize?: [number, number];
+
   /**
    * The barcode value in a human readable format.
    *

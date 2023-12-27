@@ -714,7 +714,6 @@ Remove all listeners for this plugin.
 | ---------------- | ------------------------------------------------- | ---------------------------------------------------------------------------------------- | ----- |
 | **`formats`**    | <code>BarcodeFormat[]</code>                      | Improve the speed of the barcode scanner by configuring the barcode formats to scan for. | 0.0.1 |
 | **`lensFacing`** | <code><a href="#lensfacing">LensFacing</a></code> | Configure the camera (front or back) to use.                                             | 0.0.1 |
-| **`zoomRatio`**  | <code>number</code>                               | The initial zoom ratio of the camera.                                                    | 5.4.0 |
 
 
 #### ReadBarcodesFromImageResult
@@ -730,6 +729,7 @@ Remove all listeners for this plugin.
 | ------------------ | ------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
 | **`bytes`**        | <code>number[]</code>                                                                 | Raw bytes as it was encoded in the barcode.                                                                                                                | 0.0.1 |
 | **`cornerPoints`** | <code>[[number, number], [number, number], [number, number], [number, number]]</code> | The four corner points of the barcode in clockwise order starting with top-left. This property is currently only supported by the `startScan(...)` method. | 0.0.1 |
+| **`screenSize`**   | <code>[number, number]</code>                                                         | The screen size that the coordinates are relative to.                                                                                                      |       |
 | **`displayValue`** | <code>string</code>                                                                   | The barcode value in a human readable format.                                                                                                              | 0.0.1 |
 | **`format`**       | <code><a href="#barcodeformat">BarcodeFormat</a></code>                               | The barcode format.                                                                                                                                        | 0.0.1 |
 | **`rawValue`**     | <code>string</code>                                                                   | The barcode value in a machine readable format.                                                                                                            | 0.0.1 |
