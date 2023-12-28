@@ -43,7 +43,7 @@ public class BarcodeScannerHelper {
         var result = JSObject()
         if let rawData = barcode.rawData {
             result["bytes"] = convertDataToJsonArray(rawData)
-        }  
+        }
         result["cornerPoints"] = cornerPointsResult
         result["displayValue"] = barcode.displayValue
         result["format"] = convertBarcodeScannerFormatToString(barcode.format)
