@@ -12,10 +12,7 @@ public class BarcodeScannerHelper {
         let screenSize: CGRect = UIScreen.main.bounds
         let imageWidth = imageSize.width
         let imageHeight = imageSize.height
-
         let isPortrait = UIDevice.current.orientation.isPortrait || UIDevice.current.orientation.isFlat
-        
-        
         var normalizedCornerPoints = [NSValue]()
         for cornerPoint in cornerPoints {
             var x = Int((cornerPoint.cgPointValue.x / CGFloat(imageWidth)) * screenSize.width * scale)
@@ -33,7 +30,6 @@ public class BarcodeScannerHelper {
 
     public static func createBarcodeResultForBarcode(_ barcode: Barcode, imageSize: CGSize?, scale: CGFloat = UIScreen.main.scale) -> JSObject {
         var cornerPointsResult = [[Int]]()
-        
         if let cornerPoints = barcode.cornerPoints, let imageSize = imageSize {
             let normalizedCornerPoints = normalizeCornerPoints(cornerPoints: cornerPoints, imageSize: imageSize, scale: scale)
             for cornerPoint in normalizedCornerPoints {
@@ -47,8 +43,7 @@ public class BarcodeScannerHelper {
         var result = JSObject()
         if let rawData = barcode.rawData {
             result["bytes"] = convertDataToJsonArray(rawData)
-        }
-               
+        }  
         result["cornerPoints"] = cornerPointsResult
         result["displayValue"] = barcode.displayValue
         result["format"] = convertBarcodeScannerFormatToString(barcode.format)
