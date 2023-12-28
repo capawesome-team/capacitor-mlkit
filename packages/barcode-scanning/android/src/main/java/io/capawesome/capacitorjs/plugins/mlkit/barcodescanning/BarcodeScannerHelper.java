@@ -36,10 +36,6 @@ public class BarcodeScannerHelper {
         if (cornerPoints != null) {
             result.put("cornerPoints", cornerPointsResult);
         }
-        JSArray screenSizeArray = new JSArray();
-        screenSizeArray.put(screenSize.x);
-        screenSizeArray.put(screenSize.y);
-        result.put("screenSize", screenSizeArray);
         result.put("displayValue", barcode.getDisplayValue());
         result.put("format", convertBarcodeScannerFormatToString(barcode.getFormat()));
         result.put("rawValue", barcode.getRawValue());

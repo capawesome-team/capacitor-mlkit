@@ -48,13 +48,7 @@ public class BarcodeScannerHelper {
         if let rawData = barcode.rawData {
             result["bytes"] = convertDataToJsonArray(rawData)
         }
-        
-        let screenSize: CGRect = UIScreen.main.bounds
-        var screenSizeArray = [Int]()
-        screenSizeArray.append(Int(screenSize.width * scale))
-        screenSizeArray.append(Int(screenSize.height * scale))
-        result["screenSize"] = screenSizeArray
-        
+               
         result["cornerPoints"] = cornerPointsResult
         result["displayValue"] = barcode.displayValue
         result["format"] = convertBarcodeScannerFormatToString(barcode.format)
