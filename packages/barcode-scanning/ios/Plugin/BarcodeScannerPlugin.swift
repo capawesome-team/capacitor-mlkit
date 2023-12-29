@@ -84,7 +84,7 @@ public class BarcodeScannerPlugin: CAPPlugin {
             }
             var barcodeResults = JSArray()
             for barcode in barcodes ?? [] {
-                barcodeResults.append(BarcodeScannerHelper.createBarcodeResultForBarcode(barcode, imageSize: nil))
+                barcodeResults.append(BarcodeScannerHelper.createBarcodeResultForBarcode(barcode, imageSize: nil, isPortrait: UIDevice.current.orientation.isPortrait))
             }
             call.resolve([
                 "barcodes": barcodeResults
@@ -108,14 +108,14 @@ public class BarcodeScannerPlugin: CAPPlugin {
                 call.reject(error.localizedDescription)
                 return
             }
-            self.implementation?.scan(settings: settings, completion: { barcodes, errorMessage in
+            self.implementation?.scan(settings: settings, completion: { barcodes, isPortrait, errorMessage in
                 if let errorMessage = errorMessage {
                     call.reject(errorMessage)
                     return
                 }
                 var barcodeResults = JSArray()
                 for barcode in barcodes ?? [] {
-                    barcodeResults.append(BarcodeScannerHelper.createBarcodeResultForBarcode(barcode, imageSize: nil, scale: 1))
+                    barcodeResults.append(BarcodeScannerHelper.createBarcodeResultForBarcode(barcode, imageSize: nil, scale: 1, isPortrait: isPortrait))
                 }
                 call.resolve([
                     "barcodes": barcodeResults
@@ -234,9 +234,9 @@ public class BarcodeScannerPlugin: CAPPlugin {
         }
     }
 
-    @objc func notifyBarcodeScannedListener(barcode: Barcode, imageSize: CGSize) {
+    @objc func notifyBarcodeScannedListener(barcode: Barcode, imageSize: CGSize, isPortrait: Bool) {
         var result = JSObject()
-        result["barcode"] = BarcodeScannerHelper.createBarcodeResultForBarcode(barcode, imageSize: imageSize)
+        result["barcode"] = BarcodeScannerHelper.createBarcodeResultForBarcode(barcode, imageSize: imageSize, isPortrait: isPortrait)
         notifyListeners(barcodeScannedEvent, data: result)
     }
 }
