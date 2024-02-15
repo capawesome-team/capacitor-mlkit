@@ -8,30 +8,47 @@ import MLKitBarcodeScanning
 // swiftlint:disable cyclomatic_complexity
 public class BarcodeScannerHelper {
     // swiftlint:disable identifier_name
-    public static func normalizeCornerPoints(cornerPoints: [NSValue], imageSize: CGSize, scale: CGFloat = UIScreen.main.scale) -> [NSValue] {
-        let screenSize: CGRect = UIScreen.main.bounds
-        let imageWidth = imageSize.width
-        let imageHeight = imageSize.height
+    public static func normalizeCornerPoints(cornerPoints: [NSValue], imageSize: CGSize) -> [NSValue] {
+        CAPLog.print("Corner points (\(cornerPoints[0].cgPointValue.x), \(cornerPoints[0].cgPointValue.y)), (\(cornerPoints[1].cgPointValue.x), \(cornerPoints[1].cgPointValue.y)), (\(cornerPoints[2].cgPointValue.x), \(cornerPoints[2].cgPointValue.y)), (\(cornerPoints[3].cgPointValue.x), \(cornerPoints[3].cgPointValue.y))")
+        let screenWidth = UIScreen.main.bounds.width
+        let screenHeight = UIScreen.main.bounds.height
+        var imageWidth = imageSize.width
+        var imageHeight = imageSize.height
+        
+        if screenWidth > screenHeight {
+            imageWidth = imageSize.height
+            imageHeight = imageSize.width
+        }
+        
+        let scale = max(screenHeight / CGFloat(imageWidth), screenWidth / CGFloat(imageHeight))
+        
         let isPortrait = UIDevice.current.orientation == .portrait || UIDevice.current.orientation == .portraitUpsideDown
+        let invisibleWidth = imageHeight * scale - screenWidth
+        let invisibleHeight = imageWidth * scale - screenHeight
         var normalizedCornerPoints = [NSValue]()
         for cornerPoint in cornerPoints {
-            var x = Int((cornerPoint.cgPointValue.x / CGFloat(imageWidth)) * screenSize.width * scale)
-            var y = Int((cornerPoint.cgPointValue.y / CGFloat(imageHeight)) * screenSize.height * scale)
+            var x = Int(((cornerPoint.cgPointValue.x * scale) - (invisibleWidth / 2)) * UIScreen.main.scale)
+            var y = Int(((cornerPoint.cgPointValue.y * scale) - (invisibleHeight / 2)) * UIScreen.main.scale)
             if isPortrait {
-                x = Int((1 - (cornerPoint.cgPointValue.y / CGFloat(imageHeight))) * screenSize.width * scale)
-                y = Int((cornerPoint.cgPointValue.x / CGFloat(imageWidth)) * screenSize.height * scale)
+                x = Int((((imageHeight - cornerPoint.cgPointValue.y) * scale) - (invisibleWidth / 2)) * UIScreen.main.scale)
+                y = Int(((cornerPoint.cgPointValue.x * scale) - (invisibleHeight / 2)) * UIScreen.main.scale)
             }
             let point = CGPoint(x: x, y: y)
             let value = NSValue(cgPoint: point)
             normalizedCornerPoints.append(value)
         }
+        if isPortrait {
+            let lastNormalizedCornerPoints = normalizedCornerPoints.removeLast()
+            normalizedCornerPoints.insert(lastNormalizedCornerPoints, at: 0)
+        }
+        CAPLog.print("Normalized corner points (\(normalizedCornerPoints[0].cgPointValue.x), \(normalizedCornerPoints[0].cgPointValue.y)), (\(normalizedCornerPoints[1].cgPointValue.x), \(normalizedCornerPoints[1].cgPointValue.y)), (\(normalizedCornerPoints[2].cgPointValue.x), \(normalizedCornerPoints[2].cgPointValue.y)), (\(normalizedCornerPoints[3].cgPointValue.x), \(normalizedCornerPoints[3].cgPointValue.y))")
         return normalizedCornerPoints
     }
 
-    public static func createBarcodeResultForBarcode(_ barcode: Barcode, imageSize: CGSize?, scale: CGFloat = UIScreen.main.scale) -> JSObject {
+    public static func createBarcodeResultForBarcode(_ barcode: Barcode, imageSize: CGSize?, scale222: CGFloat = UIScreen.main.scale) -> JSObject {
         var cornerPointsResult = [[Int]]()
         if let cornerPoints = barcode.cornerPoints, let imageSize = imageSize {
-            let normalizedCornerPoints = normalizeCornerPoints(cornerPoints: cornerPoints, imageSize: imageSize, scale: scale)
+            let normalizedCornerPoints = normalizeCornerPoints(cornerPoints: cornerPoints, imageSize: imageSize)
             for cornerPoint in normalizedCornerPoints {
                 var value = [Int]()
                 value.append(Int(cornerPoint.cgPointValue.x))
