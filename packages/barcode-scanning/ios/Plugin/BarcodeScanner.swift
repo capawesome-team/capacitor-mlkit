@@ -15,6 +15,7 @@ typealias MLKitBarcodeScanner = MLKitBarcodeScanning.BarcodeScanner
 
     private var cameraView: BarcodeScannerView?
     private var scanCompletionHandler: (([Barcode]?, AVCaptureVideoOrientation?, String?) -> Void)?
+    private var barcodeRawValueVotes = [String: Int]()
 
     init(plugin: BarcodeScannerPlugin) {
         self.plugin = plugin
@@ -50,6 +51,7 @@ typealias MLKitBarcodeScanner = MLKitBarcodeScanning.BarcodeScanner
             self.cameraView = nil
         }
         self.scanCompletionHandler = nil
+        self.barcodeRawValueVotes.removeAll()
     }
 
     @objc public func readBarcodesFromImage(imageUrl: URL, settings: ScanSettings, completion: @escaping ([Barcode]?, String?) -> Void) {
@@ -257,6 +259,18 @@ typealias MLKitBarcodeScanner = MLKitBarcodeScanning.BarcodeScanner
     private func handleScannedBarcode(barcode: Barcode, imageSize: CGSize, videoOrientation: AVCaptureVideoOrientation?) {
         plugin.notifyBarcodeScannedListener(barcode: barcode, imageSize: imageSize, videoOrientation: videoOrientation)
     }
+
+    private func voteForBarcode(barcode: Barcode) -> Int {
+        guard let rawValue = barcode.rawValue else {
+            return 1
+        }
+        if let votes = self.barcodeRawValueVotes[rawValue] {
+            self.barcodeRawValueVotes[rawValue] = votes + 1
+        } else {
+            self.barcodeRawValueVotes[rawValue] = 1
+        }
+        return self.barcodeRawValueVotes[rawValue] ?? 1
+    }
 }
 
 extension BarcodeScanner: BarcodeScannerViewDelegate {
@@ -266,7 +280,10 @@ extension BarcodeScanner: BarcodeScannerViewDelegate {
             self.stopScan()
         } else {
             for barcode in barcodes {
-                self.handleScannedBarcode(barcode: barcode, imageSize: imageSize, videoOrientation: videoOrientation)
+                let votes = self.voteForBarcode(barcode: barcode)
+                if votes >= 10 {
+                    self.handleScannedBarcode(barcode: barcode, imageSize: imageSize, videoOrientation: videoOrientation)
+                }
             }
         }
     }
