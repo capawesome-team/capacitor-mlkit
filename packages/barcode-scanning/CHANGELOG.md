@@ -1,5 +1,19 @@
 # Changelog
 
+## 5.4.0
+
+### Minor Changes
+
+- [`2b390c1`](https://github.com/capawesome-team/capacitor-mlkit/commit/2b390c126fccf6e5d71772153c38bd81d27854c4) ([#112](https://github.com/capawesome-team/capacitor-mlkit/pull/112)): feat: zoom functionality
+
+### Patch Changes
+
+- [`c297f7e`](https://github.com/capawesome-team/capacitor-mlkit/commit/c297f7e531c978ea946cd7f152e8cdf569b0695d): fix(ios): `readBarcodesFromImage(...)` does not resolve
+
+* [`4ca54ae`](https://github.com/capawesome-team/capacitor-mlkit/commit/4ca54ae5ef517db0f6794e14ab29958eb3ad6731) ([#128](https://github.com/capawesome-team/capacitor-mlkit/pull/128)): fix(ios): incorrect coordinate calculation in landscape mode
+
+- [`454bad4`](https://github.com/capawesome-team/capacitor-mlkit/commit/454bad459b2cec0d3c0316cb20ad9638b0f98714) ([#127](https://github.com/capawesome-team/capacitor-mlkit/pull/127)): fix(ios): incorrect coordinate calculation
+
 ## 5.3.0
 
 ## 5.2.0
