@@ -14,7 +14,7 @@ typealias MLKitBarcodeScanner = MLKitBarcodeScanning.BarcodeScanner
     public let plugin: BarcodeScannerPlugin
 
     private var cameraView: BarcodeScannerView?
-    private var scanCompletionHandler: (([Barcode]?, String?) -> Void)?
+    private var scanCompletionHandler: (([Barcode]?, AVCaptureVideoOrientation?, String?) -> Void)?
 
     init(plugin: BarcodeScannerPlugin) {
         self.plugin = plugin
@@ -70,7 +70,7 @@ typealias MLKitBarcodeScanner = MLKitBarcodeScanning.BarcodeScanner
         }
     }
 
-    @objc public func scan(settings: ScanSettings, completion: @escaping (([Barcode]?, String?) -> Void)) {
+    public func scan(settings: ScanSettings, completion: @escaping (([Barcode]?, AVCaptureVideoOrientation?, String?) -> Void)) {
         self.stopScan()
 
         guard let webView = self.plugin.webView else {
@@ -86,7 +86,7 @@ typealias MLKitBarcodeScanner = MLKitBarcodeScanning.BarcodeScanner
                 self.cameraView = cameraView
             } catch let error {
                 CAPLog.print(error.localizedDescription, error)
-                completion(nil, error.localizedDescription)
+                completion(nil, nil, error.localizedDescription)
                 return
             }
         }
@@ -254,27 +254,26 @@ typealias MLKitBarcodeScanner = MLKitBarcodeScanning.BarcodeScanner
         webView.scrollView.backgroundColor = UIColor.white
     }
 
-    private func handleScannedBarcode(barcode: Barcode, imageSize: CGSize) {
-        plugin.notifyBarcodeScannedListener(barcode: barcode, imageSize: imageSize)
+    private func handleScannedBarcode(barcode: Barcode, imageSize: CGSize, videoOrientation: AVCaptureVideoOrientation?) {
+        plugin.notifyBarcodeScannedListener(barcode: barcode, imageSize: imageSize, videoOrientation: videoOrientation)
     }
-
 }
 
 extension BarcodeScanner: BarcodeScannerViewDelegate {
-    public func onBarcodesDetected(barcodes: [Barcode], imageSize: CGSize) {
+    public func onBarcodesDetected(barcodes: [Barcode], imageSize: CGSize, videoOrientation: AVCaptureVideoOrientation?) {
         if let scanCompletionHandler = self.scanCompletionHandler {
-            scanCompletionHandler(barcodes, nil)
+            scanCompletionHandler(barcodes, videoOrientation, nil)
             self.stopScan()
         } else {
             for barcode in barcodes {
-                self.handleScannedBarcode(barcode: barcode, imageSize: imageSize)
+                self.handleScannedBarcode(barcode: barcode, imageSize: imageSize, videoOrientation: videoOrientation)
             }
         }
     }
 
     public func onCancel() {
         if let scanCompletionHandler = self.scanCompletionHandler {
-            scanCompletionHandler(nil, plugin.errorScanCanceled)
+            scanCompletionHandler(nil, nil, plugin.errorScanCanceled)
         }
         self.stopScan()
     }
