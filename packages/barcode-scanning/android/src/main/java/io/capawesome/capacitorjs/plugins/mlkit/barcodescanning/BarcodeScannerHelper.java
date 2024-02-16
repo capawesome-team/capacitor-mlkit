@@ -165,7 +165,7 @@ public class BarcodeScannerHelper {
 
     private static Point[] normalizeCornerPoints(@NonNull Point[] cornerPoints, @NonNull Point imageSize, @NonNull Point screenSize) {
         // Log corner points
-        Logger.debug("Corner points: " + cornerPoints[0] + ", " + cornerPoints[1] + ", " + cornerPoints[2] + ", " + cornerPoints[3]);
+        // Logger.debug("Corner points: " + cornerPoints[0] + ", " + cornerPoints[1] + ", " + cornerPoints[2] + ", " + cornerPoints[3]);
         double screenWidth = screenSize.x;
         double screenHeight = screenSize.y;
         double imageWidth = imageSize.x;
@@ -188,7 +188,7 @@ public class BarcodeScannerHelper {
             normalizedCornerPoints[i] = new Point(x, y);
         }
         // Log normalized corner points
-        Logger.debug("Normalized corner points: " + normalizedCornerPoints[0] + ", " + normalizedCornerPoints[1] + ", " + normalizedCornerPoints[2] + ", " + normalizedCornerPoints[3]);
+        // Logger.debug("Normalized corner points: " + normalizedCornerPoints[0] + ", " + normalizedCornerPoints[1] + ", " + normalizedCornerPoints[2] + ", " + normalizedCornerPoints[3]);
         return normalizedCornerPoints;
     }
 }
