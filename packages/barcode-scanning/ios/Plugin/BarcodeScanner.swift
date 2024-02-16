@@ -68,6 +68,7 @@ typealias MLKitBarcodeScanner = MLKitBarcodeScanning.BarcodeScanner
             }
             CAPLog.print("\(features?.count ?? 0)")
             guard let features = features, !features.isEmpty else {
+                completion(features, nil)
                 return
             }
             completion(features, nil)
