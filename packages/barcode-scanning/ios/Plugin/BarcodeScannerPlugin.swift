@@ -115,7 +115,7 @@ public class BarcodeScannerPlugin: CAPPlugin {
                 }
                 var barcodeResults = JSArray()
                 for barcode in barcodes ?? [] {
-                    barcodeResults.append(BarcodeScannerHelper.createBarcodeResultForBarcode(barcode, imageSize: nil, scale: 1))
+                    barcodeResults.append(BarcodeScannerHelper.createBarcodeResultForBarcode(barcode, imageSize: nil))
                 }
                 call.resolve([
                     "barcodes": barcodeResults

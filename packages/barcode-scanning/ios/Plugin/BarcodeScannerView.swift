@@ -262,8 +262,9 @@ public protocol BarcodeScannerViewDelegate {
     private func filterBarcodesOutsideTheDetectionArea(_ barcodes: [Barcode], imageSize: CGSize?, detectionArea: CGRect) -> [Barcode] {
         return barcodes.filter { barcode in
             if let cornerPoints = barcode.cornerPoints, let imageSize = imageSize {
+                let screenSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
                 let normalizedCornerPoints = BarcodeScannerHelper.normalizeCornerPoints(cornerPoints: cornerPoints,
-                                                                                        imageSize: imageSize, scale: 1)
+                                                                                        imageSize: imageSize, screenSize: screenSize)
 
                 let topLeft = normalizedCornerPoints[0].cgPointValue
                 let topRight = normalizedCornerPoints[1].cgPointValue

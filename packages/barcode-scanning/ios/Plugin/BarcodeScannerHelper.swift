@@ -8,30 +8,51 @@ import MLKitBarcodeScanning
 // swiftlint:disable cyclomatic_complexity
 public class BarcodeScannerHelper {
     // swiftlint:disable identifier_name
-    public static func normalizeCornerPoints(cornerPoints: [NSValue], imageSize: CGSize, scale: CGFloat = UIScreen.main.scale) -> [NSValue] {
-        let screenSize: CGRect = UIScreen.main.bounds
-        let imageWidth = imageSize.width
-        let imageHeight = imageSize.height
+    public static func normalizeCornerPoints(cornerPoints: [NSValue], imageSize: CGSize, screenSize: CGSize) -> [NSValue] {
+        // Log corner points
+        // CAPLog.print("Corner points (\(cornerPoints[0].cgPointValue.x), \(cornerPoints[0].cgPointValue.y)), (\(cornerPoints[1].cgPointValue.x), \(cornerPoints[1].cgPointValue.y)), (\(cornerPoints[2].cgPointValue.x), \(cornerPoints[2].cgPointValue.y)), (\(cornerPoints[3].cgPointValue.x), \(cornerPoints[3].cgPointValue.y))")
+        let screenWidth = screenSize.width
+        let screenHeight = screenSize.height
+        var imageWidth = imageSize.width
+        var imageHeight = imageSize.height
+        // Swap the image dimensions if the image is in landscape mode
+        if screenWidth > screenHeight {
+            imageWidth = imageSize.height
+            imageHeight = imageSize.width
+        }
+        // Calculate the scale of the image
+        let scale = max(screenHeight / CGFloat(imageWidth), screenWidth / CGFloat(imageHeight))
+        // Calculate the invisible area of the image
+        let invisibleWidth = imageHeight * scale - screenWidth
+        let invisibleHeight = imageWidth * scale - screenHeight
         let isPortrait = UIDevice.current.orientation == .portrait || UIDevice.current.orientation == .portraitUpsideDown
         var normalizedCornerPoints = [NSValue]()
         for cornerPoint in cornerPoints {
-            var x = Int((cornerPoint.cgPointValue.x / CGFloat(imageWidth)) * screenSize.width * scale)
-            var y = Int((cornerPoint.cgPointValue.y / CGFloat(imageHeight)) * screenSize.height * scale)
+            var x = Int(((cornerPoint.cgPointValue.x * scale) - (invisibleWidth / 2)))
+            var y = Int(((cornerPoint.cgPointValue.y * scale) - (invisibleHeight / 2)))
             if isPortrait {
-                x = Int((1 - (cornerPoint.cgPointValue.y / CGFloat(imageHeight))) * screenSize.width * scale)
-                y = Int((cornerPoint.cgPointValue.x / CGFloat(imageWidth)) * screenSize.height * scale)
+                x = Int((((imageHeight - cornerPoint.cgPointValue.y) * scale) - (invisibleWidth / 2)))
+                y = Int(((cornerPoint.cgPointValue.x * scale) - (invisibleHeight / 2)))
             }
             let point = CGPoint(x: x, y: y)
             let value = NSValue(cgPoint: point)
             normalizedCornerPoints.append(value)
         }
+        // If the image is in portrait mode, the corner points need to be rotated
+        if isPortrait {
+            let lastNormalizedCornerPoints = normalizedCornerPoints.removeLast()
+            normalizedCornerPoints.insert(lastNormalizedCornerPoints, at: 0)
+        }
+        // Log normalized corner points
+        // CAPLog.print("Normalized corner points (\(normalizedCornerPoints[0].cgPointValue.x), \(normalizedCornerPoints[0].cgPointValue.y)), (\(normalizedCornerPoints[1].cgPointValue.x), \(normalizedCornerPoints[1].cgPointValue.y)), (\(normalizedCornerPoints[2].cgPointValue.x), \(normalizedCornerPoints[2].cgPointValue.y)), (\(normalizedCornerPoints[3].cgPointValue.x), \(normalizedCornerPoints[3].cgPointValue.y))")
         return normalizedCornerPoints
     }
 
-    public static func createBarcodeResultForBarcode(_ barcode: Barcode, imageSize: CGSize?, scale: CGFloat = UIScreen.main.scale) -> JSObject {
+    public static func createBarcodeResultForBarcode(_ barcode: Barcode, imageSize: CGSize?) -> JSObject {
         var cornerPointsResult = [[Int]]()
         if let cornerPoints = barcode.cornerPoints, let imageSize = imageSize {
-            let normalizedCornerPoints = normalizeCornerPoints(cornerPoints: cornerPoints, imageSize: imageSize, scale: scale)
+            let screenSize = CGSize(width: UIScreen.main.bounds.width * UIScreen.main.scale, height: UIScreen.main.bounds.height * UIScreen.main.scale)
+            let normalizedCornerPoints = normalizeCornerPoints(cornerPoints: cornerPoints, imageSize: imageSize, screenSize: screenSize)
             for cornerPoint in normalizedCornerPoints {
                 var value = [Int]()
                 value.append(Int(cornerPoint.cgPointValue.x))

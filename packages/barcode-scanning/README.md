@@ -714,7 +714,6 @@ Remove all listeners for this plugin.
 | ---------------- | ------------------------------------------------- | ---------------------------------------------------------------------------------------- | ----- |
 | **`formats`**    | <code>BarcodeFormat[]</code>                      | Improve the speed of the barcode scanner by configuring the barcode formats to scan for. | 0.0.1 |
 | **`lensFacing`** | <code><a href="#lensfacing">LensFacing</a></code> | Configure the camera (front or back) to use.                                             | 0.0.1 |
-| **`zoomRatio`**  | <code>number</code>                               | The initial zoom ratio of the camera.                                                    | 5.4.0 |
 
 
 #### ReadBarcodesFromImageResult
