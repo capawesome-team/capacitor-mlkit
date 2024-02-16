@@ -84,7 +84,7 @@ public class BarcodeScannerPlugin: CAPPlugin {
             }
             var barcodeResults = JSArray()
             for barcode in barcodes ?? [] {
-                barcodeResults.append(BarcodeScannerHelper.createBarcodeResultForBarcode(barcode, imageSize: nil))
+                barcodeResults.append(BarcodeScannerHelper.createBarcodeResultForBarcode(barcode, imageSize: nil, videoOrientation: nil))
             }
             call.resolve([
                 "barcodes": barcodeResults
@@ -108,14 +108,14 @@ public class BarcodeScannerPlugin: CAPPlugin {
                 call.reject(error.localizedDescription)
                 return
             }
-            self.implementation?.scan(settings: settings, completion: { barcodes, errorMessage in
+            self.implementation?.scan(settings: settings, completion: { barcodes, videoOrientation, errorMessage in
                 if let errorMessage = errorMessage {
                     call.reject(errorMessage)
                     return
                 }
                 var barcodeResults = JSArray()
                 for barcode in barcodes ?? [] {
-                    barcodeResults.append(BarcodeScannerHelper.createBarcodeResultForBarcode(barcode, imageSize: nil))
+                    barcodeResults.append(BarcodeScannerHelper.createBarcodeResultForBarcode(barcode, imageSize: nil, videoOrientation: videoOrientation))
                 }
                 call.resolve([
                     "barcodes": barcodeResults
@@ -234,9 +234,9 @@ public class BarcodeScannerPlugin: CAPPlugin {
         }
     }
 
-    @objc func notifyBarcodeScannedListener(barcode: Barcode, imageSize: CGSize) {
+    func notifyBarcodeScannedListener(barcode: Barcode, imageSize: CGSize, videoOrientation: AVCaptureVideoOrientation?) {
         var result = JSObject()
-        result["barcode"] = BarcodeScannerHelper.createBarcodeResultForBarcode(barcode, imageSize: imageSize)
+        result["barcode"] = BarcodeScannerHelper.createBarcodeResultForBarcode(barcode, imageSize: imageSize, videoOrientation: videoOrientation)
         notifyListeners(barcodeScannedEvent, data: result)
     }
 }
