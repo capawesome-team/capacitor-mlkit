@@ -2,7 +2,14 @@
 
 This is a comprehensive list of the breaking changes introduced in the major version releases of Capacitor ML Kit Translation plugin.
 
+- [Version 6.x.x](#version-6xx)
 - [Version 5.x.x](#version-5xx)
+
+## Version 6.x.x
+
+### Variables
+
+- On Android, the `mlkitTranslateVersion` variable has been updated to `17.0.2`.
 
 ## Version 5.x.x
 

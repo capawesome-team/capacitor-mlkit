@@ -3,7 +3,7 @@ ext {
     androidxAppCompatVersion = project.hasProperty('androidxAppCompatVersion') ? rootProject.ext.androidxAppCompatVersion : '1.6.1'
     androidxJunitVersion = project.hasProperty('androidxJunitVersion') ? rootProject.ext.androidxJunitVersion : '1.1.5'
     androidxEspressoCoreVersion = project.hasProperty('androidxEspressoCoreVersion') ? rootProject.ext.androidxEspressoCoreVersion : '3.5.1'
-    mlkitFaceMeshDetectionVersion = project.hasProperty('mlkitFaceMeshDetectionVersion') ? rootProject.ext.mlkitFaceMeshDetectionVersion : '16.0.0-beta1'
+    mlkitFaceMeshDetectionVersion = project.hasProperty('mlkitFaceMeshDetectionVersion') ? rootProject.ext.mlkitFaceMeshDetectionVersion : '16.0.0-beta2'
 }
 
 buildscript {
