@@ -35,6 +35,8 @@ npx cap sync
 
 ### Android
 
+#### Permissions
+
 This API requires the following permissions be added to your `AndroidManifest.xml` before the `application` tag:
 
 ```xml
@@ -49,6 +51,22 @@ You also need to add the following meta data **in** the `application` tag in you
 ```xml
 <meta-data android:name="com.google.mlkit.vision.DEPENDENCIES" android:value="barcode_ui"/>
 <!-- To use multiple models: android:value="face,model2,model3" -->
+```
+
+#### Data Binding
+
+Enable the databinding library by setting the `dataBinding` and `enabled` build options to `true` in your module-level (app-level) Gradle file (usually `android/app/build.gradle`):
+
+```diff
+android {
+    ...
++    buildFeatures {
++        dataBinding true
++    }
++    dataBinding {
++        enabled = true
++    }
+}
 ```
 
 #### Variables
@@ -925,6 +943,13 @@ Remove all listeners for this plugin.
 | **`DOWNLOAD_PAUSED`** | <code>7</code> | 5.1.0 |
 
 </docgen-api>
+
+## Common Issues
+
+### `NullPointerException` during `startScan(...)`
+
+The following error may occur when calling the `startScan(...)` method: `Attempt to invoke virtual method 'void androidx.camera.view.PreviewView.setScaleType(androidx.camera.view.PreviewView$ScaleType)' on a null object reference`.
+In this case, make sure that the databinding library is enabled (see [Data Binding](#data-binding)).
 
 ## Terms & Privacy
 
