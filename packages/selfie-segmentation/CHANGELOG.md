@@ -1,5 +1,11 @@
 # Changelog
 
+## 6.0.0
+
+### Major Changes
+
+- [`bfcfaff`](https://github.com/capawesome-team/capacitor-mlkit/commit/bfcfaff900218f19b2b6bdfa27e940b02d451b24) ([#134](https://github.com/capawesome-team/capacitor-mlkit/pull/134)): chore(deps): update Android SDKs
+
 ## 5.4.0
 
 ## 5.3.0
