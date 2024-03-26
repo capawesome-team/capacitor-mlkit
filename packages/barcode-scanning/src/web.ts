@@ -1,6 +1,7 @@
 import { CapacitorException, ExceptionCode, WebPlugin } from '@capacitor/core';
 
 import type {
+  BarcodeScannedEvent,
   BarcodeScannerPlugin,
   GetMaxZoomRatioResult,
   GetMinZoomRatioResult,
@@ -16,17 +17,64 @@ import type {
   SetZoomRatioOptions,
   StartScanOptions,
 } from './definitions';
+import { BarcodeValueType } from './definitions';
 
 export class BarcodeScannerWeb
   extends WebPlugin
   implements BarcodeScannerPlugin
 {
-  async startScan(_options?: StartScanOptions): Promise<void> {
-    throw this.createUnavailableException();
+  public static readonly ERROR_VIDEO_ELEMENT_MISSING =
+    'videoElement must be provided.';
+  private readonly _isSupported = 'BarcodeDetector' in window;
+  private intervalId: number | undefined;
+  private stream: MediaStream | undefined;
+
+  async startScan(options?: StartScanOptions): Promise<void> {
+    if (!this._isSupported) {
+      this.throwUnsupportedError();
+    }
+    if (!options?.videoElement) {
+      throw new Error(BarcodeScannerWeb.ERROR_VIDEO_ELEMENT_MISSING);
+    }
+    this.stream = await navigator.mediaDevices.getUserMedia({
+      video: {
+        facingMode: {
+          ideal: 'environment',
+        },
+      },
+      audio: false,
+    });
+    options.videoElement.srcObject = this.stream;
+    await options.videoElement.play();
+    const barcodeDetector = new window.BarcodeDetector({
+      formats: ['qr_code'],
+    });
+    this.intervalId = window.setInterval(async () => {
+      const barcodes = await barcodeDetector.detect(options.videoElement);
+      if (barcodes.length === 0) {
+        return;
+      } else {
+        for (const barcode of barcodes) {
+          this.handleScannedBarcode(barcode);
+        }
+      }
+    }, 1000);
   }
 
   async stopScan(): Promise<void> {
-    throw this.createUnavailableException();
+    if (!this._isSupported) {
+      this.throwUnsupportedError();
+    }
+    if (this.intervalId) {
+      window.clearInterval(this.intervalId);
+      this.intervalId = undefined;
+    }
+    if (this.stream) {
+      this.stream.getTracks().forEach(track => {
+        track.stop();
+      });
+      this.stream = undefined;
+    }
   }
 
   async readBarcodesFromImage(
@@ -40,7 +88,9 @@ export class BarcodeScannerWeb
   }
 
   async isSupported(): Promise<IsSupportedResult> {
-    throw this.createUnavailableException();
+    return {
+      supported: this._isSupported,
+    };
   }
 
   async enableTorch(): Promise<void> {
@@ -104,5 +154,29 @@ export class BarcodeScannerWeb
       'This Barcode Scanner plugin method is not available on this platform.',
       ExceptionCode.Unavailable,
     );
+  }
+
+  private throwUnsupportedError(): never {
+    throw this.unavailable(
+      'Barcode Detector API not available in this browser.',
+    );
+  }
+
+  private handleScannedBarcode(barcode: any): void {
+    const result: BarcodeScannedEvent = {
+      barcode: {
+        displayValue: barcode.rawValue,
+        rawValue: barcode.rawValue,
+        format: barcode.format,
+        valueType: BarcodeValueType.Unknown,
+      },
+    };
+    this.notifyListeners('barcodeScanned', result);
+  }
+}
+
+declare global {
+  interface Window {
+    BarcodeDetector: any;
   }
 }
