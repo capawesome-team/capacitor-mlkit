@@ -32,7 +32,7 @@ public class ModuleInstallProgressListener implements InstallStatusListener {
         // Progress info is only set when modules are in the progress of downloading.
         Integer progress = null;
         if (progressInfo != null) {
-            progress = (int) (progressInfo.getBytesDownloaded() / progressInfo.getTotalBytesToDownload());
+            progress = (int) (100 * (progressInfo.getBytesDownloaded() / progressInfo.getTotalBytesToDownload()));
         }
         implementation.handleGoogleBarcodeScannerModuleInstallProgress(state, progress);
     }
