@@ -1,5 +1,19 @@
 # Changelog
 
+## 6.0.0
+
+### Major Changes
+
+- [`bfcfaff`](https://github.com/capawesome-team/capacitor-mlkit/commit/bfcfaff900218f19b2b6bdfa27e940b02d451b24) ([#134](https://github.com/capawesome-team/capacitor-mlkit/pull/134)): chore(deps): update Android SDKs
+
+* [`13a86f9`](https://github.com/capawesome-team/capacitor-mlkit/commit/13a86f9377d053ab29fe90b3ea059e95f3c39938): feat: update to Capacitor 6
+
+### Patch Changes
+
+- [`cb63726`](https://github.com/capawesome-team/capacitor-mlkit/commit/cb63726e4a7c21822d13faa6987abfc169f733af) ([#138](https://github.com/capawesome-team/capacitor-mlkit/pull/138)): fix(android): enable the databinding library
+
+* [`a86df95`](https://github.com/capawesome-team/capacitor-mlkit/commit/a86df95af16c3fe64922795ce15668e882f596e8) ([#145](https://github.com/capawesome-team/capacitor-mlkit/pull/145)): fix(android): invalid `progress` values
+
 ## 5.4.0
 
 ### Minor Changes
