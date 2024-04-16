@@ -17,6 +17,14 @@ This plugin will use the following project variables (defined in your app’s `v
 
 - `$mlkitTranslateVersion` version of `com.google.mlkit:translate` (default: `17.0.1`)
 
+### iOS
+
+#### Variables
+
+This plugin will use the following project variables (defined in your app’s `Podfile` file):
+
+- `$mlkitTranslateVersion` version of `GoogleMLKit/Translate` (default: `4.0.0`)
+
 ## Configuration
 
 No configuration required for this plugin.
