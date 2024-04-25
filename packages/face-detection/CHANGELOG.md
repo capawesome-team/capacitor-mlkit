@@ -1,5 +1,11 @@
 # Changelog
 
+## 6.1.0
+
+### Minor Changes
+
+- [`79011e7`](https://github.com/capawesome-team/capacitor-mlkit/commit/79011e7fa310f2a275179d6179d89c3ea0324150) ([#150](https://github.com/capawesome-team/capacitor-mlkit/pull/150)): feat(ios): update `GoogleMLKit` dependencies to `5.0.0`
+
 ## 6.0.0
 
 ### Major Changes
