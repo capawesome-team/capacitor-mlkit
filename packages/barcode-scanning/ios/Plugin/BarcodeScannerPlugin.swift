@@ -12,6 +12,7 @@ import MLKitBarcodeScanning
  */
 @objc(BarcodeScannerPlugin)
 public class BarcodeScannerPlugin: CAPPlugin {
+    public let tag = "BarcodeScanner"
     public let errorPathMissing = "path must be provided."
     public let errorFileNotExist = "File does not exist."
     public let errorInvalidImage = "The file is no valid image."
@@ -19,6 +20,7 @@ public class BarcodeScannerPlugin: CAPPlugin {
     public let errorCannotAddCaptureInput = "Cannot add input to capture session."
     public let errorCannotAddCaptureOutput = "Cannot add output to capture session."
     public let errorScanCanceled = "scan canceled."
+    public let errorZoomRatioMissing = "zoomRatio must be provided."
     public let errorPermissionDenied = "User denied access to camera."
     public let errorOpenSettingsFailed = "Cannot open settings."
     public let barcodeScannedEvent = "barcodeScanned"
@@ -82,7 +84,7 @@ public class BarcodeScannerPlugin: CAPPlugin {
             }
             var barcodeResults = JSArray()
             for barcode in barcodes ?? [] {
-                barcodeResults.append(BarcodeScannerHelper.createBarcodeResultForBarcode(barcode, imageSize: nil))
+                barcodeResults.append(BarcodeScannerHelper.createBarcodeResultForBarcode(barcode, imageSize: nil, videoOrientation: nil))
             }
             call.resolve([
                 "barcodes": barcodeResults
@@ -106,14 +108,14 @@ public class BarcodeScannerPlugin: CAPPlugin {
                 call.reject(error.localizedDescription)
                 return
             }
-            self.implementation?.scan(settings: settings, completion: { barcodes, errorMessage in
+            self.implementation?.scan(settings: settings, completion: { barcodes, videoOrientation, errorMessage in
                 if let errorMessage = errorMessage {
                     call.reject(errorMessage)
                     return
                 }
                 var barcodeResults = JSArray()
                 for barcode in barcodes ?? [] {
-                    barcodeResults.append(BarcodeScannerHelper.createBarcodeResultForBarcode(barcode, imageSize: nil, scale: 1))
+                    barcodeResults.append(BarcodeScannerHelper.createBarcodeResultForBarcode(barcode, imageSize: nil, videoOrientation: videoOrientation))
                 }
                 call.resolve([
                     "barcodes": barcodeResults
@@ -155,6 +157,53 @@ public class BarcodeScannerPlugin: CAPPlugin {
         ])
     }
 
+    @objc func setZoomRatio(_ call: CAPPluginCall) {
+        guard let zoomRatio = call.getFloat("zoomRatio") else {
+            call.reject(errorZoomRatioMissing)
+            return
+        }
+
+        let options = SetZoomRatioOptions(zoomRatio: zoomRatio)
+
+        do {
+            try implementation?.setZoomRatio(options)
+            call.resolve()
+        } catch {
+            CAPLog.print("[", self.tag, "] ", error)
+            call.reject(error.localizedDescription)
+        }
+    }
+
+    @objc func getZoomRatio(_ call: CAPPluginCall) {
+        guard let result = implementation?.getZoomRatio() else {
+            call.reject(errorNoCaptureDeviceAvailable)
+            return
+        }
+        if let result = result.toJSObject() as? JSObject {
+            call.resolve(result)
+        }
+    }
+
+    @objc func getMinZoomRatio(_ call: CAPPluginCall) {
+        guard let result = implementation?.getMinZoomRatio() else {
+            call.reject(errorNoCaptureDeviceAvailable)
+            return
+        }
+        if let result = result.toJSObject() as? JSObject {
+            call.resolve(result)
+        }
+    }
+
+    @objc func getMaxZoomRatio(_ call: CAPPluginCall) {
+        guard let result = implementation?.getMaxZoomRatio() else {
+            call.reject(errorNoCaptureDeviceAvailable)
+            return
+        }
+        if let result = result.toJSObject() as? JSObject {
+            call.resolve(result)
+        }
+    }
+
     @objc func openSettings(_ call: CAPPluginCall) {
         implementation?.openSettings(completion: { error in
             if let error = error {
@@ -163,6 +212,14 @@ public class BarcodeScannerPlugin: CAPPlugin {
             }
             call.resolve()
         })
+    }
+
+    @objc func isGoogleBarcodeScannerModuleAvailable(_ call: CAPPluginCall) {
+        call.reject("Not available on iOS")
+    }
+
+    @objc func installGoogleBarcodeScannerModule(_ call: CAPPluginCall) {
+        call.reject("Not available on iOS")
     }
 
     @objc override public func checkPermissions(_ call: CAPPluginCall) {
@@ -177,9 +234,9 @@ public class BarcodeScannerPlugin: CAPPlugin {
         }
     }
 
-    @objc func notifyBarcodeScannedListener(barcode: Barcode, imageSize: CGSize) {
+    func notifyBarcodeScannedListener(barcode: Barcode, imageSize: CGSize, videoOrientation: AVCaptureVideoOrientation?) {
         var result = JSObject()
-        result["barcode"] = BarcodeScannerHelper.createBarcodeResultForBarcode(barcode, imageSize: imageSize)
+        result["barcode"] = BarcodeScannerHelper.createBarcodeResultForBarcode(barcode, imageSize: imageSize, videoOrientation: videoOrientation)
         notifyListeners(barcodeScannedEvent, data: result)
     }
 }

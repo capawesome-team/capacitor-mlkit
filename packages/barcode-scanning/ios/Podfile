@@ -9,7 +9,7 @@ end
 
 target 'Plugin' do
   capacitor_pods
-  pod 'GoogleMLKit/BarcodeScanning', '4.0.0'
+  pod 'GoogleMLKit/BarcodeScanning', '5.0.0'
 end
 
 target 'PluginTests' do
@@ -20,6 +20,11 @@ post_install do |installer|
   installer.pods_project.targets.each do |target|
       target.build_configurations.each do |config|
         config.build_settings['ONLY_ACTIVE_ARCH'] = 'NO'
+      end
+      if target.respond_to?(:product_type) and target.product_type == "com.apple.product-type.bundle"
+        target.build_configurations.each do |config|
+          config.build_settings['CODE_SIGNING_ALLOWED'] = 'NO'
+        end
       end
   end
 end

@@ -2,7 +2,17 @@
 
 This is a comprehensive list of the breaking changes introduced in the major version releases of Capacitor ML Kit Barcode Scanning plugin.
 
+## Versions
+
+- [Version 6.x.x](#version-6xx)
 - [Version 5.x.x](#version-5xx)
+
+## Version 6.x.x
+
+### Variables
+
+- On Android, the `mlkitBarcodeScanningVersion` variable has been updated to `17.2.0`.
+- On Android, the `playServicesCodeScannerVersion` variable has been updated to `16.1.0`.
 
 ## Version 5.x.x
 

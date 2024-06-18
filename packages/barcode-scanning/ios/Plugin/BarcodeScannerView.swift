@@ -10,7 +10,7 @@ import MLKitVision
 
 // swiftlint:disable class_delegate_protocol
 public protocol BarcodeScannerViewDelegate {
-    func onBarcodesDetected(barcodes: [Barcode], imageSize: CGSize)
+    func onBarcodesDetected(barcodes: [Barcode], imageSize: CGSize, videoOrientation: AVCaptureVideoOrientation?)
     func onCancel()
     func onTorchToggle()
 }
@@ -23,6 +23,7 @@ public protocol BarcodeScannerViewDelegate {
     private var captureSession: AVCaptureSession?
     private var barcodeScannerInstance: MLKitBarcodeScanner?
     private var videoPreviewLayer: AVCaptureVideoPreviewLayer?
+    private var videoOrientation: AVCaptureVideoOrientation?
     private var cancelButton: UIButton?
     private var torchButton: UIButton?
     private var detectionAreaView: UIView?
@@ -107,7 +108,9 @@ public protocol BarcodeScannerViewDelegate {
         }
 
         if let interfaceOrientation = UIApplication.shared.windows.first(where: { $0.isKeyWindow })?.windowScene?.interfaceOrientation {
-            self.videoPreviewLayer?.connection?.videoOrientation = interfaceOrientationToVideoOrientation(interfaceOrientation)
+            let videoOrientation = interfaceOrientationToVideoOrientation(interfaceOrientation)
+            self.videoPreviewLayer?.connection?.videoOrientation = videoOrientation
+            self.videoOrientation = videoOrientation
         }
     }
 
@@ -117,7 +120,7 @@ public protocol BarcodeScannerViewDelegate {
         }
         let visionImage = VisionImage(buffer: sampleBuffer)
         visionImage.orientation = imageOrientation(
-            deviceOrientation: UIDevice.current.orientation,
+            videoOrientation: self.videoOrientation,
             cameraPosition: AVCaptureDevice.Position.back)
         var barcodes: [Barcode] = []
         do {
@@ -137,12 +140,12 @@ public protocol BarcodeScannerViewDelegate {
         let imageSize = CGSize(width: imageWidth, height: imageHeight)
         if let detectionAreaViewFrame = self.detectionAreaViewFrame {
             barcodes = filterBarcodesOutsideTheDetectionArea(barcodes, imageSize: imageSize,
-                                                             detectionArea: detectionAreaViewFrame)
+                                                             detectionArea: detectionAreaViewFrame, videoOrientation: videoOrientation)
             if barcodes.isEmpty {
                 return
             }
         }
-        onBarcodesDetected(barcodes: barcodes, imageSize: imageSize)
+        onBarcodesDetected(barcodes: barcodes, imageSize: imageSize, videoOrientation: videoOrientation)
     }
 
     private func interfaceOrientationToVideoOrientation(_ orientation: UIInterfaceOrientation) -> AVCaptureVideoOrientation {
@@ -161,10 +164,10 @@ public protocol BarcodeScannerViewDelegate {
     }
 
     private func imageOrientation(
-        deviceOrientation: UIDeviceOrientation,
+        videoOrientation: AVCaptureVideoOrientation?,
         cameraPosition: AVCaptureDevice.Position
     ) -> UIImage.Orientation {
-        switch deviceOrientation {
+        switch videoOrientation {
         case .portrait:
             return cameraPosition == .front ? .leftMirrored : .right
         case .landscapeLeft:
@@ -173,7 +176,7 @@ public protocol BarcodeScannerViewDelegate {
             return cameraPosition == .front ? .rightMirrored : .left
         case .landscapeRight:
             return cameraPosition == .front ? .upMirrored : .down
-        case .faceDown, .faceUp, .unknown:
+        case .none:
             return .up
         @unknown default:
             return .up
@@ -259,11 +262,12 @@ public protocol BarcodeScannerViewDelegate {
         self.detectionAreaViewFrame = nil
     }
 
-    private func filterBarcodesOutsideTheDetectionArea(_ barcodes: [Barcode], imageSize: CGSize?, detectionArea: CGRect) -> [Barcode] {
+    private func filterBarcodesOutsideTheDetectionArea(_ barcodes: [Barcode], imageSize: CGSize?, detectionArea: CGRect, videoOrientation: AVCaptureVideoOrientation?) -> [Barcode] {
         return barcodes.filter { barcode in
             if let cornerPoints = barcode.cornerPoints, let imageSize = imageSize {
+                let screenSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
                 let normalizedCornerPoints = BarcodeScannerHelper.normalizeCornerPoints(cornerPoints: cornerPoints,
-                                                                                        imageSize: imageSize, scale: 1)
+                                                                                        imageSize: imageSize, screenSize: screenSize, videoOrientation: videoOrientation)
 
                 let topLeft = normalizedCornerPoints[0].cgPointValue
                 let topRight = normalizedCornerPoints[1].cgPointValue
@@ -287,8 +291,8 @@ public protocol BarcodeScannerViewDelegate {
         }
     }
 
-    @objc private func onBarcodesDetected(barcodes: [Barcode], imageSize: CGSize) {
-        self.delegate?.onBarcodesDetected(barcodes: barcodes, imageSize: imageSize)
+    private func onBarcodesDetected(barcodes: [Barcode], imageSize: CGSize, videoOrientation: AVCaptureVideoOrientation?) {
+        self.delegate?.onBarcodesDetected(barcodes: barcodes, imageSize: imageSize, videoOrientation: videoOrientation)
     }
 
     @objc private func onCancel() {

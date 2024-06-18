@@ -8,15 +8,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.graphics.Matrix;
 import android.graphics.Point;
-import android.graphics.Rect;
 import android.media.Image;
 import android.net.Uri;
 import android.provider.Settings;
-import android.util.Size;
 import android.view.Display;
-import android.view.View;
 import android.view.WindowManager;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,13 +22,16 @@ import androidx.camera.core.ImageAnalysis;
 import androidx.camera.core.ImageProxy;
 import androidx.camera.core.Preview;
 import androidx.camera.lifecycle.ProcessCameraProvider;
-import androidx.camera.view.CameraController;
 import androidx.camera.view.PreviewView;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LifecycleOwner;
-import com.getcapacitor.Logger;
 import com.getcapacitor.PermissionState;
 import com.getcapacitor.PluginCall;
+import com.google.android.gms.common.moduleinstall.InstallStatusListener;
+import com.google.android.gms.common.moduleinstall.ModuleInstall;
+import com.google.android.gms.common.moduleinstall.ModuleInstallClient;
+import com.google.android.gms.common.moduleinstall.ModuleInstallRequest;
+import com.google.android.gms.common.moduleinstall.ModuleInstallStatusUpdate;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.mlkit.vision.barcode.BarcodeScannerOptions;
 import com.google.mlkit.vision.barcode.BarcodeScanning;
@@ -41,10 +40,16 @@ import com.google.mlkit.vision.codescanner.GmsBarcodeScanner;
 import com.google.mlkit.vision.codescanner.GmsBarcodeScannerOptions;
 import com.google.mlkit.vision.codescanner.GmsBarcodeScanning;
 import com.google.mlkit.vision.common.InputImage;
+import io.capawesome.capacitorjs.plugins.mlkit.barcodescanning.classes.options.SetZoomRatioOptions;
+import io.capawesome.capacitorjs.plugins.mlkit.barcodescanning.classes.results.GetMaxZoomRatioResult;
+import io.capawesome.capacitorjs.plugins.mlkit.barcodescanning.classes.results.GetMinZoomRatioResult;
+import io.capawesome.capacitorjs.plugins.mlkit.barcodescanning.classes.results.GetZoomRatioResult;
 
 public class BarcodeScanner implements ImageAnalysis.Analyzer {
 
+    @NonNull
     private final BarcodeScannerPlugin plugin;
+
     private final Point displaySize;
 
     @Nullable
@@ -61,6 +66,9 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
 
     @Nullable
     private ScanSettings scanSettings;
+
+    @Nullable
+    private ModuleInstallProgressListener moduleInstallProgressListener;
 
     private boolean isTorchEnabled = false;
 
@@ -103,6 +111,7 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
                     // Start the camera
                     camera =
                         processCameraProvider.bindToLifecycle((LifecycleOwner) plugin.getContext(), cameraSelector, preview, imageAnalysis);
+
                     callback.success();
                 } catch (Exception exception) {
                     callback.error(exception);
@@ -156,6 +165,7 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
     public void scan(ScanSettings scanSettings, ScanResultCallback callback) {
         GmsBarcodeScannerOptions options = buildGmsBarcodeScannerOptions(scanSettings);
         GmsBarcodeScanner scanner = GmsBarcodeScanning.getClient(plugin.getContext(), options);
+
         scanner
             .startScan()
             .addOnSuccessListener(
@@ -166,6 +176,47 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
             .addOnCanceledListener(
                 () -> {
                     callback.cancel();
+                }
+            )
+            .addOnFailureListener(
+                exception -> {
+                    callback.error(exception);
+                }
+            );
+    }
+
+    public void isGoogleBarcodeScannerModuleAvailable(IsGoogleBarodeScannerModuleAvailableResultCallback callback) {
+        GmsBarcodeScanner scanner = GmsBarcodeScanning.getClient(plugin.getContext());
+        ModuleInstallClient moduleInstallClient = ModuleInstall.getClient(plugin.getContext());
+        moduleInstallClient
+            .areModulesAvailable(scanner)
+            .addOnSuccessListener(
+                response -> {
+                    boolean isAvailable = response.areModulesAvailable();
+                    callback.success(isAvailable);
+                }
+            )
+            .addOnFailureListener(
+                exception -> {
+                    callback.error(exception);
+                }
+            );
+    }
+
+    public void installGoogleBarcodeScannerModule(InstallGoogleBarcodeScannerModuleResultCallback callback) {
+        GmsBarcodeScanner scanner = GmsBarcodeScanning.getClient(plugin.getContext());
+        InstallStatusListener listener = new ModuleInstallProgressListener(this);
+        ModuleInstallRequest moduleInstallRequest = ModuleInstallRequest.newBuilder().addApi(scanner).setListener(listener).build();
+        ModuleInstallClient moduleInstallClient = ModuleInstall.getClient(plugin.getContext());
+        moduleInstallClient
+            .installModules(moduleInstallRequest)
+            .addOnSuccessListener(
+                moduleInstallResponse -> {
+                    if (moduleInstallResponse.areModulesAlreadyInstalled()) {
+                        callback.error(new Exception(BarcodeScannerPlugin.ERROR_GOOGLE_BARCODE_SCANNER_MODULE_ALREADY_INSTALLED));
+                    } else {
+                        callback.success();
+                    }
                 }
             )
             .addOnFailureListener(
@@ -211,6 +262,41 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
         return plugin.getContext().getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
     }
 
+    public void setZoomRatio(SetZoomRatioOptions options) {
+        float zoomRatio = options.getZoomRatio();
+        if (camera == null) {
+            return;
+        }
+        camera.getCameraControl().setZoomRatio(zoomRatio);
+    }
+
+    @Nullable
+    public GetZoomRatioResult getZoomRatio() {
+        if (camera == null) {
+            return null;
+        }
+        float zoomRatio = camera.getCameraInfo().getZoomState().getValue().getZoomRatio();
+        return new GetZoomRatioResult(zoomRatio);
+    }
+
+    @Nullable
+    public GetMinZoomRatioResult getMinZoomRatio() {
+        if (camera == null) {
+            return null;
+        }
+        float minZoomRatio = camera.getCameraInfo().getZoomState().getValue().getMinZoomRatio();
+        return new GetMinZoomRatioResult(minZoomRatio);
+    }
+
+    @Nullable
+    public GetMaxZoomRatioResult getMaxZoomRatio() {
+        if (camera == null) {
+            return null;
+        }
+        float maxZoomRatio = camera.getCameraInfo().getZoomState().getValue().getMaxZoomRatio();
+        return new GetMaxZoomRatioResult(maxZoomRatio);
+    }
+
     public void openSettings(PluginCall call) {
         Uri uri = Uri.fromParts("package", plugin.getAppId(), null);
         Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, uri);
@@ -235,6 +321,10 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
             requestCameraPermission(call);
             return false;
         }
+    }
+
+    public boolean isCameraActive() {
+        return camera != null;
     }
 
     @Override
@@ -272,6 +362,19 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
                     image.close();
                 }
             );
+    }
+
+    public void handleGoogleBarcodeScannerModuleInstallProgress(
+        @ModuleInstallStatusUpdate.InstallState int state,
+        @Nullable Integer progress
+    ) {
+        plugin.notifyGoogleBarcodeScannerModuleInstallProgressListener(state, progress);
+        boolean isTerminateState = ModuleInstallProgressListener.isTerminateState(state);
+        if (isTerminateState && moduleInstallProgressListener != null) {
+            ModuleInstallClient moduleInstallClient = ModuleInstall.getClient(plugin.getContext());
+            moduleInstallClient.unregisterListener(moduleInstallProgressListener);
+            moduleInstallProgressListener = null;
+        }
     }
 
     private Point getDisplaySize() {

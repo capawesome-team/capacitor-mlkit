@@ -1,4 +1,4 @@
-import type { PluginListenerHandle } from '@capacitor/core';
+import type { PermissionState, PluginListenerHandle } from '@capacitor/core';
 
 export interface BarcodeScannerPlugin {
   /**
@@ -30,7 +30,11 @@ export interface BarcodeScannerPlugin {
   /**
    * Scan a barcode with a ready-to-use interface without WebView customization.
    *
-   * On **Android**, no camera permission is required.
+   * On **Android**, this method is only available on devices with Google Play Services
+   * installed. Therefore, no camera permission is required.
+   *
+   * **Attention:** Before using this method on *Android*, first check if the Google Barcode Scanner module is available
+   * by using `isGoogleBarcodeScannerModuleAvailable()`.
    *
    * Only available on Android and iOS.
    *
@@ -87,6 +91,38 @@ export interface BarcodeScannerPlugin {
    */
   isTorchAvailable(): Promise<IsTorchAvailableResult>;
   /**
+   * Set the zoom ratio of the camera.
+   *
+   * Only available on Android and iOS.
+   *
+   * @since 5.4.0
+   */
+  setZoomRatio(options: SetZoomRatioOptions): Promise<void>;
+  /**
+   * Get the zoom ratio of the camera.
+   *
+   * Only available on Android and iOS.
+   *
+   * @since 5.4.0
+   */
+  getZoomRatio(): Promise<GetZoomRatioResult>;
+  /**
+   * Get the minimum zoom ratio of the camera.
+   *
+   * Only available on Android and iOS.
+   *
+   * @since 5.4.0
+   */
+  getMinZoomRatio(): Promise<GetMinZoomRatioResult>;
+  /**
+   * Get the maximum zoom ratio of the camera.
+   *
+   * Only available on Android and iOS.
+   *
+   * @since 5.4.0
+   */
+  getMaxZoomRatio(): Promise<GetMaxZoomRatioResult>;
+  /**
    * Open the settings of the app so that the user can grant the camera permission.
    *
    * Only available on Android and iOS.
@@ -94,6 +130,28 @@ export interface BarcodeScannerPlugin {
    * @since 0.0.1
    */
   openSettings(): Promise<void>;
+  /**
+   * Check if the Google Barcode Scanner module is available.
+   *
+   * If the Google Barcode Scanner module is not available, you can install it by using `installGoogleBarcodeScannerModule()`.
+   *
+   * Only available on Android.
+   *
+   * @since 5.1.0
+   */
+  isGoogleBarcodeScannerModuleAvailable(): Promise<IsGoogleBarcodeScannerModuleAvailableResult>;
+  /**
+   * Install the Google Barcode Scanner module.
+   *
+   * **Attention**: This only starts the installation.
+   * The `googleBarcodeScannerModuleInstallProgress` event listener will
+   * notify you when the installation is complete.
+   *
+   * Only available on Android.
+   *
+   * @since 5.1.0
+   */
+  installGoogleBarcodeScannerModule(): Promise<void>;
   /**
    * Check camera permission.
    *
@@ -120,7 +178,7 @@ export interface BarcodeScannerPlugin {
   addListener(
     eventName: 'barcodeScanned',
     listenerFunc: (event: BarcodeScannedEvent) => void,
-  ): Promise<PluginListenerHandle> & PluginListenerHandle;
+  ): Promise<PluginListenerHandle>;
   /**
    * Called when an error occurs during the scan.
    *
@@ -131,7 +189,20 @@ export interface BarcodeScannerPlugin {
   addListener(
     eventName: 'scanError',
     listenerFunc: (event: ScanErrorEvent) => void,
-  ): Promise<PluginListenerHandle> & PluginListenerHandle;
+  ): Promise<PluginListenerHandle>;
+  /**
+   * Called when the Google Barcode Scanner module is installed.
+   *
+   * Available on Android.
+   *
+   * @since 5.1.0
+   */
+  addListener(
+    eventName: 'googleBarcodeScannerModuleInstallProgress',
+    listenerFunc: (
+      event: GoogleBarcodeScannerModuleInstallProgressEvent,
+    ) => void,
+  ): Promise<PluginListenerHandle>;
   /**
    * Remove all listeners for this plugin.
    *
@@ -228,7 +299,7 @@ export interface ScanResult {
  */
 export interface IsSupportedResult {
   /**
-   * Whether or not the barcode scanner is supported.
+   * Whether or not the barcode scanner is supported by checking if the device has a camera.
    *
    * @since 0.0.1
    * @example true
@@ -258,6 +329,66 @@ export interface IsTorchAvailableResult {
    *
    * @since 0.0.1
    * @example true
+   */
+  available: boolean;
+}
+
+/**
+ * @since 5.4.0
+ */
+export interface SetZoomRatioOptions {
+  /**
+   * The zoom ratio to set.
+   *
+   * @since 5.4.0
+   */
+  zoomRatio: number;
+}
+
+/**
+ * @since 5.4.0
+ */
+export interface GetZoomRatioResult {
+  /**
+   * The zoom ratio.
+   *
+   * @since 5.4.0
+   */
+  zoomRatio: number;
+}
+
+/**
+ * @since 5.4.0
+ */
+export interface GetMinZoomRatioResult {
+  /**
+   * The minimum zoom ratio.
+   *
+   * @since 5.4.0
+   */
+  zoomRatio: number;
+}
+
+/**
+ * @since 5.4.0
+ */
+export interface GetMaxZoomRatioResult {
+  /**
+   * The maximum zoom ratio.
+   *
+   * @since 5.4.0
+   */
+  zoomRatio: number;
+}
+
+/**
+ * @since 5.1.0
+ */
+export interface IsGoogleBarcodeScannerModuleAvailableResult {
+  /**
+   * Whether or not the Google Barcode Scanner module is available.
+   *
+   * @since 5.1.0
    */
   available: boolean;
 }
@@ -299,6 +430,24 @@ export interface ScanErrorEvent {
    * @since 0.0.1
    */
   message: string;
+}
+
+/**
+ * @since 5.1.0
+ */
+export interface GoogleBarcodeScannerModuleInstallProgressEvent {
+  /**
+   * The current state of the installation.
+   *
+   * @since 5.1.0
+   */
+  state: GoogleBarcodeScannerModuleInstallState;
+  /**
+   * The progress of the installation in percent between 0 and 100.
+   *
+   * @since 5.1.0
+   */
+  progress?: number;
 }
 
 /**
@@ -512,4 +661,42 @@ export enum LensFacing {
    * @since 0.0.1
    */
   Back = 'BACK',
+}
+
+/**
+ * @since 5.1.0
+ */
+export enum GoogleBarcodeScannerModuleInstallState {
+  /**
+   * @since 5.1.0
+   */
+  UNKNOWN = 0,
+  /**
+   * @since 5.1.0
+   */
+  PENDING = 1,
+  /**
+   * @since 5.1.0
+   */
+  DOWNLOADING = 2,
+  /**
+   * @since 5.1.0
+   */
+  CANCELED = 3,
+  /**
+   * @since 5.1.0
+   */
+  COMPLETED = 4,
+  /**
+   * @since 5.1.0
+   */
+  FAILED = 5,
+  /**
+   * @since 5.1.0
+   */
+  INSTALLING = 6,
+  /**
+   * @since 5.1.0
+   */
+  DOWNLOAD_PAUSED = 7,
 }

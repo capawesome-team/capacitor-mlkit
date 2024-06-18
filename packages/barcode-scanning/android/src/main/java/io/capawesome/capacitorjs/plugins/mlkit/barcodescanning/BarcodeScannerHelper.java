@@ -164,23 +164,31 @@ public class BarcodeScannerHelper {
     }
 
     private static Point[] normalizeCornerPoints(@NonNull Point[] cornerPoints, @NonNull Point imageSize, @NonNull Point screenSize) {
+        // Log corner points
+        // Logger.debug("Corner points: " + cornerPoints[0] + ", " + cornerPoints[1] + ", " + cornerPoints[2] + ", " + cornerPoints[3]);
         double screenWidth = screenSize.x;
         double screenHeight = screenSize.y;
         double imageWidth = imageSize.x;
         double imageHeight = imageSize.y;
+        // Swap the image dimensions if the image is in landscape mode
         if (screenWidth > screenHeight) {
             imageWidth = imageSize.y;
             imageHeight = imageSize.x;
         }
+        // Calculate the scale of the image
         double scale = Math.max(screenHeight / imageWidth, screenWidth / imageHeight);
+        // Calculate the invisible area of the image
         double invisibleWidth = imageHeight * scale - screenWidth;
         double invisibleHeight = imageWidth * scale - screenHeight;
         Point[] normalizedCornerPoints = new Point[cornerPoints.length];
         for (int i = 0; i < cornerPoints.length; i++) {
+            // Scale the points and move them to the center of the screen
             int x = (int) ((cornerPoints[i].x * scale) - (invisibleWidth / 2));
             int y = (int) ((cornerPoints[i].y * scale) - (invisibleHeight / 2));
             normalizedCornerPoints[i] = new Point(x, y);
         }
+        // Log normalized corner points
+        // Logger.debug("Normalized corner points: " + normalizedCornerPoints[0] + ", " + normalizedCornerPoints[1] + ", " + normalizedCornerPoints[2] + ", " + normalizedCornerPoints[3]);
         return normalizedCornerPoints;
     }
 }

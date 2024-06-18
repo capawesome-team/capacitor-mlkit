@@ -1,6 +1,6 @@
 # @capacitor-mlkit/barcode-scanning
 
-Unofficial Capacitor plugin for [ML Kit Barcode scanning](https://developers.google.com/ml-kit/vision/barcode-scanning).[^1][^2]
+Unofficial Capacitor plugin for [ML Kit Barcode Scanning](https://developers.google.com/ml-kit/vision/barcode-scanning).[^1][^2]
 
 ## Features
 
@@ -35,6 +35,8 @@ npx cap sync
 
 ### Android
 
+#### Permissions
+
 This API requires the following permissions be added to your `AndroidManifest.xml` before the `application` tag:
 
 ```xml
@@ -48,6 +50,23 @@ You also need to add the following meta data **in** the `application` tag in you
 
 ```xml
 <meta-data android:name="com.google.mlkit.vision.DEPENDENCIES" android:value="barcode_ui"/>
+<!-- To use multiple models: android:value="face,model2,model3" -->
+```
+
+#### Data Binding
+
+Enable the databinding library by setting the `dataBinding` and `enabled` build options to `true` in your module-level (app-level) Gradle file (usually `android/app/build.gradle`):
+
+```diff
+android {
+    ...
++    buildFeatures {
++        dataBinding true
++    }
++    dataBinding {
++        enabled = true
++    }
+}
 ```
 
 #### Variables
@@ -58,8 +77,8 @@ This plugin will use the following project variables (defined in your app’s `v
 - `$androidxCameraCoreVersion` version of `com.google.mlkit:barcode-scanning` (default: `1.1.0`)
 - `$androidxCameraLifecycleVersion` version of `com.google.mlkit:barcode-scanning` (default: `1.1.0`)
 - `$androidxCameraViewVersion` version of `com.google.mlkit:barcode-scanning` (default: `1.1.0`)
-- `$mlkitBarcodeScanningVersion` version of `com.google.mlkit:barcode-scanning` (default: `17.0.3`)
-- `$playServicesCodeScannerVersion` version of `com.google.mlkit:barcode-scanning` (default: `16.0.0-beta3`)
+- `$mlkitBarcodeScanningVersion` version of `com.google.mlkit:barcode-scanning` (default: `17.1.0`)
+- `$playServicesCodeScannerVersion` version of `com.google.mlkit:barcode-scanning` (default: `16.0.0`)
 
 ### iOS
 
@@ -140,7 +159,6 @@ const scanSingleBarcode = async () => {
 const scan = async () => {
   const { barcodes } = await BarcodeScanner.scan({
     formats: [BarcodeFormat.QrCode],
-    lensFacing: LensFacing.Back,
   });
   return barcodes;
 };
@@ -172,8 +190,37 @@ const isTorchAvailable = async () => {
   return available;
 };
 
+const setZoomRatio = async () => {
+  await BarcodeScanner.setZoomRatio({ zoomRatio: 0.5 });
+};
+
+const getZoomRatio = async () => {
+  const { zoomRatio } = await BarcodeScanner.getZoomRatio();
+  return zoomRatio;
+};
+
+const getMinZoomRatio = async () => {
+  const { zoomRatio } = await BarcodeScanner.getMinZoomRatio();
+  return zoomRatio;
+};
+
+const getMaxZoomRatio = async () => {
+  const { zoomRatio } = await BarcodeScanner.getMaxZoomRatio();
+  return zoomRatio;
+};
+
 const openSettings = async () => {
   await BarcodeScanner.openSettings();
+};
+
+const isGoogleBarcodeScannerModuleAvailable = async () => {
+  const { available } =
+    await BarcodeScanner.isGoogleBarcodeScannerModuleAvailable();
+  return available;
+};
+
+const installGoogleBarcodeScannerModule = async () => {
+  await BarcodeScanner.installGoogleBarcodeScannerModule();
 };
 
 const checkPermissions = async () => {
@@ -187,7 +234,7 @@ const requestPermissions = async () => {
 };
 ```
 
-An example of the CSS class `barcode-scanner-active` **with** Ionic could be:
+An example of the CSS class `barcode-scanner-active` **with** Ionic Framework could be:
 
 ```css
 // Hide all elements
@@ -210,7 +257,7 @@ body.barcode-scanner-active {
 }
 ```
 
-An example of the CSS class `barcode-scanner-active` **without** Ionic could be:
+An example of the CSS class `barcode-scanner-active` **without** Ionic Framework could be:
 
 ```css
 // Hide all elements
@@ -240,11 +287,18 @@ If you can't see the camera view, make sure all elements in the DOM are not visi
 * [`toggleTorch()`](#toggletorch)
 * [`isTorchEnabled()`](#istorchenabled)
 * [`isTorchAvailable()`](#istorchavailable)
+* [`setZoomRatio(...)`](#setzoomratio)
+* [`getZoomRatio()`](#getzoomratio)
+* [`getMinZoomRatio()`](#getminzoomratio)
+* [`getMaxZoomRatio()`](#getmaxzoomratio)
 * [`openSettings()`](#opensettings)
+* [`isGoogleBarcodeScannerModuleAvailable()`](#isgooglebarcodescannermoduleavailable)
+* [`installGoogleBarcodeScannerModule()`](#installgooglebarcodescannermodule)
 * [`checkPermissions()`](#checkpermissions)
 * [`requestPermissions()`](#requestpermissions)
 * [`addListener('barcodeScanned', ...)`](#addlistenerbarcodescanned)
 * [`addListener('scanError', ...)`](#addlistenerscanerror)
+* [`addListener('googleBarcodeScannerModuleInstallProgress', ...)`](#addlistenergooglebarcodescannermoduleinstallprogress)
 * [`removeAllListeners()`](#removealllisteners)
 * [Interfaces](#interfaces)
 * [Type Aliases](#type-aliases)
@@ -318,7 +372,11 @@ scan(options?: ScanOptions | undefined) => Promise<ScanResult>
 
 Scan a barcode with a ready-to-use interface without WebView customization.
 
-On **Android**, no camera permission is required.
+On **Android**, this method is only available on devices with Google Play Services
+installed. Therefore, no camera permission is required.
+
+**Attention:** Before using this method on *Android*, first check if the Google <a href="#barcode">Barcode</a> Scanner module is available
+by using `isGoogleBarcodeScannerModuleAvailable()`.
 
 Only available on Android and iOS.
 
@@ -429,6 +487,76 @@ Only available on Android and iOS.
 --------------------
 
 
+### setZoomRatio(...)
+
+```typescript
+setZoomRatio(options: SetZoomRatioOptions) => Promise<void>
+```
+
+Set the zoom ratio of the camera.
+
+Only available on Android and iOS.
+
+| Param         | Type                                                                |
+| ------------- | ------------------------------------------------------------------- |
+| **`options`** | <code><a href="#setzoomratiooptions">SetZoomRatioOptions</a></code> |
+
+**Since:** 5.4.0
+
+--------------------
+
+
+### getZoomRatio()
+
+```typescript
+getZoomRatio() => Promise<GetZoomRatioResult>
+```
+
+Get the zoom ratio of the camera.
+
+Only available on Android and iOS.
+
+**Returns:** <code>Promise&lt;<a href="#getzoomratioresult">GetZoomRatioResult</a>&gt;</code>
+
+**Since:** 5.4.0
+
+--------------------
+
+
+### getMinZoomRatio()
+
+```typescript
+getMinZoomRatio() => Promise<GetMinZoomRatioResult>
+```
+
+Get the minimum zoom ratio of the camera.
+
+Only available on Android and iOS.
+
+**Returns:** <code>Promise&lt;<a href="#getminzoomratioresult">GetMinZoomRatioResult</a>&gt;</code>
+
+**Since:** 5.4.0
+
+--------------------
+
+
+### getMaxZoomRatio()
+
+```typescript
+getMaxZoomRatio() => Promise<GetMaxZoomRatioResult>
+```
+
+Get the maximum zoom ratio of the camera.
+
+Only available on Android and iOS.
+
+**Returns:** <code>Promise&lt;<a href="#getmaxzoomratioresult">GetMaxZoomRatioResult</a>&gt;</code>
+
+**Since:** 5.4.0
+
+--------------------
+
+
 ### openSettings()
 
 ```typescript
@@ -440,6 +568,44 @@ Open the settings of the app so that the user can grant the camera permission.
 Only available on Android and iOS.
 
 **Since:** 0.0.1
+
+--------------------
+
+
+### isGoogleBarcodeScannerModuleAvailable()
+
+```typescript
+isGoogleBarcodeScannerModuleAvailable() => Promise<IsGoogleBarcodeScannerModuleAvailableResult>
+```
+
+Check if the Google <a href="#barcode">Barcode</a> Scanner module is available.
+
+If the Google <a href="#barcode">Barcode</a> Scanner module is not available, you can install it by using `installGoogleBarcodeScannerModule()`.
+
+Only available on Android.
+
+**Returns:** <code>Promise&lt;<a href="#isgooglebarcodescannermoduleavailableresult">IsGoogleBarcodeScannerModuleAvailableResult</a>&gt;</code>
+
+**Since:** 5.1.0
+
+--------------------
+
+
+### installGoogleBarcodeScannerModule()
+
+```typescript
+installGoogleBarcodeScannerModule() => Promise<void>
+```
+
+Install the Google <a href="#barcode">Barcode</a> Scanner module.
+
+**Attention**: This only starts the installation.
+The `googleBarcodeScannerModuleInstallProgress` event listener will
+notify you when the installation is complete.
+
+Only available on Android.
+
+**Since:** 5.1.0
 
 --------------------
 
@@ -481,7 +647,7 @@ Only available on Android and iOS.
 ### addListener('barcodeScanned', ...)
 
 ```typescript
-addListener(eventName: 'barcodeScanned', listenerFunc: (event: BarcodeScannedEvent) => void) => Promise<PluginListenerHandle> & PluginListenerHandle
+addListener(eventName: 'barcodeScanned', listenerFunc: (event: BarcodeScannedEvent) => void) => Promise<PluginListenerHandle>
 ```
 
 Called when a barcode is scanned.
@@ -493,7 +659,7 @@ Available on Android and iOS.
 | **`eventName`**    | <code>'barcodeScanned'</code>                                                           |
 | **`listenerFunc`** | <code>(event: <a href="#barcodescannedevent">BarcodeScannedEvent</a>) =&gt; void</code> |
 
-**Returns:** <code>Promise&lt;<a href="#pluginlistenerhandle">PluginListenerHandle</a>&gt; & <a href="#pluginlistenerhandle">PluginListenerHandle</a></code>
+**Returns:** <code>Promise&lt;<a href="#pluginlistenerhandle">PluginListenerHandle</a>&gt;</code>
 
 **Since:** 0.0.1
 
@@ -503,7 +669,7 @@ Available on Android and iOS.
 ### addListener('scanError', ...)
 
 ```typescript
-addListener(eventName: 'scanError', listenerFunc: (event: ScanErrorEvent) => void) => Promise<PluginListenerHandle> & PluginListenerHandle
+addListener(eventName: 'scanError', listenerFunc: (event: ScanErrorEvent) => void) => Promise<PluginListenerHandle>
 ```
 
 Called when an error occurs during the scan.
@@ -515,9 +681,31 @@ Available on Android and iOS.
 | **`eventName`**    | <code>'scanError'</code>                                                      |
 | **`listenerFunc`** | <code>(event: <a href="#scanerrorevent">ScanErrorEvent</a>) =&gt; void</code> |
 
-**Returns:** <code>Promise&lt;<a href="#pluginlistenerhandle">PluginListenerHandle</a>&gt; & <a href="#pluginlistenerhandle">PluginListenerHandle</a></code>
+**Returns:** <code>Promise&lt;<a href="#pluginlistenerhandle">PluginListenerHandle</a>&gt;</code>
 
 **Since:** 0.0.1
+
+--------------------
+
+
+### addListener('googleBarcodeScannerModuleInstallProgress', ...)
+
+```typescript
+addListener(eventName: 'googleBarcodeScannerModuleInstallProgress', listenerFunc: (event: GoogleBarcodeScannerModuleInstallProgressEvent) => void) => Promise<PluginListenerHandle>
+```
+
+Called when the Google <a href="#barcode">Barcode</a> Scanner module is installed.
+
+Available on Android.
+
+| Param              | Type                                                                                                                                          |
+| ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`eventName`**    | <code>'googleBarcodeScannerModuleInstallProgress'</code>                                                                                      |
+| **`listenerFunc`** | <code>(event: <a href="#googlebarcodescannermoduleinstallprogressevent">GoogleBarcodeScannerModuleInstallProgressEvent</a>) =&gt; void</code> |
+
+**Returns:** <code>Promise&lt;<a href="#pluginlistenerhandle">PluginListenerHandle</a>&gt;</code>
+
+**Since:** 5.1.0
 
 --------------------
 
@@ -589,9 +777,9 @@ Remove all listeners for this plugin.
 
 #### IsSupportedResult
 
-| Prop            | Type                 | Description                                      | Since |
-| --------------- | -------------------- | ------------------------------------------------ | ----- |
-| **`supported`** | <code>boolean</code> | Whether or not the barcode scanner is supported. | 0.0.1 |
+| Prop            | Type                 | Description                                                                             | Since |
+| --------------- | -------------------- | --------------------------------------------------------------------------------------- | ----- |
+| **`supported`** | <code>boolean</code> | Whether or not the barcode scanner is supported by checking if the device has a camera. | 0.0.1 |
 
 
 #### IsTorchEnabledResult
@@ -606,6 +794,41 @@ Remove all listeners for this plugin.
 | Prop            | Type                 | Description                            | Since |
 | --------------- | -------------------- | -------------------------------------- | ----- |
 | **`available`** | <code>boolean</code> | Whether or not the torch is available. | 0.0.1 |
+
+
+#### SetZoomRatioOptions
+
+| Prop            | Type                | Description            | Since |
+| --------------- | ------------------- | ---------------------- | ----- |
+| **`zoomRatio`** | <code>number</code> | The zoom ratio to set. | 5.4.0 |
+
+
+#### GetZoomRatioResult
+
+| Prop            | Type                | Description     | Since |
+| --------------- | ------------------- | --------------- | ----- |
+| **`zoomRatio`** | <code>number</code> | The zoom ratio. | 5.4.0 |
+
+
+#### GetMinZoomRatioResult
+
+| Prop            | Type                | Description             | Since |
+| --------------- | ------------------- | ----------------------- | ----- |
+| **`zoomRatio`** | <code>number</code> | The minimum zoom ratio. | 5.4.0 |
+
+
+#### GetMaxZoomRatioResult
+
+| Prop            | Type                | Description             | Since |
+| --------------- | ------------------- | ----------------------- | ----- |
+| **`zoomRatio`** | <code>number</code> | The maximum zoom ratio. | 5.4.0 |
+
+
+#### IsGoogleBarcodeScannerModuleAvailableResult
+
+| Prop            | Type                 | Description                                                                           | Since |
+| --------------- | -------------------- | ------------------------------------------------------------------------------------- | ----- |
+| **`available`** | <code>boolean</code> | Whether or not the Google <a href="#barcode">Barcode</a> Scanner module is available. | 5.1.0 |
 
 
 #### PermissionStatus
@@ -634,6 +857,14 @@ Remove all listeners for this plugin.
 | Prop          | Type                | Description        | Since |
 | ------------- | ------------------- | ------------------ | ----- |
 | **`message`** | <code>string</code> | The error message. | 0.0.1 |
+
+
+#### GoogleBarcodeScannerModuleInstallProgressEvent
+
+| Prop           | Type                                                                                                      | Description                                                    | Since |
+| -------------- | --------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------- | ----- |
+| **`state`**    | <code><a href="#googlebarcodescannermoduleinstallstate">GoogleBarcodeScannerModuleInstallState</a></code> | The current state of the installation.                         | 5.1.0 |
+| **`progress`** | <code>number</code>                                                                                       | The progress of the installation in percent between 0 and 100. | 5.1.0 |
 
 
 ### Type Aliases
@@ -697,7 +928,28 @@ Remove all listeners for this plugin.
 | **`Wifi`**           | <code>'WIFI'</code>            | 0.0.1 |
 | **`Unknown`**        | <code>'UNKNOWN'</code>         | 0.0.1 |
 
+
+#### GoogleBarcodeScannerModuleInstallState
+
+| Members               | Value          | Since |
+| --------------------- | -------------- | ----- |
+| **`UNKNOWN`**         | <code>0</code> | 5.1.0 |
+| **`PENDING`**         | <code>1</code> | 5.1.0 |
+| **`DOWNLOADING`**     | <code>2</code> | 5.1.0 |
+| **`CANCELED`**        | <code>3</code> | 5.1.0 |
+| **`COMPLETED`**       | <code>4</code> | 5.1.0 |
+| **`FAILED`**          | <code>5</code> | 5.1.0 |
+| **`INSTALLING`**      | <code>6</code> | 5.1.0 |
+| **`DOWNLOAD_PAUSED`** | <code>7</code> | 5.1.0 |
+
 </docgen-api>
+
+## Common Issues
+
+### `NullPointerException` during `startScan(...)`
+
+The following error may occur when calling the `startScan(...)` method: `Attempt to invoke virtual method 'void androidx.camera.view.PreviewView.setScaleType(androidx.camera.view.PreviewView$ScaleType)' on a null object reference`.
+In this case, make sure that the databinding library is enabled (see [Data Binding](#data-binding)).
 
 ## Terms & Privacy
 

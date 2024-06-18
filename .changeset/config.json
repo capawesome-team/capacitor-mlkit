@@ -6,7 +6,13 @@
   ],
   "commit": false,
   "fixed": [
-    ["@capacitor-mlkit/translation", "@capacitor-mlkit/barcode-scanning"]
+    [
+      "@capacitor-mlkit/barcode-scanning",
+      "@capacitor-mlkit/face-detection",
+      "@capacitor-mlkit/face-mesh-detection",
+      "@capacitor-mlkit/selfie-segmentation",
+      "@capacitor-mlkit/translation"
+    ]
   ],
   "linked": [],
   "access": "public",

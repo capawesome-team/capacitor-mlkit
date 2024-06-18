@@ -3,6 +3,10 @@ import { CapacitorException, ExceptionCode, WebPlugin } from '@capacitor/core';
 import type {
   BarcodeScannedEvent,
   BarcodeScannerPlugin,
+  GetMaxZoomRatioResult,
+  GetMinZoomRatioResult,
+  GetZoomRatioResult,
+  IsGoogleBarcodeScannerModuleAvailableResult,
   IsSupportedResult,
   IsTorchAvailableResult,
   IsTorchEnabledResult,
@@ -10,6 +14,7 @@ import type {
   ReadBarcodesFromImageOptions,
   ReadBarcodesFromImageResult,
   ScanResult,
+  SetZoomRatioOptions,
   StartScanOptions,
 } from './definitions';
 import { BarcodeValueType } from './definitions';
@@ -108,7 +113,31 @@ export class BarcodeScannerWeb
     throw this.createUnavailableException();
   }
 
+  async setZoomRatio(_options: SetZoomRatioOptions): Promise<void> {
+    throw this.createUnavailableException();
+  }
+
+  async getZoomRatio(): Promise<GetZoomRatioResult> {
+    throw this.createUnavailableException();
+  }
+
+  async getMinZoomRatio(): Promise<GetMinZoomRatioResult> {
+    throw this.createUnavailableException();
+  }
+
+  async getMaxZoomRatio(): Promise<GetMaxZoomRatioResult> {
+    throw this.createUnavailableException();
+  }
+
   async openSettings(): Promise<void> {
+    throw this.createUnavailableException();
+  }
+
+  async isGoogleBarcodeScannerModuleAvailable(): Promise<IsGoogleBarcodeScannerModuleAvailableResult> {
+    throw this.createUnavailableException();
+  }
+
+  async installGoogleBarcodeScannerModule(): Promise<void> {
     throw this.createUnavailableException();
   }
 
