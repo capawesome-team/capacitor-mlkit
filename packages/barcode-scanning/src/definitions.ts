@@ -283,7 +283,13 @@ export interface ScanResult {
    *
    * @since 0.0.1
    */
-  barcodes: Barcode[];
+  barcodes?: Barcode[];
+  /**
+   * The detected text.
+   *
+   * @since 6.1.1
+   */
+  text?: string;
 }
 
 /**

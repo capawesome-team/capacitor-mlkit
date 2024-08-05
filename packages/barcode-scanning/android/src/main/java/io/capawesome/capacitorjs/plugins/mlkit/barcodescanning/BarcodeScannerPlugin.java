@@ -477,6 +477,16 @@ public class BarcodeScannerPlugin extends Plugin {
         }
     }
 
+    public void notifyScanTextListener(String text) {
+        try {
+            JSObject result = new JSObject();
+            result.put("text", text);
+            notifyListeners(BARCODE_SCANNED_EVENT, result);
+        } catch (Exception exception) {
+            Logger.error(TAG, exception.getMessage(), exception);
+        }
+    }
+
     public void notifyScanErrorListener(String message) {
         try {
             JSObject result = new JSObject();

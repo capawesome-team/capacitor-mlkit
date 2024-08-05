@@ -4,3 +4,5 @@ node_modules
 
 # VSCode
 .vscode/settings.json
+
+.idea
