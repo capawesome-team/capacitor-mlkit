@@ -39,6 +39,7 @@ public class BarcodeScannerPlugin extends Plugin {
     public static final String CAMERA = "camera";
 
     public static final String BARCODE_SCANNED_EVENT = "barcodeScanned";
+    public static final String TEXT_RECOGNIZED_EVENT = "textRecognized";
     public static final String SCAN_ERROR_EVENT = "scanError";
     public static final String GOOGLE_BARCODE_SCANNER_MODULE_INSTALL_PROGRESS_EVENT = "googleBarcodeScannerModuleInstallProgress";
     public static final String ERROR_SCAN_CANCELED = "scan canceled.";
@@ -481,7 +482,7 @@ public class BarcodeScannerPlugin extends Plugin {
         try {
             JSObject result = new JSObject();
             result.put("text", text);
-            notifyListeners(BARCODE_SCANNED_EVENT, result);
+            notifyListeners(TEXT_RECOGNIZED_EVENT, result);
         } catch (Exception exception) {
             Logger.error(TAG, exception.getMessage(), exception);
         }

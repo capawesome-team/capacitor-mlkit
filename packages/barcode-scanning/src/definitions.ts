@@ -180,6 +180,17 @@ export interface BarcodeScannerPlugin {
     listenerFunc: (event: BarcodeScannedEvent) => void,
   ): Promise<PluginListenerHandle>;
   /**
+   * Called when a text is recognized.
+   *
+   * Available on Android.
+   *
+   * @since 6.1.1
+   */
+  addListener(
+    eventName: 'textRecognized',
+    listenerFunc: (event: TextRecognizedEvent) => void,
+  ): Promise<PluginListenerHandle>;
+  /**
    * Called when an error occurs during the scan.
    *
    * Available on Android and iOS.
@@ -416,6 +427,18 @@ export interface BarcodeScannedEvent {
    * @since 0.0.1
    */
   barcode: Barcode;
+}
+
+/**
+ * @since 0.0.1
+ */
+export interface TextRecognizedEvent {
+  /**
+   * A detected text.
+   *
+   * @since 6.1.1
+   */
+  text: string;
 }
 
 /**
