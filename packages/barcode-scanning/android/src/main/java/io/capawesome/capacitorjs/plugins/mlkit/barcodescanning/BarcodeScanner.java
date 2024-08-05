@@ -372,9 +372,8 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
 
         textRecognizerInstance
             .process(inputImage)
-            .addOnSuccessListener(new OnSuccessListener<Text>() {
-                @Override
-                public void onSuccess(Text visionText) {
+            .addOnSuccessListener(
+                visionText -> {
                     if (scanSettings == null) {
                         return;
                     }
@@ -427,7 +426,7 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
         plugin.notifyBarcodeScannedListener(barcode, imageSize);
     }
 
-    private void handleScanText(String text) {
+    private void handleScannedText(String text) {
         plugin.notifyScanErrorListener(text);
     }
 
