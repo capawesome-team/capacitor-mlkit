@@ -15,6 +15,7 @@ typealias MLKitBarcodeScanner = MLKitBarcodeScanning.BarcodeScanner
 
     private var cameraView: BarcodeScannerView?
     private var scanCompletionHandler: (([Barcode]?, AVCaptureVideoOrientation?, String?) -> Void)?
+    private var textRecognitionHandler: ((String) -> Void)?
 
     init(plugin: BarcodeScannerPlugin) {
         self.plugin = plugin
@@ -257,9 +258,22 @@ typealias MLKitBarcodeScanner = MLKitBarcodeScanning.BarcodeScanner
     private func handleScannedBarcode(barcode: Barcode, imageSize: CGSize, videoOrientation: AVCaptureVideoOrientation?) {
         plugin.notifyBarcodeScannedListener(barcode: barcode, imageSize: imageSize, videoOrientation: videoOrientation)
     }
+
+    private func handleTextRecognized(text: String) {
+        plugin.notifyTextRecognizedListener(text: text)
+    }
 }
 
 extension BarcodeScanner: BarcodeScannerViewDelegate {
+    public func onTextRecognized(text: String) {
+        if let textRecognitionHandler = self.textRecognitionHandler {
+            textRecognitionHandler(text)
+            self.stopScan()
+        } else {
+            self.handleTextRecognized(text: text)
+        }
+    }
+
     public func onBarcodesDetected(barcodes: [Barcode], imageSize: CGSize, videoOrientation: AVCaptureVideoOrientation?) {
         if let scanCompletionHandler = self.scanCompletionHandler {
             scanCompletionHandler(barcodes, videoOrientation, nil)

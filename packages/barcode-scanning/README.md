@@ -297,6 +297,7 @@ If you can't see the camera view, make sure all elements in the DOM are not visi
 * [`checkPermissions()`](#checkpermissions)
 * [`requestPermissions()`](#requestpermissions)
 * [`addListener('barcodeScanned', ...)`](#addlistenerbarcodescanned)
+* [`addListener('textRecognized', ...)`](#addlistenertextrecognized)
 * [`addListener('scanError', ...)`](#addlistenerscanerror)
 * [`addListener('googleBarcodeScannerModuleInstallProgress', ...)`](#addlistenergooglebarcodescannermoduleinstallprogress)
 * [`removeAllListeners()`](#removealllisteners)
@@ -666,6 +667,28 @@ Available on Android and iOS.
 --------------------
 
 
+### addListener('textRecognized', ...)
+
+```typescript
+addListener(eventName: 'textRecognized', listenerFunc: (event: TextRecognizedEvent) => void) => Promise<PluginListenerHandle>
+```
+
+Called when a text is recognized.
+
+Available on Android and iOS.
+
+| Param              | Type                                                                                    |
+| ------------------ | --------------------------------------------------------------------------------------- |
+| **`eventName`**    | <code>'textRecognized'</code>                                                           |
+| **`listenerFunc`** | <code>(event: <a href="#textrecognizedevent">TextRecognizedEvent</a>) =&gt; void</code> |
+
+**Returns:** <code>Promise&lt;<a href="#pluginlistenerhandle">PluginListenerHandle</a>&gt;</code>
+
+**Since:** 6.1.1
+
+--------------------
+
+
 ### addListener('scanError', ...)
 
 ```typescript
@@ -766,6 +789,7 @@ Remove all listeners for this plugin.
 | Prop           | Type                   | Description            | Since |
 | -------------- | ---------------------- | ---------------------- | ----- |
 | **`barcodes`** | <code>Barcode[]</code> | The detected barcodes. | 0.0.1 |
+| **`text`**     | <code>string</code>    | The detected text.     | 6.1.1 |
 
 
 #### ScanOptions
@@ -850,6 +874,13 @@ Remove all listeners for this plugin.
 | Prop          | Type                                        | Description         | Since |
 | ------------- | ------------------------------------------- | ------------------- | ----- |
 | **`barcode`** | <code><a href="#barcode">Barcode</a></code> | A detected barcode. | 0.0.1 |
+
+
+#### TextRecognizedEvent
+
+| Prop       | Type                | Description      | Since |
+| ---------- | ------------------- | ---------------- | ----- |
+| **`text`** | <code>string</code> | A detected text. | 6.1.1 |
 
 
 #### ScanErrorEvent

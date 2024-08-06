@@ -24,6 +24,7 @@ public class BarcodeScannerPlugin: CAPPlugin {
     public let errorPermissionDenied = "User denied access to camera."
     public let errorOpenSettingsFailed = "Cannot open settings."
     public let barcodeScannedEvent = "barcodeScanned"
+    public let textRecognizedEvent = "textRecognized"
 
     private var implementation: BarcodeScanner?
 
@@ -238,6 +239,12 @@ public class BarcodeScannerPlugin: CAPPlugin {
         var result = JSObject()
         result["barcode"] = BarcodeScannerHelper.createBarcodeResultForBarcode(barcode, imageSize: imageSize, videoOrientation: videoOrientation)
         notifyListeners(barcodeScannedEvent, data: result)
+    }
+
+    func notifyTextRecognizedListener(text: String?) {
+        var result = JSObject()
+        result["text"] = text
+        notifyListeners(textRecognizedEvent, data: result)
     }
 }
 

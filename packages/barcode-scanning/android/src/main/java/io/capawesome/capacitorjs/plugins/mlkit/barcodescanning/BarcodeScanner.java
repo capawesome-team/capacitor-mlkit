@@ -41,7 +41,7 @@ import com.google.mlkit.vision.codescanner.GmsBarcodeScannerOptions;
 import com.google.mlkit.vision.codescanner.GmsBarcodeScanning;
 import com.google.mlkit.vision.common.InputImage;
 import com.google.mlkit.vision.text.TextRecognition;
-import com.google.mlkit.vision.text.TextRecognizerOptions;
+import com.google.mlkit.vision.text.latin.TextRecognizerOptions;
 import io.capawesome.capacitorjs.plugins.mlkit.barcodescanning.classes.options.SetZoomRatioOptions;
 import io.capawesome.capacitorjs.plugins.mlkit.barcodescanning.classes.results.GetMaxZoomRatioResult;
 import io.capawesome.capacitorjs.plugins.mlkit.barcodescanning.classes.results.GetMinZoomRatioResult;
@@ -96,7 +96,7 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
         BarcodeScannerOptions options = buildBarcodeScannerOptions(scanSettings);
         barcodeScannerInstance = BarcodeScanning.getClient(options);
 
-        textRecognizerInstance = TextRecognition.getClient(new TextRecognizerOptions.Builder().build());
+        textRecognizerInstance = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS);
 
         ImageAnalysis imageAnalysis = new ImageAnalysis.Builder().setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST).build();
         imageAnalysis.setAnalyzer(ContextCompat.getMainExecutor(plugin.getContext()), this);
@@ -141,6 +141,10 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
         processCameraProvider = null;
         camera = null;
         barcodeScannerInstance = null;
+        if (textRecognizerInstance != null) {
+            textRecognizerInstance.close();
+            textRecognizerInstance = null;
+        }
         scanSettings = null;
     }
 

@@ -182,7 +182,7 @@ export interface BarcodeScannerPlugin {
   /**
    * Called when a text is recognized.
    *
-   * Available on Android.
+   * Available on Android and iOS.
    *
    * @since 6.1.1
    */

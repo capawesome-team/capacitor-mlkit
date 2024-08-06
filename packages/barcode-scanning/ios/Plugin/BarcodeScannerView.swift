@@ -6,11 +6,14 @@ import AVFoundation
 import UIKit
 import Capacitor
 import MLKitBarcodeScanning
+import MLKitTextRecognitionCommon
+import MLKitTextRecognition
 import MLKitVision
 
 // swiftlint:disable class_delegate_protocol
 public protocol BarcodeScannerViewDelegate {
     func onBarcodesDetected(barcodes: [Barcode], imageSize: CGSize, videoOrientation: AVCaptureVideoOrientation?)
+    func onTextRecognized(text: String)
     func onCancel()
     func onTorchToggle()
 }
@@ -22,6 +25,7 @@ public protocol BarcodeScannerViewDelegate {
     private let settings: ScanSettings
     private var captureSession: AVCaptureSession?
     private var barcodeScannerInstance: MLKitBarcodeScanner?
+    private var textRecognizerInstance: MLKitTextRecognitionCommon.TextRecognizer?
     private var videoPreviewLayer: AVCaptureVideoPreviewLayer?
     private var videoOrientation: AVCaptureVideoOrientation?
     private var cancelButton: UIButton?
@@ -68,6 +72,7 @@ public protocol BarcodeScannerViewDelegate {
         self.captureSession = captureSession
         let formats = settings.formats.count == 0 ? BarcodeFormat.all : BarcodeFormat(settings.formats)
         self.barcodeScannerInstance = MLKitBarcodeScanner.barcodeScanner(options: BarcodeScannerOptions(formats: formats))
+        self.textRecognizerInstance = TextRecognizer.textRecognizer(options: TextRecognizerOptions())
 
         self.setVideoPreviewLayer(AVCaptureVideoPreviewLayer(session: captureSession))
 
@@ -91,6 +96,7 @@ public protocol BarcodeScannerViewDelegate {
         self.captureSession?.stopRunning()
         self.captureSession = nil
         self.barcodeScannerInstance = nil
+        self.textRecognizerInstance = nil
     }
 
     override public func layoutSubviews() {
@@ -118,10 +124,22 @@ public protocol BarcodeScannerViewDelegate {
         guard let barcodeScannerInstance = self.barcodeScannerInstance else {
             return
         }
+        guard let textRecognizerInstance = self.textRecognizerInstance else {
+            return
+        }
         let visionImage = VisionImage(buffer: sampleBuffer)
         visionImage.orientation = imageOrientation(
             videoOrientation: self.videoOrientation,
             cameraPosition: AVCaptureDevice.Position.back)
+
+        textRecognizerInstance.process(visionImage) { result, error in
+          guard error == nil, let result = result else {
+            CAPLog.print(error)
+            return
+          }
+          self.onTextRecognized(text: result.text)
+        }
+
         var barcodes: [Barcode] = []
         do {
             barcodes = try barcodeScannerInstance.results(in: visionImage)
@@ -293,6 +311,10 @@ public protocol BarcodeScannerViewDelegate {
 
     private func onBarcodesDetected(barcodes: [Barcode], imageSize: CGSize, videoOrientation: AVCaptureVideoOrientation?) {
         self.delegate?.onBarcodesDetected(barcodes: barcodes, imageSize: imageSize, videoOrientation: videoOrientation)
+    }
+
+    private func onTextRecognized(text: String) {
+        self.delegate?.onTextRecognized(text: text)
     }
 
     @objc private func onCancel() {
