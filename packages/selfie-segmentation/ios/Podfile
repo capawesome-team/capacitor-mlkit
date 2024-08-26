@@ -9,7 +9,7 @@ end
 
 target 'Plugin' do
   capacitor_pods
-  pod 'GoogleMLKit/SegmentationSelfie', '5.0.0'
+  pod 'GoogleMLKit/SegmentationSelfie', '6.0.0'
 end
 
 target 'PluginTests' do
