@@ -280,6 +280,7 @@ If you can't see the camera view, make sure all elements in the DOM are not visi
 * [`startScan(...)`](#startscan)
 * [`stopScan()`](#stopscan)
 * [`readBarcodesFromImage(...)`](#readbarcodesfromimage)
+* [`readBarcodeBase64(...)`](#readbarcodebase64)
 * [`scan(...)`](#scan)
 * [`isSupported()`](#issupported)
 * [`enableTorch()`](#enabletorch)
@@ -364,10 +365,10 @@ Only available on Android and iOS.
 --------------------
 
 
-### scan(...)
+### readBarcodeBase64(...)
 
 ```typescript
-scan(options?: ScanOptions | undefined) => Promise<ScanResult>
+readBarcodeBase64(options: ReadBarcodeFromBase64) => Promise<ReadBarcodesFromImageResult>
 ```
 
 Scan a barcode with a ready-to-use interface without WebView customization.
@@ -380,13 +381,28 @@ by using `isGoogleBarcodeScannerModuleAvailable()`.
 
 Only available on Android and iOS.
 
+| Param         | Type                                                                    |
+| ------------- | ----------------------------------------------------------------------- |
+| **`options`** | <code><a href="#readbarcodefrombase64">ReadBarcodeFromBase64</a></code> |
+
+**Returns:** <code>Promise&lt;<a href="#readbarcodesfromimageresult">ReadBarcodesFromImageResult</a>&gt;</code>
+
+**Since:** 0.0.1
+
+--------------------
+
+
+### scan(...)
+
+```typescript
+scan(options?: ScanOptions | undefined) => Promise<ScanResult>
+```
+
 | Param         | Type                                                |
 | ------------- | --------------------------------------------------- |
 | **`options`** | <code><a href="#scanoptions">ScanOptions</a></code> |
 
 **Returns:** <code>Promise&lt;<a href="#scanresult">ScanResult</a>&gt;</code>
-
-**Since:** 0.0.1
 
 --------------------
 
@@ -759,6 +775,14 @@ Remove all listeners for this plugin.
 | ------------- | ---------------------------- | ---------------------------------------------------------------------------------------- | ----- |
 | **`formats`** | <code>BarcodeFormat[]</code> | Improve the speed of the barcode scanner by configuring the barcode formats to scan for. | 0.0.1 |
 | **`path`**    | <code>string</code>          | The local path to the image file.                                                        | 0.0.1 |
+
+
+#### ReadBarcodeFromBase64
+
+| Prop          | Type                         |
+| ------------- | ---------------------------- |
+| **`formats`** | <code>BarcodeFormat[]</code> |
+| **`base64`**  | <code>string</code>          |
 
 
 #### ScanResult

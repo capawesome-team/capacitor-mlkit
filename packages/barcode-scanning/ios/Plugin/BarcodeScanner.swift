@@ -66,7 +66,34 @@ typealias MLKitBarcodeScanner = MLKitBarcodeScanning.BarcodeScanner
                 completion(nil, error.localizedDescription)
                 return
             }
+            CAPLog.print("\(features?.count ?? 0)")
+            guard let features = features, !features.isEmpty else {
+                return
+            }
             completion(features, nil)
+        }
+    }
+
+        @objc public func readBarcodeFromBase64(base64: String, settings: ScanSettings, completion: @escaping ([Barcode]?, String?) -> Void) {
+        if let data = Data(base64Encoded: base64), let image = UIImage(data: data) {
+            // Image is successfully created from Base64 data
+            let visionImage = VisionImage(image: image)
+            let barcodeScannerInstance = MLKitBarcodeScanner.barcodeScanner(options: BarcodeScannerOptions(formats: BarcodeFormat(settings.formats)))
+            barcodeScannerInstance.process(visionImage) { features, error in
+                if let error = error {
+                    CAPLog.print(error.localizedDescription, error)
+                    completion(nil, error.localizedDescription)
+                    return
+                }
+                CAPLog.print("\(features?.count ?? 0)")
+                guard let features = features, !features.isEmpty else {
+                    completion(nil, error?.localizedDescription);
+                    return;
+                }
+                completion(features, nil)
+            }
+        } else {
+            completion(nil, plugin.errorInvalidImage)
         }
     }
 

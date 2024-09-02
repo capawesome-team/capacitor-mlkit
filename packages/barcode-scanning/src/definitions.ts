@@ -41,6 +41,9 @@ export interface BarcodeScannerPlugin {
    * @since 0.0.1
    * @experimental This method is experimental and may change in the future.
    */
+
+  readBarcodeBase64(options: ReadBarcodeFromBase64): Promise<ReadBarcodesFromImageResult>;
+
   scan(options?: ScanOptions): Promise<ScanResult>;
   /**
    * Returns whether or not the barcode scanner is supported.
@@ -249,6 +252,11 @@ export interface ReadBarcodesFromImageOptions {
   path: string;
 }
 
+export interface ReadBarcodeFromBase64 { 
+    formats?: BarcodeFormat[];
+
+    base64: string;
+};
 /**
  * @since 0.0.1
  */

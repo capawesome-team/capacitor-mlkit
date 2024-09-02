@@ -7,6 +7,7 @@ CAP_PLUGIN(BarcodeScannerPlugin, "BarcodeScanner",
            CAP_PLUGIN_METHOD(startScan, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(stopScan, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(readBarcodesFromImage, CAPPluginReturnPromise);
+           CAP_PLUGIN_METHOD(readBarcodeBase64, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(scan, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(isSupported, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(enableTorch, CAPPluginReturnPromise);
@@ -23,4 +24,5 @@ CAP_PLUGIN(BarcodeScannerPlugin, "BarcodeScanner",
            CAP_PLUGIN_METHOD(installGoogleBarcodeScannerModule, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(checkPermissions, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(requestPermissions, CAPPluginReturnPromise);
+           CAP_PLUGIN_METHOD(removeAllListeners, CAPPluginReturnPromise);
 )

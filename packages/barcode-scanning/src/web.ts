@@ -10,6 +10,7 @@ import type {
   IsTorchAvailableResult,
   IsTorchEnabledResult,
   PermissionStatus,
+  ReadBarcodeFromBase64,
   ReadBarcodesFromImageOptions,
   ReadBarcodesFromImageResult,
   ScanResult,
@@ -31,6 +32,12 @@ export class BarcodeScannerWeb
 
   async readBarcodesFromImage(
     _options: ReadBarcodesFromImageOptions,
+  ): Promise<ReadBarcodesFromImageResult> {
+    throw this.createUnavailableException();
+  }
+
+  async readBarcodeBase64(
+    _options: ReadBarcodeFromBase64,
   ): Promise<ReadBarcodesFromImageResult> {
     throw this.createUnavailableException();
   }

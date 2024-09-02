@@ -20,7 +20,9 @@ import com.getcapacitor.annotation.ActivityCallback;
 import com.getcapacitor.annotation.CapacitorPlugin;
 import com.getcapacitor.annotation.Permission;
 import com.getcapacitor.annotation.PermissionCallback;
+import com.google.android.gms.common.moduleinstall.ModuleInstallStatusUpdate;
 import com.google.mlkit.vision.barcode.common.Barcode;
+import com.google.mlkit.vision.common.InputImage;
 import io.capawesome.capacitorjs.plugins.mlkit.barcodescanning.classes.options.SetZoomRatioOptions;
 import io.capawesome.capacitorjs.plugins.mlkit.barcodescanning.classes.results.GetMaxZoomRatioResult;
 import io.capawesome.capacitorjs.plugins.mlkit.barcodescanning.classes.results.GetMinZoomRatioResult;
@@ -34,7 +36,6 @@ import java.util.List;
 public class BarcodeScannerPlugin extends Plugin {
 
     public static final String TAG = "BarcodeScanner";
-
     // Permission alias constants
     public static final String CAMERA = "camera";
 
@@ -43,6 +44,7 @@ public class BarcodeScannerPlugin extends Plugin {
     public static final String GOOGLE_BARCODE_SCANNER_MODULE_INSTALL_PROGRESS_EVENT = "googleBarcodeScannerModuleInstallProgress";
     public static final String ERROR_SCAN_CANCELED = "scan canceled.";
     public static final String ERROR_PATH_MISSING = "path must be provided.";
+    public static final String ERROR_BASE64_STRING_MISSING = "base64 image string missing";
     public static final String ERROR_LOAD_IMAGE_FAILED = "The image could not be loaded.";
     public static final String ERROR_ZOOM_RATIO_MISSING = "zoomRatio must be provided.";
     public static final String ERROR_NO_ACTIVE_SCAN_SESSION = "There is no active scan session.";
@@ -162,8 +164,56 @@ public class BarcodeScannerPlugin extends Plugin {
                 }
             );
         } catch (Exception exception) {
-            Logger.error(TAG, exception.getMessage(), exception);
-            call.reject(exception.getMessage());
+            String message = exception.getMessage();
+            Logger.error(TAG, message, exception);
+            call.reject(message);
+        }
+    }
+
+
+
+    @PluginMethod
+    public void readBarcodeBase64(PluginCall call) {
+        try {
+            String base64 = call.getString("base64");
+            if (base64 == null) {
+                call.reject(ERROR_BASE64_STRING_MISSING);
+                return;
+            }
+
+            List<String> formatsOption = call.getArray("formats", new JSArray()).toList();
+            int[] formats = BarcodeScannerHelper.convertStringsToBarcodeScannerFormats(formatsOption.toArray(new String[0]));
+
+            ScanSettings scanSettings = new ScanSettings();
+            scanSettings.formats = formats;
+
+            implementation.readBarcodeBase64(
+                    base64,
+                    scanSettings,
+                    new ReadBarcodesFromImageResultCallback() {
+                        @Override
+                        public void success(List<Barcode> barcodes) {
+                            JSArray barcodeResults = new JSArray();
+                            for (Barcode barcode : barcodes) {
+                                barcodeResults.put(BarcodeScannerHelper.createBarcodeResultForBarcode(barcode, null, null));
+                            }
+
+                            JSObject result = new JSObject();
+                            result.put("barcodes", barcodeResults);
+                            call.resolve(result);
+                        }
+
+                        @Override
+                        public void error(Exception exception) {
+                            Logger.error(TAG, "readBarcodeBase64 failed.", exception);
+                            call.reject(exception.getMessage());
+                        }
+                    }
+            );
+        } catch (Exception exception) {
+            String message = exception.getMessage();
+            Logger.error(TAG, message, exception);
+            call.reject(message);
         }
     }
 

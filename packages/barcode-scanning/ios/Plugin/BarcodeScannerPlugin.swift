@@ -92,6 +92,32 @@ public class BarcodeScannerPlugin: CAPPlugin {
         })
     }
 
+    @objc func readBarcodeBase64(_ call: CAPPluginCall) {
+        let formatsOption = call.getArray("formats") as? [String]
+        let formats = BarcodeScannerHelper.convertStringsToBarcodeScannerFormats(formatsOption ?? [])
+        guard let base64 = call.getString("base64") else {
+            call.reject(errorPathMissing)
+            return
+        }
+
+        let settings = ScanSettings()
+        settings.formats = formats
+
+        implementation?.readBarcodeFromBase64(base64: base64, settings: settings, completion: { barcodes, errorMessage in
+            if let errorMessage = errorMessage {
+                call.reject(errorMessage)
+                return
+            }
+            var barcodeResults = JSArray()
+            for barcode in barcodes ?? [] {
+                barcodeResults.append(BarcodeScannerHelper.createBarcodeResultForBarcode(barcode, imageSize: nil, videoOrientation: nil))
+            }
+            call.resolve([
+                "barcodes": barcodeResults
+            ])
+        })
+    }
+
     @objc func scan(_ call: CAPPluginCall) {
         let formatsOption = call.getArray("formats") as? [String]
         let formats = BarcodeScannerHelper.convertStringsToBarcodeScannerFormats(formatsOption ?? [])
