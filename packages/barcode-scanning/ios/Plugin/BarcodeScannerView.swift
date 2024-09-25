@@ -61,7 +61,13 @@ public protocol BarcodeScannerViewDelegate {
             throw RuntimeError(implementation.plugin.errorCannotAddCaptureOutput)
         }
         captureSession.commitConfiguration()
-
+        // `session.startRunning()` should be called after `session.commitConfiguration()` is complete.
+        // However, occacsionally `commitConfiguration()` runs asynchronously, so when `startRunning()`
+        // is called, `commitConfiguration()` is still in progress and the state is still `uncommited`.
+        // This can be reproduced by repeatedly switching or toggling the camera using the plugin demo.
+        // Adding a 100ms delay ensures that `session.commitConfiguration()` is complete before calling
+        // `session.startRunning()`.
+        Thread.sleep(forTimeInterval: 0.1)
         DispatchQueue.global(qos: .background).async {
             captureSession.startRunning()
         }
