@@ -410,6 +410,10 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
         plugin.notifyBarcodeScannedListener(barcode, imageSize);
     }
 
+    private void handleScannedBarcodes(Barcode[] barcodes, Point imageSize) {
+        plugin.notifyBarcodesScannedListener(barcodes, imageSize);
+    }
+
     private void handleScanError(Exception exception) {
         plugin.notifyScanErrorListener(exception.getMessage());
     }

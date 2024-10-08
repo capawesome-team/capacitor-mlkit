@@ -297,6 +297,7 @@ If you can't see the camera view, make sure all elements in the DOM are not visi
 * [`checkPermissions()`](#checkpermissions)
 * [`requestPermissions()`](#requestpermissions)
 * [`addListener('barcodeScanned', ...)`](#addlistenerbarcodescanned)
+* [`addListener('barcodesScanned', ...)`](#addlistenerbarcodesscanned)
 * [`addListener('scanError', ...)`](#addlistenerscanerror)
 * [`addListener('googleBarcodeScannerModuleInstallProgress', ...)`](#addlistenergooglebarcodescannermoduleinstallprogress)
 * [`removeAllListeners()`](#removealllisteners)
@@ -666,6 +667,28 @@ Available on Android and iOS.
 --------------------
 
 
+### addListener('barcodesScanned', ...)
+
+```typescript
+addListener(eventName: 'barcodesScanned', listenerFunc: (event: BarcodesScannedEvent) => void) => Promise<PluginListenerHandle>
+```
+
+Called when barcodes are scanned.
+
+Available on Android and iOS.
+
+| Param              | Type                                                                                      |
+| ------------------ | ----------------------------------------------------------------------------------------- |
+| **`eventName`**    | <code>'barcodesScanned'</code>                                                            |
+| **`listenerFunc`** | <code>(event: <a href="#barcodesscannedevent">BarcodesScannedEvent</a>) =&gt; void</code> |
+
+**Returns:** <code>Promise&lt;<a href="#pluginlistenerhandle">PluginListenerHandle</a>&gt;</code>
+
+**Since:** 6.2.0
+
+--------------------
+
+
 ### addListener('scanError', ...)
 
 ```typescript
@@ -850,6 +873,13 @@ Remove all listeners for this plugin.
 | Prop          | Type                                        | Description         | Since |
 | ------------- | ------------------------------------------- | ------------------- | ----- |
 | **`barcode`** | <code><a href="#barcode">Barcode</a></code> | A detected barcode. | 0.0.1 |
+
+
+#### BarcodesScannedEvent
+
+| Prop           | Type                   | Description            | Since |
+| -------------- | ---------------------- | ---------------------- | ----- |
+| **`barcodes`** | <code>Barcode[]</code> | The detected barcodes. | 6.2.0 |
 
 
 #### ScanErrorEvent

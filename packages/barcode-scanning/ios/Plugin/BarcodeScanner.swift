@@ -260,6 +260,10 @@ typealias MLKitBarcodeScanner = MLKitBarcodeScanning.BarcodeScanner
         plugin.notifyBarcodeScannedListener(barcode: barcode, imageSize: imageSize, videoOrientation: videoOrientation)
     }
 
+    private func handleScannedBarcodes(barcodes: [Barcode], imageSize: CGSize, videoOrientation: AVCaptureVideoOrientation?) {
+        plugin.notifyBarcodesScannedListener(barcodes: barcodes, imageSize: imageSize, videoOrientation: videoOrientation)
+    }
+
     private func voteForBarcode(barcode: Barcode) -> Int {
         guard let rawValue = barcode.rawValue else {
             return 1
