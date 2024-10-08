@@ -1,5 +1,11 @@
 # Changelog
 
+## 6.1.1-next.0
+
+### Patch Changes
+
+- [`a0198b6`](https://github.com/capawesome-team/capacitor-mlkit/commit/a0198b6844a7200ccc6a3303700a30f43b680293) ([#188](https://github.com/capawesome-team/capacitor-mlkit/pull/188)): fix(ios): add delay before starting camera session
+
 ## 6.1.0
 
 ### Minor Changes

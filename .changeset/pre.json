@@ -8,5 +8,7 @@
     "@capacitor-mlkit/selfie-segmentation": "6.1.0",
     "@capacitor-mlkit/translation": "6.1.0"
   },
-  "changesets": []
+  "changesets": [
+    "hungry-trees-raise"
+  ]
 }
