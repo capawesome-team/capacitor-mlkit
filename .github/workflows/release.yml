@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - next
     paths:
       - .changeset/**
   workflow_dispatch:
@@ -11,7 +12,7 @@ on:
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 env:
-  NODE_VERSION: 18
+  NODE_VERSION: 20
 
 jobs:
   release:

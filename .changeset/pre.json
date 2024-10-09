@@ -1,0 +1,12 @@
+{
+  "mode": "pre",
+  "tag": "next",
+  "initialVersions": {
+    "@capacitor-mlkit/barcode-scanning": "6.2.0",
+    "@capacitor-mlkit/face-detection": "6.2.0",
+    "@capacitor-mlkit/face-mesh-detection": "6.2.0",
+    "@capacitor-mlkit/selfie-segmentation": "6.2.0",
+    "@capacitor-mlkit/translation": "6.2.0"
+  },
+  "changesets": []
+}

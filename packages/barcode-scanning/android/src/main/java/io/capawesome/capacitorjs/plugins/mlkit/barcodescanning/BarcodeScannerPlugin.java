@@ -39,6 +39,7 @@ public class BarcodeScannerPlugin extends Plugin {
     public static final String CAMERA = "camera";
 
     public static final String BARCODE_SCANNED_EVENT = "barcodeScanned";
+    public static final String BARCODES_SCANNED_EVENT = "barcodesScanned";
     public static final String SCAN_ERROR_EVENT = "scanError";
     public static final String GOOGLE_BARCODE_SCANNER_MODULE_INSTALL_PROGRESS_EVENT = "googleBarcodeScannerModuleInstallProgress";
     public static final String ERROR_SCAN_CANCELED = "scan canceled.";
@@ -472,6 +473,23 @@ public class BarcodeScannerPlugin extends Plugin {
             JSObject result = new JSObject();
             result.put("barcode", barcodeResult);
             notifyListeners(BARCODE_SCANNED_EVENT, result);
+        } catch (Exception exception) {
+            Logger.error(TAG, exception.getMessage(), exception);
+        }
+    }
+
+    public void notifyBarcodesScannedListener(Barcode[] barcodes, Point imageSize) {
+        try {
+            Point screenSize = this.getScreenSize();
+            JSArray barcodesResult = new JSArray();
+            for (Barcode barcode : barcodes) {
+                JSObject barcodeResult = BarcodeScannerHelper.createBarcodeResultForBarcode(barcode, imageSize, screenSize);
+                barcodesResult.put(barcodeResult);
+            }
+
+            JSObject result = new JSObject();
+            result.put("barcodes", barcodesResult);
+            notifyListeners(BARCODES_SCANNED_EVENT, result);
         } catch (Exception exception) {
             Logger.error(TAG, exception.getMessage(), exception);
         }

@@ -44,6 +44,9 @@ import io.capawesome.capacitorjs.plugins.mlkit.barcodescanning.classes.options.S
 import io.capawesome.capacitorjs.plugins.mlkit.barcodescanning.classes.results.GetMaxZoomRatioResult;
 import io.capawesome.capacitorjs.plugins.mlkit.barcodescanning.classes.results.GetMinZoomRatioResult;
 import io.capawesome.capacitorjs.plugins.mlkit.barcodescanning.classes.results.GetZoomRatioResult;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class BarcodeScanner implements ImageAnalysis.Analyzer {
 
@@ -69,6 +72,8 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
 
     @Nullable
     private ModuleInstallProgressListener moduleInstallProgressListener;
+
+    private HashMap<String, Integer> barcodeRawValueVotes = new HashMap<String, Integer>();
 
     private boolean isTorchEnabled = false;
 
@@ -135,6 +140,7 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
         camera = null;
         barcodeScannerInstance = null;
         scanSettings = null;
+        barcodeRawValueVotes.clear();
     }
 
     public void readBarcodesFromImage(String path, ScanSettings scanSettings, ReadBarcodesFromImageResultCallback callback)
@@ -346,8 +352,12 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
                         // Scanning stopped while processing the image
                         return;
                     }
-                    for (Barcode barcode : barcodes) {
+                    List<Barcode> barcodesWithEnoughVotes = voteForBarcodes(barcodes);
+                    for (Barcode barcode : barcodesWithEnoughVotes) {
                         handleScannedBarcode(barcode, imageSize);
+                    }
+                    if (barcodesWithEnoughVotes.size() > 0) {
+                        handleScannedBarcodes(barcodesWithEnoughVotes.toArray(new Barcode[0]), imageSize);
                     }
                 }
             )
@@ -403,6 +413,10 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
         plugin.notifyBarcodeScannedListener(barcode, imageSize);
     }
 
+    private void handleScannedBarcodes(Barcode[] barcodes, Point imageSize) {
+        plugin.notifyBarcodesScannedListener(barcodes, imageSize);
+    }
+
     private void handleScanError(Exception exception) {
         plugin.notifyScanErrorListener(exception.getMessage());
     }
@@ -417,5 +431,30 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
         int[] formats = scanSettings.formats.length == 0 ? new int[] { Barcode.FORMAT_ALL_FORMATS } : scanSettings.formats;
         GmsBarcodeScannerOptions options = new GmsBarcodeScannerOptions.Builder().setBarcodeFormats(formats[0], formats).build();
         return options;
+    }
+
+    private Integer voteForBarcode(Barcode barcode) {
+        String rawValue = barcode.getRawValue();
+        if (rawValue == null) {
+            return 1;
+        } else {
+            if (barcodeRawValueVotes.containsKey(rawValue)) {
+                barcodeRawValueVotes.put(rawValue, barcodeRawValueVotes.get(rawValue) + 1);
+            } else {
+                barcodeRawValueVotes.put(rawValue, 1);
+            }
+            return barcodeRawValueVotes.get(rawValue);
+        }
+    }
+
+    private List<Barcode> voteForBarcodes(List<Barcode> barcodes) {
+        List<Barcode> barcodesWithEnoughVotes = new ArrayList<>();
+        for (Barcode barcode : barcodes) {
+            Integer votes = voteForBarcode(barcode);
+            if (votes >= 10) {
+                barcodesWithEnoughVotes.add(barcode);
+            }
+        }
+        return barcodesWithEnoughVotes;
     }
 }
