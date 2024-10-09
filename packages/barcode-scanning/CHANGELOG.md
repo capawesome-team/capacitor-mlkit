@@ -1,5 +1,17 @@
 # Changelog
 
+## 6.2.0
+
+### Minor Changes
+
+- [`fa76d3c`](https://github.com/capawesome-team/capacitor-mlkit/commit/fa76d3c0eafa1c60143421caa04f3c553401c87f) ([#195](https://github.com/capawesome-team/capacitor-mlkit/pull/195)): feat: add `barcodesScanned` listener
+
+* [`c3672b4`](https://github.com/capawesome-team/capacitor-mlkit/commit/c3672b47e3e6f9f190bd432e9518aae0f87c302f): feat: vote system
+
+### Patch Changes
+
+- [`a0198b6`](https://github.com/capawesome-team/capacitor-mlkit/commit/a0198b6844a7200ccc6a3303700a30f43b680293) ([#188](https://github.com/capawesome-team/capacitor-mlkit/pull/188)): fix(ios): add delay before starting camera session
+
 ## 6.1.0
 
 ### Minor Changes
