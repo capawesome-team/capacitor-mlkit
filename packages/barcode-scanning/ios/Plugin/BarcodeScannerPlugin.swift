@@ -24,6 +24,7 @@ public class BarcodeScannerPlugin: CAPPlugin {
     public let errorPermissionDenied = "User denied access to camera."
     public let errorOpenSettingsFailed = "Cannot open settings."
     public let barcodeScannedEvent = "barcodeScanned"
+    public let barcodesScannedEvent = "barcodesScanned"
 
     private var implementation: BarcodeScanner?
 
@@ -238,6 +239,16 @@ public class BarcodeScannerPlugin: CAPPlugin {
         var result = JSObject()
         result["barcode"] = BarcodeScannerHelper.createBarcodeResultForBarcode(barcode, imageSize: imageSize, videoOrientation: videoOrientation)
         notifyListeners(barcodeScannedEvent, data: result)
+    }
+
+    func notifyBarcodesScannedListener(barcodes: [Barcode], imageSize: CGSize, videoOrientation: AVCaptureVideoOrientation?) {
+        var barcodesResult = JSArray()
+        for barcode in barcodes {
+            barcodesResult.append(BarcodeScannerHelper.createBarcodeResultForBarcode(barcode, imageSize: imageSize, videoOrientation: videoOrientation))
+        }
+        var result = JSObject()
+        result["barcodes"] = barcodesResult
+        notifyListeners(barcodesScannedEvent, data: result)
     }
 }
 
