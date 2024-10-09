@@ -44,7 +44,6 @@ import io.capawesome.capacitorjs.plugins.mlkit.barcodescanning.classes.options.S
 import io.capawesome.capacitorjs.plugins.mlkit.barcodescanning.classes.results.GetMaxZoomRatioResult;
 import io.capawesome.capacitorjs.plugins.mlkit.barcodescanning.classes.results.GetMinZoomRatioResult;
 import io.capawesome.capacitorjs.plugins.mlkit.barcodescanning.classes.results.GetZoomRatioResult;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
