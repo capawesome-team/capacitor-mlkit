@@ -34,15 +34,12 @@ public class BarcodeScannerHelper {
             case .portrait, .portraitUpsideDown:
                 x = ((imageHeight - cornerPoint.cgPointValue.y) * scale) - (invisibleWidth / 2)
                 y = (cornerPoint.cgPointValue.x * scale) - (invisibleHeight / 2)
-                break
-            case .landscapeLeft:
+                case .landscapeLeft:
                 x = ((imageHeight - cornerPoint.cgPointValue.x) * scale) - (invisibleWidth / 2)
                 y = ((imageWidth - cornerPoint.cgPointValue.y) * scale) - (invisibleHeight / 2)
-                break
-            default:
+                default:
                 x = (cornerPoint.cgPointValue.x * scale) - (invisibleWidth / 2)
                 y = (cornerPoint.cgPointValue.y * scale) - (invisibleHeight / 2)
-                break
             }
             let point = CGPoint(x: Int(x), y: Int(y))
             let value = NSValue(cgPoint: point)
