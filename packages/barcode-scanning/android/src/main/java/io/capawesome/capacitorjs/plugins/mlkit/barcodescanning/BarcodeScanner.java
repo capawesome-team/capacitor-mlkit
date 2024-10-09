@@ -44,7 +44,10 @@ import io.capawesome.capacitorjs.plugins.mlkit.barcodescanning.classes.options.S
 import io.capawesome.capacitorjs.plugins.mlkit.barcodescanning.classes.results.GetMaxZoomRatioResult;
 import io.capawesome.capacitorjs.plugins.mlkit.barcodescanning.classes.results.GetMinZoomRatioResult;
 import io.capawesome.capacitorjs.plugins.mlkit.barcodescanning.classes.results.GetZoomRatioResult;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class BarcodeScanner implements ImageAnalysis.Analyzer {
 
@@ -350,11 +353,12 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
                         // Scanning stopped while processing the image
                         return;
                     }
-                    for (Barcode barcode : barcodes) {
-                        Integer votes = voteForBarcode(barcode);
-                        if (votes >= 10) {
-                            handleScannedBarcode(barcode, imageSize);
-                        }
+                    List<Barcode> barcodesWithEnoughVotes = voteForBarcodes(barcodes);
+                    for (Barcode barcode : barcodesWithEnoughVotes) {
+                        handleScannedBarcode(barcode, imageSize);
+                    }
+                    if (barcodesWithEnoughVotes.size() > 0) {
+                        handleScannedBarcodes(barcodesWithEnoughVotes.toArray(new Barcode[0]), imageSize);
                     }
                 }
             )
@@ -442,5 +446,16 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
             }
             return barcodeRawValueVotes.get(rawValue);
         }
+    }
+
+    private List<Barcode> voteForBarcodes(List<Barcode> barcodes) {
+        List<Barcode> barcodesWithEnoughVotes = new ArrayList<>();
+        for (Barcode barcode : barcodes) {
+            Integer votes = voteForBarcode(barcode);
+            if (votes >= 10) {
+                barcodesWithEnoughVotes.add(barcode);
+            }
+        }
+        return barcodesWithEnoughVotes;
     }
 }

@@ -275,6 +275,12 @@ typealias MLKitBarcodeScanner = MLKitBarcodeScanning.BarcodeScanner
         }
         return self.barcodeRawValueVotes[rawValue] ?? 1
     }
+
+    private func voteForBarcodes(barcodes: [Barcode]) -> [Barcode] {
+        return barcodes.filter { barcode in
+            return self.voteForBarcode(barcode: barcode) >= 10
+        }
+    }
 }
 
 extension BarcodeScanner: BarcodeScannerViewDelegate {
@@ -283,11 +289,12 @@ extension BarcodeScanner: BarcodeScannerViewDelegate {
             scanCompletionHandler(barcodes, videoOrientation, nil)
             self.stopScan()
         } else {
-            for barcode in barcodes {
-                let votes = self.voteForBarcode(barcode: barcode)
-                if votes >= 10 {
-                    self.handleScannedBarcode(barcode: barcode, imageSize: imageSize, videoOrientation: videoOrientation)
-                }
+            let barcodesWithEnoughVotes = self.voteForBarcodes(barcodes: barcodes)
+            for barcode in barcodesWithEnoughVotes {
+                self.handleScannedBarcode(barcode: barcode, imageSize: imageSize, videoOrientation: videoOrientation)
+            }
+            if barcodesWithEnoughVotes.count > 0 {
+                self.handleScannedBarcodes(barcodes: barcodesWithEnoughVotes, imageSize: imageSize, videoOrientation: videoOrientation)
             }
         }
     }
