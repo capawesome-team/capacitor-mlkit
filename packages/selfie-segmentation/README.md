@@ -5,9 +5,11 @@ Unofficial Capacitor plugin for [ML Kit Selfie Segmentation](https://developers.
 ## Installation
 
 ```bash
-npm install @capacitor-mlkit/selfie-segmentation
+npm install @capacitor-mlkit/selfie-segmentation@next
 npx cap sync
 ```
+
+**Attention**: Please use the `next` tag to install the latest version of the plugin due to issue [#179](https://github.com/capawesome-team/capacitor-mlkit/pull/179).
 
 #### Variables
 
