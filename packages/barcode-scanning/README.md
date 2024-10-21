@@ -728,10 +728,11 @@ Remove all listeners for this plugin.
 
 #### StartScanOptions
 
-| Prop             | Type                                              | Description                                                                              | Since |
-| ---------------- | ------------------------------------------------- | ---------------------------------------------------------------------------------------- | ----- |
-| **`formats`**    | <code>BarcodeFormat[]</code>                      | Improve the speed of the barcode scanner by configuring the barcode formats to scan for. | 0.0.1 |
-| **`lensFacing`** | <code><a href="#lensfacing">LensFacing</a></code> | Configure the camera (front or back) to use.                                             | 0.0.1 |
+| Prop               | Type                                              | Description                                                                              | Since |
+| ------------------ | ------------------------------------------------- | ---------------------------------------------------------------------------------------- | ----- |
+| **`formats`**      | <code>BarcodeFormat[]</code>                      | Improve the speed of the barcode scanner by configuring the barcode formats to scan for. | 0.0.1 |
+| **`lensFacing`**   | <code><a href="#lensfacing">LensFacing</a></code> | Configure the camera (front or back) to use.                                             | 0.0.1 |
+| **`videoElementId`** | <code>string</code>                     | Element ID to set on the video element to use for the camera preview. Element will be crreated, but you can customize it with your own styles. | 5.1.0 |
 
 
 #### ReadBarcodesFromImageResult

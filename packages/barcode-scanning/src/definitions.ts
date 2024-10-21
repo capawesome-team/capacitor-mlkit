@@ -229,13 +229,15 @@ export interface StartScanOptions {
    */
   lensFacing?: LensFacing;
   /**
-   * The HTML video element to use for the camera preview.
+   * Element ID to set on the video element to use for the
+   * camera preview. Element will be crreated, but you can
+   * customize it with your own styles.
    *
    * Only available on Web.
    *
    * @since 5.1.0
    */
-  videoElement?: HTMLVideoElement;
+  videoElementId?: string;
 }
 
 /**
