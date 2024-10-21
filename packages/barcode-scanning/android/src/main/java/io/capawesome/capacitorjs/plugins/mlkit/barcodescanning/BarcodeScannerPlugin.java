@@ -39,6 +39,7 @@ public class BarcodeScannerPlugin extends Plugin {
     public static final String CAMERA = "camera";
 
     public static final String BARCODE_SCANNED_EVENT = "barcodeScanned";
+    public static final String BARCODES_SCANNED_EVENT = "barcodesScanned";
     public static final String SCAN_ERROR_EVENT = "scanError";
     public static final String GOOGLE_BARCODE_SCANNER_MODULE_INSTALL_PROGRESS_EVENT = "googleBarcodeScannerModuleInstallProgress";
     public static final String ERROR_SCAN_CANCELED = "scan canceled.";
@@ -47,7 +48,7 @@ public class BarcodeScannerPlugin extends Plugin {
     public static final String ERROR_ZOOM_RATIO_MISSING = "zoomRatio must be provided.";
     public static final String ERROR_NO_ACTIVE_SCAN_SESSION = "There is no active scan session.";
     public static final String ERROR_GOOGLE_BARCODE_SCANNER_MODULE_NOT_AVAILABLE =
-        "The Google Barcode Scanner Module is not available. You must install it first.";
+        "The Google Barcode Scanner Module is not available. You must install it first using the installGoogleBarcodeScannerModule method.";
     public static final String ERROR_GOOGLE_BARCODE_SCANNER_MODULE_ALREADY_INSTALLED =
         "The Google Barcode Scanner Module is already installed.";
     public static final String ERROR_PERMISSION_DENIED = "User denied access to camera.";
@@ -472,6 +473,23 @@ public class BarcodeScannerPlugin extends Plugin {
             JSObject result = new JSObject();
             result.put("barcode", barcodeResult);
             notifyListeners(BARCODE_SCANNED_EVENT, result);
+        } catch (Exception exception) {
+            Logger.error(TAG, exception.getMessage(), exception);
+        }
+    }
+
+    public void notifyBarcodesScannedListener(Barcode[] barcodes, Point imageSize) {
+        try {
+            Point screenSize = this.getScreenSize();
+            JSArray barcodesResult = new JSArray();
+            for (Barcode barcode : barcodes) {
+                JSObject barcodeResult = BarcodeScannerHelper.createBarcodeResultForBarcode(barcode, imageSize, screenSize);
+                barcodesResult.put(barcodeResult);
+            }
+
+            JSObject result = new JSObject();
+            result.put("barcodes", barcodesResult);
+            notifyListeners(BARCODES_SCANNED_EVENT, result);
         } catch (Exception exception) {
             Logger.error(TAG, exception.getMessage(), exception);
         }

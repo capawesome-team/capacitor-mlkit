@@ -56,6 +56,7 @@ export interface BarcodeScannerPlugin {
    * Only available on Android and iOS.
    *
    * @since 0.0.1
+   * @deprecated Use the [Capacitor Torch](https://capawesome.io/plugins/torch/) plugin instead.
    */
   enableTorch(): Promise<void>;
   /**
@@ -64,6 +65,7 @@ export interface BarcodeScannerPlugin {
    * Only available on Android and iOS.
    *
    * @since 0.0.1
+   * @deprecated Use the [Capacitor Torch](https://capawesome.io/plugins/torch/) plugin instead.
    */
   disableTorch(): Promise<void>;
   /**
@@ -72,6 +74,7 @@ export interface BarcodeScannerPlugin {
    * Only available on Android and iOS.
    *
    * @since 0.0.1
+   * @deprecated Use the [Capacitor Torch](https://capawesome.io/plugins/torch/) plugin instead.
    */
   toggleTorch(): Promise<void>;
   /**
@@ -80,6 +83,7 @@ export interface BarcodeScannerPlugin {
    * Only available on Android and iOS.
    *
    * @since 0.0.1
+   * @deprecated Use the [Capacitor Torch](https://capawesome.io/plugins/torch/) plugin instead.
    */
   isTorchEnabled(): Promise<IsTorchEnabledResult>;
   /**
@@ -88,6 +92,7 @@ export interface BarcodeScannerPlugin {
    * Only available on Android and iOS.
    *
    * @since 0.0.1
+   * @deprecated Use the [Capacitor Torch](https://capawesome.io/plugins/torch/) plugin instead.
    */
   isTorchAvailable(): Promise<IsTorchAvailableResult>;
   /**
@@ -174,10 +179,22 @@ export interface BarcodeScannerPlugin {
    * Available on Android and iOS.
    *
    * @since 0.0.1
+   * @deprecated Use the `barcodesScanned` event listener instead.
    */
   addListener(
     eventName: 'barcodeScanned',
     listenerFunc: (event: BarcodeScannedEvent) => void,
+  ): Promise<PluginListenerHandle>;
+  /**
+   * Called when barcodes are scanned.
+   *
+   * Available on Android and iOS.
+   *
+   * @since 6.2.0
+   */
+  addListener(
+    eventName: 'barcodesScanned',
+    listenerFunc: (event: BarcodesScannedEvent) => void,
   ): Promise<PluginListenerHandle>;
   /**
    * Called when an error occurs during the scan.
@@ -420,6 +437,18 @@ export interface BarcodeScannedEvent {
    * @since 0.0.1
    */
   barcode: Barcode;
+}
+
+/**
+ * @since 6.2.0
+ */
+export interface BarcodesScannedEvent {
+  /**
+   * The detected barcodes.
+   *
+   * @since 6.2.0
+   */
+  barcodes: Barcode[];
 }
 
 /**
