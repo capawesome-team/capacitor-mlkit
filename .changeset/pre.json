@@ -9,6 +9,7 @@
     "@capacitor-mlkit/translation": "6.2.0"
   },
   "changesets": [
-    "brown-singers-press"
+    "brown-singers-press",
+    "little-brooms-explode"
   ]
 }
