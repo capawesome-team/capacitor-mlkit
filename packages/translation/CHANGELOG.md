@@ -1,5 +1,11 @@
 # Changelog
 
+## 7.0.0-next.1
+
+### Major Changes
+
+- [`257ef27`](https://github.com/capawesome-team/capacitor-mlkit/commit/257ef27371cb3e401490024dde19fcf6ed5e601a) ([#202](https://github.com/capawesome-team/capacitor-mlkit/pull/202)): fix(ios): update `GoogleMLKit` pods to version `7.0.0`
+
 ## 7.0.0-next.0
 
 ### Major Changes
