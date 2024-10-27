@@ -71,6 +71,16 @@ android {
 }
 ```
 
+### iOS
+
+#### Minimum Deployment Target
+
+Make sure to set the deployment target in your `ios/App/Podfile` to at least `15.5`:
+
+```ruby
+platform :ios, '15.5'
+```
+
 #### Variables
 
 This plugin will use the following project variables (defined in your app’s `variables.gradle` file):
@@ -279,78 +289,33 @@ If you can't see the camera view, make sure all elements in the DOM are not visi
 
 <docgen-index>
 
-- [@capacitor-mlkit/barcode-scanning](#capacitor-mlkitbarcode-scanning)
-  - [Features](#features)
-  - [Demo](#demo)
-  - [Guides](#guides)
-  - [Installation](#installation)
-    - [Android](#android)
-      - [Permissions](#permissions)
-      - [Data Binding](#data-binding)
-      - [Variables](#variables)
-    - [iOS](#ios)
-  - [Configuration](#configuration)
-  - [Demo](#demo-1)
-  - [Usage](#usage)
-  - [API](#api)
-    - [startScan(...)](#startscan)
-    - [stopScan()](#stopscan)
-    - [readBarcodesFromImage(...)](#readbarcodesfromimage)
-    - [scan(...)](#scan)
-    - [isSupported()](#issupported)
-    - [enableTorch()](#enabletorch)
-    - [disableTorch()](#disabletorch)
-    - [toggleTorch()](#toggletorch)
-    - [isTorchEnabled()](#istorchenabled)
-    - [isTorchAvailable()](#istorchavailable)
-    - [setZoomRatio(...)](#setzoomratio)
-    - [getZoomRatio()](#getzoomratio)
-    - [getMinZoomRatio()](#getminzoomratio)
-    - [getMaxZoomRatio()](#getmaxzoomratio)
-    - [openSettings()](#opensettings)
-    - [isGoogleBarcodeScannerModuleAvailable()](#isgooglebarcodescannermoduleavailable)
-    - [installGoogleBarcodeScannerModule()](#installgooglebarcodescannermodule)
-    - [checkPermissions()](#checkpermissions)
-    - [requestPermissions()](#requestpermissions)
-    - [addListener('barcodeScanned', ...)](#addlistenerbarcodescanned-)
-    - [addListener('barcodesScanned', ...)](#addlistenerbarcodesscanned-)
-    - [addListener('scanError', ...)](#addlistenerscanerror-)
-    - [addListener('googleBarcodeScannerModuleInstallProgress', ...)](#addlistenergooglebarcodescannermoduleinstallprogress-)
-    - [removeAllListeners()](#removealllisteners)
-    - [Interfaces](#interfaces)
-      - [StartScanOptions](#startscanoptions)
-      - [ReadBarcodesFromImageResult](#readbarcodesfromimageresult)
-      - [Barcode](#barcode)
-      - [ReadBarcodesFromImageOptions](#readbarcodesfromimageoptions)
-      - [ScanResult](#scanresult)
-      - [ScanOptions](#scanoptions)
-      - [IsSupportedResult](#issupportedresult)
-      - [IsTorchEnabledResult](#istorchenabledresult)
-      - [IsTorchAvailableResult](#istorchavailableresult)
-      - [SetZoomRatioOptions](#setzoomratiooptions)
-      - [GetZoomRatioResult](#getzoomratioresult)
-      - [GetMinZoomRatioResult](#getminzoomratioresult)
-      - [GetMaxZoomRatioResult](#getmaxzoomratioresult)
-      - [IsGoogleBarcodeScannerModuleAvailableResult](#isgooglebarcodescannermoduleavailableresult)
-      - [PermissionStatus](#permissionstatus)
-      - [PluginListenerHandle](#pluginlistenerhandle)
-      - [BarcodeScannedEvent](#barcodescannedevent)
-      - [BarcodesScannedEvent](#barcodesscannedevent)
-      - [ScanErrorEvent](#scanerrorevent)
-      - [GoogleBarcodeScannerModuleInstallProgressEvent](#googlebarcodescannermoduleinstallprogressevent)
-    - [Type Aliases](#type-aliases)
-      - [CameraPermissionState](#camerapermissionstate)
-      - [PermissionState](#permissionstate)
-    - [Enums](#enums)
-      - [BarcodeFormat](#barcodeformat)
-      - [LensFacing](#lensfacing)
-      - [BarcodeValueType](#barcodevaluetype)
-      - [GoogleBarcodeScannerModuleInstallState](#googlebarcodescannermoduleinstallstate)
-  - [Common Issues](#common-issues)
-    - [`NullPointerException` during `startScan(...)`](#nullpointerexception-during-startscan)
-  - [Terms \& Privacy](#terms--privacy)
-  - [Changelog](#changelog)
-  - [License](#license)
+* [`startScan(...)`](#startscan)
+* [`stopScan()`](#stopscan)
+* [`readBarcodesFromImage(...)`](#readbarcodesfromimage)
+* [`scan(...)`](#scan)
+* [`isSupported()`](#issupported)
+* [`enableTorch()`](#enabletorch)
+* [`disableTorch()`](#disabletorch)
+* [`toggleTorch()`](#toggletorch)
+* [`isTorchEnabled()`](#istorchenabled)
+* [`isTorchAvailable()`](#istorchavailable)
+* [`setZoomRatio(...)`](#setzoomratio)
+* [`getZoomRatio()`](#getzoomratio)
+* [`getMinZoomRatio()`](#getminzoomratio)
+* [`getMaxZoomRatio()`](#getmaxzoomratio)
+* [`openSettings()`](#opensettings)
+* [`isGoogleBarcodeScannerModuleAvailable()`](#isgooglebarcodescannermoduleavailable)
+* [`installGoogleBarcodeScannerModule()`](#installgooglebarcodescannermodule)
+* [`checkPermissions()`](#checkpermissions)
+* [`requestPermissions()`](#requestpermissions)
+* [`addListener('barcodeScanned', ...)`](#addlistenerbarcodescanned)
+* [`addListener('barcodesScanned', ...)`](#addlistenerbarcodesscanned)
+* [`addListener('scanError', ...)`](#addlistenerscanerror)
+* [`addListener('googleBarcodeScannerModuleInstallProgress', ...)`](#addlistenergooglebarcodescannermoduleinstallprogress)
+* [`removeAllListeners()`](#removealllisteners)
+* [Interfaces](#interfaces)
+* [Type Aliases](#type-aliases)
+* [Enums](#enums)
 
 </docgen-index>
 
