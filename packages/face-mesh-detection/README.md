@@ -19,6 +19,16 @@ This plugin will use the following project variables (defined in your app’s `v
 
 - `$mlkitFaceMeshDetectionVersion` version of `com.google.mlkit:face-mesh-detection` (default: `16.0.0-beta1`)
 
+### iOS
+
+#### Minimum Deployment Target
+
+Make sure to set the deployment target in your `ios/App/Podfile` to at least `15.5`:
+
+```ruby
+platform :ios, '15.5'
+```
+
 ## Configuration
 
 No configuration required for this plugin.

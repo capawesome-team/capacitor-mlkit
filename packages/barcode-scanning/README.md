@@ -71,6 +71,16 @@ android {
 }
 ```
 
+### iOS
+
+#### Minimum Deployment Target
+
+Make sure to set the deployment target in your `ios/App/Podfile` to at least `15.5`:
+
+```ruby
+platform :ios, '15.5'
+```
+
 #### Variables
 
 This plugin will use the following project variables (defined in your app’s `variables.gradle` file):
@@ -287,8 +297,10 @@ If you can't see the camera view, make sure all elements in the DOM are not visi
     - [Android](#android)
       - [Permissions](#permissions)
       - [Data Binding](#data-binding)
-      - [Variables](#variables)
     - [iOS](#ios)
+      - [Minimum Deployment Target](#minimum-deployment-target)
+      - [Variables](#variables)
+    - [iOS](#ios-1)
   - [Configuration](#configuration)
   - [Demo](#demo-1)
   - [Usage](#usage)
