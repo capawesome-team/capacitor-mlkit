@@ -794,7 +794,7 @@ Remove all listeners for this plugin.
 | **`sms`**           | <code><a href="#sms">Sms</a></code>                                                   | A sms message from a 'SMS:'.                                                                                                                               | 7.0.0 |
 | **`urlBookmark`**   | <code><a href="#urlbookmark">UrlBookmark</a></code>                                   | A URL and title from a 'MEBKM:'.                                                                                                                           | 7.0.0 |
 | **`valueType`**     | <code><a href="#barcodevaluetype">BarcodeValueType</a></code>                         | The barcode value type.                                                                                                                                    | 0.0.1 |
-| **`wifi`**          | <code><a href="#barcodewifi">BarcodeWifi</a></code>                                   | A wifi network parameters from a 'WIFI:'.                                                                                                                  | 7.0.0 |
+| **`wifi`**          | <code><a href="#wifi">Wifi</a></code>                                                 | A wifi network parameters from a 'WIFI:'.                                                                                                                  | 7.0.0 |
 
 
 #### CalendarEvent
@@ -816,12 +816,12 @@ Remove all listeners for this plugin.
 | -------------- | -------------------- | ------------------------------------ | ----- |
 | **`day`**      | <code>number</code>  | Day of the calendar date time.       | 7.0.0 |
 | **`hours`**    | <code>number</code>  | Hours of the calendar date time.     | 7.0.0 |
+| **`isUtc`**    | <code>boolean</code> | Whether the date time is UTC.        | 7.0.0 |
 | **`minutes`**  | <code>number</code>  | Minutes of the calendar date time.   | 7.0.0 |
 | **`month`**    | <code>number</code>  | Month of the calendar date time.     | 7.0.0 |
 | **`rawValue`** | <code>string</code>  | Raw value of the calendar date time. | 7.0.0 |
 | **`seconds`**  | <code>number</code>  | Seconds of the calendar date time.   | 7.0.0 |
 | **`year`**     | <code>number</code>  | Year of the calendar date time.      | 7.0.0 |
-| **`isUtc`**    | <code>boolean</code> | Whether the date time is UTC.        | 7.0.0 |
 
 
 #### ContactInfo
@@ -920,13 +920,13 @@ Remove all listeners for this plugin.
 | **`title`** | <code>string</code> | The title of the bookmark. | 7.0.0 |
 
 
-#### BarcodeWifi
+#### Wifi
 
-| Prop                 | Type                                                                            | Description                   | Since |
-| -------------------- | ------------------------------------------------------------------------------- | ----------------------------- | ----- |
-| **`encryptionType`** | <code><a href="#barcodewifiencryptiontype">BarcodeWifiEncryptionType</a></code> | Encryption type of the WI-FI. | 7.0.0 |
-| **`password`**       | <code>string</code>                                                             | Password of the WI-FI.        | 7.0.0 |
-| **`ssid`**           | <code>string</code>                                                             | SSID of the WI-FI.            | 7.0.0 |
+| Prop                 | Type                                                              | Description                   | Since |
+| -------------------- | ----------------------------------------------------------------- | ----------------------------- | ----- |
+| **`encryptionType`** | <code><a href="#wifiencryptiontype">WifiEncryptionType</a></code> | Encryption type of the WI-FI. | 7.0.0 |
+| **`password`**       | <code>string</code>                                               | Password of the WI-FI.        | 7.0.0 |
+| **`ssid`**           | <code>string</code>                                               | SSID of the WI-FI.            | 7.0.0 |
 
 
 #### ReadBarcodesFromImageOptions
@@ -1141,7 +1141,7 @@ Remove all listeners for this plugin.
 | **`Unknown`**        | <code>'UNKNOWN'</code>         | 0.0.1 |
 
 
-#### BarcodeWifiEncryptionType
+#### WifiEncryptionType
 
 | Members    | Value          | Since |
 | ---------- | -------------- | ----- |

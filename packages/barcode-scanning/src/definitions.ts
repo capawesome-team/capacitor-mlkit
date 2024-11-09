@@ -486,14 +486,12 @@ export interface Barcode {
    * Calendar event info.
    *
    * @since 7.0.0
-   * @example { description: '', end: { day: 1, hours: 0, minutes: 0, month: 1, rawValue: '20230101T000000', seconds: 0, year: 2023 }, location: '', organizer: '', start: { day: 1, hours: 0, minutes: 0, month: 1, rawValue: '20230101T000000', seconds: 0, year: 2023 } }
    */
   calendarEvent?: CalendarEvent;
   /**
    * Person's or organization's business card.
    *
    * @since 7.0.0
-   * @example { addresses: [ { addressLines: [''], type: 2 } ], emails: [ { address: '', body: '', subject: '', type: 2 } ], personName: { first: '', formattedName: '', last: '', middle: '', prefix: '', pronunciation: '', suffix: '' }, organization: '', phones: [ { number: '', type: 2 } ], title: '', urls: [''] }
    */
   contactInfo?: ContactInfo;
   /**
@@ -523,14 +521,12 @@ export interface Barcode {
    * Driver license or ID card.
    *
    * @since 7.0.0
-   * @example { firstName: 'John', lastName: 'Doe', licenseNumber: '1234567890' }
    */
   driverLicense?: DriverLicense;
   /**
    * An email message from a 'MAILTO:'.
    *
    * @since 7.0.0
-   * @example { address: '', body: '', subject: '', type: 2 }
    */
   email?: Email;
   /**
@@ -545,14 +541,12 @@ export interface Barcode {
    * GPS coordinates from a 'GEO:'.
    *
    * @since 7.0.0
-   * @example { latitude: 37.422004, longitude: -122.084095 }
    */
   geoPoint?: GeoPoint;
   /**
    * Phone number info.
    *
    * @since 7.0.0
-   * @example { number: '+1234567890', type: 2 }
    */
   phone?: Phone;
   /**
@@ -566,14 +560,12 @@ export interface Barcode {
    * A sms message from a 'SMS:'.
    *
    * @since 7.0.0
-   * @example { phoneNumber: '+1234567890', message: 'Hello, Capawesome!' }
    */
   sms?: Sms;
   /**
    * A URL and title from a 'MEBKM:'.
    *
    * @since 7.0.0
-   * @example { url: 'https://capacitorjs.com', title: 'CapacitorJS' }
    */
   urlBookmark?: UrlBookmark;
   /**
@@ -587,9 +579,8 @@ export interface Barcode {
    * A wifi network parameters from a 'WIFI:'.
    *
    * @since 7.0.0
-   * @example { encryptionType: 3 ,password: 'CapacitorJS', ssid: 'CapacitorJS' }
    */
-  wifi?: BarcodeWifi;
+  wifi?: Wifi;
 }
 
 /**
@@ -657,6 +648,12 @@ export interface CalendarDateTime {
    */
   hours?: number;
   /**
+   * Whether the date time is UTC.
+   *
+   * @since 7.0.0
+   */
+  isUtc?: boolean;
+  /**
    * Minutes of the calendar date time.
    *
    * @since 7.0.0
@@ -686,12 +683,6 @@ export interface CalendarDateTime {
    * @since 7.0.0
    */
   year?: number;
-  /**
-   * Whether the date time is UTC.
-   *
-   * @since 7.0.0
-   */
-  isUtc?: boolean;
 }
 
 /**
@@ -1004,13 +995,13 @@ export interface UrlBookmark {
 /**
  * @since 7.0.0
  */
-export interface BarcodeWifi {
+export interface Wifi {
   /**
    * Encryption type of the WI-FI.
    *
    * @since 7.0.0
    */
-  encryptionType: BarcodeWifiEncryptionType;
+  encryptionType: WifiEncryptionType;
   /**
    * Password of the WI-FI.
    *
@@ -1284,7 +1275,7 @@ export enum PhoneFormatType {
 /**
  * @since 7.0.0
  */
-export enum BarcodeWifiEncryptionType {
+export enum WifiEncryptionType {
   /**
    * @since 7.0.0
    */
