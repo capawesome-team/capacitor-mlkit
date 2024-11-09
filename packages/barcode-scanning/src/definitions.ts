@@ -482,7 +482,6 @@ export interface Barcode {
    * @example [67, 97, 112, 97, 99, 105, 116, 111, 114, 74, 83]
    */
   bytes?: number[];
-
   /**
    * Calendar event info.
    *
