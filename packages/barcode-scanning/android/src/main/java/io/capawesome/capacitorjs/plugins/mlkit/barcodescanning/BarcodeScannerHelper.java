@@ -4,15 +4,12 @@
 package io.capawesome.capacitorjs.plugins.mlkit.barcodescanning;
 
 import android.graphics.Point;
-import android.util.DisplayMetrics;
-import android.view.Display;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.getcapacitor.JSArray;
 import com.getcapacitor.JSObject;
-import com.getcapacitor.Logger;
 import com.google.mlkit.vision.barcode.common.Barcode;
-import com.google.mlkit.vision.common.InputImage;
+import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -36,10 +33,37 @@ public class BarcodeScannerHelper {
         if (cornerPoints != null) {
             result.put("cornerPoints", cornerPointsResult);
         }
+        if (barcode.getCalendarEvent() != null) {
+            result.put("calendarEvent", extractCalendarEventProperties(barcode.getCalendarEvent()));
+        }
+        if (barcode.getContactInfo() != null) {
+            result.put("contactInfo", extractContactInfoProperties(barcode.getContactInfo()));
+        }
         result.put("displayValue", barcode.getDisplayValue());
+        if (barcode.getDriverLicense() != null) {
+            result.put("driverLicense", extractDriverLicenseProperties(barcode.getDriverLicense()));
+        }
+        if (barcode.getEmail() != null) {
+            result.put("email", extractEmailProperties(barcode.getEmail()));
+        }
         result.put("format", convertBarcodeScannerFormatToString(barcode.getFormat()));
+        if (barcode.getGeoPoint() != null) {
+            result.put("geoPoint", extractGeoPointProperties(barcode.getGeoPoint()));
+        }
+        if (barcode.getPhone() != null) {
+            result.put("phone", extractPhoneProperties(barcode.getPhone()));
+        }
         result.put("rawValue", barcode.getRawValue());
+        if (barcode.getSms() != null) {
+            result.put("sms", extractSmsProperties(barcode.getSms()));
+        }
+        if (barcode.getUrl() != null) {
+            result.put("urlBookmark", extractUrlBookmark(barcode.getUrl()));
+        }
         result.put("valueType", convertBarcodeValueTypeToString(barcode.getValueType()));
+        if (barcode.getWifi() != null) {
+            result.put("wifi", extractWifiProperties(barcode.getWifi()));
+        }
         return result;
     }
 
@@ -163,6 +187,174 @@ public class BarcodeScannerHelper {
         return ret;
     }
 
+    private static JSObject convertCalendarDateTimeToJSObject(Barcode.CalendarDateTime dateTime) {
+        JSObject dateTimeObj = new JSObject();
+
+        putIfNotNull(dateTimeObj, "year", dateTime.getYear());
+        putIfNotNull(dateTimeObj, "month", dateTime.getMonth());
+        putIfNotNull(dateTimeObj, "day", dateTime.getDay());
+        putIfNotNull(dateTimeObj, "hour", dateTime.getHours());
+        putIfNotNull(dateTimeObj, "minute", dateTime.getMinutes());
+        putIfNotNull(dateTimeObj, "second", dateTime.getSeconds());
+
+        return dateTimeObj;
+    }
+
+    private static JSObject extractCalendarEventProperties(Barcode.CalendarEvent calendarEvent) {
+        JSObject result = new JSObject();
+
+        putIfNotNull(result, "description", calendarEvent.getDescription());
+        putIfNotNull(result, "end", convertCalendarDateTimeToJSObject(calendarEvent.getEnd()));
+        putIfNotNull(result, "location", calendarEvent.getLocation());
+        putIfNotNull(result, "organizer", calendarEvent.getOrganizer());
+        putIfNotNull(result, "start", convertCalendarDateTimeToJSObject(calendarEvent.getStart()));
+        putIfNotNull(result, "status", calendarEvent.getStatus());
+        putIfNotNull(result, "summary", calendarEvent.getSummary());
+
+        return result;
+    }
+
+    private static JSArray extractAddresses(List<Barcode.Address> addresses) {
+        JSArray addressArray = new JSArray();
+        for (Barcode.Address address : addresses) {
+            JSObject addressObj = new JSObject();
+            addressObj.put("addressLines", address.getAddressLines());
+            addressObj.put("type", address.getType());
+            addressArray.put(addressObj);
+        }
+
+        return addressArray;
+    }
+
+    private static JSObject extractContactInfoProperties(Barcode.ContactInfo contactInfo) {
+        JSObject result = new JSObject();
+
+        result.put("addresses", extractAddresses(contactInfo.getAddresses()));
+        result.put("emails", extractEmails(contactInfo.getEmails()));
+        putIfNotNull(result, "organization", contactInfo.getOrganization());
+        putIfNotNull(result, "name", extractPersonNameProperties(contactInfo.getName()));
+        result.put("phones", extractPhones(contactInfo.getPhones()));
+        putIfNotNull(result, "title", contactInfo.getTitle());
+        result.put("urls", extractUrls(contactInfo.getUrls()));
+
+        return result;
+    }
+
+    private static JSObject extractDriverLicenseProperties(Barcode.DriverLicense driverLicense) {
+        JSObject result = new JSObject();
+
+        putIfNotNull(result, "addressCity", driverLicense.getAddressCity());
+        putIfNotNull(result, "addressState", driverLicense.getAddressState());
+        putIfNotNull(result, "addressStreet", driverLicense.getAddressStreet());
+        putIfNotNull(result, "addressZip", driverLicense.getAddressZip());
+        putIfNotNull(result, "birthDate", driverLicense.getBirthDate());
+        putIfNotNull(result, "documentType", driverLicense.getDocumentType());
+        putIfNotNull(result, "expiryDate", driverLicense.getExpiryDate());
+        putIfNotNull(result, "firstName", driverLicense.getFirstName());
+        putIfNotNull(result, "gender", driverLicense.getGender());
+        putIfNotNull(result, "issueDate", driverLicense.getIssueDate());
+        putIfNotNull(result, "issuingCountry", driverLicense.getIssuingCountry());
+        putIfNotNull(result, "lastName", driverLicense.getLastName());
+        putIfNotNull(result, "licenseNumber", driverLicense.getLicenseNumber());
+        putIfNotNull(result, "middleName", driverLicense.getMiddleName());
+
+        return result;
+    }
+
+    private static JSObject extractEmailProperties(Barcode.Email email) {
+        JSObject emailObj = new JSObject();
+        putIfNotNull(emailObj, "address", email.getAddress());
+        putIfNotNull(emailObj, "body", email.getBody());
+        putIfNotNull(emailObj, "subject", email.getSubject());
+        emailObj.put("type", email.getType());
+
+        return emailObj;
+    }
+
+    private static JSArray extractEmails(List<Barcode.Email> emails) {
+        JSArray emailArray = new JSArray();
+        for (Barcode.Email email : emails) {
+            JSObject emailObj = extractEmailProperties(email);
+            emailArray.put(emailObj);
+        }
+
+        return emailArray;
+    }
+
+    private static JSObject extractGeoPointProperties(Barcode.GeoPoint geoPoint) {
+        JSObject geoPointObj = new JSObject();
+        putIfNotNull(geoPointObj, "latitude", geoPoint.getLat());
+        putIfNotNull(geoPointObj, "longitude", geoPoint.getLng());
+
+        return geoPointObj;
+    }
+
+    private static JSObject extractPersonNameProperties(Barcode.PersonName personName) {
+        JSObject result = new JSObject();
+
+        putIfNotNull(result, "first", personName.getFirst());
+        putIfNotNull(result, "formattedName", personName.getFormattedName());
+        putIfNotNull(result, "last", personName.getLast());
+        putIfNotNull(result, "middle", personName.getMiddle());
+        putIfNotNull(result, "prefix", personName.getPrefix());
+        putIfNotNull(result, "pronunciation", personName.getPronunciation());
+        putIfNotNull(result, "suffix", personName.getSuffix());
+
+        return result;
+    }
+
+    private static JSObject extractPhoneProperties(Barcode.Phone phone) {
+        JSObject result = new JSObject();
+        putIfNotNull(result, "number", phone.getNumber());
+        putIfNotNull(result, "type", phone.getType());
+
+        return result;
+    }
+
+    private static JSArray extractPhones(List<Barcode.Phone> phones) {
+        JSArray phoneArray = new JSArray();
+        for (Barcode.Phone phone : phones) {
+            JSObject phoneObj = extractPhoneProperties(phone);
+            phoneArray.put(phoneObj);
+        }
+
+        return phoneArray;
+    }
+
+    private static JSObject extractSmsProperties(Barcode.Sms sms) {
+        JSObject result = new JSObject();
+        putIfNotNull(result, "message", sms.getMessage());
+        putIfNotNull(result, "phoneNumber", sms.getPhoneNumber());
+
+        return result;
+    }
+
+    private static JSObject extractUrlBookmark(Barcode.UrlBookmark urlBookmark) {
+        JSObject result = new JSObject();
+        putIfNotNull(result, "title", urlBookmark.getTitle());
+        putIfNotNull(result, "url", urlBookmark.getUrl());
+
+        return result;
+    }
+
+    private static JSArray extractUrls(List<String> urls) {
+        JSArray urlArray = new JSArray();
+        for (String url : urls) {
+            urlArray.put(url);
+        }
+
+        return urlArray;
+    }
+
+    private static JSObject extractWifiProperties(Barcode.WiFi wifi) {
+        JSObject result = new JSObject();
+        result.put("encryptionType", wifi.getEncryptionType());
+        putIfNotNull(result, "password", wifi.getPassword());
+        putIfNotNull(result, "ssid", wifi.getSsid());
+
+        return result;
+    }
+
     private static Point[] normalizeCornerPoints(@NonNull Point[] cornerPoints, @NonNull Point imageSize, @NonNull Point screenSize) {
         // Log corner points
         // Logger.debug("Corner points: " + cornerPoints[0] + ", " + cornerPoints[1] + ", " + cornerPoints[2] + ", " + cornerPoints[3]);
@@ -190,5 +382,11 @@ public class BarcodeScannerHelper {
         // Log normalized corner points
         // Logger.debug("Normalized corner points: " + normalizedCornerPoints[0] + ", " + normalizedCornerPoints[1] + ", " + normalizedCornerPoints[2] + ", " + normalizedCornerPoints[3]);
         return normalizedCornerPoints;
+    }
+
+    private static void putIfNotNull(JSObject result, String key, Object value) {
+        if (value != null) {
+            result.put(key, value);
+        }
     }
 }
