@@ -190,12 +190,12 @@ public class BarcodeScannerHelper {
     private static JSObject convertCalendarDateTimeToJSObject(Barcode.CalendarDateTime dateTime) {
         JSObject dateTimeObj = new JSObject();
 
-        putIfNotNull(dateTimeObj, "year", dateTime.getYear());
-        putIfNotNull(dateTimeObj, "month", dateTime.getMonth());
-        putIfNotNull(dateTimeObj, "day", dateTime.getDay());
-        putIfNotNull(dateTimeObj, "hour", dateTime.getHours());
-        putIfNotNull(dateTimeObj, "minute", dateTime.getMinutes());
-        putIfNotNull(dateTimeObj, "second", dateTime.getSeconds());
+        dateTimeObj.put("year", dateTime.getYear());
+        dateTimeObj.put("month", dateTime.getMonth());
+        dateTimeObj.put("day", dateTime.getDay());
+        dateTimeObj.put("hour", dateTime.getHours());
+        dateTimeObj.put("minute", dateTime.getMinutes());
+        dateTimeObj.put("second", dateTime.getSeconds());
 
         return dateTimeObj;
     }
@@ -203,13 +203,13 @@ public class BarcodeScannerHelper {
     private static JSObject extractCalendarEventProperties(Barcode.CalendarEvent calendarEvent) {
         JSObject result = new JSObject();
 
-        putIfNotNull(result, "description", calendarEvent.getDescription());
-        putIfNotNull(result, "end", convertCalendarDateTimeToJSObject(calendarEvent.getEnd()));
-        putIfNotNull(result, "location", calendarEvent.getLocation());
-        putIfNotNull(result, "organizer", calendarEvent.getOrganizer());
-        putIfNotNull(result, "start", convertCalendarDateTimeToJSObject(calendarEvent.getStart()));
-        putIfNotNull(result, "status", calendarEvent.getStatus());
-        putIfNotNull(result, "summary", calendarEvent.getSummary());
+        result.put("description", calendarEvent.getDescription());
+        result.put("end", convertCalendarDateTimeToJSObject(calendarEvent.getEnd()));
+        result.put("location", calendarEvent.getLocation());
+        result.put("organizer", calendarEvent.getOrganizer());
+        result.put("start", convertCalendarDateTimeToJSObject(calendarEvent.getStart()));
+        result.put("status", calendarEvent.getStatus());
+        result.put("summary", calendarEvent.getSummary());
 
         return result;
     }
@@ -231,10 +231,10 @@ public class BarcodeScannerHelper {
 
         result.put("addresses", extractAddresses(contactInfo.getAddresses()));
         result.put("emails", extractEmails(contactInfo.getEmails()));
-        putIfNotNull(result, "organization", contactInfo.getOrganization());
-        putIfNotNull(result, "name", extractPersonNameProperties(contactInfo.getName()));
+        result.put("organization", contactInfo.getOrganization());
+        result.put("name", extractPersonNameProperties(contactInfo.getName()));
         result.put("phones", extractPhones(contactInfo.getPhones()));
-        putIfNotNull(result, "title", contactInfo.getTitle());
+        result.put("title", contactInfo.getTitle());
         result.put("urls", extractUrls(contactInfo.getUrls()));
 
         return result;
@@ -243,29 +243,29 @@ public class BarcodeScannerHelper {
     private static JSObject extractDriverLicenseProperties(Barcode.DriverLicense driverLicense) {
         JSObject result = new JSObject();
 
-        putIfNotNull(result, "addressCity", driverLicense.getAddressCity());
-        putIfNotNull(result, "addressState", driverLicense.getAddressState());
-        putIfNotNull(result, "addressStreet", driverLicense.getAddressStreet());
-        putIfNotNull(result, "addressZip", driverLicense.getAddressZip());
-        putIfNotNull(result, "birthDate", driverLicense.getBirthDate());
-        putIfNotNull(result, "documentType", driverLicense.getDocumentType());
-        putIfNotNull(result, "expiryDate", driverLicense.getExpiryDate());
-        putIfNotNull(result, "firstName", driverLicense.getFirstName());
-        putIfNotNull(result, "gender", driverLicense.getGender());
-        putIfNotNull(result, "issueDate", driverLicense.getIssueDate());
-        putIfNotNull(result, "issuingCountry", driverLicense.getIssuingCountry());
-        putIfNotNull(result, "lastName", driverLicense.getLastName());
-        putIfNotNull(result, "licenseNumber", driverLicense.getLicenseNumber());
-        putIfNotNull(result, "middleName", driverLicense.getMiddleName());
+        result.put("addressCity", driverLicense.getAddressCity());
+        result.put("addressState", driverLicense.getAddressState());
+        result.put("addressStreet", driverLicense.getAddressStreet());
+        result.put("addressZip", driverLicense.getAddressZip());
+        result.put("birthDate", driverLicense.getBirthDate());
+        result.put("documentType", driverLicense.getDocumentType());
+        result.put("expiryDate", driverLicense.getExpiryDate());
+        result.put("firstName", driverLicense.getFirstName());
+        result.put("gender", driverLicense.getGender());
+        result.put("issueDate", driverLicense.getIssueDate());
+        result.put("issuingCountry", driverLicense.getIssuingCountry());
+        result.put("lastName", driverLicense.getLastName());
+        result.put("licenseNumber", driverLicense.getLicenseNumber());
+        result.put("middleName", driverLicense.getMiddleName());
 
         return result;
     }
 
     private static JSObject extractEmailProperties(Barcode.Email email) {
         JSObject emailObj = new JSObject();
-        putIfNotNull(emailObj, "address", email.getAddress());
-        putIfNotNull(emailObj, "body", email.getBody());
-        putIfNotNull(emailObj, "subject", email.getSubject());
+        emailObj.put("address", email.getAddress());
+        emailObj.put("body", email.getBody());
+        emailObj.put("subject", email.getSubject());
         emailObj.put("type", email.getType());
 
         return emailObj;
@@ -283,8 +283,8 @@ public class BarcodeScannerHelper {
 
     private static JSObject extractGeoPointProperties(Barcode.GeoPoint geoPoint) {
         JSObject geoPointObj = new JSObject();
-        putIfNotNull(geoPointObj, "latitude", geoPoint.getLat());
-        putIfNotNull(geoPointObj, "longitude", geoPoint.getLng());
+        geoPointObj.put("latitude", geoPoint.getLat());
+        geoPointObj.put("longitude", geoPoint.getLng());
 
         return geoPointObj;
     }
@@ -292,21 +292,21 @@ public class BarcodeScannerHelper {
     private static JSObject extractPersonNameProperties(Barcode.PersonName personName) {
         JSObject result = new JSObject();
 
-        putIfNotNull(result, "first", personName.getFirst());
-        putIfNotNull(result, "formattedName", personName.getFormattedName());
-        putIfNotNull(result, "last", personName.getLast());
-        putIfNotNull(result, "middle", personName.getMiddle());
-        putIfNotNull(result, "prefix", personName.getPrefix());
-        putIfNotNull(result, "pronunciation", personName.getPronunciation());
-        putIfNotNull(result, "suffix", personName.getSuffix());
+        result.put("first", personName.getFirst());
+        result.put("formattedName", personName.getFormattedName());
+        result.put("last", personName.getLast());
+        result.put("middle", personName.getMiddle());
+        result.put("prefix", personName.getPrefix());
+        result.put("pronunciation", personName.getPronunciation());
+        result.put("suffix", personName.getSuffix());
 
         return result;
     }
 
     private static JSObject extractPhoneProperties(Barcode.Phone phone) {
         JSObject result = new JSObject();
-        putIfNotNull(result, "number", phone.getNumber());
-        putIfNotNull(result, "type", phone.getType());
+        result.put("number", phone.getNumber());
+        result.put("type", phone.getType());
 
         return result;
     }
@@ -323,17 +323,15 @@ public class BarcodeScannerHelper {
 
     private static JSObject extractSmsProperties(Barcode.Sms sms) {
         JSObject result = new JSObject();
-        putIfNotNull(result, "message", sms.getMessage());
-        putIfNotNull(result, "phoneNumber", sms.getPhoneNumber());
-
+        result.put("message", sms.getMessage());
+        result.put("phoneNumber", sms.getPhoneNumber());
         return result;
     }
 
     private static JSObject extractUrlBookmark(Barcode.UrlBookmark urlBookmark) {
         JSObject result = new JSObject();
-        putIfNotNull(result, "title", urlBookmark.getTitle());
-        putIfNotNull(result, "url", urlBookmark.getUrl());
-
+        result.put("title", urlBookmark.getTitle());
+        result.put("url", urlBookmark.getUrl());
         return result;
     }
 
@@ -349,8 +347,8 @@ public class BarcodeScannerHelper {
     private static JSObject extractWifiProperties(Barcode.WiFi wifi) {
         JSObject result = new JSObject();
         result.put("encryptionType", wifi.getEncryptionType());
-        putIfNotNull(result, "password", wifi.getPassword());
-        putIfNotNull(result, "ssid", wifi.getSsid());
+        result.put("password", wifi.getPassword());
+        result.put("ssid", wifi.getSsid());
 
         return result;
     }
@@ -382,11 +380,5 @@ public class BarcodeScannerHelper {
         // Log normalized corner points
         // Logger.debug("Normalized corner points: " + normalizedCornerPoints[0] + ", " + normalizedCornerPoints[1] + ", " + normalizedCornerPoints[2] + ", " + normalizedCornerPoints[3]);
         return normalizedCornerPoints;
-    }
-
-    private static void putIfNotNull(JSObject result, String key, Object value) {
-        if (value != null) {
-            result.put(key, value);
-        }
     }
 }
