@@ -34,10 +34,10 @@ public class BarcodeScannerHelper {
             case .portrait, .portraitUpsideDown:
                 x = ((imageHeight - cornerPoint.cgPointValue.y) * scale) - (invisibleWidth / 2)
                 y = (cornerPoint.cgPointValue.x * scale) - (invisibleHeight / 2)
-                case .landscapeLeft:
+            case .landscapeLeft:
                 x = ((imageHeight - cornerPoint.cgPointValue.x) * scale) - (invisibleWidth / 2)
                 y = ((imageWidth - cornerPoint.cgPointValue.y) * scale) - (invisibleHeight / 2)
-                default:
+            default:
                 x = (cornerPoint.cgPointValue.x * scale) - (invisibleWidth / 2)
                 y = (cornerPoint.cgPointValue.y * scale) - (invisibleHeight / 2)
             }
@@ -81,10 +81,37 @@ public class BarcodeScannerHelper {
             result["bytes"] = convertDataToJsonArray(rawData)
         }
         result["cornerPoints"] = cornerPointsResult
+        if barcode.calendarEvent != nil {
+            result["calendarEvent"] = extractCalendarEventProperties(barcode.calendarEvent!)
+        }
+        if barcode.contactInfo != nil {
+            result["contactInfo"] = extractContactInfoProperties(barcode.contactInfo!)
+        }
         result["displayValue"] = barcode.displayValue
+        if barcode.driverLicense != nil {
+            result["driverLicense"] = extractDriverLicenseProperties(barcode.driverLicense!)
+        }
+        if barcode.email != nil {
+            result["email"] = extractEmailProperties(barcode.email!)
+        }
         result["format"] = convertBarcodeScannerFormatToString(barcode.format)
+        if barcode.geoPoint != nil {
+            result["geoPoint"] = extractGeoPointProperties(barcode.geoPoint!)
+        }
+        if barcode.phone != nil {
+            result["phone"] = extractPhoneProperties(barcode.phone!)
+        }
         result["rawValue"] = barcode.rawValue
+        if barcode.sms != nil {
+            result["sms"] = extractSmsProperties(barcode.sms!)
+        }
+        if barcode.url != nil {
+            result["url"] = extractUrlBookmark(barcode.url!)
+        }
         result["valueType"] = convertBarcodeValueTypeToString(barcode.valueType)
+        if barcode.wifi != nil {
+            result["wifi"] = extractWifiProperties(barcode.wifi!)
+        }
         return result
     }
 
@@ -200,4 +227,114 @@ public class BarcodeScannerHelper {
     private static func convertDataToJsonArray(_ data: Data) -> [UInt8] {
         return [UInt8](data)
     }
+
+    private static func extractAddressProperties(_ address: BarcodeAddress) -> JSObject {
+        var result = JSObject()
+        result["addressLines"] = address.addressLines
+        result["type"] = address.type.rawValue
+        return result
+    }
+
+    private static func extractCalendarEventProperties(_ calendarEvent: BarcodeCalendarEvent) -> JSObject {
+        var result = JSObject()
+        result["description"] = calendarEvent.eventDescription
+        result["end"] = calendarEvent.end
+        result["location"] = calendarEvent.location
+        result["organizer"] = calendarEvent.organizer
+        result["start"] = calendarEvent.start
+        result["status"] = calendarEvent.status
+        result["summary"] = calendarEvent.summary
+        return result
+    }
+
+    private static func extractContactInfoProperties(_ contactInfo: BarcodeContactInfo) -> JSObject {
+        var result = JSObject()
+        result["addresses"] = (contactInfo.addresses ?? []).map { address in extractAddressProperties(address) }
+        result["emails"] = (contactInfo.emails ?? []).map { email in extractEmailProperties(email) }
+        result["name"] = extractPersonNameProperties(contactInfo.name)
+        result["organization"] = contactInfo.organization
+        result["phones"] = (contactInfo.phones ?? []).map { phone in
+            extractPhoneProperties(phone)
+        }
+        result["title"] = contactInfo.jobTitle
+        result["urls"] = JSArray(contactInfo.urls ?? [])
+        return result
+    }
+
+    private static func extractDriverLicenseProperties(_ driverLicense: BarcodeDriverLicense) -> JSObject {
+        var result = JSObject()
+        result["addressCity"] = driverLicense.addressCity
+        result["addressState"] = driverLicense.addressState
+        result["addressStreet"] = driverLicense.addressStreet
+        result["addressZip"] = driverLicense.addressZip
+        result["birthDate"] = driverLicense.birthDate
+        result["documentType"] = driverLicense.documentType
+        result["expiryDate"] = driverLicense.expiryDate
+        result["firstName"] = driverLicense.firstName
+        result["gender"] = driverLicense.gender
+        result["issuingDate"] = driverLicense.issuingDate
+        result["issuingCountry"] = driverLicense.issuingCountry
+        result["lastName"] = driverLicense.lastName
+        result["licenseNumber"] = driverLicense.licenseNumber
+        result["middleName"] = driverLicense.middleName
+        return result
+    }
+
+    private static func extractEmailProperties(_ email: BarcodeEmail) -> JSObject {
+        var result = JSObject()
+        result["address"] = email.address
+        result["body"] = email.body
+        result["subject"] = email.subject
+        result["type"] = email.type.rawValue
+        return result
+    }
+
+    private static func extractGeoPointProperties(_ geoPoint: BarcodeGeoPoint) -> JSObject {
+        var result = JSObject()
+        result["latitude"] = geoPoint.latitude
+        result["longitude"] = geoPoint.longitude
+        return result
+    }
+
+    private static func extractPersonNameProperties(_ personName: BarcodePersonName?) -> JSObject {
+        var result = JSObject()
+        result["first"] = personName?.first
+        result["formattedName"] = personName?.formattedName
+        result["last"] = personName?.last
+        result["middle"] = personName?.middle
+        result["prefix"] = personName?.prefix
+        result["pronunciation"] = personName?.pronunciation
+        result["suffix"] = personName?.suffix
+        return result
+    }
+
+    private static func extractPhoneProperties(_ phone: BarcodePhone) -> JSObject {
+        var result = JSObject()
+        result["number"] = phone.number
+        result["type"] = phone.type.rawValue
+        return result
+    }
+
+    private static func extractSmsProperties(_ sms: BarcodeSMS) -> JSObject {
+        var result = JSObject()
+        result["message"] = sms.message
+        result["phoneNumber"] = sms.phoneNumber
+        return result
+    }
+
+    private static func extractUrlBookmark(_ bookmark: BarcodeURLBookmark) -> JSObject {
+        var result = JSObject()
+        result["title"] = bookmark.title
+        result["url"] = bookmark.url
+        return result
+    }
+
+    private static func extractWifiProperties(_ wifi: BarcodeWifi) -> JSObject {
+        var result = JSObject()
+        result["encryptionType"] = wifi.type.rawValue
+        result["ssid"] = wifi.ssid
+        result["password"] = wifi.password
+        return result
+    }
+
 }
