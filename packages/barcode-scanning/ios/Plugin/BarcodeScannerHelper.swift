@@ -81,35 +81,35 @@ public class BarcodeScannerHelper {
             result["bytes"] = convertDataToJsonArray(rawData)
         }
         result["cornerPoints"] = cornerPointsResult
-        if barcode.calendarEvent != nil {
+        if let barcode.calendarEvent {
             result["calendarEvent"] = extractCalendarEventProperties(barcode.calendarEvent!)
         }
-        if barcode.contactInfo != nil {
+        if let barcode.contactInfo {
             result["contactInfo"] = extractContactInfoProperties(barcode.contactInfo!)
         }
         result["displayValue"] = barcode.displayValue
-        if barcode.driverLicense != nil {
+        if let barcode.driverLicense {
             result["driverLicense"] = extractDriverLicenseProperties(barcode.driverLicense!)
         }
-        if barcode.email != nil {
+        if let barcode.email {
             result["email"] = extractEmailProperties(barcode.email!)
         }
         result["format"] = convertBarcodeScannerFormatToString(barcode.format)
-        if barcode.geoPoint != nil {
+        if let barcode.geoPoint {
             result["geoPoint"] = extractGeoPointProperties(barcode.geoPoint!)
         }
-        if barcode.phone != nil {
+        if let barcode.phone {
             result["phone"] = extractPhoneProperties(barcode.phone!)
         }
         result["rawValue"] = barcode.rawValue
-        if barcode.sms != nil {
+        if let barcode.sms {
             result["sms"] = extractSmsProperties(barcode.sms!)
         }
-        if barcode.url != nil {
+        if let barcode.url {
             result["url"] = extractUrlBookmark(barcode.url!)
         }
         result["valueType"] = convertBarcodeValueTypeToString(barcode.valueType)
-        if barcode.wifi != nil {
+        if let barcode.wifi {
             result["wifi"] = extractWifiProperties(barcode.wifi!)
         }
         return result
