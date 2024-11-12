@@ -81,36 +81,36 @@ public class BarcodeScannerHelper {
             result["bytes"] = convertDataToJsonArray(rawData)
         }
         result["cornerPoints"] = cornerPointsResult
-        if let barcode.calendarEvent {
-            result["calendarEvent"] = extractCalendarEventProperties(barcode.calendarEvent!)
+        if let calendarEvent = barcode.calendarEvent {
+            result["calendarEvent"] = extractCalendarEventProperties(calendarEvent)
         }
-        if let barcode.contactInfo {
-            result["contactInfo"] = extractContactInfoProperties(barcode.contactInfo!)
+        if let contactInfo = barcode.contactInfo {
+            result["contactInfo"] = extractContactInfoProperties(contactInfo)
         }
         result["displayValue"] = barcode.displayValue
-        if let barcode.driverLicense {
-            result["driverLicense"] = extractDriverLicenseProperties(barcode.driverLicense!)
+        if let driverLicense = barcode.driverLicense {
+            result["driverLicense"] = extractDriverLicenseProperties(driverLicense)
         }
-        if let barcode.email {
-            result["email"] = extractEmailProperties(barcode.email!)
+        if let email = barcode.email {
+            result["email"] = extractEmailProperties(email)
         }
         result["format"] = convertBarcodeScannerFormatToString(barcode.format)
-        if let barcode.geoPoint {
-            result["geoPoint"] = extractGeoPointProperties(barcode.geoPoint!)
+        if let geoPoint = barcode.geoPoint {
+            result["geoPoint"] = extractGeoPointProperties(geoPoint)
         }
-        if let barcode.phone {
-            result["phone"] = extractPhoneProperties(barcode.phone!)
+        if let phone = barcode.phone {
+            result["phone"] = extractPhoneProperties(phone)
         }
         result["rawValue"] = barcode.rawValue
-        if let barcode.sms {
-            result["sms"] = extractSmsProperties(barcode.sms!)
+        if let sms = barcode.sms {
+            result["sms"] = extractSmsProperties(sms)
         }
-        if let barcode.url {
-            result["url"] = extractUrlBookmark(barcode.url!)
+        if let url = barcode.url {
+            result["url"] = extractUrlBookmark(url)
         }
         result["valueType"] = convertBarcodeValueTypeToString(barcode.valueType)
-        if let barcode.wifi {
-            result["wifi"] = extractWifiProperties(barcode.wifi!)
+        if let wifi = barcode.wifi {
+            result["wifi"] = extractWifiProperties(wifi)
         }
         return result
     }
