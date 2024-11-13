@@ -594,11 +594,12 @@ export interface BarcodeCalendarEvent {
    */
   description?: string;
   /**
-   * The event end date.
+   * The event end date as ISO 8601 string.
    *
    * @since 7.0.0
+   * @example "2022-12-31T23:59:59.999Z"
    */
-  end?: CalendarDateTime;
+  end?: string;
   /**
    * The event location.
    *
@@ -612,11 +613,12 @@ export interface BarcodeCalendarEvent {
    */
   organizer?: string;
   /**
-   * The event start date.
+   * The event start date as ISO 8601 string.
    *
    * @since 7.0.0
+   * @example "2022-01-01T00:00:00.000Z"
    */
-  start?: CalendarDateTime;
+  start?: string;
   /**
    * The event status.
    *
@@ -629,60 +631,6 @@ export interface BarcodeCalendarEvent {
    * @since 7.0.0
    */
   summary?: string;
-}
-
-/**
- * @since 7.0.0
- */
-export interface CalendarDateTime {
-  /**
-   * Day of the calendar date time.
-   *
-   * @since 7.0.0
-   */
-  day?: number;
-  /**
-   * Hours of the calendar date time.
-   *
-   * @since 7.0.0
-   */
-  hours?: number;
-  /**
-   * Whether the date time is UTC.
-   *
-   * @since 7.0.0
-   */
-  isUtc?: boolean;
-  /**
-   * Minutes of the calendar date time.
-   *
-   * @since 7.0.0
-   */
-  minutes?: number;
-  /**
-   * Month of the calendar date time.
-   *
-   * @since 7.0.0
-   */
-  month?: number;
-  /**
-   * Raw value of the calendar date time.
-   *
-   * @since 7.0.0
-   */
-  rawValue?: string;
-  /**
-   * Seconds of the calendar date time.
-   *
-   * @since 7.0.0
-   */
-  seconds?: number;
-  /**
-   * Year of the calendar date time.
-   *
-   * @since 7.0.0
-   */
-  year?: number;
 }
 
 /**

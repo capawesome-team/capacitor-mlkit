@@ -187,31 +187,15 @@ public class BarcodeScannerHelper {
         return ret;
     }
 
-    private static JSObject convertCalendarDateTimeToJSObject(Barcode.CalendarDateTime dateTime) {
-        JSObject dateTimeObj = new JSObject();
-
-        dateTimeObj.put("year", dateTime.getYear());
-        dateTimeObj.put("month", dateTime.getMonth());
-        dateTimeObj.put("day", dateTime.getDay());
-        dateTimeObj.put("hour", dateTime.getHours());
-        dateTimeObj.put("minute", dateTime.getMinutes());
-        dateTimeObj.put("second", dateTime.getSeconds());
-
-        return dateTimeObj;
-    }
-
-    private static JSObject extractCalendarEventProperties(Barcode.CalendarEvent calendarEvent) {
-        JSObject result = new JSObject();
-
-        result.put("description", calendarEvent.getDescription());
-        result.put("end", convertCalendarDateTimeToJSObject(calendarEvent.getEnd()));
-        result.put("location", calendarEvent.getLocation());
-        result.put("organizer", calendarEvent.getOrganizer());
-        result.put("start", convertCalendarDateTimeToJSObject(calendarEvent.getStart()));
-        result.put("status", calendarEvent.getStatus());
-        result.put("summary", calendarEvent.getSummary());
-
-        return result;
+    private static String convertCalendarDateTimeToString(Barcode.CalendarDateTime dateTime) {
+        int year = dateTime.getYear() == -1 ? 0 : dateTime.getYear();
+        int month = dateTime.getMonth() == -1 ? 0 : dateTime.getMonth();
+        int day = dateTime.getDay() == -1 ? 0 : dateTime.getDay();
+        int hour = dateTime.getHours() == -1 ? 0 : dateTime.getHours();
+        int minute = dateTime.getMinutes() == -1 ? 0 : dateTime.getMinutes();
+        int second = dateTime.getSeconds() == -1 ? 0 : dateTime.getSeconds();
+        boolean isUtc = dateTime.isUtc();
+        return String.format("%04d-%02d-%02dT%02d:%02d:%02d%s", year, month, day, hour, minute, second, isUtc ? "Z" : "");
     }
 
     private static JSArray extractAddresses(List<Barcode.Address> addresses) {
@@ -226,13 +210,27 @@ public class BarcodeScannerHelper {
         return addressArray;
     }
 
+    private static JSObject extractCalendarEventProperties(Barcode.CalendarEvent calendarEvent) {
+        JSObject result = new JSObject();
+
+        result.put("description", calendarEvent.getDescription());
+        result.put("end", convertCalendarDateTimeToString(calendarEvent.getEnd()));
+        result.put("location", calendarEvent.getLocation());
+        result.put("organizer", calendarEvent.getOrganizer());
+        result.put("start", convertCalendarDateTimeToString(calendarEvent.getStart()));
+        result.put("status", calendarEvent.getStatus());
+        result.put("summary", calendarEvent.getSummary());
+
+        return result;
+    }
+
     private static JSObject extractContactInfoProperties(Barcode.ContactInfo contactInfo) {
         JSObject result = new JSObject();
 
         result.put("addresses", extractAddresses(contactInfo.getAddresses()));
         result.put("emails", extractEmails(contactInfo.getEmails()));
-        result.put("organization", contactInfo.getOrganization());
         result.put("name", extractPersonNameProperties(contactInfo.getName()));
+        result.put("organization", contactInfo.getOrganization());
         result.put("phones", extractPhones(contactInfo.getPhones()));
         result.put("title", contactInfo.getTitle());
         result.put("urls", extractUrls(contactInfo.getUrls()));
