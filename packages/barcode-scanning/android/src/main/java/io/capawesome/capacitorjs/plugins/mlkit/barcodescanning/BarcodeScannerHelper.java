@@ -4,15 +4,12 @@
 package io.capawesome.capacitorjs.plugins.mlkit.barcodescanning;
 
 import android.graphics.Point;
-import android.util.DisplayMetrics;
-import android.view.Display;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.getcapacitor.JSArray;
 import com.getcapacitor.JSObject;
-import com.getcapacitor.Logger;
 import com.google.mlkit.vision.barcode.common.Barcode;
-import com.google.mlkit.vision.common.InputImage;
+import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -36,10 +33,37 @@ public class BarcodeScannerHelper {
         if (cornerPoints != null) {
             result.put("cornerPoints", cornerPointsResult);
         }
+        if (barcode.getCalendarEvent() != null) {
+            result.put("calendarEvent", extractCalendarEventProperties(barcode.getCalendarEvent()));
+        }
+        if (barcode.getContactInfo() != null) {
+            result.put("contactInfo", extractContactInfoProperties(barcode.getContactInfo()));
+        }
         result.put("displayValue", barcode.getDisplayValue());
+        if (barcode.getDriverLicense() != null) {
+            result.put("driverLicense", extractDriverLicenseProperties(barcode.getDriverLicense()));
+        }
+        if (barcode.getEmail() != null) {
+            result.put("email", extractEmailProperties(barcode.getEmail()));
+        }
         result.put("format", convertBarcodeScannerFormatToString(barcode.getFormat()));
+        if (barcode.getGeoPoint() != null) {
+            result.put("geoPoint", extractGeoPointProperties(barcode.getGeoPoint()));
+        }
+        if (barcode.getPhone() != null) {
+            result.put("phone", extractPhoneProperties(barcode.getPhone()));
+        }
         result.put("rawValue", barcode.getRawValue());
+        if (barcode.getSms() != null) {
+            result.put("sms", extractSmsProperties(barcode.getSms()));
+        }
+        if (barcode.getUrl() != null) {
+            result.put("urlBookmark", extractUrlBookmark(barcode.getUrl()));
+        }
         result.put("valueType", convertBarcodeValueTypeToString(barcode.getValueType()));
+        if (barcode.getWifi() != null) {
+            result.put("wifi", extractWifiProperties(barcode.getWifi()));
+        }
         return result;
     }
 
@@ -161,6 +185,172 @@ public class BarcodeScannerHelper {
             ret.put(_byte);
         }
         return ret;
+    }
+
+    private static JSObject convertCalendarDateTimeToJSObject(Barcode.CalendarDateTime dateTime) {
+        JSObject dateTimeObj = new JSObject();
+
+        dateTimeObj.put("year", dateTime.getYear());
+        dateTimeObj.put("month", dateTime.getMonth());
+        dateTimeObj.put("day", dateTime.getDay());
+        dateTimeObj.put("hour", dateTime.getHours());
+        dateTimeObj.put("minute", dateTime.getMinutes());
+        dateTimeObj.put("second", dateTime.getSeconds());
+
+        return dateTimeObj;
+    }
+
+    private static JSObject extractCalendarEventProperties(Barcode.CalendarEvent calendarEvent) {
+        JSObject result = new JSObject();
+
+        result.put("description", calendarEvent.getDescription());
+        result.put("end", convertCalendarDateTimeToJSObject(calendarEvent.getEnd()));
+        result.put("location", calendarEvent.getLocation());
+        result.put("organizer", calendarEvent.getOrganizer());
+        result.put("start", convertCalendarDateTimeToJSObject(calendarEvent.getStart()));
+        result.put("status", calendarEvent.getStatus());
+        result.put("summary", calendarEvent.getSummary());
+
+        return result;
+    }
+
+    private static JSArray extractAddresses(List<Barcode.Address> addresses) {
+        JSArray addressArray = new JSArray();
+        for (Barcode.Address address : addresses) {
+            JSObject addressObj = new JSObject();
+            addressObj.put("addressLines", address.getAddressLines());
+            addressObj.put("type", address.getType());
+            addressArray.put(addressObj);
+        }
+
+        return addressArray;
+    }
+
+    private static JSObject extractContactInfoProperties(Barcode.ContactInfo contactInfo) {
+        JSObject result = new JSObject();
+
+        result.put("addresses", extractAddresses(contactInfo.getAddresses()));
+        result.put("emails", extractEmails(contactInfo.getEmails()));
+        result.put("organization", contactInfo.getOrganization());
+        result.put("name", extractPersonNameProperties(contactInfo.getName()));
+        result.put("phones", extractPhones(contactInfo.getPhones()));
+        result.put("title", contactInfo.getTitle());
+        result.put("urls", extractUrls(contactInfo.getUrls()));
+
+        return result;
+    }
+
+    private static JSObject extractDriverLicenseProperties(Barcode.DriverLicense driverLicense) {
+        JSObject result = new JSObject();
+
+        result.put("addressCity", driverLicense.getAddressCity());
+        result.put("addressState", driverLicense.getAddressState());
+        result.put("addressStreet", driverLicense.getAddressStreet());
+        result.put("addressZip", driverLicense.getAddressZip());
+        result.put("birthDate", driverLicense.getBirthDate());
+        result.put("documentType", driverLicense.getDocumentType());
+        result.put("expiryDate", driverLicense.getExpiryDate());
+        result.put("firstName", driverLicense.getFirstName());
+        result.put("gender", driverLicense.getGender());
+        result.put("issueDate", driverLicense.getIssueDate());
+        result.put("issuingCountry", driverLicense.getIssuingCountry());
+        result.put("lastName", driverLicense.getLastName());
+        result.put("licenseNumber", driverLicense.getLicenseNumber());
+        result.put("middleName", driverLicense.getMiddleName());
+
+        return result;
+    }
+
+    private static JSObject extractEmailProperties(Barcode.Email email) {
+        JSObject emailObj = new JSObject();
+        emailObj.put("address", email.getAddress());
+        emailObj.put("body", email.getBody());
+        emailObj.put("subject", email.getSubject());
+        emailObj.put("type", email.getType());
+
+        return emailObj;
+    }
+
+    private static JSArray extractEmails(List<Barcode.Email> emails) {
+        JSArray emailArray = new JSArray();
+        for (Barcode.Email email : emails) {
+            JSObject emailObj = extractEmailProperties(email);
+            emailArray.put(emailObj);
+        }
+
+        return emailArray;
+    }
+
+    private static JSObject extractGeoPointProperties(Barcode.GeoPoint geoPoint) {
+        JSObject geoPointObj = new JSObject();
+        geoPointObj.put("latitude", geoPoint.getLat());
+        geoPointObj.put("longitude", geoPoint.getLng());
+
+        return geoPointObj;
+    }
+
+    private static JSObject extractPersonNameProperties(Barcode.PersonName personName) {
+        JSObject result = new JSObject();
+
+        result.put("first", personName.getFirst());
+        result.put("formattedName", personName.getFormattedName());
+        result.put("last", personName.getLast());
+        result.put("middle", personName.getMiddle());
+        result.put("prefix", personName.getPrefix());
+        result.put("pronunciation", personName.getPronunciation());
+        result.put("suffix", personName.getSuffix());
+
+        return result;
+    }
+
+    private static JSObject extractPhoneProperties(Barcode.Phone phone) {
+        JSObject result = new JSObject();
+        result.put("number", phone.getNumber());
+        result.put("type", phone.getType());
+
+        return result;
+    }
+
+    private static JSArray extractPhones(List<Barcode.Phone> phones) {
+        JSArray phoneArray = new JSArray();
+        for (Barcode.Phone phone : phones) {
+            JSObject phoneObj = extractPhoneProperties(phone);
+            phoneArray.put(phoneObj);
+        }
+
+        return phoneArray;
+    }
+
+    private static JSObject extractSmsProperties(Barcode.Sms sms) {
+        JSObject result = new JSObject();
+        result.put("message", sms.getMessage());
+        result.put("phoneNumber", sms.getPhoneNumber());
+        return result;
+    }
+
+    private static JSObject extractUrlBookmark(Barcode.UrlBookmark urlBookmark) {
+        JSObject result = new JSObject();
+        result.put("title", urlBookmark.getTitle());
+        result.put("url", urlBookmark.getUrl());
+        return result;
+    }
+
+    private static JSArray extractUrls(List<String> urls) {
+        JSArray urlArray = new JSArray();
+        for (String url : urls) {
+            urlArray.put(url);
+        }
+
+        return urlArray;
+    }
+
+    private static JSObject extractWifiProperties(Barcode.WiFi wifi) {
+        JSObject result = new JSObject();
+        result.put("encryptionType", wifi.getEncryptionType());
+        result.put("password", wifi.getPassword());
+        result.put("ssid", wifi.getSsid());
+
+        return result;
     }
 
     private static Point[] normalizeCornerPoints(@NonNull Point[] cornerPoints, @NonNull Point imageSize, @NonNull Point screenSize) {

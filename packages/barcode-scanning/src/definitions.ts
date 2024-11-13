@@ -483,6 +483,18 @@ export interface Barcode {
    */
   bytes?: number[];
   /**
+   * Calendar event info.
+   *
+   * @since 7.0.0
+   */
+  calendarEvent?: CalendarEvent;
+  /**
+   * Person's or organization's business card.
+   *
+   * @since 7.0.0
+   */
+  contactInfo?: ContactInfo;
+  /**
    * The four corner points of the barcode in clockwise
    * order starting with top-left.
    *
@@ -506,12 +518,37 @@ export interface Barcode {
    */
   displayValue: string;
   /**
+   * Driver license or ID card.
+   *
+   * @since 7.0.0
+   */
+  driverLicense?: DriverLicense;
+  /**
+   * An email message from a 'MAILTO:'.
+   *
+   * @since 7.0.0
+   */
+  email?: Email;
+  /**
    * The barcode format.
    *
    * @since 0.0.1
    * @example "QR_CODE"
    */
   format: BarcodeFormat;
+
+  /**
+   * GPS coordinates from a 'GEO:'.
+   *
+   * @since 7.0.0
+   */
+  geoPoint?: GeoPoint;
+  /**
+   * Phone number info.
+   *
+   * @since 7.0.0
+   */
+  phone?: Phone;
   /**
    * The barcode value in a machine readable format.
    *
@@ -520,12 +557,463 @@ export interface Barcode {
    */
   rawValue: string;
   /**
+   * A sms message from a 'SMS:'.
+   *
+   * @since 7.0.0
+   */
+  sms?: Sms;
+  /**
+   * A URL and title from a 'MEBKM:'.
+   *
+   * @since 7.0.0
+   */
+  urlBookmark?: UrlBookmark;
+  /**
    * The barcode value type.
    *
    * @since 0.0.1
    * @example "TEXT"
    */
   valueType: BarcodeValueType;
+  /**
+   * A wifi network parameters from a 'WIFI:'.
+   *
+   * @since 7.0.0
+   */
+  wifi?: Wifi;
+}
+
+/**
+ * @since 7.0.0
+ */
+export interface CalendarEvent {
+  /**
+   * The event description.
+   *
+   * @since 7.0.0
+   */
+  description?: string;
+  /**
+   * The event end date.
+   *
+   * @since 7.0.0
+   */
+  end?: CalendarDateTime;
+  /**
+   * The event location.
+   *
+   * @since 7.0.0
+   */
+  location?: string;
+  /**
+   * The event organizer.
+   *
+   * @since 7.0.0
+   */
+  organizer?: string;
+  /**
+   * The event start date.
+   *
+   * @since 7.0.0
+   */
+  start?: CalendarDateTime;
+  /**
+   * The event status.
+   *
+   * @since 7.0.0
+   */
+  status?: string;
+  /**
+   * The event summary.
+   *
+   * @since 7.0.0
+   */
+  summary?: string;
+}
+
+/**
+ * @since 7.0.0
+ */
+export interface CalendarDateTime {
+  /**
+   * Day of the calendar date time.
+   *
+   * @since 7.0.0
+   */
+  day?: number;
+  /**
+   * Hours of the calendar date time.
+   *
+   * @since 7.0.0
+   */
+  hours?: number;
+  /**
+   * Whether the date time is UTC.
+   *
+   * @since 7.0.0
+   */
+  isUtc?: boolean;
+  /**
+   * Minutes of the calendar date time.
+   *
+   * @since 7.0.0
+   */
+  minutes?: number;
+  /**
+   * Month of the calendar date time.
+   *
+   * @since 7.0.0
+   */
+  month?: number;
+  /**
+   * Raw value of the calendar date time.
+   *
+   * @since 7.0.0
+   */
+  rawValue?: string;
+  /**
+   * Seconds of the calendar date time.
+   *
+   * @since 7.0.0
+   */
+  seconds?: number;
+  /**
+   * Year of the calendar date time.
+   *
+   * @since 7.0.0
+   */
+  year?: number;
+}
+
+/**
+ * @since 7.0.0
+ */
+export interface ContactInfo {
+  /**
+   * The contact's addresses.
+   *
+   * @since 7.0.0
+   */
+  addresses?: Address[];
+  /**
+   * The contact's emails.
+   *
+   * @since 7.0.0
+   */
+  emails?: Email[];
+  /**
+   * The contact's name.
+   *
+   * @since 7.0.0
+   */
+  personName?: PersonName;
+  /**
+   * The contact's organization.
+   *
+   * @since 7.0.0
+   */
+  organization?: string;
+  /**
+   * The contact's phones.
+   *
+   * @since 7.0.0
+   */
+  phones?: Phone[];
+  /**
+   * The contact's title.
+   *
+   * @since 7.0.0
+   */
+  title?: string;
+  /**
+   * The contact's urls.
+   *
+   * @since 7.0.0
+   */
+  urls?: string[];
+}
+
+/**
+ * @since 7.0.0
+ */
+export interface Address {
+  /**
+   * Formatted address, multiple lines when appropriate.
+   *
+   * @since 7.0.0
+   */
+  addressLines?: string[];
+  /**
+   * Address type.
+   *
+   * @since 7.0.0
+   */
+  type?: AddressType;
+}
+
+/**
+ * @since 7.0.0
+ */
+export interface DriverLicense {
+  /**
+   * City of holder's address.
+   *
+   * @since 7.0.0
+   */
+  addressCity?: string;
+  /**
+   * State of holder's address.
+   *
+   * @since 7.0.0
+   */
+  addressState?: string;
+  /**
+   * Street of holder's address.
+   *
+   * @since 7.0.0
+   */
+  addressStreet?: string;
+  /**
+   * Postal code of holder's address.
+   *
+   * @since 7.0.0
+   */
+  addressZip?: string;
+  /**
+   * Birthdate of the holder.
+   *
+   * @since 7.0.0
+   */
+  birthDate?: string;
+  /**
+   * "DL" for driver's licenses, "ID" for ID cards.
+   *
+   * @since 7.0.0
+   */
+  documentType?: string;
+  /**
+   * Expiration date of the license.
+   *
+   * @since 7.0.0
+   */
+  expiryDate?: string;
+  /**
+   * Holder's first name.
+   *
+   * @since 7.0.0
+   */
+  firstName?: string;
+  /**
+   * Holder's gender.
+   *
+   * @since 7.0.0
+   */
+  gender?: string;
+
+  /**
+   * Issue date of the license.
+   *
+   * @since 7.0.0
+   */
+  issueDate?: string;
+  /**
+   * ISO 3166-1 alpha-3 code in which DL/ID was issued.
+   *
+   * @since 7.0.0
+   */
+  issuingCountry?: string;
+  /**
+   * Holder's last name.
+   *
+   * @since 7.0.0
+   */
+  lastName?: string;
+  /**
+   * Driver license ID number.
+   *
+   * @since 7.0.0
+   */
+  licenseNumber?: string;
+  /**
+   * Holder's middle name.
+   *
+   * @since 7.0.0
+   */
+  middleName?: string;
+}
+
+/**
+ * @since 7.0.0
+ */
+export interface Email {
+  /**
+   * The email address.
+   *
+   * @since 7.0.0
+   */
+  address?: string;
+  /**
+   * The email body.
+   *
+   * @since 7.0.0
+   */
+  body?: string;
+  /**
+   * The email subject.
+   *
+   * @since 7.0.0
+   */
+  subject?: string;
+  /**
+   * The email address type.
+   *
+   * @since 7.0.0
+   */
+  type: EmailFormatType;
+}
+
+/**
+ * @since 7.0.0
+ */
+export interface GeoPoint {
+  /**
+   * Latitude.
+   *
+   * @since 7.0.0
+   */
+  latitude?: number;
+  /**
+   * Longitude.
+   *
+   * @since 7.0.0
+   */
+  longitude?: number;
+}
+
+/**
+ * @since 7.0.0
+ */
+export interface Phone {
+  /**
+   * The phone number.
+   *
+   * @since 7.0.0
+   */
+  number?: string;
+  /**
+   * The phone number type.
+   *
+   * @since 7.0.0
+   */
+  type?: PhoneFormatType;
+}
+
+/**
+ * @since 7.0.0
+ */
+export interface PersonName {
+  /**
+   * First name.
+   *
+   * @since 7.0.0
+   */
+  first?: string;
+  /**
+   * The formatted name.
+   *
+   * @since 7.0.0
+   */
+  formattedName?: string;
+  /**
+   * Last name.
+   *
+   * @since 7.0.0
+   */
+  last?: string;
+  /**
+   * Middle name.
+   *
+   * @since 7.0.0
+   */
+  middle?: string;
+  /**
+   * Name prefix.
+   *
+   * @since 7.0.0
+   */
+  prefix?: string;
+  /**
+   * Text string to be set as the kana name in the phonebook. Used for Japanese contacts.
+   *
+   * @since 7.0.0
+   */
+  pronunciation?: string;
+  /**
+   * Name suffix.
+   *
+   * @since 7.0.0
+   */
+  suffix?: string;
+}
+
+/**
+ * @since 7.0.0
+ */
+export interface Sms {
+  /**
+   * The phone number of the sms.
+   *
+   * @since 7.0.0
+   */
+  phoneNumber?: string;
+  /**
+   * The message content of the sms.
+   *
+   * @since 7.0.0
+   */
+  message?: string;
+}
+
+/**
+ * @since 7.0.0
+ */
+export interface UrlBookmark {
+  /**
+   * The URL of the bookmark.
+   *
+   * @since 7.0.0
+   */
+  url?: string;
+  /**
+   * The title of the bookmark.
+   *
+   * @since 7.0.0
+   */
+  title?: string;
+}
+
+/**
+ * @since 7.0.0
+ */
+export interface Wifi {
+  /**
+   * Encryption type of the WI-FI.
+   *
+   * @since 7.0.0
+   */
+  encryptionType: WifiEncryptionType;
+  /**
+   * Password of the WI-FI.
+   *
+   * @since 7.0.0
+   */
+  password?: string;
+  /**
+   * SSID of the WI-FI.
+   *
+   * @since 7.0.0
+   */
+  ssid?: string;
 }
 
 /**
@@ -720,4 +1208,84 @@ export enum GoogleBarcodeScannerModuleInstallState {
    * @since 5.1.0
    */
   DOWNLOAD_PAUSED = 7,
+}
+
+/**
+ * @since 7.0.0
+ */
+export enum AddressType {
+  /**
+   * @since 7.0.0
+   */
+  HOME = 0,
+  /**
+   * @since 7.0.0
+   */
+  UNKNOWN = 1,
+  /**
+   * @since 7.0.0
+   */
+  WORK = 2,
+}
+
+/**
+ * @since 7.0.0
+ */
+export enum EmailFormatType {
+  /**
+   * @since 7.0.0
+   */
+  HOME = 0,
+  /**
+   * @since 7.0.0
+   */
+  UNKNOWN = 1,
+  /**
+   * @since 7.0.0
+   */
+  WORK = 2,
+}
+
+/**
+ * @since 7.0.0
+ */
+export enum PhoneFormatType {
+  /**
+   * @since 7.0.0
+   */
+  FAX = 0,
+  /**
+   * @since 7.0.0
+   */
+  HOME = 1,
+  /**
+   * @since 7.0.0
+   */
+  MOBILE = 2,
+  /**
+   * @since 7.0.0
+   */
+  UNKNOWN = 3,
+  /**
+   * @since 7.0.0
+   */
+  WORK = 4,
+}
+
+/**
+ * @since 7.0.0
+ */
+export enum WifiEncryptionType {
+  /**
+   * @since 7.0.0
+   */
+  OPEN = 1,
+  /**
+   * @since 7.0.0
+   */
+  WEP = 2,
+  /**
+   * @since 7.0.0
+   */
+  WPA = 3,
 }
