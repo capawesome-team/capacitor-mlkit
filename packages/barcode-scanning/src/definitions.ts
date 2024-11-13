@@ -487,13 +487,13 @@ export interface Barcode {
    *
    * @since 7.0.0
    */
-  calendarEvent?: CalendarEvent;
+  calendarEvent?: BarcodeCalendarEvent;
   /**
    * Person's or organization's business card.
    *
    * @since 7.0.0
    */
-  contactInfo?: ContactInfo;
+  contactInfo?: BarcodeContactInfo;
   /**
    * The four corner points of the barcode in clockwise
    * order starting with top-left.
@@ -522,13 +522,13 @@ export interface Barcode {
    *
    * @since 7.0.0
    */
-  driverLicense?: DriverLicense;
+  driverLicense?: BarcodeDriverLicense;
   /**
    * An email message from a 'MAILTO:'.
    *
    * @since 7.0.0
    */
-  email?: Email;
+  email?: BarcodeEmail;
   /**
    * The barcode format.
    *
@@ -542,13 +542,13 @@ export interface Barcode {
    *
    * @since 7.0.0
    */
-  geoPoint?: GeoPoint;
+  geoPoint?: BarcodeGeoPoint;
   /**
    * Phone number info.
    *
    * @since 7.0.0
    */
-  phone?: Phone;
+  phone?: BarcodePhone;
   /**
    * The barcode value in a machine readable format.
    *
@@ -561,13 +561,13 @@ export interface Barcode {
    *
    * @since 7.0.0
    */
-  sms?: Sms;
+  sms?: BarcodeSms;
   /**
    * A URL and title from a 'MEBKM:'.
    *
    * @since 7.0.0
    */
-  urlBookmark?: UrlBookmark;
+  urlBookmark?: BarcodeUrlBookmark;
   /**
    * The barcode value type.
    *
@@ -580,13 +580,13 @@ export interface Barcode {
    *
    * @since 7.0.0
    */
-  wifi?: Wifi;
+  wifi?: BarcodeWifi;
 }
 
 /**
  * @since 7.0.0
  */
-export interface CalendarEvent {
+export interface BarcodeCalendarEvent {
   /**
    * The event description.
    *
@@ -688,7 +688,7 @@ export interface CalendarDateTime {
 /**
  * @since 7.0.0
  */
-export interface ContactInfo {
+export interface BarcodeContactInfo {
   /**
    * The contact's addresses.
    *
@@ -700,7 +700,7 @@ export interface ContactInfo {
    *
    * @since 7.0.0
    */
-  emails?: Email[];
+  emails?: BarcodeEmail[];
   /**
    * The contact's name.
    *
@@ -718,7 +718,7 @@ export interface ContactInfo {
    *
    * @since 7.0.0
    */
-  phones?: Phone[];
+  phones?: BarcodePhone[];
   /**
    * The contact's title.
    *
@@ -754,7 +754,7 @@ export interface Address {
 /**
  * @since 7.0.0
  */
-export interface DriverLicense {
+export interface BarcodeDriverLicense {
   /**
    * City of holder's address.
    *
@@ -845,7 +845,7 @@ export interface DriverLicense {
 /**
  * @since 7.0.0
  */
-export interface Email {
+export interface BarcodeEmail {
   /**
    * The email address.
    *
@@ -875,7 +875,7 @@ export interface Email {
 /**
  * @since 7.0.0
  */
-export interface GeoPoint {
+export interface BarcodeGeoPoint {
   /**
    * Latitude.
    *
@@ -893,7 +893,7 @@ export interface GeoPoint {
 /**
  * @since 7.0.0
  */
-export interface Phone {
+export interface BarcodePhone {
   /**
    * The phone number.
    *
@@ -959,7 +959,7 @@ export interface PersonName {
 /**
  * @since 7.0.0
  */
-export interface Sms {
+export interface BarcodeSms {
   /**
    * The phone number of the sms.
    *
@@ -977,7 +977,7 @@ export interface Sms {
 /**
  * @since 7.0.0
  */
-export interface UrlBookmark {
+export interface BarcodeUrlBookmark {
   /**
    * The URL of the bookmark.
    *
@@ -995,7 +995,7 @@ export interface UrlBookmark {
 /**
  * @since 7.0.0
  */
-export interface Wifi {
+export interface BarcodeWifi {
   /**
    * Encryption type of the WI-FI.
    *
