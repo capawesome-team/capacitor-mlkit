@@ -56,7 +56,6 @@ export interface BarcodeScannerPlugin {
    * Only available on Android and iOS.
    *
    * @since 0.0.1
-   * @deprecated Use the [Capacitor Torch](https://capawesome.io/plugins/torch/) plugin instead.
    */
   enableTorch(): Promise<void>;
   /**
@@ -65,7 +64,6 @@ export interface BarcodeScannerPlugin {
    * Only available on Android and iOS.
    *
    * @since 0.0.1
-   * @deprecated Use the [Capacitor Torch](https://capawesome.io/plugins/torch/) plugin instead.
    */
   disableTorch(): Promise<void>;
   /**
@@ -74,7 +72,6 @@ export interface BarcodeScannerPlugin {
    * Only available on Android and iOS.
    *
    * @since 0.0.1
-   * @deprecated Use the [Capacitor Torch](https://capawesome.io/plugins/torch/) plugin instead.
    */
   toggleTorch(): Promise<void>;
   /**
@@ -83,7 +80,6 @@ export interface BarcodeScannerPlugin {
    * Only available on Android and iOS.
    *
    * @since 0.0.1
-   * @deprecated Use the [Capacitor Torch](https://capawesome.io/plugins/torch/) plugin instead.
    */
   isTorchEnabled(): Promise<IsTorchEnabledResult>;
   /**
@@ -92,7 +88,6 @@ export interface BarcodeScannerPlugin {
    * Only available on Android and iOS.
    *
    * @since 0.0.1
-   * @deprecated Use the [Capacitor Torch](https://capawesome.io/plugins/torch/) plugin instead.
    */
   isTorchAvailable(): Promise<IsTorchAvailableResult>;
   /**
