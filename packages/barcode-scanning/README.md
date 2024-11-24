@@ -273,6 +273,12 @@ body.barcode-scanner-active {
 
 If you can't see the camera view, make sure all elements in the DOM are not visible or have a transparent background to debug the issue.
 
+### Web specifics
+
+You can customize the camera view by using the `videoElementId` option.
+
+Some browsers does not implement BarcodeDetector API ([see which](https://caniuse.com/mdn-api_barcodedetector)). If you need to support them you can use the [polyfill](https://www.npmjs.com/package/barcode-detector), the "Side Effects" approach.
+
 ## API
 
 <docgen-index>
@@ -318,8 +324,6 @@ startScan(options?: StartScanOptions | undefined) => Promise<void>
 
 Start scanning for barcodes.
 
-Only available on Android and iOS.
-
 | Param         | Type                                                          |
 | ------------- | ------------------------------------------------------------- |
 | **`options`** | <code><a href="#startscanoptions">StartScanOptions</a></code> |
@@ -336,8 +340,6 @@ stopScan() => Promise<void>
 ```
 
 Stop scanning for barcodes.
-
-Only available on Android and iOS.
 
 **Since:** 0.0.1
 
@@ -400,8 +402,6 @@ isSupported() => Promise<IsSupportedResult>
 
 Returns whether or not the barcode scanner is supported.
 
-Available on Android and iOS.
-
 **Returns:** <code>Promise&lt;<a href="#issupportedresult">IsSupportedResult</a>&gt;</code>
 
 **Since:** 0.0.1
@@ -416,8 +416,6 @@ enableTorch() => Promise<void>
 ```
 
 Enable camera's torch (flash) during a scan session.
-
-Only available on Android and iOS.
 
 **Since:** 0.0.1
 
@@ -653,7 +651,7 @@ addListener(eventName: 'barcodeScanned', listenerFunc: (event: BarcodeScannedEve
 
 Called when a barcode is scanned.
 
-Available on Android and iOS.
+Only available on Android and iOS.
 
 | Param              | Type                                                                                    |
 | ------------------ | --------------------------------------------------------------------------------------- |
@@ -675,8 +673,6 @@ addListener(eventName: 'barcodesScanned', listenerFunc: (event: BarcodesScannedE
 
 Called when barcodes are scanned.
 
-Available on Android and iOS.
-
 | Param              | Type                                                                                      |
 | ------------------ | ----------------------------------------------------------------------------------------- |
 | **`eventName`**    | <code>'barcodesScanned'</code>                                                            |
@@ -696,8 +692,6 @@ addListener(eventName: 'scanError', listenerFunc: (event: ScanErrorEvent) => voi
 ```
 
 Called when an error occurs during the scan.
-
-Available on Android and iOS.
 
 | Param              | Type                                                                          |
 | ------------------ | ----------------------------------------------------------------------------- |
@@ -751,11 +745,11 @@ Remove all listeners for this plugin.
 
 #### StartScanOptions
 
-| Prop               | Type                                              | Description                                                                              | Since |
-| ------------------ | ------------------------------------------------- | ---------------------------------------------------------------------------------------- | ----- |
-| **`formats`**      | <code>BarcodeFormat[]</code>                      | Improve the speed of the barcode scanner by configuring the barcode formats to scan for. | 0.0.1 |
-| **`lensFacing`**   | <code><a href="#lensfacing">LensFacing</a></code> | Configure the camera (front or back) to use.                                             | 0.0.1 |
-| **`videoElementId`** | <code>string</code>                     | Element ID to set on the video element to use for the camera preview. Element will be crreated, but you can customize it with your own styles. | 5.1.0 |
+| Prop                 | Type                                              | Description                                                                                                                                                           | Since |
+| -------------------- | ------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
+| **`formats`**        | <code>BarcodeFormat[]</code>                      | Improve the speed of the barcode scanner by configuring the barcode formats to scan for.                                                                              | 0.0.1 |
+| **`lensFacing`**     | <code><a href="#lensfacing">LensFacing</a></code> | Configure the camera (front or back) to use.                                                                                                                          | 0.0.1 |
+| **`videoElementId`** | <code>string</code>                               | Element ID to set on the video element to use for the camera preview. Element will be crreated, but you can customize it with your own styles. Only available on Web. | 5.1.0 |
 
 
 #### ReadBarcodesFromImageResult
@@ -769,12 +763,12 @@ Remove all listeners for this plugin.
 
 | Prop               | Type                                                                                  | Description                                                                                                                                                | Since |
 | ------------------ | ------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
-| **`bytes`**        | <code>number[]</code>                                                                 | Raw bytes as it was encoded in the barcode.                                                                                                                | 0.0.1 |
+| **`bytes`**        | <code>number[]</code>                                                                 | Raw bytes as it was encoded in the barcode. Only available on Android and iOS.                                                                             | 0.0.1 |
 | **`cornerPoints`** | <code>[[number, number], [number, number], [number, number], [number, number]]</code> | The four corner points of the barcode in clockwise order starting with top-left. This property is currently only supported by the `startScan(...)` method. | 0.0.1 |
-| **`displayValue`** | <code>string</code>                                                                   | The barcode value in a human readable format.                                                                                                              | 0.0.1 |
+| **`displayValue`** | <code>string</code>                                                                   | The barcode value in a human readable format. Only available on Android and iOS.                                                                           | 0.0.1 |
 | **`format`**       | <code><a href="#barcodeformat">BarcodeFormat</a></code>                               | The barcode format.                                                                                                                                        | 0.0.1 |
 | **`rawValue`**     | <code>string</code>                                                                   | The barcode value in a machine readable format.                                                                                                            | 0.0.1 |
-| **`valueType`**    | <code><a href="#barcodevaluetype">BarcodeValueType</a></code>                         | The barcode value type.                                                                                                                                    | 0.0.1 |
+| **`valueType`**    | <code><a href="#barcodevaluetype">BarcodeValueType</a></code>                         | The barcode value type. Only available on Android and iOS. On web this property is always <a href="#barcodevaluetype">`BarcodeValueType.Unknown`</a>.      | 0.0.1 |
 
 
 #### ReadBarcodesFromImageOptions
@@ -899,6 +893,15 @@ Remove all listeners for this plugin.
 
 
 ### Type Aliases
+
+
+#### BarcodeFormat
+
+The possible types of barcode format that can be detected using the
+Barcode Detection API. This list may change in the future.
+Adapted from: https://developer.mozilla.org/en-US/docs/Web/API/Barcode_Detection_API
+
+<code>'aztec' | 'code_128' | 'code_39' | 'code_93' | 'codabar' | 'data_matrix' | 'ean_13' | 'ean_8' | 'itf' | 'pdf417' | 'qr_code' | 'upc_a' | 'upc_e' | 'unknown'</code>
 
 
 #### CameraPermissionState

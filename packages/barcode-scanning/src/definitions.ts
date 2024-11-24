@@ -4,15 +4,11 @@ export interface BarcodeScannerPlugin {
   /**
    * Start scanning for barcodes.
    *
-   * Only available on Android and iOS.
-   *
    * @since 0.0.1
    */
   startScan(options?: StartScanOptions): Promise<void>;
   /**
    * Stop scanning for barcodes.
-   *
-   * Only available on Android and iOS.
    *
    * @since 0.0.1
    */
@@ -45,15 +41,11 @@ export interface BarcodeScannerPlugin {
   /**
    * Returns whether or not the barcode scanner is supported.
    *
-   * Available on Android and iOS.
-   *
    * @since 0.0.1
    */
   isSupported(): Promise<IsSupportedResult>;
   /**
    * Enable camera's torch (flash) during a scan session.
-   *
-   * Only available on Android and iOS.
    *
    * @since 0.0.1
    * @deprecated Use the [Capacitor Torch](https://capawesome.io/plugins/torch/) plugin instead.
@@ -176,7 +168,7 @@ export interface BarcodeScannerPlugin {
   /**
    * Called when a barcode is scanned.
    *
-   * Available on Android and iOS.
+   * Only available on Android and iOS.
    *
    * @since 0.0.1
    * @deprecated Use the `barcodesScanned` event listener instead.
@@ -188,8 +180,6 @@ export interface BarcodeScannerPlugin {
   /**
    * Called when barcodes are scanned.
    *
-   * Available on Android and iOS.
-   *
    * @since 6.2.0
    */
   addListener(
@@ -198,8 +188,6 @@ export interface BarcodeScannerPlugin {
   ): Promise<PluginListenerHandle>;
   /**
    * Called when an error occurs during the scan.
-   *
-   * Available on Android and iOS.
    *
    * @since 0.0.1
    */
@@ -488,6 +476,8 @@ export interface Barcode {
   /**
    * Raw bytes as it was encoded in the barcode.
    *
+   * Only available on Android and iOS.
+   *
    * @since 0.0.1
    * @example [67, 97, 112, 97, 99, 105, 116, 111, 114, 74, 83]
    */
@@ -511,10 +501,12 @@ export interface Barcode {
   /**
    * The barcode value in a human readable format.
    *
+   * Only available on Android and iOS.
+   *
    * @since 0.0.1
    * @example "CapacitorJS"
    */
-  displayValue: string;
+  displayValue?: string;
   /**
    * The barcode format.
    *
@@ -531,6 +523,9 @@ export interface Barcode {
   rawValue: string;
   /**
    * The barcode value type.
+   *
+   * Only available on Android and iOS.
+   * On web this property is always `BarcodeValueType.Unknown`.
    *
    * @since 0.0.1
    * @example "TEXT"
