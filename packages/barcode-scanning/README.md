@@ -791,37 +791,23 @@ Remove all listeners for this plugin.
 | **`geoPoint`**      | <code><a href="#barcodegeopoint">BarcodeGeoPoint</a></code>                           | GPS coordinates from a 'GEO:'.                                                                                                                             | 7.0.0 |
 | **`phone`**         | <code><a href="#barcodephone">BarcodePhone</a></code>                                 | Phone number info.                                                                                                                                         | 7.0.0 |
 | **`rawValue`**      | <code>string</code>                                                                   | The barcode value in a machine readable format.                                                                                                            | 0.0.1 |
-| **`sms`**           | <code><a href="#sms">Sms</a></code>                                                   | A sms message from a 'SMS:'.                                                                                                                               | 7.0.0 |
+| **`sms`**           | <code><a href="#barcodesms">BarcodeSms</a></code>                                     | A sms message from a 'SMS:'.                                                                                                                               | 7.0.0 |
 | **`urlBookmark`**   | <code><a href="#barcodeurlbookmark">BarcodeUrlBookmark</a></code>                     | A URL and title from a 'MEBKM:'.                                                                                                                           | 7.0.0 |
 | **`valueType`**     | <code><a href="#barcodevaluetype">BarcodeValueType</a></code>                         | The barcode value type.                                                                                                                                    | 0.0.1 |
-| **`wifi`**          | <code><a href="#wifi">Wifi</a></code>                                                 | A wifi network parameters from a 'WIFI:'.                                                                                                                  | 7.0.0 |
+| **`wifi`**          | <code><a href="#barcodewifi">BarcodeWifi</a></code>                                   | A wifi network parameters from a 'WIFI:'.                                                                                                                  | 7.0.0 |
 
 
 #### BarcodeCalendarEvent
 
-| Prop              | Type                                                          | Description            | Since |
-| ----------------- | ------------------------------------------------------------- | ---------------------- | ----- |
-| **`description`** | <code>string</code>                                           | The event description. | 7.0.0 |
-| **`end`**         | <code><a href="#calendardatetime">CalendarDateTime</a></code> | The event end date.    | 7.0.0 |
-| **`location`**    | <code>string</code>                                           | The event location.    | 7.0.0 |
-| **`organizer`**   | <code>string</code>                                           | The event organizer.   | 7.0.0 |
-| **`start`**       | <code><a href="#calendardatetime">CalendarDateTime</a></code> | The event start date.  | 7.0.0 |
-| **`status`**      | <code>string</code>                                           | The event status.      | 7.0.0 |
-| **`summary`**     | <code>string</code>                                           | The event summary.     | 7.0.0 |
-
-
-#### CalendarDateTime
-
-| Prop           | Type                 | Description                          | Since |
-| -------------- | -------------------- | ------------------------------------ | ----- |
-| **`day`**      | <code>number</code>  | Day of the calendar date time.       | 7.0.0 |
-| **`hours`**    | <code>number</code>  | Hours of the calendar date time.     | 7.0.0 |
-| **`isUtc`**    | <code>boolean</code> | Whether the date time is UTC.        | 7.0.0 |
-| **`minutes`**  | <code>number</code>  | Minutes of the calendar date time.   | 7.0.0 |
-| **`month`**    | <code>number</code>  | Month of the calendar date time.     | 7.0.0 |
-| **`rawValue`** | <code>string</code>  | Raw value of the calendar date time. | 7.0.0 |
-| **`seconds`**  | <code>number</code>  | Seconds of the calendar date time.   | 7.0.0 |
-| **`year`**     | <code>number</code>  | Year of the calendar date time.      | 7.0.0 |
+| Prop              | Type                | Description                              | Since |
+| ----------------- | ------------------- | ---------------------------------------- | ----- |
+| **`description`** | <code>string</code> | The event description.                   | 7.0.0 |
+| **`end`**         | <code>string</code> | The event end date as ISO 8601 string.   | 7.0.0 |
+| **`location`**    | <code>string</code> | The event location.                      | 7.0.0 |
+| **`organizer`**   | <code>string</code> | The event organizer.                     | 7.0.0 |
+| **`start`**       | <code>string</code> | The event start date as ISO 8601 string. | 7.0.0 |
+| **`status`**      | <code>string</code> | The event status.                        | 7.0.0 |
+| **`summary`**     | <code>string</code> | The event summary.                       | 7.0.0 |
 
 
 #### BarcodeContactInfo
@@ -904,7 +890,7 @@ Remove all listeners for this plugin.
 | **`longitude`** | <code>number</code> | Longitude.  | 7.0.0 |
 
 
-#### Sms
+#### BarcodeSms
 
 | Prop              | Type                | Description                     | Since |
 | ----------------- | ------------------- | ------------------------------- | ----- |
@@ -920,7 +906,7 @@ Remove all listeners for this plugin.
 | **`title`** | <code>string</code> | The title of the bookmark. | 7.0.0 |
 
 
-#### Wifi
+#### BarcodeWifi
 
 | Prop                 | Type                                                              | Description                   | Since |
 | -------------------- | ----------------------------------------------------------------- | ----------------------------- | ----- |
