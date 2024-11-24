@@ -1,7 +1,8 @@
 import { CapacitorException, ExceptionCode, WebPlugin } from '@capacitor/core';
 
 import type {
-  BarcodeScannedEvent,
+  BarcodeFormat as PluginBarcodeFormat,
+  BarcodesScannedEvent,
   BarcodeScannerPlugin,
   GetMaxZoomRatioResult,
   GetMinZoomRatioResult,
@@ -17,48 +18,58 @@ import type {
   SetZoomRatioOptions,
   StartScanOptions,
 } from './definitions';
-import { BarcodeValueType } from './definitions';
+import { BarcodeValueType, LensFacing } from './definitions';
+
+import type { DetectedBarcode, BarcodeFormat as WebBarcodeFormat } from './barcode-detector';
 
 export class BarcodeScannerWeb
   extends WebPlugin
   implements BarcodeScannerPlugin
 {
-  public static readonly ERROR_VIDEO_ELEMENT_MISSING =
-    'videoElement must be provided.';
   private readonly _isSupported = 'BarcodeDetector' in window;
   private intervalId: number | undefined;
   private stream: MediaStream | undefined;
+  private videoElement: HTMLVideoElement | undefined;
 
   async startScan(options?: StartScanOptions): Promise<void> {
-    if (!this._isSupported) {
+    if (!window.BarcodeDetector) {
       this.throwUnsupportedError();
     }
-    if (!options?.videoElement) {
-      throw new Error(BarcodeScannerWeb.ERROR_VIDEO_ELEMENT_MISSING);
-    }
+
+    this.videoElement = document.createElement('video');
+    this.videoElement.style.position = 'absolute';
+    this.videoElement.style.top = '0';
+    this.videoElement.style.left = '0';
+    this.videoElement.style.right = '0';
+    this.videoElement.style.bottom = '0';
+    this.videoElement.style.width = '100%';
+    this.videoElement.style.height = '100%';
+    this.videoElement.style.zIndex = '-9999';
+    this.videoElement.style.objectFit = 'cover';
+    if (options?.videoElementId) this.videoElement.id = options.videoElementId;
+    document.body.appendChild(this.videoElement);
+
     this.stream = await navigator.mediaDevices.getUserMedia({
       video: {
         facingMode: {
-          ideal: 'environment',
+          ideal: options?.lensFacing === LensFacing.Back ? 'environment' : 'user',
         },
       },
       audio: false,
     });
-    options.videoElement.srcObject = this.stream;
-    await options.videoElement.play();
-    const barcodeDetector = new window.BarcodeDetector({
-      formats: ['qr_code'],
+    this.videoElement.srcObject = this.stream;
+    await this.videoElement.play();
+    const barcodeDetector = new BarcodeDetector({
+      formats: options?.formats?.map(format => format.toLowerCase() as WebBarcodeFormat),
     });
     this.intervalId = window.setInterval(async () => {
-      const barcodes = await barcodeDetector.detect(options.videoElement);
+      const barcodes = await barcodeDetector.detect(this.videoElement!);
       if (barcodes.length === 0) {
         return;
       } else {
-        for (const barcode of barcodes) {
-          this.handleScannedBarcode(barcode);
-        }
+        this.handleScannedBarcodes(barcodes);
       }
-    }, 1000);
+    }, 1000); // Most use-cases don't need to scan faster than once per second, so it does not make sense to waste resources by scanning more frequently.
   }
 
   async stopScan(): Promise<void> {
@@ -75,16 +86,20 @@ export class BarcodeScannerWeb
       });
       this.stream = undefined;
     }
+    if (this.videoElement) {
+      this.videoElement.remove();
+      this.videoElement = undefined;
+    }
   }
 
   async readBarcodesFromImage(
     _options: ReadBarcodesFromImageOptions,
   ): Promise<ReadBarcodesFromImageResult> {
-    throw this.createUnavailableException();
+    throw this.createUnimplementedException();
   }
 
   async scan(): Promise<ScanResult> {
-    throw this.createUnavailableException();
+    throw this.createUnimplementedException();
   }
 
   async isSupported(): Promise<IsSupportedResult> {
@@ -114,23 +129,23 @@ export class BarcodeScannerWeb
   }
 
   async setZoomRatio(_options: SetZoomRatioOptions): Promise<void> {
-    throw this.createUnavailableException();
+    throw this.createUnimplementedException();
   }
 
   async getZoomRatio(): Promise<GetZoomRatioResult> {
-    throw this.createUnavailableException();
+    throw this.createUnimplementedException();
   }
 
   async getMinZoomRatio(): Promise<GetMinZoomRatioResult> {
-    throw this.createUnavailableException();
+    throw this.createUnimplementedException();
   }
 
   async getMaxZoomRatio(): Promise<GetMaxZoomRatioResult> {
-    throw this.createUnavailableException();
+    throw this.createUnimplementedException();
   }
 
   async openSettings(): Promise<void> {
-    throw this.createUnavailableException();
+    throw this.createUnimplementedException();
   }
 
   async isGoogleBarcodeScannerModuleAvailable(): Promise<IsGoogleBarcodeScannerModuleAvailableResult> {
@@ -149,6 +164,13 @@ export class BarcodeScannerWeb
     throw this.createUnavailableException();
   }
 
+  private createUnimplementedException(): CapacitorException {
+    return new CapacitorException(
+      'This Barcode Scanner plugin method is not implemented yet on this platform.',
+      ExceptionCode.Unimplemented,
+    );
+  }
+
   private createUnavailableException(): CapacitorException {
     return new CapacitorException(
       'This Barcode Scanner plugin method is not available on this platform.',
@@ -158,25 +180,28 @@ export class BarcodeScannerWeb
 
   private throwUnsupportedError(): never {
     throw this.unavailable(
-      'Barcode Detector API not available in this browser.',
+      'Barcode Detector API not available in this browser. You can install polyfill, check README.md for more information.',
     );
   }
 
-  private handleScannedBarcode(barcode: any): void {
-    const result: BarcodeScannedEvent = {
-      barcode: {
-        displayValue: barcode.rawValue,
+  private handleScannedBarcodes(barcodes: DetectedBarcode[]): void {
+    const result: BarcodesScannedEvent = {
+      barcodes: barcodes.map(barcode => ({
+        cornerPoints: [
+          [barcode.cornerPoints[0].x, barcode.cornerPoints[0].y],
+          [barcode.cornerPoints[1].x, barcode.cornerPoints[1].y],
+          [barcode.cornerPoints[2].x, barcode.cornerPoints[2].y],
+          [barcode.cornerPoints[3].x, barcode.cornerPoints[3].y],
+        ],
         rawValue: barcode.rawValue,
-        format: barcode.format,
+        format: barcode.format.toUpperCase() as PluginBarcodeFormat,
         valueType: BarcodeValueType.Unknown,
-      },
+      })),
     };
-    this.notifyListeners('barcodeScanned', result);
+    this.notifyListeners('barcodesScanned', result);
   }
 }
 
 declare global {
-  interface Window {
-    BarcodeDetector: any;
-  }
+  var BarcodeDetector: typeof import("./barcode-detector").BarcodeDetector;
 }
