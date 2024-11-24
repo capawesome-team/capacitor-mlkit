@@ -10,7 +10,7 @@ Unofficial Capacitor plugin for [ML Kit Barcode Scanning](https://developers.goo
 - ⏺️ Define detection area
 - 🏞️ Reading barcodes from images
 - 🔦 Torch and Autofocus support
-- 🔋 Supports Android and iOS
+- 🔋 Supports Android, iOS and web
 
 For a complete list of **supported barcodes**, see [BarcodeFormat](#barcodeformat).
 
