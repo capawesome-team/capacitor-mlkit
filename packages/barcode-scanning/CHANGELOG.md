@@ -1,5 +1,13 @@
 # Changelog
 
+## 7.0.0-next.2
+
+### Minor Changes
+
+- [`c0c29b9`](https://github.com/capawesome-team/capacitor-mlkit/commit/c0c29b9326a59814134dd8080f3fffc72f0ee502) ([#206](https://github.com/capawesome-team/capacitor-mlkit/pull/206)): feat: support all barcode types
+
+* [`6a73faf`](https://github.com/capawesome-team/capacitor-mlkit/commit/6a73faffcc9da148fcd49ed12dd7fdffd1bba3e7) ([#210](https://github.com/capawesome-team/capacitor-mlkit/pull/210)): feat: add compatibility for the Torch plugin
+
 ## 7.0.0-next.1
 
 ### Major Changes
