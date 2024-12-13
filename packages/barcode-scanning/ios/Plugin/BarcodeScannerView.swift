@@ -28,62 +28,83 @@ public protocol BarcodeScannerViewDelegate {
     private var torchButton: UIButton?
     private var detectionAreaView: UIView?
     private var detectionAreaViewFrame: CGRect?
+    private var error: Error?
 
     init (implementation: BarcodeScanner, settings: ScanSettings) throws {
         self.implementation = implementation
         self.settings = settings
-
+        // creates a serial DispatchQueue, which ensures operations are executed in a First In, First Out
+        // (FIFO) order, meaning tasks are completed one at a time in the exact order they were added to
+        // the queue.
+        let captureSessionQueue = DispatchQueue(label: "com.google.mlkit.visiondetector.CaptureSessionQueue")
+        
         super.init(frame: UIScreen.main.bounds)
 
         let captureSession = AVCaptureSession()
-        captureSession.beginConfiguration()
-        captureSession.sessionPreset = AVCaptureSession.Preset.hd1280x720
+        // Prepare capture session and preview layer
+        // It executes tasks one at a time in the order they are added (FIFO), ensuring that no other
+        // tasks on the same queue can run simultaneously or out of order with respect to the synchronous
+        // block
+        captureSessionQueue.sync {
+            do {
+                captureSession.beginConfiguration()
+                captureSession.sessionPreset = AVCaptureSession.Preset.hd1280x720
 
-        let captureDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: AVMediaType.video, position: settings.lensFacing)
-        guard let captureDevice = captureDevice else {
-            throw RuntimeError(implementation.plugin.errorNoCaptureDeviceAvailable)
+                guard let captureDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: settings.lensFacing),
+                      let deviceInput = try? AVCaptureDeviceInput(device: captureDevice) else {
+                    throw RuntimeError(implementation.plugin.errorNoCaptureDeviceAvailable)
+                }
+
+                if captureSession.canAddInput(deviceInput) {
+                    captureSession.addInput(deviceInput)
+                } else {
+                    throw RuntimeError(implementation.plugin.errorCannotAddCaptureInput)
+                }
+
+                let deviceOutput = AVCaptureVideoDataOutput()
+                deviceOutput.videoSettings = [kCVPixelBufferPixelFormatTypeKey as String: Int(kCVPixelFormatType_32BGRA)]
+                deviceOutput.alwaysDiscardsLateVideoFrames = true
+                let outputQueue = DispatchQueue(label: "com.google.mlkit.visiondetector.VideoDataOutputQueue")
+                deviceOutput.setSampleBufferDelegate(self, queue: outputQueue)
+
+                if captureSession.canAddOutput(deviceOutput) {
+                    captureSession.addOutput(deviceOutput)
+                } else {
+                    throw RuntimeError(implementation.plugin.errorCannotAddCaptureOutput)
+                }
+
+                captureSession.commitConfiguration()
+            } catch {
+                print("Failed to configure AVCaptureSession: \(error)")
+                self.error = error
+            }
         }
-        var deviceInput: AVCaptureDeviceInput
-        deviceInput = try AVCaptureDeviceInput(device: captureDevice)
-        if captureSession.canAddInput(deviceInput) {
-            captureSession.addInput(deviceInput)
-        } else {
-            throw RuntimeError(implementation.plugin.errorCannotAddCaptureInput)
+        
+        if let error = self.error {
+            throw error
         }
-        let deviceOutput = AVCaptureVideoDataOutput()
-        deviceOutput.videoSettings = [kCVPixelBufferPixelFormatTypeKey as String: Int(kCVPixelFormatType_32BGRA)]
-        deviceOutput.alwaysDiscardsLateVideoFrames = true
-        let outputQueue = DispatchQueue(label: "com.google.mlkit.visiondetector.VideoDataOutputQueue")
-        deviceOutput.setSampleBufferDelegate(self, queue: outputQueue)
-        if captureSession.canAddOutput(deviceOutput) {
-            captureSession.addOutput(deviceOutput)
-        } else {
-            throw RuntimeError(implementation.plugin.errorCannotAddCaptureOutput)
-        }
-        captureSession.commitConfiguration()
-        // `session.startRunning()` should be called after `session.commitConfiguration()` is complete.
-        // However, occacsionally `commitConfiguration()` runs asynchronously, so when `startRunning()`
-        // is called, `commitConfiguration()` is still in progress and the state is still `uncommited`.
-        // This can be reproduced by repeatedly switching or toggling the camera using the plugin demo.
-        // Adding a 100ms delay ensures that `session.commitConfiguration()` is complete before calling
-        // `session.startRunning()`.
-        Thread.sleep(forTimeInterval: 0.1)
-        DispatchQueue.global(qos: .background).async {
+        
+        // Add Start task to the queue in the order, each task starts only after the previous task has
+        // finished, ensuring captureSession.startRunning() starts after the sync block
+        captureSessionQueue.async {
             captureSession.startRunning()
         }
-        self.captureSession = captureSession
-        let formats = settings.formats.count == 0 ? BarcodeFormat.all : BarcodeFormat(settings.formats)
-        self.barcodeScannerInstance = MLKitBarcodeScanner.barcodeScanner(options: BarcodeScannerOptions(formats: formats))
+        
+        DispatchQueue.main.async {
+            self.captureSession = captureSession
+            let formats = settings.formats.count == 0 ? BarcodeFormat.all : BarcodeFormat(settings.formats)
+            self.barcodeScannerInstance = MLKitBarcodeScanner.barcodeScanner(options: BarcodeScannerOptions(formats: formats))
+            self.setVideoPreviewLayer(AVCaptureVideoPreviewLayer(session: captureSession))
 
-        self.setVideoPreviewLayer(AVCaptureVideoPreviewLayer(session: captureSession))
-
-        if settings.showUIElements {
-            self.addCancelButton()
-            if implementation.isTorchAvailable() {
-                self.addTorchButton()
+            if settings.showUIElements {
+                self.addCancelButton()
+                if implementation.isTorchAvailable() {
+                    self.addTorchButton()
+                }
             }
         }
     }
+
 
     required init?(coder: NSCoder) {
         fatalError("coder initialization not supported.")
