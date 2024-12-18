@@ -105,7 +105,6 @@ public protocol BarcodeScannerViewDelegate {
         }
     }
 
-
     required init?(coder: NSCoder) {
         fatalError("coder initialization not supported.")
     }
