@@ -18,9 +18,19 @@ On **iOS**, make sure to set the deployment target in your `ios/App/Podfile` to 
 platform :ios, '15.5'
 ```
 
-### Android Image Resolution
+### Image Resolution
 
-Previously, the **android** implementation was using 640x480 as a resolution for the image captured by the `startScan` method. This has been changed to 1280x720 to improve the barcode scanning performance and be consistent with the iOS implementation.
+on **Android**, the image resolution used for barcode scanning has been increased to `1280x720` to improve the barcode scanning performance and be consistent with the iOS implementation. Previously, the resolution was `640x480`. You can change the resolution by setting the `resolution` option when calling the `startScan` method.
+
+```typescript
+import { BarcodeScanner, Resolution } from '@capacitor-mlkit/barcode-scanning';
+
+const startScan = async () => {
+  await BarcodeScanner.startScan({
+    resolution: Resolution['640x480'],
+  });
+};
+```
 
 ## Version 6.x.x
 
