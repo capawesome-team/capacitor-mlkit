@@ -1,4 +1,4 @@
-platform :ios, '13.0'
+platform :ios, '15.5'
 
 def capacitor_pods
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
@@ -9,7 +9,7 @@ end
 
 target 'Plugin' do
   capacitor_pods
-  pod 'GoogleMLKit/BarcodeScanning', '5.0.0'
+  pod 'GoogleMLKit/BarcodeScanning', '7.0.0'
 end
 
 target 'PluginTests' do

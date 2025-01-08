@@ -29,9 +29,11 @@ A working example can be found here: [https://github.com/robingenz/capacitor-mlk
 ## Installation
 
 ```bash
-npm install @capacitor-mlkit/barcode-scanning
+npm install @capacitor-mlkit/barcode-scanning@next
 npx cap sync
 ```
+
+**Attention**: Please use the `next` tag to install the latest version of the plugin due to issue [#179](https://github.com/capawesome-team/capacitor-mlkit/pull/179).
 
 ### Android
 
@@ -67,6 +69,16 @@ android {
 +        enabled = true
 +    }
 }
+```
+
+### iOS
+
+#### Minimum Deployment Target
+
+Make sure to set the deployment target in your `ios/App/Podfile` to at least `15.5`:
+
+```ruby
+platform :ios, '15.5'
 ```
 
 #### Variables
@@ -766,14 +778,141 @@ Remove all listeners for this plugin.
 
 #### Barcode
 
-| Prop               | Type                                                                                  | Description                                                                                                                                                | Since |
-| ------------------ | ------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
-| **`bytes`**        | <code>number[]</code>                                                                 | Raw bytes as it was encoded in the barcode.                                                                                                                | 0.0.1 |
-| **`cornerPoints`** | <code>[[number, number], [number, number], [number, number], [number, number]]</code> | The four corner points of the barcode in clockwise order starting with top-left. This property is currently only supported by the `startScan(...)` method. | 0.0.1 |
-| **`displayValue`** | <code>string</code>                                                                   | The barcode value in a human readable format.                                                                                                              | 0.0.1 |
-| **`format`**       | <code><a href="#barcodeformat">BarcodeFormat</a></code>                               | The barcode format.                                                                                                                                        | 0.0.1 |
-| **`rawValue`**     | <code>string</code>                                                                   | The barcode value in a machine readable format.                                                                                                            | 0.0.1 |
-| **`valueType`**    | <code><a href="#barcodevaluetype">BarcodeValueType</a></code>                         | The barcode value type.                                                                                                                                    | 0.0.1 |
+| Prop                | Type                                                                                  | Description                                                                                                                                                | Since |
+| ------------------- | ------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
+| **`bytes`**         | <code>number[]</code>                                                                 | Raw bytes as it was encoded in the barcode.                                                                                                                | 0.0.1 |
+| **`calendarEvent`** | <code><a href="#barcodecalendarevent">BarcodeCalendarEvent</a></code>                 | Calendar event info.                                                                                                                                       | 7.0.0 |
+| **`contactInfo`**   | <code><a href="#barcodecontactinfo">BarcodeContactInfo</a></code>                     | Person's or organization's business card.                                                                                                                  | 7.0.0 |
+| **`cornerPoints`**  | <code>[[number, number], [number, number], [number, number], [number, number]]</code> | The four corner points of the barcode in clockwise order starting with top-left. This property is currently only supported by the `startScan(...)` method. | 0.0.1 |
+| **`displayValue`**  | <code>string</code>                                                                   | The barcode value in a human readable format.                                                                                                              | 0.0.1 |
+| **`driverLicense`** | <code><a href="#barcodedriverlicense">BarcodeDriverLicense</a></code>                 | Driver license or ID card.                                                                                                                                 | 7.0.0 |
+| **`email`**         | <code><a href="#barcodeemail">BarcodeEmail</a></code>                                 | An email message from a 'MAILTO:'.                                                                                                                         | 7.0.0 |
+| **`format`**        | <code><a href="#barcodeformat">BarcodeFormat</a></code>                               | The barcode format.                                                                                                                                        | 0.0.1 |
+| **`geoPoint`**      | <code><a href="#barcodegeopoint">BarcodeGeoPoint</a></code>                           | GPS coordinates from a 'GEO:'.                                                                                                                             | 7.0.0 |
+| **`phone`**         | <code><a href="#barcodephone">BarcodePhone</a></code>                                 | Phone number info.                                                                                                                                         | 7.0.0 |
+| **`rawValue`**      | <code>string</code>                                                                   | The barcode value in a machine readable format.                                                                                                            | 0.0.1 |
+| **`sms`**           | <code><a href="#barcodesms">BarcodeSms</a></code>                                     | A sms message from a 'SMS:'.                                                                                                                               | 7.0.0 |
+| **`urlBookmark`**   | <code><a href="#barcodeurlbookmark">BarcodeUrlBookmark</a></code>                     | A URL and title from a 'MEBKM:'.                                                                                                                           | 7.0.0 |
+| **`valueType`**     | <code><a href="#barcodevaluetype">BarcodeValueType</a></code>                         | The barcode value type.                                                                                                                                    | 0.0.1 |
+| **`wifi`**          | <code><a href="#barcodewifi">BarcodeWifi</a></code>                                   | A wifi network parameters from a 'WIFI:'.                                                                                                                  | 7.0.0 |
+
+
+#### BarcodeCalendarEvent
+
+| Prop              | Type                | Description                              | Since |
+| ----------------- | ------------------- | ---------------------------------------- | ----- |
+| **`description`** | <code>string</code> | The event description.                   | 7.0.0 |
+| **`end`**         | <code>string</code> | The event end date as ISO 8601 string.   | 7.0.0 |
+| **`location`**    | <code>string</code> | The event location.                      | 7.0.0 |
+| **`organizer`**   | <code>string</code> | The event organizer.                     | 7.0.0 |
+| **`start`**       | <code>string</code> | The event start date as ISO 8601 string. | 7.0.0 |
+| **`status`**      | <code>string</code> | The event status.                        | 7.0.0 |
+| **`summary`**     | <code>string</code> | The event summary.                       | 7.0.0 |
+
+
+#### BarcodeContactInfo
+
+| Prop               | Type                                              | Description                 | Since |
+| ------------------ | ------------------------------------------------- | --------------------------- | ----- |
+| **`addresses`**    | <code>Address[]</code>                            | The contact's addresses.    | 7.0.0 |
+| **`emails`**       | <code>BarcodeEmail[]</code>                       | The contact's emails.       | 7.0.0 |
+| **`personName`**   | <code><a href="#personname">PersonName</a></code> | The contact's name.         | 7.0.0 |
+| **`organization`** | <code>string</code>                               | The contact's organization. | 7.0.0 |
+| **`phones`**       | <code>BarcodePhone[]</code>                       | The contact's phones.       | 7.0.0 |
+| **`title`**        | <code>string</code>                               | The contact's title.        | 7.0.0 |
+| **`urls`**         | <code>string[]</code>                             | The contact's urls.         | 7.0.0 |
+
+
+#### Address
+
+| Prop               | Type                                                | Description                                         | Since |
+| ------------------ | --------------------------------------------------- | --------------------------------------------------- | ----- |
+| **`addressLines`** | <code>string[]</code>                               | Formatted address, multiple lines when appropriate. | 7.0.0 |
+| **`type`**         | <code><a href="#addresstype">AddressType</a></code> | <a href="#address">Address</a> type.                | 7.0.0 |
+
+
+#### BarcodeEmail
+
+| Prop          | Type                                                        | Description             | Since |
+| ------------- | ----------------------------------------------------------- | ----------------------- | ----- |
+| **`address`** | <code>string</code>                                         | The email address.      | 7.0.0 |
+| **`body`**    | <code>string</code>                                         | The email body.         | 7.0.0 |
+| **`subject`** | <code>string</code>                                         | The email subject.      | 7.0.0 |
+| **`type`**    | <code><a href="#emailformattype">EmailFormatType</a></code> | The email address type. | 7.0.0 |
+
+
+#### PersonName
+
+| Prop                | Type                | Description                                                                          | Since |
+| ------------------- | ------------------- | ------------------------------------------------------------------------------------ | ----- |
+| **`first`**         | <code>string</code> | First name.                                                                          | 7.0.0 |
+| **`formattedName`** | <code>string</code> | The formatted name.                                                                  | 7.0.0 |
+| **`last`**          | <code>string</code> | Last name.                                                                           | 7.0.0 |
+| **`middle`**        | <code>string</code> | Middle name.                                                                         | 7.0.0 |
+| **`prefix`**        | <code>string</code> | Name prefix.                                                                         | 7.0.0 |
+| **`pronunciation`** | <code>string</code> | Text string to be set as the kana name in the phonebook. Used for Japanese contacts. | 7.0.0 |
+| **`suffix`**        | <code>string</code> | Name suffix.                                                                         | 7.0.0 |
+
+
+#### BarcodePhone
+
+| Prop         | Type                                                        | Description            | Since |
+| ------------ | ----------------------------------------------------------- | ---------------------- | ----- |
+| **`number`** | <code>string</code>                                         | The phone number.      | 7.0.0 |
+| **`type`**   | <code><a href="#phoneformattype">PhoneFormatType</a></code> | The phone number type. | 7.0.0 |
+
+
+#### BarcodeDriverLicense
+
+| Prop                 | Type                | Description                                        | Since |
+| -------------------- | ------------------- | -------------------------------------------------- | ----- |
+| **`addressCity`**    | <code>string</code> | City of holder's address.                          | 7.0.0 |
+| **`addressState`**   | <code>string</code> | State of holder's address.                         | 7.0.0 |
+| **`addressStreet`**  | <code>string</code> | Street of holder's address.                        | 7.0.0 |
+| **`addressZip`**     | <code>string</code> | Postal code of holder's address.                   | 7.0.0 |
+| **`birthDate`**      | <code>string</code> | Birthdate of the holder.                           | 7.0.0 |
+| **`documentType`**   | <code>string</code> | "DL" for driver's licenses, "ID" for ID cards.     | 7.0.0 |
+| **`expiryDate`**     | <code>string</code> | Expiration date of the license.                    | 7.0.0 |
+| **`firstName`**      | <code>string</code> | Holder's first name.                               | 7.0.0 |
+| **`gender`**         | <code>string</code> | Holder's gender.                                   | 7.0.0 |
+| **`issueDate`**      | <code>string</code> | Issue date of the license.                         | 7.0.0 |
+| **`issuingCountry`** | <code>string</code> | ISO 3166-1 alpha-3 code in which DL/ID was issued. | 7.0.0 |
+| **`lastName`**       | <code>string</code> | Holder's last name.                                | 7.0.0 |
+| **`licenseNumber`**  | <code>string</code> | Driver license ID number.                          | 7.0.0 |
+| **`middleName`**     | <code>string</code> | Holder's middle name.                              | 7.0.0 |
+
+
+#### BarcodeGeoPoint
+
+| Prop            | Type                | Description | Since |
+| --------------- | ------------------- | ----------- | ----- |
+| **`latitude`**  | <code>number</code> | Latitude.   | 7.0.0 |
+| **`longitude`** | <code>number</code> | Longitude.  | 7.0.0 |
+
+
+#### BarcodeSms
+
+| Prop              | Type                | Description                     | Since |
+| ----------------- | ------------------- | ------------------------------- | ----- |
+| **`phoneNumber`** | <code>string</code> | The phone number of the sms.    | 7.0.0 |
+| **`message`**     | <code>string</code> | The message content of the sms. | 7.0.0 |
+
+
+#### BarcodeUrlBookmark
+
+| Prop        | Type                | Description                | Since |
+| ----------- | ------------------- | -------------------------- | ----- |
+| **`url`**   | <code>string</code> | The URL of the bookmark.   | 7.0.0 |
+| **`title`** | <code>string</code> | The title of the bookmark. | 7.0.0 |
+
+
+#### BarcodeWifi
+
+| Prop                 | Type                                                              | Description                   | Since |
+| -------------------- | ----------------------------------------------------------------- | ----------------------------- | ----- |
+| **`encryptionType`** | <code><a href="#wifiencryptiontype">WifiEncryptionType</a></code> | Encryption type of the WI-FI. | 7.0.0 |
+| **`password`**       | <code>string</code>                                               | Password of the WI-FI.        | 7.0.0 |
+| **`ssid`**           | <code>string</code>                                               | SSID of the WI-FI.            | 7.0.0 |
 
 
 #### ReadBarcodesFromImageOptions
@@ -940,6 +1079,35 @@ Remove all listeners for this plugin.
 | **`Back`**  | <code>'BACK'</code>  | 0.0.1 |
 
 
+#### AddressType
+
+| Members       | Value          | Since |
+| ------------- | -------------- | ----- |
+| **`HOME`**    | <code>0</code> | 7.0.0 |
+| **`UNKNOWN`** | <code>1</code> | 7.0.0 |
+| **`WORK`**    | <code>2</code> | 7.0.0 |
+
+
+#### EmailFormatType
+
+| Members       | Value          | Since |
+| ------------- | -------------- | ----- |
+| **`HOME`**    | <code>0</code> | 7.0.0 |
+| **`UNKNOWN`** | <code>1</code> | 7.0.0 |
+| **`WORK`**    | <code>2</code> | 7.0.0 |
+
+
+#### PhoneFormatType
+
+| Members       | Value          | Since |
+| ------------- | -------------- | ----- |
+| **`FAX`**     | <code>0</code> | 7.0.0 |
+| **`HOME`**    | <code>1</code> | 7.0.0 |
+| **`MOBILE`**  | <code>2</code> | 7.0.0 |
+| **`UNKNOWN`** | <code>3</code> | 7.0.0 |
+| **`WORK`**    | <code>4</code> | 7.0.0 |
+
+
 #### BarcodeValueType
 
 | Members              | Value                          | Since |
@@ -957,6 +1125,15 @@ Remove all listeners for this plugin.
 | **`Url`**            | <code>'URL'</code>             | 0.0.1 |
 | **`Wifi`**           | <code>'WIFI'</code>            | 0.0.1 |
 | **`Unknown`**        | <code>'UNKNOWN'</code>         | 0.0.1 |
+
+
+#### WifiEncryptionType
+
+| Members    | Value          | Since |
+| ---------- | -------------- | ----- |
+| **`OPEN`** | <code>1</code> | 7.0.0 |
+| **`WEP`**  | <code>2</code> | 7.0.0 |
+| **`WPA`**  | <code>3</code> | 7.0.0 |
 
 
 #### GoogleBarcodeScannerModuleInstallState

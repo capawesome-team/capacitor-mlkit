@@ -17,6 +17,7 @@ import android.view.WindowManager;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.camera.core.Camera;
+import androidx.camera.core.CameraControl;
 import androidx.camera.core.CameraSelector;
 import androidx.camera.core.ImageAnalysis;
 import androidx.camera.core.ImageProxy;
@@ -50,6 +51,9 @@ import java.util.List;
 
 public class BarcodeScanner implements ImageAnalysis.Analyzer {
 
+    @Nullable
+    private static Camera camera;
+
     @NonNull
     private final BarcodeScannerPlugin plugin;
 
@@ -57,9 +61,6 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
 
     @Nullable
     private com.google.mlkit.vision.barcode.BarcodeScanner barcodeScannerInstance;
-
-    @Nullable
-    private Camera camera;
 
     @Nullable
     private ProcessCameraProvider processCameraProvider;
@@ -80,6 +81,17 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
     public BarcodeScanner(BarcodeScannerPlugin plugin) {
         this.plugin = plugin;
         this.displaySize = this.getDisplaySize();
+    }
+
+    /**
+     * Do NOT change this method signature. It is used by the Torch plugin.
+     */
+    @Nullable
+    public static CameraControl getCameraControl() {
+        if (camera == null) {
+            return null;
+        }
+        return camera.getCameraControl();
     }
 
     /**

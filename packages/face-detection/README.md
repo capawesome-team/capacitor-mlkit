@@ -5,11 +5,15 @@ Unofficial Capacitor plugin for [ML Kit Face Detection](https://developers.googl
 ## Installation
 
 ```bash
-npm install @capacitor-mlkit/face-detection
+npm install @capacitor-mlkit/face-detection@next
 npx cap sync
 ```
 
+**Attention**: Please use the `next` tag to install the latest version of the plugin due to issue [#179](https://github.com/capawesome-team/capacitor-mlkit/pull/179).
+
 ### Android
+
+#### Dependencies
 
 You need to add the following meta data **in** the `application` tag in your `AndroidManifest.xml`:
 
@@ -24,6 +28,16 @@ This plugin will use the following project variables (defined in your app’s `v
 
 - `$mlkitFaceDetectionVersion` version of `com.google.mlkit:face-detection` (default: `16.1.5`)
 - `$playServicesMlkitFaceDetectionVersion` version of `com.google.android.gms:play-services-mlkit-face-detection` (default: `17.1.0`)
+
+### iOS
+
+#### Minimum Deployment Target
+
+Make sure to set the deployment target in your `ios/App/Podfile` to at least `15.5`:
+
+```ruby
+platform :ios, '15.5'
+```
 
 ## Configuration
 
