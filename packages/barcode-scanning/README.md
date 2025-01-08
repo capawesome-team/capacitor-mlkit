@@ -308,10 +308,10 @@ If you can't see the camera view, make sure all elements in the DOM are not visi
 * [`installGoogleBarcodeScannerModule()`](#installgooglebarcodescannermodule)
 * [`checkPermissions()`](#checkpermissions)
 * [`requestPermissions()`](#requestpermissions)
-* [`addListener('barcodeScanned', ...)`](#addlistenerbarcodescanned)
-* [`addListener('barcodesScanned', ...)`](#addlistenerbarcodesscanned)
-* [`addListener('scanError', ...)`](#addlistenerscanerror)
-* [`addListener('googleBarcodeScannerModuleInstallProgress', ...)`](#addlistenergooglebarcodescannermoduleinstallprogress)
+* [`addListener('barcodeScanned', ...)`](#addlistenerbarcodescanned-)
+* [`addListener('barcodesScanned', ...)`](#addlistenerbarcodesscanned-)
+* [`addListener('scanError', ...)`](#addlistenerscanerror-)
+* [`addListener('googleBarcodeScannerModuleInstallProgress', ...)`](#addlistenergooglebarcodescannermoduleinstallprogress-)
 * [`removeAllListeners()`](#removealllisteners)
 * [Interfaces](#interfaces)
 * [Type Aliases](#type-aliases)
@@ -763,11 +763,11 @@ Remove all listeners for this plugin.
 
 #### StartScanOptions
 
-| Prop             | Type                                              | Description                                                                              | Since |
-| ---------------- | ------------------------------------------------- | ---------------------------------------------------------------------------------------- | ----- |
-| **`formats`**    | <code>BarcodeFormat[]</code>                      | Improve the speed of the barcode scanner by configuring the barcode formats to scan for. | 0.0.1 |
-| **`lensFacing`** | <code><a href="#lensfacing">LensFacing</a></code> | Configure the camera (front or back) to use.                                             | 0.0.1 |
-| **`resolution`** | <code><a href="#resolution">Resolution</a></code> | Configure the resolution of the captured image that is used for barcode scanning.        | 6.3.0 |
+| Prop             | Type                                              | Description                                                                              | Default                             | Since |
+| ---------------- | ------------------------------------------------- | ---------------------------------------------------------------------------------------- | ----------------------------------- | ----- |
+| **`formats`**    | <code>BarcodeFormat[]</code>                      | Improve the speed of the barcode scanner by configuring the barcode formats to scan for. |                                     | 0.0.1 |
+| **`lensFacing`** | <code><a href="#lensfacing">LensFacing</a></code> | Configure the camera (front or back) to use.                                             |                                     | 0.0.1 |
+| **`resolution`** | <code><a href="#resolution">Resolution</a></code> | Configure the resolution of the captured image that is used for barcode scanning.        | <code>Resolution['1280x720']</code> | 7.0.0 |
 
 
 #### ReadBarcodesFromImageResult
@@ -1082,11 +1082,11 @@ Remove all listeners for this plugin.
 
 #### Resolution
 
-| Members           | Value          |
-| ----------------- | -------------- |
-| **`'640x480'`**   | <code>0</code> |
-| **`'1280x720'`**  | <code>1</code> |
-| **`'1920x1080'`** | <code>2</code> |
+| Members           | Value          | Since |
+| ----------------- | -------------- | ----- |
+| **`'640x480'`**   | <code>0</code> | 7.0.0 |
+| **`'1280x720'`**  | <code>1</code> | 7.0.0 |
+| **`'1920x1080'`** | <code>2</code> | 7.0.0 |
 
 
 #### AddressType
