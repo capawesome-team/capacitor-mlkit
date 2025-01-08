@@ -337,4 +337,15 @@ public class BarcodeScannerHelper {
         return result
     }
 
+    public static func convertIntToCapturePreset(_ resolution: Int) -> AVCaptureSession.Preset {
+        switch resolution {
+        case 0:
+            return AVCaptureSession.Preset.vga640x480
+        case 2:
+            return AVCaptureSession.Preset.hd1920x1080
+        default:
+            return AVCaptureSession.Preset.hd1280x720
+        }
+    }
+
 }

@@ -4,6 +4,9 @@
 package io.capawesome.capacitorjs.plugins.mlkit.barcodescanning;
 
 import android.graphics.Point;
+import android.util.DisplayMetrics;
+import android.util.Size;
+import android.view.Display;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.getcapacitor.JSArray;
@@ -378,5 +381,13 @@ public class BarcodeScannerHelper {
         // Log normalized corner points
         // Logger.debug("Normalized corner points: " + normalizedCornerPoints[0] + ", " + normalizedCornerPoints[1] + ", " + normalizedCornerPoints[2] + ", " + normalizedCornerPoints[3]);
         return normalizedCornerPoints;
+    }
+
+    public static Size convertIntegerToResolution(Integer resolution) {
+        return switch (resolution) {
+            case 0 -> new Size(640, 480);
+            case 2 -> new Size(1920, 1080);
+            default -> new Size(1280, 720);
+        };
     }
 }
