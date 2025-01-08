@@ -37,7 +37,7 @@ public protocol BarcodeScannerViewDelegate {
 
         let captureSession = AVCaptureSession()
         captureSession.beginConfiguration()
-        captureSession.sessionPreset = AVCaptureSession.Preset.hd1280x720
+        captureSession.sessionPreset = settings.resolution
 
         let captureDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: AVMediaType.video, position: settings.lensFacing)
         guard let captureDevice = captureDevice else {
