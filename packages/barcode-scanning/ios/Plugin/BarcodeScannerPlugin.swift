@@ -11,7 +11,30 @@ import MLKitBarcodeScanning
  * here: https://capacitorjs.com/docs/plugins/ios
  */
 @objc(BarcodeScannerPlugin)
-public class BarcodeScannerPlugin: CAPPlugin {
+public class BarcodeScannerPlugin: CAPPlugin, CAPBridgedPlugin {
+    public let identifier = "BarcodeScannerPlugin" 
+    public let jsName = "BarcodeScanner" 
+    public let pluginMethods: [CAPPluginMethod] = [
+        CAPPluginMethod(name: "startScan", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "stopScan", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "readBarcodesFromImage", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "scan", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "isSupported", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "enableTorch", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "disableTorch", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "toggleTorch", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "isTorchEnabled", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "isTorchAvailable", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "setZoomRatio", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "getZoomRatio", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "getMinZoomRatio", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "getMaxZoomRatio", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "openSettings", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "isGoogleBarcodeScannerModuleAvailable", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "installGoogleBarcodeScannerModule", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "checkPermissions", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "requestPermissions", returnType: CAPPluginReturnPromise),
+    ] 
     public let tag = "BarcodeScanner"
     public let errorPathMissing = "path must be provided."
     public let errorFileNotExist = "File does not exist."

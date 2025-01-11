@@ -6,7 +6,12 @@ import Capacitor
  * here: https://capacitorjs.com/docs/plugins/ios
  */
 @objc(FaceMeshDetectionPlugin)
-public class FaceMeshDetectionPlugin: CAPPlugin {
+public class FaceMeshDetectionPlugin: CAPPlugin, CAPBridgedPlugin {
+    public let identifier = "FaceMeshDetectionPlugin" 
+    public let jsName = "FaceMeshDetection" 
+    public let pluginMethods: [CAPPluginMethod] = [
+        CAPPluginMethod(name: "processImage", returnType: CAPPluginReturnPromise),
+    ] 
     private let implementation = FaceMeshDetection()
 
     @objc func processImage(_ call: CAPPluginCall) {

@@ -7,7 +7,15 @@ import MLKitTranslate
  * here: https://capacitorjs.com/docs/plugins/ios
  */
 @objc(TranslationPlugin)
-public class TranslationPlugin: CAPPlugin {
+public class TranslationPlugin: CAPPlugin, CAPBridgedPlugin {
+    public let identifier = "TranslationPlugin" 
+    public let jsName = "Translation" 
+    public let pluginMethods: [CAPPluginMethod] = [
+        CAPPluginMethod(name: "deleteDownloadedModel", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "downloadModel", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "getDownloadedModels", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "translate", returnType: CAPPluginReturnPromise),
+    ] 
     public let errorLanguageMissing = "language must be provided."
     public let errorTextMissing = "text must be provided."
     public let errorSourceLanguageMissing = "sourceLanguage must be provided."

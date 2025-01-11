@@ -6,7 +6,12 @@ import Capacitor
  * here: https://capacitorjs.com/docs/plugins/ios
  */
 @objc(SelfieSegmentationPlugin)
-public class SelfieSegmentationPlugin: CAPPlugin {
+public class SelfieSegmentationPlugin: CAPPlugin, CAPBridgedPlugin {
+    public let identifier = "SelfieSegmentationPlugin" 
+    public let jsName = "SelfieSegmentation" 
+    public let pluginMethods: [CAPPluginMethod] = [
+        CAPPluginMethod(name: "processImage", returnType: CAPPluginReturnPromise),
+    ] 
     public let tag = "SelfieSegmentation"
 
     public let errorPathMissing = "path must be provided."

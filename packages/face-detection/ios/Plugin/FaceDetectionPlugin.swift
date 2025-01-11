@@ -8,7 +8,12 @@ import MLKitFaceDetection
  * here: https://capacitorjs.com/docs/plugins/ios
  */
 @objc(FaceDetectionPlugin)
-public class FaceDetectionPlugin: CAPPlugin {
+public class FaceDetectionPlugin: CAPPlugin, CAPBridgedPlugin {
+    public let identifier = "FaceDetectionPlugin" 
+    public let jsName = "FaceDetection" 
+    public let pluginMethods: [CAPPluginMethod] = [
+        CAPPluginMethod(name: "processImage", returnType: CAPPluginReturnPromise),
+    ] 
     public let tag = "FaceDetection"
     public let errorPathMissing = "path must be provided."
     public let errorLoadImageFailed = "image could not be loaded."
