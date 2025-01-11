@@ -23,6 +23,7 @@
     "affected:fmt": "turbo run fmt --since=origin/main",
     "affected:docgen": "turbo run docgen --since=origin/main",
     "affected:build": "turbo run build --since=origin/main",
+    "affected:ios:pod:install": "turbo run ios:pod:install --since=origin/main --concurrency=1 --no-cache",
     "changeset": "changeset",
     "release": "npm run build && changeset publish",
     "release:preview": "pkg-pr-new publish './packages/*'"
