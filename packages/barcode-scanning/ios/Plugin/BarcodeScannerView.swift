@@ -28,30 +28,31 @@ public protocol BarcodeScannerViewDelegate {
     private var torchButton: UIButton?
     private var detectionAreaView: UIView?
     private var detectionAreaViewFrame: CGRect?
-    private var error: Error?
 
-    init (implementation: BarcodeScanner, settings: ScanSettings) throws {
+    init(implementation: BarcodeScanner, settings: ScanSettings) throws {
         self.implementation = implementation
         self.settings = settings
+
+        super.init(frame: UIScreen.main.bounds)
+
         // creates a serial DispatchQueue, which ensures operations are executed in a First In, First Out
         // (FIFO) order, meaning tasks are completed one at a time in the exact order they were added to
         // the queue.
         let captureSessionQueue = DispatchQueue(label: "com.google.mlkit.visiondetector.CaptureSessionQueue")
-        
-        super.init(frame: UIScreen.main.bounds)
+        var setupError: Error?
 
-        let captureSession = AVCaptureSession()
         // Prepare capture session and preview layer
         // It executes tasks one at a time in the order they are added (FIFO), ensuring that no other
         // tasks on the same queue can run simultaneously or out of order with respect to the synchronous
         // block
         captureSessionQueue.sync {
             do {
+                let captureSession = AVCaptureSession()
                 captureSession.beginConfiguration()
-                captureSession.sessionPreset = AVCaptureSession.Preset.hd1280x720
+                captureSession.sessionPreset = settings.resolution
 
                 guard let captureDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: settings.lensFacing),
-                      let deviceInput = try? AVCaptureDeviceInput(device: captureDevice) else {
+                      let deviceInput = try AVCaptureDeviceInput(device: captureDevice) else {
                     throw RuntimeError(implementation.plugin.errorNoCaptureDeviceAvailable)
                 }
 
@@ -74,31 +75,32 @@ public protocol BarcodeScannerViewDelegate {
                 }
 
                 captureSession.commitConfiguration()
+                self.captureSession = captureSession
             } catch {
                 print("Failed to configure AVCaptureSession: \(error)")
-                self.error = error
+                setupError = error
             }
         }
-        
-        if let error = self.error {
+
+        if let error = setupError {
             throw error
         }
-        
+
         // Add Start task to the queue in the order, each task starts only after the previous task has
         // finished, ensuring captureSession.startRunning() starts after the sync block
         captureSessionQueue.async {
-            captureSession.startRunning()
+            self.captureSession.startRunning()
         }
-        
+
         DispatchQueue.main.async {
-            self.captureSession = captureSession
-            let formats = settings.formats.count == 0 ? BarcodeFormat.all : BarcodeFormat(settings.formats)
+            guard let captureSession = self.captureSession else { return }
+            let formats = self.settings.formats.isEmpty ? BarcodeFormat.all : BarcodeFormat(self.settings.formats)
             self.barcodeScannerInstance = MLKitBarcodeScanner.barcodeScanner(options: BarcodeScannerOptions(formats: formats))
             self.setVideoPreviewLayer(AVCaptureVideoPreviewLayer(session: captureSession))
 
-            if settings.showUIElements {
+            if self.settings.showUIElements {
                 self.addCancelButton()
-                if implementation.isTorchAvailable() {
+                if self.implementation.isTorchAvailable() {
                     self.addTorchButton()
                 }
             }
