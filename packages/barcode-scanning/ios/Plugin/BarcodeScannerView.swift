@@ -41,16 +41,16 @@ public protocol BarcodeScannerViewDelegate {
         let captureSessionQueue = DispatchQueue(label: "com.google.mlkit.visiondetector.CaptureSessionQueue")
         var setupError: Error?
 
+        let captureSession = AVCaptureSession()
+        captureSession.beginConfiguration()
+        captureSession.sessionPreset = settings.resolution
+
         // Prepare capture session and preview layer
         // It executes tasks one at a time in the order they are added (FIFO), ensuring that no other
         // tasks on the same queue can run simultaneously or out of order with respect to the synchronous
         // block
         captureSessionQueue.sync {
             do {
-                let captureSession = AVCaptureSession()
-                captureSession.beginConfiguration()
-                captureSession.sessionPreset = settings.resolution
-
                 guard let captureDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: settings.lensFacing),
                       let deviceInput = try AVCaptureDeviceInput(device: captureDevice) else {
                     throw RuntimeError(implementation.plugin.errorNoCaptureDeviceAvailable)
