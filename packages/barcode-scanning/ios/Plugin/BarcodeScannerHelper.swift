@@ -74,6 +74,13 @@ public class BarcodeScannerHelper {
                 value.append(Int(cornerPoint.cgPointValue.y))
                 cornerPointsResult.append(value)
             }
+        } else if let cornerPoints = barcode.cornerPoints, videoOrientation == nil {
+            for cornerPoint in cornerPoints {
+                var value = [Int]()
+                value.append(Int(cornerPoint.cgPointValue.x))
+                value.append(Int(cornerPoint.cgPointValue.y))
+                cornerPointsResult.append(value)
+            }
         }
 
         var result = JSObject()
