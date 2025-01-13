@@ -34,6 +34,10 @@ public protocol BarcodeScannerViewDelegate {
         self.settings = settings
 
         super.init(frame: UIScreen.main.bounds)
+        
+        // Set autoresizing mask to fill the screen
+        // This is necessary for the view to resize when the device orientation changes
+        super.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 
         // creates a serial DispatchQueue, which ensures operations are executed in a First In, First Out
         // (FIFO) order, meaning tasks are completed one at a time in the exact order they were added to
