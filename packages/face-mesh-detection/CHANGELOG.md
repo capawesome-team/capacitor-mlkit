@@ -1,5 +1,7 @@
 # Changelog
 
+## 7.0.0-next.3
+
 ## 7.0.0-next.2
 
 ## 7.0.0-next.1
