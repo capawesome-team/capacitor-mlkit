@@ -1,5 +1,15 @@
 # Changelog
 
+## 7.0.0-next.3
+
+### Major Changes
+
+- [`e392fb7`](https://github.com/capawesome-team/capacitor-mlkit/commit/e392fb72b312452d56665e60249dbbcc48460f2a) ([#221](https://github.com/capawesome-team/capacitor-mlkit/pull/221)): feat: add option for image resolution
+
+### Patch Changes
+
+- [`dd12ea8`](https://github.com/capawesome-team/capacitor-mlkit/commit/dd12ea8b8f5906f0ab56f3c1672d09e5a48426bb) ([#224](https://github.com/capawesome-team/capacitor-mlkit/pull/224)): fix(ios): resize the barcode scanner view when the device orientation changes
+
 ## 7.0.0-next.2
 
 ### Minor Changes
