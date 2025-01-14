@@ -29,6 +29,13 @@ public class BarcodeScannerHelper {
                 cornerPointResult.put(normalizedCornerPoints[i].y);
                 cornerPointsResult.put(cornerPointResult);
             }
+        } else if (cornerPoints != null && screenSize == null) {
+            for (Point cornerPoint : cornerPoints) {
+                JSArray cornerPointResult = new JSArray();
+                cornerPointResult.put(cornerPoint.x);
+                cornerPointResult.put(cornerPoint.y);
+                cornerPointsResult.put(cornerPointResult);
+            }
         }
 
         JSObject result = new JSObject();
