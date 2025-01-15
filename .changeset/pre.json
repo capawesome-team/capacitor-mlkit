@@ -9,9 +9,11 @@
     "@capacitor-mlkit/translation": "6.2.0"
   },
   "changesets": [
+    "angry-pugs-deliver",
     "brown-singers-press",
     "little-brooms-explode",
     "mighty-comics-whisper",
+    "ten-games-shake",
     "violet-coats-act"
   ]
 }

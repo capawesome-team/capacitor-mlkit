@@ -37,11 +37,14 @@ public class BarcodeScannerPlugin: CAPPlugin {
         let formats = BarcodeScannerHelper.convertStringsToBarcodeScannerFormats(formatsOption ?? [])
         let lensFacingOption = call.getString("lensFacing", "BACK")
         let lensFacing = lensFacingOption == "FRONT" ? AVCaptureDevice.Position.front : AVCaptureDevice.Position.back
+        let resolutionOption = call.getInt("resolution", 1)
+        let resolution = BarcodeScannerHelper.convertIntToCapturePreset(resolutionOption)
 
         let settings = ScanSettings()
         settings.showUIElements = false
         settings.formats = formats
         settings.lensFacing = lensFacing
+        settings.resolution = resolution
 
         self.implementation?.requestCameraPermissionIfNotDetermined(completion: { error in
             if let error = error {

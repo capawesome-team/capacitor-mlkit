@@ -74,6 +74,13 @@ public class BarcodeScannerHelper {
                 value.append(Int(cornerPoint.cgPointValue.y))
                 cornerPointsResult.append(value)
             }
+        } else if let cornerPoints = barcode.cornerPoints, videoOrientation == nil {
+            for cornerPoint in cornerPoints {
+                var value = [Int]()
+                value.append(Int(cornerPoint.cgPointValue.x))
+                value.append(Int(cornerPoint.cgPointValue.y))
+                cornerPointsResult.append(value)
+            }
         }
 
         var result = JSObject()
@@ -335,6 +342,17 @@ public class BarcodeScannerHelper {
         result["ssid"] = wifi.ssid
         result["password"] = wifi.password
         return result
+    }
+
+    public static func convertIntToCapturePreset(_ resolution: Int) -> AVCaptureSession.Preset {
+        switch resolution {
+        case 0:
+            return AVCaptureSession.Preset.vga640x480
+        case 2:
+            return AVCaptureSession.Preset.hd1920x1080
+        default:
+            return AVCaptureSession.Preset.hd1280x720
+        }
     }
 
 }
