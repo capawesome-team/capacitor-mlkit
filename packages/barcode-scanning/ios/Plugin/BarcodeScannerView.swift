@@ -43,18 +43,20 @@ public protocol BarcodeScannerViewDelegate {
 
         let captureSession = AVCaptureSession()
         captureSession.beginConfiguration()
-        captureSession.sessionPreset = settings.resolution
-
+        captureSession.sessionPreset = AVCaptureSession.Preset.hd1280x720
+        
         // Prepare capture session and preview layer
         // It executes tasks one at a time in the order they are added (FIFO), ensuring that no other
         // tasks on the same queue can run simultaneously or out of order with respect to the synchronous
         // block
         captureSessionQueue.sync {
             do {
-                guard let captureDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: settings.lensFacing),
-                      let deviceInput = try AVCaptureDeviceInput(device: captureDevice) else {
+                let captureDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: AVMediaType.video, position: settings.lensFacing)
+                guard let captureDevice = captureDevice else {
                     throw RuntimeError(implementation.plugin.errorNoCaptureDeviceAvailable)
                 }
+                var deviceInput: AVCaptureDeviceInput
+                deviceInput = try AVCaptureDeviceInput(device: captureDevice)
 
                 if captureSession.canAddInput(deviceInput) {
                     captureSession.addInput(deviceInput)
@@ -89,7 +91,7 @@ public protocol BarcodeScannerViewDelegate {
         // Add Start task to the queue in the order, each task starts only after the previous task has
         // finished, ensuring captureSession.startRunning() starts after the sync block
         captureSessionQueue.async {
-            self.captureSession.startRunning()
+            captureSession.startRunning()
         }
 
         DispatchQueue.main.async {
