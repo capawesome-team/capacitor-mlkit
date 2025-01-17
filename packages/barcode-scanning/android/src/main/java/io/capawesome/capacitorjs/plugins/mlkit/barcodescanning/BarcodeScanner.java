@@ -16,7 +16,6 @@ import android.view.Display;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.camera.core.Camera;
@@ -121,9 +120,9 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
                     CameraSelector cameraSelector = new CameraSelector.Builder().requireLensFacing(this.scanSettings.lensFacing).build();
 
                     previewView = new PreviewView(plugin.getActivity());
-                    previewView.setLayoutParams(new FrameLayout.LayoutParams(
-                            FrameLayout.LayoutParams.MATCH_PARENT,
-                            FrameLayout.LayoutParams.MATCH_PARENT));
+                    previewView.setLayoutParams(
+                        new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT)
+                    );
                     previewView.setScaleType(PreviewView.ScaleType.FILL_CENTER);
                     previewView.setBackgroundColor(Color.BLACK);
 
