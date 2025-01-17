@@ -413,14 +413,6 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
         }
     }
 
-    private Point getDisplaySize() {
-        WindowManager wm = (WindowManager) plugin.getContext().getSystemService(Context.WINDOW_SERVICE);
-        Display display = wm.getDefaultDisplay();
-        Point size = new Point();
-        display.getRealSize(size);
-        return size;
-    }
-
     /**
      * Must run on UI thread.
      */
