@@ -63,10 +63,10 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
     private com.google.mlkit.vision.barcode.BarcodeScanner barcodeScannerInstance;
 
     @Nullable
-    private PreviewView previewView;
+    private ProcessCameraProvider processCameraProvider;
 
     @Nullable
-    private ProcessCameraProvider processCameraProvider;
+    private PreviewView previewView;
 
     @Nullable
     private ScanSettings scanSettings;
