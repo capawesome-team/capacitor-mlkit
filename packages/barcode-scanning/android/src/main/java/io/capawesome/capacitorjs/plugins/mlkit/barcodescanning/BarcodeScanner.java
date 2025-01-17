@@ -13,7 +13,9 @@ import android.media.Image;
 import android.net.Uri;
 import android.provider.Settings;
 import android.view.Display;
+import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.camera.core.Camera;
@@ -57,8 +59,6 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
     @NonNull
     private final BarcodeScannerPlugin plugin;
 
-    private final Point displaySize;
-
     @Nullable
     private com.google.mlkit.vision.barcode.BarcodeScanner barcodeScannerInstance;
 
@@ -80,7 +80,6 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
 
     public BarcodeScanner(BarcodeScannerPlugin plugin) {
         this.plugin = plugin;
-        this.displaySize = this.getDisplaySize();
     }
 
     /**
@@ -100,6 +99,7 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
     public void startScan(ScanSettings scanSettings, StartScanResultCallback callback) {
         // Stop the camera if running
         stopScan();
+
         // Hide WebView background
         hideWebViewBackground();
 
@@ -122,8 +122,15 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
 
                     CameraSelector cameraSelector = new CameraSelector.Builder().requireLensFacing(this.scanSettings.lensFacing).build();
 
-                    previewView = plugin.getActivity().findViewById(R.id.preview_view);
+                    previewView = new PreviewView(plugin.getActivity());
+                    previewView.setLayoutParams(
+                        new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT)
+                    );
                     previewView.setScaleType(PreviewView.ScaleType.FILL_CENTER);
+                    previewView.setBackgroundColor(Color.BLACK);
+
+                    // Add preview view behind the WebView
+                    ((ViewGroup) plugin.getBridge().getWebView().getParent()).addView(previewView, 0);
 
                     Preview preview = new Preview.Builder().build();
                     preview.setSurfaceProvider(previewView.getSurfaceProvider());
@@ -153,6 +160,10 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
         }
         processCameraProvider = null;
         camera = null;
+        if (previewView != null) {
+            ((ViewGroup) previewView.getParent()).removeView(previewView);
+            previewView = null;
+        }
         barcodeScannerInstance = null;
         scanSettings = null;
         barcodeRawValueVotes.clear();
@@ -400,14 +411,6 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
             moduleInstallClient.unregisterListener(moduleInstallProgressListener);
             moduleInstallProgressListener = null;
         }
-    }
-
-    private Point getDisplaySize() {
-        WindowManager wm = (WindowManager) plugin.getContext().getSystemService(Context.WINDOW_SERVICE);
-        Display display = wm.getDefaultDisplay();
-        Point size = new Point();
-        display.getRealSize(size);
-        return size;
     }
 
     /**
