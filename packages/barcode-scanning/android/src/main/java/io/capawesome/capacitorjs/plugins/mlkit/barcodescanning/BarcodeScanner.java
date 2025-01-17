@@ -13,7 +13,10 @@ import android.media.Image;
 import android.net.Uri;
 import android.provider.Settings;
 import android.view.Display;
+import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.camera.core.Camera;
@@ -57,16 +60,14 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
     @NonNull
     private final BarcodeScannerPlugin plugin;
 
-    private final Point displaySize;
-
     @Nullable
     private com.google.mlkit.vision.barcode.BarcodeScanner barcodeScannerInstance;
 
     @Nullable
-    private ProcessCameraProvider processCameraProvider;
+    private PreviewView previewView;
 
     @Nullable
-    private PreviewView previewView;
+    private ProcessCameraProvider processCameraProvider;
 
     @Nullable
     private ScanSettings scanSettings;
@@ -80,7 +81,6 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
 
     public BarcodeScanner(BarcodeScannerPlugin plugin) {
         this.plugin = plugin;
-        this.displaySize = this.getDisplaySize();
     }
 
     /**
@@ -100,6 +100,7 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
     public void startScan(ScanSettings scanSettings, StartScanResultCallback callback) {
         // Stop the camera if running
         stopScan();
+
         // Hide WebView background
         hideWebViewBackground();
 
@@ -108,10 +109,7 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
         BarcodeScannerOptions options = buildBarcodeScannerOptions(scanSettings);
         barcodeScannerInstance = BarcodeScanning.getClient(options);
 
-        ImageAnalysis imageAnalysis = new ImageAnalysis.Builder()
-            .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
-            .setTargetResolution(scanSettings.resolution)
-            .build();
+        ImageAnalysis imageAnalysis = new ImageAnalysis.Builder().setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST).build();
         imageAnalysis.setAnalyzer(ContextCompat.getMainExecutor(plugin.getContext()), this);
 
         ListenableFuture<ProcessCameraProvider> cameraProviderFuture = ProcessCameraProvider.getInstance(plugin.getContext());
@@ -122,8 +120,15 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
 
                     CameraSelector cameraSelector = new CameraSelector.Builder().requireLensFacing(this.scanSettings.lensFacing).build();
 
-                    previewView = plugin.getActivity().findViewById(R.id.preview_view);
+                    previewView = new PreviewView(plugin.getActivity());
+                    previewView.setLayoutParams(new FrameLayout.LayoutParams(
+                            FrameLayout.LayoutParams.MATCH_PARENT,
+                            FrameLayout.LayoutParams.MATCH_PARENT));
                     previewView.setScaleType(PreviewView.ScaleType.FILL_CENTER);
+                    previewView.setBackgroundColor(Color.BLACK);
+
+                    // Add preview view behind the WebView
+                    ((ViewGroup) plugin.getBridge().getWebView().getParent()).addView(previewView, 0);
 
                     Preview preview = new Preview.Builder().build();
                     preview.setSurfaceProvider(previewView.getSurfaceProvider());
@@ -153,6 +158,10 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
         }
         processCameraProvider = null;
         camera = null;
+        if (previewView != null) {
+            ((ViewGroup) previewView.getParent()).removeView(previewView);
+            previewView = null;
+        }
         barcodeScannerInstance = null;
         scanSettings = null;
         barcodeRawValueVotes.clear();
