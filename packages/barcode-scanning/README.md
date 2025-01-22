@@ -55,16 +55,6 @@ You also need to add the following meta data **in** the `application` tag in you
 <!-- To use multiple models: android:value="face,model2,model3" -->
 ```
 
-### iOS
-
-#### Minimum Deployment Target
-
-Make sure to set the deployment target in your `ios/App/Podfile` to at least `15.5`:
-
-```ruby
-platform :ios, '15.5'
-```
-
 #### Variables
 
 This plugin will use the following project variables (defined in your app’s `variables.gradle` file):
@@ -77,6 +67,16 @@ This plugin will use the following project variables (defined in your app’s `v
 - `$playServicesCodeScannerVersion` version of `com.google.mlkit:barcode-scanning` (default: `16.0.0`)
 
 ### iOS
+
+#### Minimum Deployment Target
+
+Make sure to set the deployment target in your `ios/App/Podfile` to at least `15.5`:
+
+```ruby
+platform :ios, '15.5'
+```
+
+### Usage Description
 
 Add the `NSCameraUsageDescription` key to the `ios/App/App/Info.plist` file, which tells the user why the app needs to use the camera:
 
