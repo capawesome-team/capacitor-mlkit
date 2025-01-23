@@ -58,8 +58,8 @@ This plugin will use the following project variables (defined in your app’s `v
 - `$androidxCameraCoreVersion` version of `com.google.mlkit:barcode-scanning` (default: `1.1.0`)
 - `$androidxCameraLifecycleVersion` version of `com.google.mlkit:barcode-scanning` (default: `1.1.0`)
 - `$androidxCameraViewVersion` version of `com.google.mlkit:barcode-scanning` (default: `1.1.0`)
-- `$mlkitBarcodeScanningVersion` version of `com.google.mlkit:barcode-scanning` (default: `18.3.1`)
-- `$playServicesCodeScannerVersion` version of `com.google.mlkit:barcode-scanning` (default: `16.0.0`)
+- `$mlkitBarcodeScanningVersion` version of `com.google.mlkit:barcode-scanning` (default: `17.3.0`)
+- `$playServicesCodeScannerVersion` version of `com.google.mlkit:barcode-scanning` (default: `16.1.0`)
 
 ### iOS
 
