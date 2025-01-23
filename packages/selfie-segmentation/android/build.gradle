@@ -3,7 +3,7 @@ ext {
     androidxAppCompatVersion = project.hasProperty('androidxAppCompatVersion') ? rootProject.ext.androidxAppCompatVersion : '1.6.1'
     androidxJunitVersion = project.hasProperty('androidxJunitVersion') ? rootProject.ext.androidxJunitVersion : '1.1.5'
     androidxEspressoCoreVersion = project.hasProperty('androidxEspressoCoreVersion') ? rootProject.ext.androidxEspressoCoreVersion : '3.5.1'
-    mlkitSelfieSegmentationVersion = project.hasProperty('mlkitSelfieSegmentationVersion') ? rootProject.ext.mlkitSelfieSegmentationVersion : '16.0.0-beta5'
+    mlkitSelfieSegmentationVersion = project.hasProperty('mlkitSelfieSegmentationVersion') ? rootProject.ext.mlkitSelfieSegmentationVersion : '16.0.0-beta6'
 }
 
 buildscript {

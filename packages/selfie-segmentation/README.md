@@ -15,7 +15,7 @@ npx cap sync
 
 This plugin will use the following project variables (defined in your app’s `variables.gradle` file):
 
-- `$mlkitSelfieSegmentationVersion` version of `com.google.mlkit:segmentation-selfie` (default: `16.0.0-beta4`)
+- `$mlkitSelfieSegmentationVersion` version of `com.google.mlkit:segmentation-selfie` (default: `16.0.0-beta6`)
 
 ### iOS
 

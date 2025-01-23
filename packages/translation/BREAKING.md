@@ -8,6 +8,10 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 
 ## Version 7.x.x
 
+### Variables
+
+- On Android, the `mlkitTranslateVersion` variable has been updated to `17.0.3`.
+
 ### Minimum Deployment Target
 
 On **iOS**, make sure to set the deployment target in your `ios/App/Podfile` to at least `15.5`:
