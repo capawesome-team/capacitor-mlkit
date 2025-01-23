@@ -51,51 +51,6 @@ export interface BarcodeScannerPlugin {
    */
   isSupported(): Promise<IsSupportedResult>;
   /**
-   * Enable camera's torch (flash) during a scan session.
-   *
-   * Only available on Android and iOS.
-   *
-   * @since 0.0.1
-   * @deprecated Use the [Capacitor Torch](https://capawesome.io/plugins/torch/) plugin instead.
-   */
-  enableTorch(): Promise<void>;
-  /**
-   * Disable camera's torch (flash) during a scan session.
-   *
-   * Only available on Android and iOS.
-   *
-   * @since 0.0.1
-   * @deprecated Use the [Capacitor Torch](https://capawesome.io/plugins/torch/) plugin instead.
-   */
-  disableTorch(): Promise<void>;
-  /**
-   * Toggle camera's torch (flash) during a scan session.
-   *
-   * Only available on Android and iOS.
-   *
-   * @since 0.0.1
-   * @deprecated Use the [Capacitor Torch](https://capawesome.io/plugins/torch/) plugin instead.
-   */
-  toggleTorch(): Promise<void>;
-  /**
-   * Returns whether or not the camera's torch (flash) is enabled.
-   *
-   * Only available on Android and iOS.
-   *
-   * @since 0.0.1
-   * @deprecated Use the [Capacitor Torch](https://capawesome.io/plugins/torch/) plugin instead.
-   */
-  isTorchEnabled(): Promise<IsTorchEnabledResult>;
-  /**
-   * Returns whether or not the camera's torch (flash) is available.
-   *
-   * Only available on Android and iOS.
-   *
-   * @since 0.0.1
-   * @deprecated Use the [Capacitor Torch](https://capawesome.io/plugins/torch/) plugin instead.
-   */
-  isTorchAvailable(): Promise<IsTorchAvailableResult>;
-  /**
    * Set the zoom ratio of the camera.
    *
    * Only available on Android and iOS.
@@ -173,18 +128,6 @@ export interface BarcodeScannerPlugin {
    * @since 0.0.1
    */
   requestPermissions(): Promise<PermissionStatus>;
-  /**
-   * Called when a barcode is scanned.
-   *
-   * Available on Android and iOS.
-   *
-   * @since 0.0.1
-   * @deprecated Use the `barcodesScanned` event listener instead.
-   */
-  addListener(
-    eventName: 'barcodeScanned',
-    listenerFunc: (event: BarcodeScannedEvent) => void,
-  ): Promise<PluginListenerHandle>;
   /**
    * Called when barcodes are scanned.
    *

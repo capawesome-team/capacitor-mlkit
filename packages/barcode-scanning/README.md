@@ -42,10 +42,7 @@ npx cap sync
 This API requires the following permissions be added to your `AndroidManifest.xml` before the `application` tag:
 
 ```xml
-<!-- To get access to the camera. -->
 <uses-permission android:name="android.permission.CAMERA" />
-<!-- To get access to the flashlight. -->
-<uses-permission android:name="android.permission.FLASHLIGHT"/>
 ```
 
 You also need to add the following meta data **in** the `application` tag in your `AndroidManifest.xml`:
@@ -101,6 +98,7 @@ import {
   BarcodeFormat,
   LensFacing,
 } from '@capacitor-mlkit/barcode-scanning';
+import { Torch } from '@capawesome/capacitor-torch';
 
 const startScan = async () => {
   // The camera is visible behind the WebView, so that you can customize the UI in the WebView.
@@ -165,24 +163,24 @@ const isSupported = async () => {
 };
 
 const enableTorch = async () => {
-  await BarcodeScanner.enableTorch();
+  await Torch.enable();
 };
 
 const disableTorch = async () => {
-  await BarcodeScanner.disableTorch();
+  await Torch.disable();
 };
 
 const toggleTorch = async () => {
-  await BarcodeScanner.toggleTorch();
+  await Torch.toggle();
 };
 
 const isTorchEnabled = async () => {
-  const { enabled } = await BarcodeScanner.isTorchEnabled();
+  const { enabled } = await Torch.isEnabled();
   return enabled;
 };
 
 const isTorchAvailable = async () => {
-  const { available } = await BarcodeScanner.isTorchAvailable();
+  const { available } = await Torch.isAvailable();
   return available;
 };
 
@@ -278,11 +276,6 @@ If you can't see the camera view, make sure all elements in the DOM are not visi
 * [`readBarcodesFromImage(...)`](#readbarcodesfromimage)
 * [`scan(...)`](#scan)
 * [`isSupported()`](#issupported)
-* [`enableTorch()`](#enabletorch)
-* [`disableTorch()`](#disabletorch)
-* [`toggleTorch()`](#toggletorch)
-* [`isTorchEnabled()`](#istorchenabled)
-* [`isTorchAvailable()`](#istorchavailable)
 * [`setZoomRatio(...)`](#setzoomratio)
 * [`getZoomRatio()`](#getzoomratio)
 * [`getMinZoomRatio()`](#getminzoomratio)
@@ -292,7 +285,6 @@ If you can't see the camera view, make sure all elements in the DOM are not visi
 * [`installGoogleBarcodeScannerModule()`](#installgooglebarcodescannermodule)
 * [`checkPermissions()`](#checkpermissions)
 * [`requestPermissions()`](#requestpermissions)
-* [`addListener('barcodeScanned', ...)`](#addlistenerbarcodescanned-)
 * [`addListener('barcodesScanned', ...)`](#addlistenerbarcodesscanned-)
 * [`addListener('scanError', ...)`](#addlistenerscanerror-)
 * [`addListener('googleBarcodeScannerModuleInstallProgress', ...)`](#addlistenergooglebarcodescannermoduleinstallprogress-)
@@ -399,85 +391,6 @@ Returns whether or not the barcode scanner is supported.
 Available on Android and iOS.
 
 **Returns:** <code>Promise&lt;<a href="#issupportedresult">IsSupportedResult</a>&gt;</code>
-
-**Since:** 0.0.1
-
---------------------
-
-
-### enableTorch()
-
-```typescript
-enableTorch() => Promise<void>
-```
-
-Enable camera's torch (flash) during a scan session.
-
-Only available on Android and iOS.
-
-**Since:** 0.0.1
-
---------------------
-
-
-### disableTorch()
-
-```typescript
-disableTorch() => Promise<void>
-```
-
-Disable camera's torch (flash) during a scan session.
-
-Only available on Android and iOS.
-
-**Since:** 0.0.1
-
---------------------
-
-
-### toggleTorch()
-
-```typescript
-toggleTorch() => Promise<void>
-```
-
-Toggle camera's torch (flash) during a scan session.
-
-Only available on Android and iOS.
-
-**Since:** 0.0.1
-
---------------------
-
-
-### isTorchEnabled()
-
-```typescript
-isTorchEnabled() => Promise<IsTorchEnabledResult>
-```
-
-Returns whether or not the camera's torch (flash) is enabled.
-
-Only available on Android and iOS.
-
-**Returns:** <code>Promise&lt;<a href="#istorchenabledresult">IsTorchEnabledResult</a>&gt;</code>
-
-**Since:** 0.0.1
-
---------------------
-
-
-### isTorchAvailable()
-
-```typescript
-isTorchAvailable() => Promise<IsTorchAvailableResult>
-```
-
-Returns whether or not the camera's torch (flash) is available.
-
-Only available on Android and iOS.
-
-**Returns:** <code>Promise&lt;<a href="#istorchavailableresult">IsTorchAvailableResult</a>&gt;</code>
 
 **Since:** 0.0.1
 
@@ -635,28 +548,6 @@ Request camera permission.
 Only available on Android and iOS.
 
 **Returns:** <code>Promise&lt;<a href="#permissionstatus">PermissionStatus</a>&gt;</code>
-
-**Since:** 0.0.1
-
---------------------
-
-
-### addListener('barcodeScanned', ...)
-
-```typescript
-addListener(eventName: 'barcodeScanned', listenerFunc: (event: BarcodeScannedEvent) => void) => Promise<PluginListenerHandle>
-```
-
-Called when a barcode is scanned.
-
-Available on Android and iOS.
-
-| Param              | Type                                                                                    |
-| ------------------ | --------------------------------------------------------------------------------------- |
-| **`eventName`**    | <code>'barcodeScanned'</code>                                                           |
-| **`listenerFunc`** | <code>(event: <a href="#barcodescannedevent">BarcodeScannedEvent</a>) =&gt; void</code> |
-
-**Returns:** <code>Promise&lt;<a href="#pluginlistenerhandle">PluginListenerHandle</a>&gt;</code>
 
 **Since:** 0.0.1
 
@@ -929,20 +820,6 @@ Remove all listeners for this plugin.
 | **`supported`** | <code>boolean</code> | Whether or not the barcode scanner is supported by checking if the device has a camera. | 0.0.1 |
 
 
-#### IsTorchEnabledResult
-
-| Prop          | Type                 | Description                          | Since |
-| ------------- | -------------------- | ------------------------------------ | ----- |
-| **`enabled`** | <code>boolean</code> | Whether or not the torch is enabled. | 0.0.1 |
-
-
-#### IsTorchAvailableResult
-
-| Prop            | Type                 | Description                            | Since |
-| --------------- | -------------------- | -------------------------------------- | ----- |
-| **`available`** | <code>boolean</code> | Whether or not the torch is available. | 0.0.1 |
-
-
 #### SetZoomRatioOptions
 
 | Prop            | Type                | Description            | Since |
@@ -990,13 +867,6 @@ Remove all listeners for this plugin.
 | Prop         | Type                                      |
 | ------------ | ----------------------------------------- |
 | **`remove`** | <code>() =&gt; Promise&lt;void&gt;</code> |
-
-
-#### BarcodeScannedEvent
-
-| Prop          | Type                                        | Description         | Since |
-| ------------- | ------------------------------------------- | ------------------- | ----- |
-| **`barcode`** | <code><a href="#barcode">Barcode</a></code> | A detected barcode. | 0.0.1 |
 
 
 #### BarcodesScannedEvent
