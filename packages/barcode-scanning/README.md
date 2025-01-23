@@ -29,11 +29,9 @@ A working example can be found here: [https://github.com/robingenz/capacitor-mlk
 ## Installation
 
 ```bash
-npm install @capacitor-mlkit/barcode-scanning@next
+npm install @capacitor-mlkit/barcode-scanning
 npx cap sync
 ```
-
-**Attention**: Please use the `next` tag to install the latest version of the plugin due to issue [#179](https://github.com/capawesome-team/capacitor-mlkit/pull/179).
 
 ### Android
 

@@ -5,11 +5,9 @@ Unofficial Capacitor plugin for [ML Kit Face Detection](https://developers.googl
 ## Installation
 
 ```bash
-npm install @capacitor-mlkit/face-detection@next
+npm install @capacitor-mlkit/face-detection
 npx cap sync
 ```
-
-**Attention**: Please use the `next` tag to install the latest version of the plugin due to issue [#179](https://github.com/capawesome-team/capacitor-mlkit/pull/179).
 
 ### Android
 

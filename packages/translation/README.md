@@ -5,11 +5,9 @@ Unofficial Capacitor plugin for [ML Kit Translation](https://developers.google.c
 ## Installation
 
 ```bash
-npm install @capacitor-mlkit/translation@next
+npm install @capacitor-mlkit/translation
 npx cap sync
 ```
-
-**Attention**: Please use the `next` tag to install the latest version of the plugin due to issue [#179](https://github.com/capawesome-team/capacitor-mlkit/pull/179).
 
 ### Android
 
