@@ -262,38 +262,6 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
         return plugin.getContext().getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY);
     }
 
-    public void enableTorch() {
-        if (camera == null) {
-            return;
-        }
-        camera.getCameraControl().enableTorch(true);
-        isTorchEnabled = true;
-    }
-
-    public void disableTorch() {
-        if (camera == null) {
-            return;
-        }
-        camera.getCameraControl().enableTorch(false);
-        isTorchEnabled = false;
-    }
-
-    public void toggleTorch() {
-        if (isTorchEnabled) {
-            disableTorch();
-        } else {
-            enableTorch();
-        }
-    }
-
-    public boolean isTorchEnabled() {
-        return isTorchEnabled;
-    }
-
-    public boolean isTorchAvailable() {
-        return plugin.getContext().getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
-    }
-
     public void setZoomRatio(SetZoomRatioOptions options) {
         float zoomRatio = options.getZoomRatio();
         if (camera == null) {

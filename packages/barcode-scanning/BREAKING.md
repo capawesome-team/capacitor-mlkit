@@ -32,6 +32,19 @@ const startScan = async () => {
 };
 ```
 
+### Torch support
+
+All the methods related to the torch have been moved into a separate [Torch](https://capawesome.io/plugins/torch/) plugin. If you want to use the torch, just install the `@capawesome/capacitor-torch` package:
+
+```bash
+npm install @capawesome/capacitor-torch
+npx cap sync
+```
+
+### `barcodeScanned` event
+
+The `barcodeScanned` event has been replaced by the `barcodesScanned` event. The event payload now contains an array of `Barcode` objects instead of a single `Barcode` object since multiple barcodes can be scanned at the same time.
+
 ## Version 6.x.x
 
 ### Variables

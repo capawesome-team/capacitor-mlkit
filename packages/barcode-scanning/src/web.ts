@@ -43,26 +43,6 @@ export class BarcodeScannerWeb
     throw this.createUnavailableException();
   }
 
-  async enableTorch(): Promise<void> {
-    throw this.createUnavailableException();
-  }
-
-  async disableTorch(): Promise<void> {
-    throw this.createUnavailableException();
-  }
-
-  async toggleTorch(): Promise<void> {
-    throw this.createUnavailableException();
-  }
-
-  async isTorchEnabled(): Promise<IsTorchEnabledResult> {
-    throw this.createUnavailableException();
-  }
-
-  async isTorchAvailable(): Promise<IsTorchAvailableResult> {
-    throw this.createUnavailableException();
-  }
-
   async setZoomRatio(_options: SetZoomRatioOptions): Promise<void> {
     throw this.createUnavailableException();
   }
