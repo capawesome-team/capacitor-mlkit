@@ -97,7 +97,7 @@ typealias MLKitBarcodeScanner = MLKitBarcodeScanning.BarcodeScanner
     @objc public func isSupported() -> Bool {
         return UIImagePickerController.isSourceTypeAvailable(.camera)
     }
-    
+
     @objc public func enableTorch() {
         guard let device = AVCaptureDevice.default(for: AVMediaType.video) else { return }
         guard device.hasTorch else { return }
