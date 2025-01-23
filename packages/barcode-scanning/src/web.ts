@@ -7,8 +7,6 @@ import type {
   GetZoomRatioResult,
   IsGoogleBarcodeScannerModuleAvailableResult,
   IsSupportedResult,
-  IsTorchAvailableResult,
-  IsTorchEnabledResult,
   PermissionStatus,
   ReadBarcodesFromImageOptions,
   ReadBarcodesFromImageResult,
