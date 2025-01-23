@@ -153,7 +153,6 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
      */
     public void stopScan() {
         showWebViewBackground();
-        disableTorch();
         // Stop the camera
         if (processCameraProvider != null) {
             processCameraProvider.unbindAll();

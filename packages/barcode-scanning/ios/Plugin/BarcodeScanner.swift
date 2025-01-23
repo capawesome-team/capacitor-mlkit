@@ -97,6 +97,55 @@ typealias MLKitBarcodeScanner = MLKitBarcodeScanning.BarcodeScanner
     @objc public func isSupported() -> Bool {
         return UIImagePickerController.isSourceTypeAvailable(.camera)
     }
+    
+    @objc public func enableTorch() {
+        guard let device = AVCaptureDevice.default(for: AVMediaType.video) else { return }
+        guard device.hasTorch else { return }
+        do {
+            try device.lockForConfiguration()
+            do {
+                try device.setTorchModeOn(level: 1.0)
+            } catch {
+                CAPLog.print("setTorchModeOn failed.", error.localizedDescription)
+            }
+            device.unlockForConfiguration()
+        } catch {
+            CAPLog.print("lockForConfiguration failed.", error.localizedDescription)
+        }
+    }
+
+    @objc public func disableTorch() {
+        guard let device = AVCaptureDevice.default(for: AVMediaType.video) else { return }
+        guard device.hasTorch else { return }
+        do {
+            try device.lockForConfiguration()
+            device.torchMode = AVCaptureDevice.TorchMode.off
+            device.unlockForConfiguration()
+        } catch {
+            CAPLog.print("lockForConfiguration failed.", error.localizedDescription)
+        }
+    }
+
+    @objc public func toggleTorch() {
+        if self.isTorchEnabled() {
+            self.disableTorch()
+        } else {
+            self.enableTorch()
+        }
+    }
+
+    @objc public func isTorchEnabled() -> Bool {
+        guard let device = AVCaptureDevice.default(for: AVMediaType.video) else { return false }
+        guard device.hasTorch else { return false }
+        return device.torchMode == AVCaptureDevice.TorchMode.on
+    }
+
+    @objc public func isTorchAvailable() -> Bool {
+        guard let device = AVCaptureDevice.default(for: AVMediaType.video) else {
+            return false
+        }
+        return device.hasTorch
+    }
 
     @objc public func setZoomRatio(_ options: SetZoomRatioOptions) throws {
         let zoomRatio = options.getZoomRatio()
