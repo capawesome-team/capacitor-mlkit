@@ -44,7 +44,7 @@ public protocol BarcodeScannerViewDelegate {
         let captureSession = AVCaptureSession()
         captureSession.beginConfiguration()
         captureSession.sessionPreset = AVCaptureSession.Preset.hd1280x720
-        
+
         // Prepare capture session and preview layer
         // It executes tasks one at a time in the order they are added (FIFO), ensuring that no other
         // tasks on the same queue can run simultaneously or out of order with respect to the synchronous
