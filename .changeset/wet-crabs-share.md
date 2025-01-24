@@ -1,8 +1,7 @@
 ---
-'@capacitor-mlkit/barcode-scanning': patch
-'@capacitor-mlkit/face-detection': patch
-'@capacitor-mlkit/selfie-segmentation': patch
-'@capacitor-mlkit/translation': patch
+'@capacitor-mlkit/barcode-scanning': major
+'@capacitor-mlkit/face-detection': major
+'@capacitor-mlkit/selfie-segmentation': major
+'@capacitor-mlkit/translation': major
 ---
-
-chore: increment native dependencies in packages to the latest version
+chore(deps): update the ML Kit SDK to the latest version

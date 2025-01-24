@@ -12,7 +12,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 
 ### Variables
 
-- On Android, the `mlkitBarcodeScanningVersion` variable has been updated to `18.3.1`.
+- On Android, the `mlkitBarcodeScanningVersion` variable has been updated to `17.3.0`.
 
 ### Minimum Deployment Target
 
