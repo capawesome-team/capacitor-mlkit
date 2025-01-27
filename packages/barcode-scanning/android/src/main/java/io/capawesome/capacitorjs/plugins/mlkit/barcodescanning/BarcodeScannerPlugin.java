@@ -6,6 +6,7 @@ package io.capawesome.capacitorjs.plugins.mlkit.barcodescanning;
 import android.Manifest;
 import android.graphics.Point;
 import android.util.DisplayMetrics;
+import android.util.Size;
 import androidx.activity.result.ActivityResult;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -76,6 +77,7 @@ public class BarcodeScannerPlugin extends Plugin {
             ScanSettings scanSettings = new ScanSettings();
             scanSettings.formats = formats;
             scanSettings.lensFacing = lensFacing;
+            scanSettings.resolution = BarcodeScannerHelper.convertIntegerToResolution(call.getInt("resolution", 1));
 
             boolean granted = implementation.requestCameraPermissionIfNotDetermined(call);
             if (!granted) {
@@ -83,25 +85,23 @@ public class BarcodeScannerPlugin extends Plugin {
             }
 
             getActivity()
-                .runOnUiThread(
-                    () -> {
-                        implementation.startScan(
-                            scanSettings,
-                            new StartScanResultCallback() {
-                                @Override
-                                public void success() {
-                                    call.resolve();
-                                }
-
-                                @Override
-                                public void error(Exception exception) {
-                                    Logger.error(TAG, exception.getMessage(), exception);
-                                    call.reject(exception.getMessage());
-                                }
+                .runOnUiThread(() -> {
+                    implementation.startScan(
+                        scanSettings,
+                        new StartScanResultCallback() {
+                            @Override
+                            public void success() {
+                                call.resolve();
                             }
-                        );
-                    }
-                );
+
+                            @Override
+                            public void error(Exception exception) {
+                                Logger.error(TAG, exception.getMessage(), exception);
+                                call.reject(exception.getMessage());
+                            }
+                        }
+                    );
+                });
         } catch (Exception exception) {
             Logger.error(TAG, exception.getMessage(), exception);
             call.reject(exception.getMessage());
@@ -112,12 +112,10 @@ public class BarcodeScannerPlugin extends Plugin {
     public void stopScan(PluginCall call) {
         try {
             getActivity()
-                .runOnUiThread(
-                    () -> {
-                        implementation.stopScan();
-                        call.resolve();
-                    }
-                );
+                .runOnUiThread(() -> {
+                    implementation.stopScan();
+                    call.resolve();
+                });
         } catch (Exception exception) {
             Logger.error(TAG, exception.getMessage(), exception);
             call.reject(exception.getMessage());
@@ -184,8 +182,7 @@ public class BarcodeScannerPlugin extends Plugin {
                         if (isAvailable) {
                             implementation.scan(
                                 scanSettings,
-                                (
-                                    new ScanResultCallback() {
+                                (new ScanResultCallback() {
                                         @Override
                                         public void success(Barcode barcode) {
                                             JSObject barcodeResult = BarcodeScannerHelper.createBarcodeResultForBarcode(
@@ -212,8 +209,7 @@ public class BarcodeScannerPlugin extends Plugin {
                                             Logger.error(TAG, exception.getMessage(), exception);
                                             call.reject(exception.getMessage());
                                         }
-                                    }
-                                )
+                                    })
                             );
                         } else {
                             call.reject(ERROR_GOOGLE_BARCODE_SCANNER_MODULE_NOT_AVAILABLE);
@@ -238,63 +234,6 @@ public class BarcodeScannerPlugin extends Plugin {
         try {
             JSObject result = new JSObject();
             result.put("supported", implementation.isSupported());
-            call.resolve(result);
-        } catch (Exception exception) {
-            Logger.error(TAG, exception.getMessage(), exception);
-            call.reject(exception.getMessage());
-        }
-    }
-
-    @PluginMethod
-    public void enableTorch(PluginCall call) {
-        try {
-            implementation.enableTorch();
-            call.resolve();
-        } catch (Exception exception) {
-            Logger.error(TAG, exception.getMessage(), exception);
-            call.reject(exception.getMessage());
-        }
-    }
-
-    @PluginMethod
-    public void disableTorch(PluginCall call) {
-        try {
-            implementation.disableTorch();
-            call.resolve();
-        } catch (Exception exception) {
-            Logger.error(TAG, exception.getMessage(), exception);
-            call.reject(exception.getMessage());
-        }
-    }
-
-    @PluginMethod
-    public void toggleTorch(PluginCall call) {
-        try {
-            implementation.toggleTorch();
-            call.resolve();
-        } catch (Exception exception) {
-            Logger.error(TAG, exception.getMessage(), exception);
-            call.reject(exception.getMessage());
-        }
-    }
-
-    @PluginMethod
-    public void isTorchEnabled(PluginCall call) {
-        try {
-            JSObject result = new JSObject();
-            result.put("enabled", implementation.isTorchEnabled());
-            call.resolve(result);
-        } catch (Exception exception) {
-            Logger.error(TAG, exception.getMessage(), exception);
-            call.reject(exception.getMessage());
-        }
-    }
-
-    @PluginMethod
-    public void isTorchAvailable(PluginCall call) {
-        try {
-            JSObject result = new JSObject();
-            result.put("available", implementation.isTorchAvailable());
             call.resolve(result);
         } catch (Exception exception) {
             Logger.error(TAG, exception.getMessage(), exception);

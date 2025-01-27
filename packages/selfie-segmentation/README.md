@@ -9,11 +9,23 @@ npm install @capacitor-mlkit/selfie-segmentation
 npx cap sync
 ```
 
+### Android
+
 #### Variables
 
 This plugin will use the following project variables (defined in your app’s `variables.gradle` file):
 
-- `$mlkitSelfieSegmentationVersion` version of `com.google.mlkit:segmentation-selfie` (default: `16.0.0-beta4`)
+- `$mlkitSelfieSegmentationVersion` version of `com.google.mlkit:segmentation-selfie` (default: `16.0.0-beta6`)
+
+### iOS
+
+#### Minimum Deployment Target
+
+Make sure to set the deployment target in your `ios/App/Podfile` to at least `15.5`:
+
+```ruby
+platform :ios, '15.5'
+```
 
 ## Configuration
 

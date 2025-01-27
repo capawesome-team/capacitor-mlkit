@@ -1,0 +1,25 @@
+{
+  "mode": "exit",
+  "tag": "next",
+  "initialVersions": {
+    "@capacitor-mlkit/barcode-scanning": "6.2.0",
+    "@capacitor-mlkit/face-detection": "6.2.0",
+    "@capacitor-mlkit/face-mesh-detection": "6.2.0",
+    "@capacitor-mlkit/selfie-segmentation": "6.2.0",
+    "@capacitor-mlkit/translation": "6.2.0"
+  },
+  "changesets": [
+    "angry-pugs-deliver",
+    "brown-singers-press",
+    "chilled-plums-lay",
+    "forty-avocados-allow",
+    "little-brooms-explode",
+    "mighty-comics-whisper",
+    "rotten-trains-obey",
+    "rude-countries-lick",
+    "sixty-kiwis-yawn",
+    "ten-games-shake",
+    "violet-coats-act",
+    "wet-crabs-share"
+  ]
+}

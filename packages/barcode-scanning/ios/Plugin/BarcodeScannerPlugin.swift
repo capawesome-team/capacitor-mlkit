@@ -37,11 +37,14 @@ public class BarcodeScannerPlugin: CAPPlugin {
         let formats = BarcodeScannerHelper.convertStringsToBarcodeScannerFormats(formatsOption ?? [])
         let lensFacingOption = call.getString("lensFacing", "BACK")
         let lensFacing = lensFacingOption == "FRONT" ? AVCaptureDevice.Position.front : AVCaptureDevice.Position.back
+        let resolutionOption = call.getInt("resolution", 1)
+        let resolution = BarcodeScannerHelper.convertIntToCapturePreset(resolutionOption)
 
         let settings = ScanSettings()
         settings.showUIElements = false
         settings.formats = formats
         settings.lensFacing = lensFacing
+        settings.resolution = resolution
 
         self.implementation?.requestCameraPermissionIfNotDetermined(completion: { error in
             if let error = error {
@@ -128,33 +131,6 @@ public class BarcodeScannerPlugin: CAPPlugin {
     @objc func isSupported(_ call: CAPPluginCall) {
         call.resolve([
             "supported": implementation?.isSupported() ?? false
-        ])
-    }
-
-    @objc func enableTorch(_ call: CAPPluginCall) {
-        implementation?.enableTorch()
-        call.resolve()
-    }
-
-    @objc func disableTorch(_ call: CAPPluginCall) {
-        implementation?.disableTorch()
-        call.resolve()
-    }
-
-    @objc func toggleTorch(_ call: CAPPluginCall) {
-        implementation?.toggleTorch()
-        call.resolve()
-    }
-
-    @objc func isTorchEnabled(_ call: CAPPluginCall) {
-        call.resolve([
-            "enabled": implementation?.isTorchEnabled() ?? false
-        ])
-    }
-
-    @objc func isTorchAvailable(_ call: CAPPluginCall) {
-        call.resolve([
-            "available": implementation?.isTorchAvailable() ?? false
         ])
     }
 

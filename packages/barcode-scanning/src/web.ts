@@ -7,8 +7,6 @@ import type {
   GetZoomRatioResult,
   IsGoogleBarcodeScannerModuleAvailableResult,
   IsSupportedResult,
-  IsTorchAvailableResult,
-  IsTorchEnabledResult,
   PermissionStatus,
   ReadBarcodesFromImageOptions,
   ReadBarcodesFromImageResult,
@@ -40,26 +38,6 @@ export class BarcodeScannerWeb
   }
 
   async isSupported(): Promise<IsSupportedResult> {
-    throw this.createUnavailableException();
-  }
-
-  async enableTorch(): Promise<void> {
-    throw this.createUnavailableException();
-  }
-
-  async disableTorch(): Promise<void> {
-    throw this.createUnavailableException();
-  }
-
-  async toggleTorch(): Promise<void> {
-    throw this.createUnavailableException();
-  }
-
-  async isTorchEnabled(): Promise<IsTorchEnabledResult> {
-    throw this.createUnavailableException();
-  }
-
-  async isTorchAvailable(): Promise<IsTorchAvailableResult> {
     throw this.createUnavailableException();
   }
 

@@ -11,6 +11,8 @@ npx cap sync
 
 ### Android
 
+#### Dependencies
+
 You need to add the following meta data **in** the `application` tag in your `AndroidManifest.xml`:
 
 ```xml
@@ -22,8 +24,18 @@ You need to add the following meta data **in** the `application` tag in your `An
 
 This plugin will use the following project variables (defined in your app’s `variables.gradle` file):
 
-- `$mlkitFaceDetectionVersion` version of `com.google.mlkit:face-detection` (default: `16.1.5`)
+- `$mlkitFaceDetectionVersion` version of `com.google.mlkit:face-detection` (default: `16.1.7`)
 - `$playServicesMlkitFaceDetectionVersion` version of `com.google.android.gms:play-services-mlkit-face-detection` (default: `17.1.0`)
+
+### iOS
+
+#### Minimum Deployment Target
+
+Make sure to set the deployment target in your `ios/App/Podfile` to at least `15.5`:
+
+```ruby
+platform :ios, '15.5'
+```
 
 ## Configuration
 
