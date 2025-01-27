@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - next
     paths:
       - .changeset/**
   workflow_dispatch:
@@ -34,8 +35,8 @@ jobs:
         uses: changesets/action@v1
         with:
           publish: npm run release
-          commit: 'chore(release): publish'
-          title: 'chore(release): publish'
+          commit: "chore(release): publish"
+          title: "chore(release): publish"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
