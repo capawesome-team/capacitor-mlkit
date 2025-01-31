@@ -43,7 +43,7 @@ public protocol BarcodeScannerViewDelegate {
 
         let captureSession = AVCaptureSession()
         captureSession.beginConfiguration()
-        captureSession.sessionPreset = AVCaptureSession.Preset.hd1280x720
+        captureSession.sessionPreset = AVCaptureSession.Preset.hd1920x1080
 
         // Prepare capture session and preview layer
         // It executes tasks one at a time in the order they are added (FIFO), ensuring that no other
@@ -51,7 +51,17 @@ public protocol BarcodeScannerViewDelegate {
         // block
         captureSessionQueue.sync {
             do {
-                let captureDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: AVMediaType.video, position: settings.lensFacing)
+                let captureDevice: AVCaptureDevice? = {
+                  if let device = AVCaptureDevice.default(.builtInTripleCamera, for: .video, position: settings.lensFacing) {
+                      return device
+                  } else if let device = AVCaptureDevice.default(.builtInDualCamera, for: .video, position: settings.lensFacing) {
+                      return device
+                  } else {
+                    let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: settings.lensFacing)
+                      return device
+                  }
+                }()
+
                 guard let captureDevice = captureDevice else {
                     throw RuntimeError(implementation.plugin.errorNoCaptureDeviceAvailable)
                 }
