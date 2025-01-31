@@ -4,15 +4,11 @@ export interface BarcodeScannerPlugin {
   /**
    * Start scanning for barcodes.
    *
-   * Only available on Android and iOS.
-   *
    * @since 0.0.1
    */
   startScan(options?: StartScanOptions): Promise<void>;
   /**
    * Stop scanning for barcodes.
-   *
-   * Only available on Android and iOS.
    *
    * @since 0.0.1
    */
@@ -44,8 +40,6 @@ export interface BarcodeScannerPlugin {
   scan(options?: ScanOptions): Promise<ScanResult>;
   /**
    * Returns whether or not the barcode scanner is supported.
-   *
-   * Available on Android and iOS.
    *
    * @since 0.0.1
    */
@@ -115,23 +109,17 @@ export interface BarcodeScannerPlugin {
   /**
    * Check camera permission.
    *
-   * Only available on Android and iOS.
-   *
    * @since 0.0.1
    */
   checkPermissions(): Promise<PermissionStatus>;
   /**
    * Request camera permission.
    *
-   * Only available on Android and iOS.
-   *
    * @since 0.0.1
    */
   requestPermissions(): Promise<PermissionStatus>;
   /**
    * Called when barcodes are scanned.
-   *
-   * Available on Android and iOS.
    *
    * @since 6.2.0
    */
@@ -179,6 +167,8 @@ export interface StartScanOptions {
    * Improve the speed of the barcode scanner by configuring
    * the barcode formats to scan for.
    *
+   * Only available on Android and iOS.
+   *
    * @since 0.0.1
    */
   formats?: BarcodeFormat[];
@@ -191,10 +181,20 @@ export interface StartScanOptions {
   /**
    * Configure the resolution of the captured image that is used for barcode scanning.
    *
+   * Only available on Android and iOS.
+   *
    * @since 7.0.0
    * @default Resolution['1280x720']
    */
   resolution?: Resolution;
+  /**
+   * The HTML video element to use for the camera preview.
+   *
+   * Only available on web.
+   *
+   * @since 7.1.0
+   */
+  videoElement?: HTMLVideoElement;
 }
 
 /**

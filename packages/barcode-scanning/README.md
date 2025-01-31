@@ -10,7 +10,7 @@ Unofficial Capacitor plugin for [ML Kit Barcode Scanning](https://developers.goo
 - ⏺️ Define detection area
 - 🏞️ Reading barcodes from images
 - 🔦 Torch and Autofocus support
-- 🔋 Supports Android and iOS
+- 🔋 Supports Android, iOS and web
 
 For a complete list of **supported barcodes**, see [BarcodeFormat](#barcodeformat).
 
@@ -79,6 +79,18 @@ Add the `NSCameraUsageDescription` key to the `ios/App/App/Info.plist` file, whi
 + <key>NSCameraUsageDescription</key>
 + <string>The app enables the scanning of various barcodes.</string>
 ```
+
+### Web
+
+#### Polyfill
+
+This plugin uses the [Barcode Detection API](https://developer.mozilla.org/en-US/docs/Web/API/Barcode_Detection_API) to scan barcodes in the browser. This API is not yet supported in all browsers. You can check the compatibility [here](https://caniuse.com/mdn-api_barcodedetector). For this reason, we recommend installing the [barcode-detector](https://www.npmjs.com/package/barcode-detector) package for a better compatibility:
+
+```bash
+npm install barcode-detector
+```
+
+This package provides a polyfill that uses [ZXing-C++ WebAssembly](https://github.com/Sec-ant/zxing-wasm) under the hood.
 
 ## Configuration
 
@@ -304,8 +316,6 @@ startScan(options?: StartScanOptions | undefined) => Promise<void>
 
 Start scanning for barcodes.
 
-Only available on Android and iOS.
-
 | Param         | Type                                                          |
 | ------------- | ------------------------------------------------------------- |
 | **`options`** | <code><a href="#startscanoptions">StartScanOptions</a></code> |
@@ -322,8 +332,6 @@ stopScan() => Promise<void>
 ```
 
 Stop scanning for barcodes.
-
-Only available on Android and iOS.
 
 **Since:** 0.0.1
 
@@ -385,8 +393,6 @@ isSupported() => Promise<IsSupportedResult>
 ```
 
 Returns whether or not the barcode scanner is supported.
-
-Available on Android and iOS.
 
 **Returns:** <code>Promise&lt;<a href="#issupportedresult">IsSupportedResult</a>&gt;</code>
 
@@ -526,8 +532,6 @@ checkPermissions() => Promise<PermissionStatus>
 
 Check camera permission.
 
-Only available on Android and iOS.
-
 **Returns:** <code>Promise&lt;<a href="#permissionstatus">PermissionStatus</a>&gt;</code>
 
 **Since:** 0.0.1
@@ -543,8 +547,6 @@ requestPermissions() => Promise<PermissionStatus>
 
 Request camera permission.
 
-Only available on Android and iOS.
-
 **Returns:** <code>Promise&lt;<a href="#permissionstatus">PermissionStatus</a>&gt;</code>
 
 **Since:** 0.0.1
@@ -559,8 +561,6 @@ addListener(eventName: 'barcodesScanned', listenerFunc: (event: BarcodesScannedE
 ```
 
 Called when barcodes are scanned.
-
-Available on Android and iOS.
 
 | Param              | Type                                                                                      |
 | ------------------ | ----------------------------------------------------------------------------------------- |
@@ -636,11 +636,12 @@ Remove all listeners for this plugin.
 
 #### StartScanOptions
 
-| Prop             | Type                                              | Description                                                                              | Default                             | Since |
-| ---------------- | ------------------------------------------------- | ---------------------------------------------------------------------------------------- | ----------------------------------- | ----- |
-| **`formats`**    | <code>BarcodeFormat[]</code>                      | Improve the speed of the barcode scanner by configuring the barcode formats to scan for. |                                     | 0.0.1 |
-| **`lensFacing`** | <code><a href="#lensfacing">LensFacing</a></code> | Configure the camera (front or back) to use.                                             |                                     | 0.0.1 |
-| **`resolution`** | <code><a href="#resolution">Resolution</a></code> | Configure the resolution of the captured image that is used for barcode scanning.        | <code>Resolution['1280x720']</code> | 7.0.0 |
+| Prop               | Type                                              | Description                                                                                                                 | Default                             | Since |
+| ------------------ | ------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- | ----------------------------------- | ----- |
+| **`formats`**      | <code>BarcodeFormat[]</code>                      | Improve the speed of the barcode scanner by configuring the barcode formats to scan for. Only available on Android and iOS. |                                     | 0.0.1 |
+| **`lensFacing`**   | <code><a href="#lensfacing">LensFacing</a></code> | Configure the camera (front or back) to use.                                                                                |                                     | 0.0.1 |
+| **`resolution`**   | <code><a href="#resolution">Resolution</a></code> | Configure the resolution of the captured image that is used for barcode scanning. Only available on Android and iOS.        | <code>Resolution['1280x720']</code> | 7.0.0 |
+| **`videoElement`** | <code>HTMLVideoElement</code>                     | The HTML video element to use for the camera preview. Only available on web.                                                |                                     | 7.1.0 |
 
 
 #### ReadBarcodesFromImageResult
