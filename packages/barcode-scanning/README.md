@@ -893,15 +893,6 @@ Remove all listeners for this plugin.
 ### Type Aliases
 
 
-#### BarcodeFormat
-
-The possible types of barcode format that can be detected using the
-Barcode Detection API. This list may change in the future.
-Adapted from: https://developer.mozilla.org/en-US/docs/Web/API/Barcode_Detection_API
-
-<code>'aztec' | 'code_128' | 'code_39' | 'code_93' | 'codabar' | 'data_matrix' | 'ean_13' | 'ean_8' | 'itf' | 'pdf417' | 'qr_code' | 'upc_a' | 'upc_e' | 'unknown'</code>
-
-
 #### CameraPermissionState
 
 <code><a href="#permissionstate">PermissionState</a> | 'limited'</code>

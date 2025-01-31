@@ -3,7 +3,7 @@
  * Barcode Detection API. This list may change in the future.
  * Adapted from: https://developer.mozilla.org/en-US/docs/Web/API/Barcode_Detection_API
  */
-export type BarcodeFormat =
+export type BarcodeDetectorFormat =
   | 'aztec'
   | 'code_128'
   | 'code_39'
@@ -45,7 +45,7 @@ export interface DetectedBarcode {
   /**
    * The detected barcode format
    */
-  format: BarcodeFormat;
+  format: BarcodeDetectorFormat;
 
   /**
    * A string decoded from the barcode data
@@ -60,7 +60,7 @@ export interface BarcodeDetectorOptions {
   /**
    * Which formats the barcode detector should detect
    */
-  formats?: BarcodeFormat[];
+  formats?: BarcodeDetectorFormat[];
 }
 
 /**
@@ -76,7 +76,7 @@ export class BarcodeDetector {
   /**
    * Retrieve the formats that are supported by the detector
    */
-  static getSupportedFormats(): Promise<BarcodeFormat[]>;
+  static getSupportedFormats(): Promise<BarcodeDetectorFormat[]>;
 
   /**
    * Attempt to detect barcodes from an image source
