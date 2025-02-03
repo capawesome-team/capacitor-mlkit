@@ -190,7 +190,11 @@ public class BarcodeScannerHelper {
         }
     }
 
-    private static JSONArray convertByteArrayToJsonArray(byte[] bytes) {
+    @Nullable
+    private static JSONArray convertByteArrayToJsonArray(@Nullable byte[] bytes) {
+        if (bytes == null) {
+            return null;
+        }
         JSONArray ret = new JSONArray();
         for (byte _byte : bytes) {
             ret.put(_byte);
