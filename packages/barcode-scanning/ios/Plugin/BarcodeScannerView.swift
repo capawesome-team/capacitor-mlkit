@@ -43,7 +43,7 @@ public protocol BarcodeScannerViewDelegate {
 
         let captureSession = AVCaptureSession()
         captureSession.beginConfiguration()
-        captureSession.sessionPreset = AVCaptureSession.Preset.hd1280x720
+        captureSession.sessionPreset = settings.resolution
 
         // Prepare capture session and preview layer
         // It executes tasks one at a time in the order they are added (FIFO), ensuring that no other
