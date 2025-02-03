@@ -46,7 +46,6 @@ export interface DetectedBarcode {
    * The detected barcode format
    */
   format: BarcodeDetectorFormat;
-
   /**
    * A string decoded from the barcode data
    */

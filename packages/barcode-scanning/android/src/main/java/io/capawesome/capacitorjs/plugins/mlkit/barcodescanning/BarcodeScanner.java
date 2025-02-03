@@ -398,10 +398,11 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
         return options;
     }
 
+    @Nullable
     private Integer voteForBarcode(Barcode barcode) {
         String rawValue = barcode.getRawValue();
         if (rawValue == null) {
-            return 1;
+            return null;
         } else {
             if (barcodeRawValueVotes.containsKey(rawValue)) {
                 barcodeRawValueVotes.put(rawValue, barcodeRawValueVotes.get(rawValue) + 1);
@@ -416,7 +417,8 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
         List<Barcode> barcodesWithEnoughVotes = new ArrayList<>();
         for (Barcode barcode : barcodes) {
             Integer votes = voteForBarcode(barcode);
-            if (votes >= 10) {
+            if (votes == null || votes >= 10) {
+                // Do not filter out barcodes without raw value.
                 barcodesWithEnoughVotes.add(barcode);
             }
         }
