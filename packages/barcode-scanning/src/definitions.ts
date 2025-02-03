@@ -507,8 +507,10 @@ export interface Barcode {
   rawBytes?: number[];
   /**
    * The barcode value in a machine readable format.
+   *
    * This value is only available when the barcode is encoded
-   * in the UTF-8 character set.
+   * in the UTF-8 character set. Otherwise, the `rawBytes` property
+   * should be used and this property will be an empty string.
    *
    * @since 0.0.1
    * @example "CapacitorJS"

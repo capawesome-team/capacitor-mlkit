@@ -111,7 +111,7 @@ public class BarcodeScannerHelper {
         if let rawData = barcode.rawData {
             result["rawBytes"] = convertDataToJsonArray(rawData)
         }
-        result["rawValue"] = barcode.rawValue
+        result["rawValue"] = barcode.rawValue ?? ""
         if let sms = barcode.sms {
             result["sms"] = extractSmsProperties(sms)
         }
