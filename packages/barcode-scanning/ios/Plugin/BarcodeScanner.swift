@@ -264,9 +264,9 @@ typealias MLKitBarcodeScanner = MLKitBarcodeScanning.BarcodeScanner
         plugin.notifyBarcodesScannedListener(barcodes: barcodes, imageSize: imageSize, videoOrientation: videoOrientation)
     }
 
-    private func voteForBarcode(barcode: Barcode) -> Int {
+    private func voteForBarcode(barcode: Barcode) -> Int? {
         guard let rawValue = barcode.rawValue else {
-            return 1
+            return nil
         }
         if let votes = self.barcodeRawValueVotes[rawValue] {
             self.barcodeRawValueVotes[rawValue] = votes + 1
@@ -278,7 +278,12 @@ typealias MLKitBarcodeScanner = MLKitBarcodeScanning.BarcodeScanner
 
     private func voteForBarcodes(barcodes: [Barcode]) -> [Barcode] {
         return barcodes.filter { barcode in
-            return self.voteForBarcode(barcode: barcode) >= 10
+            if let votes = self.voteForBarcode(barcode: barcode) {
+                return votes >= 10
+            } else {
+                // Do not filter out barcodes without raw value.
+                return true
+            }
         }
     }
 }

@@ -63,7 +63,8 @@ public class BarcodeScannerHelper {
         if (barcode.getPhone() != null) {
             result.put("phone", extractPhoneProperties(barcode.getPhone()));
         }
-        result.put("rawValue", barcode.getRawValue());
+        result.put("rawBytes", convertByteArrayToJsonArray(barcode.getRawBytes()));
+        result.put("rawValue", barcode.getRawValue() == null ? "" : barcode.getRawValue());
         if (barcode.getSms() != null) {
             result.put("sms", extractSmsProperties(barcode.getSms()));
         }
@@ -189,7 +190,11 @@ public class BarcodeScannerHelper {
         }
     }
 
-    private static JSONArray convertByteArrayToJsonArray(byte[] bytes) {
+    @Nullable
+    private static JSONArray convertByteArrayToJsonArray(@Nullable byte[] bytes) {
+        if (bytes == null) {
+            return null;
+        }
         JSONArray ret = new JSONArray();
         for (byte _byte : bytes) {
             ret.put(_byte);
