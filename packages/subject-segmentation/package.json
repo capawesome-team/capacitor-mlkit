@@ -11,8 +11,7 @@
     "android/build.gradle",
     "dist/",
     "ios/Plugin/",
-    "CapacitorMlkitSubjectSegmentation.podspec",
-    "Package.swift"
+    "CapacitorMlkitSubjectSegmentation.podspec"
   ],
   "author": "Robin Genz <mail@robingenz.dev>",
   "license": "Apache-2.0",
@@ -33,7 +32,7 @@
       "url": "https://opencollective.com/capawesome"
     }
   ],
-  "homepage": "https://capawesome.io/plugins/app-review/",
+  "homepage": "https://capawesome.io/plugins/mlkit/subject-segmentation/",
   "keywords": [
     "capacitor",
     "plugin",
@@ -54,7 +53,6 @@
     "clean": "rimraf ./dist",
     "watch": "tsc --watch",
     "ios:pod:install": "cd ios && pod install --repo-update && cd ..",
-    "ios:spm:install": "cd ios && swift package resolve && cd ..",
     "prepublishOnly": "npm run build"
   },
   "devDependencies": {
