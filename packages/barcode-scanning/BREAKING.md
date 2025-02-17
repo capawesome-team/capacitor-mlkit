@@ -4,8 +4,23 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 
 ## Versions
 
+- [Version 7.x.x](#version-7xx)
 - [Version 6.x.x](#version-6xx)
 - [Version 5.x.x](#version-5xx)
+
+## Version 7.x.x
+
+### Minimum Deployment Target
+
+On **iOS**, make sure to set the deployment target in your `ios/App/Podfile` to at least `15.5`:
+
+```ruby
+platform :ios, '15.5'
+```
+
+### Android Image Resolution
+
+Previously, the **android** implementation was using 640x480 as a resolution for the image captured by the `startScan` method. This has been changed to 1280x720 to improve the barcode scanning performance and be consistent with the iOS implementation.
 
 ## Version 6.x.x
 

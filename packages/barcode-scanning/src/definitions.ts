@@ -245,6 +245,12 @@ export interface StartScanOptions {
    * @since 0.0.1
    */
   lensFacing?: LensFacing;
+  /**
+   * Configure the resolution of the captured image that is used for barcode scanning.
+   *
+   * @since 7.0.0
+   */
+  resolution?: Resolution;
 }
 
 /**
@@ -669,6 +675,16 @@ export enum BarcodeValueType {
    */
   Unknown = 'UNKNOWN',
 }
+
+/**
+ * @since 7.0.0
+ */
+export enum Resolution {
+  '640x480' = 0,
+  '1280x720' = 1,
+  '1920x1080' = 2,
+}
+
 
 /**
  * @since 0.0.1

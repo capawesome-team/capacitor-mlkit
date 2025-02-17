@@ -200,4 +200,15 @@ public class BarcodeScannerHelper {
     private static func convertDataToJsonArray(_ data: Data) -> [UInt8] {
         return [UInt8](data)
     }
+
+    public static func convertIntToCapturePreset(_ resolution: Int) -> AVCaptureSession.Preset {
+        switch resolution {
+        case 0:
+            return AVCaptureSession.Preset.vga640x480
+        case 2:
+            return AVCaptureSession.Preset.hd1920x1080
+        default:
+            return AVCaptureSession.Preset.hd1280x720
+        }
+    }
 }
