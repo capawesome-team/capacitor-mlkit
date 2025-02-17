@@ -23,16 +23,14 @@
     "affected:fmt": "turbo run fmt --since=origin/main",
     "affected:docgen": "turbo run docgen --since=origin/main",
     "affected:build": "turbo run build --since=origin/main",
-    "affected:ios:pod:install": "turbo run ios:pod:install --since=origin/main --concurrency=1 --no-cache",
     "changeset": "changeset",
     "release": "npm run build && changeset publish",
     "release:preview": "pkg-pr-new publish './packages/*'"
   },
   "devDependencies": {
-    "@changesets/cli": "2.27.12",
+    "@changesets/cli": "2.21.1",
     "@robingenz/changelog-github": "0.0.1",
     "pkg-pr-new": "0.0.20",
-    "prettier-plugin-java": "2.6.7",
     "turbo": "1.1.6"
   }
 }

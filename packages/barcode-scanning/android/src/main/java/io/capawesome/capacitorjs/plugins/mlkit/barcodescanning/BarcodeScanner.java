@@ -13,13 +13,10 @@ import android.media.Image;
 import android.net.Uri;
 import android.provider.Settings;
 import android.view.Display;
-import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.FrameLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.camera.core.Camera;
-import androidx.camera.core.CameraControl;
 import androidx.camera.core.CameraSelector;
 import androidx.camera.core.ImageAnalysis;
 import androidx.camera.core.ImageProxy;
@@ -53,14 +50,16 @@ import java.util.List;
 
 public class BarcodeScanner implements ImageAnalysis.Analyzer {
 
-    @Nullable
-    private static Camera camera;
-
     @NonNull
     private final BarcodeScannerPlugin plugin;
 
+    private final Point displaySize;
+
     @Nullable
     private com.google.mlkit.vision.barcode.BarcodeScanner barcodeScannerInstance;
+
+    @Nullable
+    private Camera camera;
 
     @Nullable
     private ProcessCameraProvider processCameraProvider;
@@ -80,17 +79,7 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
 
     public BarcodeScanner(BarcodeScannerPlugin plugin) {
         this.plugin = plugin;
-    }
-
-    /**
-     * Do NOT change this method signature. It is used by the Torch plugin.
-     */
-    @Nullable
-    public static CameraControl getCameraControl() {
-        if (camera == null) {
-            return null;
-        }
-        return camera.getCameraControl();
+        this.displaySize = this.getDisplaySize();
     }
 
     /**
@@ -99,7 +88,6 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
     public void startScan(ScanSettings scanSettings, StartScanResultCallback callback) {
         // Stop the camera if running
         stopScan();
-
         // Hide WebView background
         hideWebViewBackground();
 
@@ -108,10 +96,7 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
         BarcodeScannerOptions options = buildBarcodeScannerOptions(scanSettings);
         barcodeScannerInstance = BarcodeScanning.getClient(options);
 
-        ImageAnalysis imageAnalysis = new ImageAnalysis.Builder()
-            .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
-            .setTargetResolution(scanSettings.resolution)
-            .build();
+        ImageAnalysis imageAnalysis = new ImageAnalysis.Builder().setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST).build();
         imageAnalysis.setAnalyzer(ContextCompat.getMainExecutor(plugin.getContext()), this);
 
         ListenableFuture<ProcessCameraProvider> cameraProviderFuture = ProcessCameraProvider.getInstance(plugin.getContext());
@@ -122,26 +107,15 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
 
                     CameraSelector cameraSelector = new CameraSelector.Builder().requireLensFacing(this.scanSettings.lensFacing).build();
 
-                    previewView = new PreviewView(plugin.getActivity());
-                    previewView.setLayoutParams(
-                        new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT)
-                    );
+                    previewView = plugin.getActivity().findViewById(R.id.preview_view);
                     previewView.setScaleType(PreviewView.ScaleType.FILL_CENTER);
-                    previewView.setBackgroundColor(Color.BLACK);
-
-                    // Add preview view behind the WebView
-                    ((ViewGroup) plugin.getBridge().getWebView().getParent()).addView(previewView, 0);
 
                     Preview preview = new Preview.Builder().build();
                     preview.setSurfaceProvider(previewView.getSurfaceProvider());
 
                     // Start the camera
-                    camera = processCameraProvider.bindToLifecycle(
-                        (LifecycleOwner) plugin.getContext(),
-                        cameraSelector,
-                        preview,
-                        imageAnalysis
-                    );
+                    camera =
+                        processCameraProvider.bindToLifecycle((LifecycleOwner) plugin.getContext(), cameraSelector, preview, imageAnalysis);
 
                     callback.success();
                 } catch (Exception exception) {
@@ -157,16 +131,13 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
      */
     public void stopScan() {
         showWebViewBackground();
+        disableTorch();
         // Stop the camera
         if (processCameraProvider != null) {
             processCameraProvider.unbindAll();
         }
         processCameraProvider = null;
         camera = null;
-        if (previewView != null) {
-            ((ViewGroup) previewView.getParent()).removeView(previewView);
-            previewView = null;
-        }
         barcodeScannerInstance = null;
         scanSettings = null;
         barcodeRawValueVotes.clear();
@@ -185,12 +156,16 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
         com.google.mlkit.vision.barcode.BarcodeScanner barcodeScannerInstance = BarcodeScanning.getClient(options);
         barcodeScannerInstance
             .process(inputImage)
-            .addOnSuccessListener(barcodes -> {
-                callback.success(barcodes);
-            })
-            .addOnFailureListener(exception -> {
-                callback.error(exception);
-            });
+            .addOnSuccessListener(
+                barcodes -> {
+                    callback.success(barcodes);
+                }
+            )
+            .addOnFailureListener(
+                exception -> {
+                    callback.error(exception);
+                }
+            );
     }
 
     public void scan(ScanSettings scanSettings, ScanResultCallback callback) {
@@ -199,15 +174,21 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
 
         scanner
             .startScan()
-            .addOnSuccessListener(barcode -> {
-                callback.success(barcode);
-            })
-            .addOnCanceledListener(() -> {
-                callback.cancel();
-            })
-            .addOnFailureListener(exception -> {
-                callback.error(exception);
-            });
+            .addOnSuccessListener(
+                barcode -> {
+                    callback.success(barcode);
+                }
+            )
+            .addOnCanceledListener(
+                () -> {
+                    callback.cancel();
+                }
+            )
+            .addOnFailureListener(
+                exception -> {
+                    callback.error(exception);
+                }
+            );
     }
 
     public void isGoogleBarcodeScannerModuleAvailable(IsGoogleBarodeScannerModuleAvailableResultCallback callback) {
@@ -215,13 +196,17 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
         ModuleInstallClient moduleInstallClient = ModuleInstall.getClient(plugin.getContext());
         moduleInstallClient
             .areModulesAvailable(scanner)
-            .addOnSuccessListener(response -> {
-                boolean isAvailable = response.areModulesAvailable();
-                callback.success(isAvailable);
-            })
-            .addOnFailureListener(exception -> {
-                callback.error(exception);
-            });
+            .addOnSuccessListener(
+                response -> {
+                    boolean isAvailable = response.areModulesAvailable();
+                    callback.success(isAvailable);
+                }
+            )
+            .addOnFailureListener(
+                exception -> {
+                    callback.error(exception);
+                }
+            );
     }
 
     public void installGoogleBarcodeScannerModule(InstallGoogleBarcodeScannerModuleResultCallback callback) {
@@ -231,20 +216,56 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
         ModuleInstallClient moduleInstallClient = ModuleInstall.getClient(plugin.getContext());
         moduleInstallClient
             .installModules(moduleInstallRequest)
-            .addOnSuccessListener(moduleInstallResponse -> {
-                if (moduleInstallResponse.areModulesAlreadyInstalled()) {
-                    callback.error(new Exception(BarcodeScannerPlugin.ERROR_GOOGLE_BARCODE_SCANNER_MODULE_ALREADY_INSTALLED));
-                } else {
-                    callback.success();
+            .addOnSuccessListener(
+                moduleInstallResponse -> {
+                    if (moduleInstallResponse.areModulesAlreadyInstalled()) {
+                        callback.error(new Exception(BarcodeScannerPlugin.ERROR_GOOGLE_BARCODE_SCANNER_MODULE_ALREADY_INSTALLED));
+                    } else {
+                        callback.success();
+                    }
                 }
-            })
-            .addOnFailureListener(exception -> {
-                callback.error(exception);
-            });
+            )
+            .addOnFailureListener(
+                exception -> {
+                    callback.error(exception);
+                }
+            );
     }
 
     public boolean isSupported() {
         return plugin.getContext().getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY);
+    }
+
+    public void enableTorch() {
+        if (camera == null) {
+            return;
+        }
+        camera.getCameraControl().enableTorch(true);
+        isTorchEnabled = true;
+    }
+
+    public void disableTorch() {
+        if (camera == null) {
+            return;
+        }
+        camera.getCameraControl().enableTorch(false);
+        isTorchEnabled = false;
+    }
+
+    public void toggleTorch() {
+        if (isTorchEnabled) {
+            disableTorch();
+        } else {
+            enableTorch();
+        }
+    }
+
+    public boolean isTorchEnabled() {
+        return isTorchEnabled;
+    }
+
+    public boolean isTorchAvailable() {
+        return plugin.getContext().getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
     }
 
     public void setZoomRatio(SetZoomRatioOptions options) {
@@ -325,26 +346,32 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
         Point imageSize = new Point(inputImage.getWidth(), inputImage.getHeight());
         barcodeScannerInstance
             .process(inputImage)
-            .addOnSuccessListener(barcodes -> {
-                if (scanSettings == null) {
-                    // Scanning stopped while processing the image
-                    return;
+            .addOnSuccessListener(
+                barcodes -> {
+                    if (scanSettings == null) {
+                        // Scanning stopped while processing the image
+                        return;
+                    }
+                    List<Barcode> barcodesWithEnoughVotes = voteForBarcodes(barcodes);
+                    for (Barcode barcode : barcodesWithEnoughVotes) {
+                        handleScannedBarcode(barcode, imageSize);
+                    }
+                    if (barcodesWithEnoughVotes.size() > 0) {
+                        handleScannedBarcodes(barcodesWithEnoughVotes.toArray(new Barcode[0]), imageSize);
+                    }
                 }
-                List<Barcode> barcodesWithEnoughVotes = voteForBarcodes(barcodes);
-                for (Barcode barcode : barcodesWithEnoughVotes) {
-                    handleScannedBarcode(barcode, imageSize);
+            )
+            .addOnFailureListener(
+                exception -> {
+                    handleScanError(exception);
                 }
-                if (barcodesWithEnoughVotes.size() > 0) {
-                    handleScannedBarcodes(barcodesWithEnoughVotes.toArray(new Barcode[0]), imageSize);
+            )
+            .addOnCompleteListener(
+                task -> {
+                    imageProxy.close();
+                    image.close();
                 }
-            })
-            .addOnFailureListener(exception -> {
-                handleScanError(exception);
-            })
-            .addOnCompleteListener(task -> {
-                imageProxy.close();
-                image.close();
-            });
+            );
     }
 
     public void handleGoogleBarcodeScannerModuleInstallProgress(
@@ -358,6 +385,14 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
             moduleInstallClient.unregisterListener(moduleInstallProgressListener);
             moduleInstallProgressListener = null;
         }
+    }
+
+    private Point getDisplaySize() {
+        WindowManager wm = (WindowManager) plugin.getContext().getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        Point size = new Point();
+        display.getRealSize(size);
+        return size;
     }
 
     /**
@@ -398,11 +433,10 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
         return options;
     }
 
-    @Nullable
     private Integer voteForBarcode(Barcode barcode) {
         String rawValue = barcode.getRawValue();
         if (rawValue == null) {
-            return null;
+            return 1;
         } else {
             if (barcodeRawValueVotes.containsKey(rawValue)) {
                 barcodeRawValueVotes.put(rawValue, barcodeRawValueVotes.get(rawValue) + 1);
@@ -417,8 +451,7 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
         List<Barcode> barcodesWithEnoughVotes = new ArrayList<>();
         for (Barcode barcode : barcodes) {
             Integer votes = voteForBarcode(barcode);
-            if (votes == null || votes >= 10) {
-                // Do not filter out barcodes without raw value.
+            if (votes >= 10) {
                 barcodesWithEnoughVotes.add(barcode);
             }
         }

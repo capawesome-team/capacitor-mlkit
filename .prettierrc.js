@@ -9,7 +9,8 @@ module.exports = {
     singleQuote: true,
     tabWidth: 2,
     trailingComma: 'all',
-    plugins: ['prettier-plugin-java'],
+    pluginSearchDirs: ['./node_modules'],
+    plugins: [require('prettier-plugin-java')],
     overrides: [
       {
         files: ['*.java'],

@@ -27,9 +27,11 @@ public class Translation {
                     resultCallback.success();
                 }
             )
-            .addOnFailureListener(exception -> {
-                resultCallback.error(exception);
-            });
+            .addOnFailureListener(
+                exception -> {
+                    resultCallback.error(exception);
+                }
+            );
     }
 
     public void downloadModel(String language, final DownloadModelResultCallback resultCallback) {
@@ -42,9 +44,11 @@ public class Translation {
                     resultCallback.success();
                 }
             )
-            .addOnFailureListener(exception -> {
-                resultCallback.error(exception);
-            });
+            .addOnFailureListener(
+                exception -> {
+                    resultCallback.error(exception);
+                }
+            );
     }
 
     public void getDownloadedModels(final GetDownloadedModelsResultCallback resultCallback) {
@@ -55,9 +59,11 @@ public class Translation {
                     resultCallback.success(models);
                 }
             )
-            .addOnFailureListener(exception -> {
-                resultCallback.error(exception);
-            });
+            .addOnFailureListener(
+                exception -> {
+                    resultCallback.error(exception);
+                }
+            );
     }
 
     public void translate(String text, String sourceLanguage, String targetLanguage, final TranslateResultCallback resultCallback) {
@@ -79,15 +85,19 @@ public class Translation {
                                 translator.close();
                             }
                         )
-                        .addOnFailureListener(exception -> {
-                            resultCallback.error(exception);
-                            translator.close();
-                        });
+                        .addOnFailureListener(
+                            exception -> {
+                                resultCallback.error(exception);
+                                translator.close();
+                            }
+                        );
                 }
             )
-            .addOnFailureListener(exception -> {
-                resultCallback.error(exception);
-                translator.close();
-            });
+            .addOnFailureListener(
+                exception -> {
+                    resultCallback.error(exception);
+                    translator.close();
+                }
+            );
     }
 }
