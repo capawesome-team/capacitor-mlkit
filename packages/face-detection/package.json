@@ -1,6 +1,6 @@
 {
   "name": "@capacitor-mlkit/face-detection",
-  "version": "7.0.0",
+  "version": "7.1.0",
   "description": "Capacitor plugin for ML Kit Face Detection.",
   "main": "dist/plugin.cjs.js",
   "module": "dist/esm/index.js",

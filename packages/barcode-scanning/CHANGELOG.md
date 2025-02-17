@@ -1,5 +1,19 @@
 # Changelog
 
+## 7.1.0
+
+### Minor Changes
+
+- [`72ef2f8edcd71eebd487f077b4dfa0356deb745b`](https://github.com/capawesome-team/capacitor-mlkit/commit/72ef2f8edcd71eebd487f077b4dfa0356deb745b) ([#242](https://github.com/capawesome-team/capacitor-mlkit/pull/242)): feat: return the raw bytes of a barcodes
+
+- [`29ee50aa15a1a853ca558e1764b880370c3d304d`](https://github.com/capawesome-team/capacitor-mlkit/commit/29ee50aa15a1a853ca558e1764b880370c3d304d) ([#238](https://github.com/capawesome-team/capacitor-mlkit/pull/238)): feat: add web support
+
+### Patch Changes
+
+- [`d7e805e0a234d495cc2392d1de830437895d1213`](https://github.com/capawesome-team/capacitor-mlkit/commit/d7e805e0a234d495cc2392d1de830437895d1213) ([#248](https://github.com/capawesome-team/capacitor-mlkit/pull/248)): fix(ios): resize the barcode scanner view when the device orientation changes
+
+- [`958dfeda1bfea6116804d9fc3d921c811ec3c6eb`](https://github.com/capawesome-team/capacitor-mlkit/commit/958dfeda1bfea6116804d9fc3d921c811ec3c6eb) ([#240](https://github.com/capawesome-team/capacitor-mlkit/pull/240)): fix(ios): `resolution` option was ignored
+
 ## 7.0.0
 
 ### Major Changes
