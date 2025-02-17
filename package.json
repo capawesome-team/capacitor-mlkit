@@ -1,5 +1,5 @@
 {
-  "name": "capacitor-mlkit",
+  "name": "@foodji/capacitor-mlkit",
   "private": true,
   "packageManager": "npm@8.3.0",
   "workspaces": [
