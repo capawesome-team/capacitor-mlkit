@@ -44,6 +44,7 @@ public class BarcodeScannerPlugin: CAPPlugin {
         settings.showUIElements = false
         settings.formats = formats
         settings.lensFacing = lensFacing
+        settings.resolution = resolution
 
         self.implementation?.requestCameraPermissionIfNotDetermined(completion: { error in
             if let error = error {
@@ -105,7 +106,6 @@ public class BarcodeScannerPlugin: CAPPlugin {
         settings.showUIElements = true
         settings.formats = formats
         settings.lensFacing = lensFacing
-        settings.resolution = resolution
 
         self.implementation?.requestCameraPermissionIfNotDetermined(completion: { error in
             if let error = error {

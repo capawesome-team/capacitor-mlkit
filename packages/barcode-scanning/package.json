@@ -1,6 +1,6 @@
 {
   "name": "@foodji/barcode-scanning",
-  "version": "7.1.1",
+  "version": "7.1.2",
   "description": "Capacitor plugin for ML Kit Barcode Scanning.",
   "main": "dist/plugin.cjs.js",
   "module": "dist/esm/index.js",
