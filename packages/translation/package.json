@@ -1,5 +1,5 @@
 {
-  "name": "@capacitor-mlkit/translation",
+  "name": "@foodji/translation",
   "version": "7.1.2",
   "description": "Capacitor plugin for ML Kit Translation.",
   "main": "dist/plugin.cjs.js",

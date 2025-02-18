@@ -1,5 +1,5 @@
 {
-  "name": "@capacitor-mlkit/selfie-segmentation",
+  "name": "@foodji/selfie-segmentation",
   "version": "7.1.2",
   "description": "Capacitor plugin for ML Kit Selfie Segmentation.",
   "main": "dist/plugin.cjs.js",

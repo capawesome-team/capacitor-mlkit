@@ -1,5 +1,5 @@
 {
-  "name": "@capacitor-mlkit/face-mesh-detection",
+  "name": "@foodji/face-mesh-detection",
   "version": "7.1.2",
   "description": "Capacitor plugin for ML Kit Face Mesh Detection.",
   "main": "dist/plugin.cjs.js",
