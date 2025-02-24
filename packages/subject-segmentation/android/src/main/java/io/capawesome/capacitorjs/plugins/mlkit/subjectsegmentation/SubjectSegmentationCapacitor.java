@@ -2,24 +2,28 @@ package io.capawesome.capacitorjs.plugins.mlkit.subjectsegmentation;
 
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.net.Uri;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.google.mlkit.vision.common.InputImage;
+import com.google.mlkit.vision.segmentation.subject.Subject;
 import com.google.mlkit.vision.segmentation.subject.SubjectSegmentation;
 import com.google.mlkit.vision.segmentation.subject.SubjectSegmenter;
 import com.google.mlkit.vision.segmentation.subject.SubjectSegmenterOptions;
-
 import io.capawesome.capacitorjs.plugins.mlkit.subjectsegmentation.classes.ProcessImageOptions;
 import io.capawesome.capacitorjs.plugins.mlkit.subjectsegmentation.classes.ProcessImageResult;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 public class SubjectSegmentationCapacitor {
@@ -43,85 +47,99 @@ public class SubjectSegmentationCapacitor {
     public void processImage(ProcessImageOptions options, ProcessImageResultCallback callback) {
         InputImage inputImage = options.getInputImage();
         Float threshold = options.getConfidence();
+        SubjectSegmenterOptions.SubjectResultOptions subjectResultOptions = new SubjectSegmenterOptions.SubjectResultOptions.Builder()
+            .enableConfidenceMask()
+            .build();
 
         SubjectSegmenterOptions.Builder builder = new SubjectSegmenterOptions.Builder();
-        SubjectSegmenterOptions subjectSegmenterOptions = builder.build();
+        SubjectSegmenterOptions subjectSegmenterOptions = builder
+            .enableForegroundBitmap()
+            .enableMultipleSubjects(subjectResultOptions)
+            .enableForegroundConfidenceMask()
+            .build();
 
         final SubjectSegmenter segmenter = SubjectSegmentation.getClient(subjectSegmenterOptions);
 
         plugin
-                .getActivity()
-                .runOnUiThread(() ->
-                        segmenter
-                                .process(inputImage)
-                                .addOnSuccessListener((segmentationResult) -> {
-                                    segmenter.close();
+            .getActivity()
+            .runOnUiThread(() ->
+                segmenter
+                    .process(inputImage)
+                    .addOnSuccessListener(segmentationResult -> {
+                        segmenter.close();
 
-                                    FloatBuffer mask = segmentationResult.getForegroundConfidenceMask();
+                        List<Subject> subjects = segmentationResult.getSubjects();
 
-                                    Bitmap bitmap = inputImage.getBitmapInternal();
-                                    Objects.requireNonNull(bitmap).setHasAlpha(true);
+                        int[] colors = new int[inputImage.getWidth() * inputImage.getHeight()];
+                        for (Subject subject : subjects) {
+                            FloatBuffer mask = subject.getConfidenceMask();
+                            assert mask != null;
+                            for (int i = 0; i < subject.getWidth() * subject.getHeight(); i++) {
+                                float confidence = mask.get(i);
+                                if (confidence > .5f) {
+                                    int x = subject.getStartX() + (i % subject.getWidth());
+                                    int y = subject.getStartY() + (i / subject.getWidth());
+                                    int position = y * inputImage.getWidth() + x;
 
-                                    ByteBuffer pixels = ByteBuffer.allocateDirect(bitmap.getAllocationByteCount());
-                                    bitmap.copyPixelsToBuffer(pixels);
+                                    colors[position] = Color.argb(128, 255, 0, 255);
+                                }
+                            }
+                        }
 
-                                    final boolean bigEndian = pixels.order() == ByteOrder.BIG_ENDIAN;
-                                    final int ALPHA = bigEndian ? 3 : 0;
-                                    final int RED = bigEndian ? 2 : 1;
-                                    final int GREEN = bigEndian ? 1 : 2;
-                                    final int BLUE = bigEndian ? 0 : 3;
+                        Bitmap maskBitmap = Bitmap.createBitmap(
+                            colors,
+                            inputImage.getWidth(),
+                            inputImage.getHeight(),
+                            Bitmap.Config.ARGB_8888
+                        );
 
-                                    for (int i = 0; i < pixels.capacity() >> 2; i++) {
-                                        assert mask != null;
-                                        float confidence = mask.get();
+                        Bitmap originalBitmap = Bitmap.createScaledBitmap(
+                            Objects.requireNonNull(inputImage.getBitmapInternal()),
+                            maskBitmap.getWidth(),
+                            maskBitmap.getHeight(),
+                            true
+                        );
 
-                                        if (confidence >= threshold) {
-                                            byte red = pixels.get((i << 2) + RED);
-                                            byte green = pixels.get((i << 2) + GREEN);
-                                            byte blue = pixels.get((i << 2) + BLUE);
+                        Bitmap resultBitmap = Bitmap.createBitmap(maskBitmap.getWidth(), maskBitmap.getHeight(), Bitmap.Config.ARGB_8888);
 
-                                            pixels.put((i << 2) + ALPHA, (byte) (0xff));
-                                            pixels.put((i << 2) + RED, (byte) (red * confidence));
-                                            pixels.put((i << 2) + GREEN, (byte) (green * confidence));
-                                            pixels.put((i << 2) + BLUE, (byte) (blue * confidence));
-                                        } else {
-                                            pixels.putInt(i << 2, 0x00000000); // transparent
-                                        }
-                                    }
+                        Canvas canvas = new Canvas(resultBitmap);
+                        canvas.drawBitmap(originalBitmap, 0, 0, null);
 
-                                    bitmap.copyPixelsFromBuffer(pixels.rewind());
+                        Paint paint = new Paint();
+                        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
+                        canvas.drawBitmap(maskBitmap, 0, 0, paint);
 
-                                    // Create an image file name
-                                    @SuppressLint("SimpleDateFormat")
-                                    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-                                    String imageFileName = "PNG_" + timeStamp + "_";
+                        // Create an image file name
+                        @SuppressLint("SimpleDateFormat")
+                        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+                        String imageFileName = "PNG_" + timeStamp + "_";
 
-                                    try {
-                                        File image = File.createTempFile(imageFileName, ".png");
+                        try {
+                            File image = File.createTempFile(imageFileName, ".png");
 
-                                        OutputStream stream = new FileOutputStream(image);
-                                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                                        stream.close();
+                            OutputStream stream = new FileOutputStream(image);
+                            resultBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                            stream.close();
 
-                                        ProcessImageResult result = new ProcessImageResult(
-                                                image.getAbsolutePath(),
-                                                bitmap.getWidth(),
-                                                bitmap.getHeight()
-                                        );
+                            ProcessImageResult result = new ProcessImageResult(
+                                image.getAbsolutePath(),
+                                resultBitmap.getWidth(),
+                                resultBitmap.getHeight()
+                            );
 
-                                        callback.success(result);
-                                    } catch (Exception exception) {
-                                        callback.error(exception);
-                                    }
-                                })
-                                .addOnCanceledListener(() -> {
-                                    segmenter.close();
-                                    callback.cancel();
-                                })
-                                .addOnFailureListener(exception -> {
-                                    segmenter.close();
-                                    callback.error(exception);
-                                })
-                );
+                            callback.success(result);
+                        } catch (Exception exception) {
+                            callback.error(exception);
+                        }
+                    })
+                    .addOnCanceledListener(() -> {
+                        segmenter.close();
+                        callback.cancel();
+                    })
+                    .addOnFailureListener(exception -> {
+                        segmenter.close();
+                        callback.error(exception);
+                    })
+            );
     }
 }
