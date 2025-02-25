@@ -76,7 +76,7 @@ public class SubjectSegmentationCapacitor {
                             assert mask != null;
                             for (int i = 0; i < subject.getWidth() * subject.getHeight(); i++) {
                                 float confidence = mask.get(i);
-                                if (confidence > .5f) {
+                                if (confidence > threshold) {
                                     int x = subject.getStartX() + (i % subject.getWidth());
                                     int y = subject.getStartY() + (i / subject.getWidth());
                                     int position = y * inputImage.getWidth() + x;
