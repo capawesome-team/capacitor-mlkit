@@ -14,8 +14,12 @@ npx cap sync
 ```typescript
 import { SubjectSegmentation } from '@capacitor-mlkit/subject-segmentation';
 
-const echo = async () => {
-  await SubjectSegmentation.echo();
+const processImage = async () => {
+  const { path } = await SubjectSegmentation.processImage({
+    path: 'path/to/image.jpg',
+    confidence: 0.7,
+  });
+  return path;
 };
 ```
 
@@ -23,8 +27,8 @@ const echo = async () => {
 
 <docgen-index>
 
-* [`processImage(...)`](#processimage)
-* [Interfaces](#interfaces)
+- [`processImage(...)`](#processimage)
+- [Interfaces](#interfaces)
 
 </docgen-index>
 
@@ -47,30 +51,27 @@ Only available on Android and iOS.
 
 **Returns:** <code>Promise&lt;<a href="#processimageresult">ProcessImageResult</a>&gt;</code>
 
-**Since:** 5.2.0
+**Since:** 7.0.0
 
---------------------
-
+---
 
 ### Interfaces
-
 
 #### ProcessImageResult
 
 | Prop         | Type                | Description                           | Since |
 | ------------ | ------------------- | ------------------------------------- | ----- |
-| **`path`**   | <code>string</code> | The path to the segmented image file. | 5.2.0 |
-| **`width`**  | <code>number</code> | Returns the width of the image file.  | 5.2.0 |
-| **`height`** | <code>number</code> | Returns the height of the image file. | 5.2.0 |
-
+| **`path`**   | <code>string</code> | The path to the segmented image file. | 7.0.0 |
+| **`width`**  | <code>number</code> | Returns the width of the image file.  | 7.0.0 |
+| **`height`** | <code>number</code> | Returns the height of the image file. | 7.0.0 |
 
 #### ProcessImageOptions
 
 | Prop             | Type                | Description                                                                               | Default          | Since |
 | ---------------- | ------------------- | ----------------------------------------------------------------------------------------- | ---------------- | ----- |
-| **`path`**       | <code>string</code> | The local path to the image file.                                                         |                  | 5.2.0 |
-| **`width`**      | <code>number</code> | Scale the image to this width. If no `height` is given, it will respect the aspect ratio. |                  | 5.2.0 |
-| **`height`**     | <code>number</code> | Scale the image to this height. If no `width` is given, it will respect the aspect ratio. |                  | 5.2.0 |
-| **`confidence`** | <code>number</code> | Sets the confidence threshold.                                                            | <code>0.9</code> | 5.2.0 |
+| **`path`**       | <code>string</code> | The local path to the image file.                                                         |                  | 7.0.0 |
+| **`width`**      | <code>number</code> | Scale the image to this width. If no `height` is given, it will respect the aspect ratio. |                  | 7.0.0 |
+| **`height`**     | <code>number</code> | Scale the image to this height. If no `width` is given, it will respect the aspect ratio. |                  | 7.0.0 |
+| **`confidence`** | <code>number</code> | Sets the confidence threshold.                                                            | <code>0.9</code> | 7.0.0 |
 
 </docgen-api>
