@@ -99,7 +99,7 @@ typealias MLKitBarcodeScanner = MLKitBarcodeScanning.BarcodeScanner
     }
 
     @objc public func enableTorch() {
-        guard let device = AVCaptureDevice.default(for: AVMediaType.video) else { return }
+        guard let device = cameraView?.getCaptureDevice() else { return }
         guard device.hasTorch else { return }
         do {
             try device.lockForConfiguration()
@@ -115,7 +115,7 @@ typealias MLKitBarcodeScanner = MLKitBarcodeScanning.BarcodeScanner
     }
 
     @objc public func disableTorch() {
-        guard let device = AVCaptureDevice.default(for: AVMediaType.video) else { return }
+        guard let device = cameraView?.getCaptureDevice() else { return }
         guard device.hasTorch else { return }
         do {
             try device.lockForConfiguration()
@@ -135,13 +135,13 @@ typealias MLKitBarcodeScanner = MLKitBarcodeScanning.BarcodeScanner
     }
 
     @objc public func isTorchEnabled() -> Bool {
-        guard let device = AVCaptureDevice.default(for: AVMediaType.video) else { return false }
+        guard let device = cameraView?.getCaptureDevice() else { return false }
         guard device.hasTorch else { return false }
         return device.torchMode == AVCaptureDevice.TorchMode.on
     }
 
     @objc public func isTorchAvailable() -> Bool {
-        guard let device = AVCaptureDevice.default(for: AVMediaType.video) else {
+        guard let device = cameraView?.getCaptureDevice() else {
             return false
         }
         return device.hasTorch
@@ -150,7 +150,7 @@ typealias MLKitBarcodeScanner = MLKitBarcodeScanning.BarcodeScanner
     @objc public func setZoomRatio(_ options: SetZoomRatioOptions) throws {
         let zoomRatio = options.getZoomRatio()
 
-        guard let device = AVCaptureDevice.default(for: AVMediaType.video) else {
+        guard let device = cameraView?.getCaptureDevice() else {
             return
         }
         try device.lockForConfiguration()
@@ -159,21 +159,21 @@ typealias MLKitBarcodeScanner = MLKitBarcodeScanning.BarcodeScanner
     }
 
     @objc public func getZoomRatio() -> GetZoomRatioResult? {
-        guard let device = AVCaptureDevice.default(for: AVMediaType.video) else {
+        guard let device = cameraView?.getCaptureDevice() else {
             return nil
         }
         return GetZoomRatioResult(zoomRatio: device.videoZoomFactor)
     }
 
     @objc public func getMinZoomRatio() -> GetMinZoomRatioResult? {
-        guard let device = AVCaptureDevice.default(for: AVMediaType.video) else {
+        guard let device = cameraView?.getCaptureDevice() else {
             return nil
         }
         return GetMinZoomRatioResult(zoomRatio: device.minAvailableVideoZoomFactor)
     }
 
     @objc public func getMaxZoomRatio() -> GetMaxZoomRatioResult? {
-        guard let device = AVCaptureDevice.default(for: AVMediaType.video) else {
+        guard let device = cameraView?.getCaptureDevice() else {
             return nil
         }
         return GetMaxZoomRatioResult(zoomRatio: device.maxAvailableVideoZoomFactor)
