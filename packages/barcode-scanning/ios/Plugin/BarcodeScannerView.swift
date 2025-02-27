@@ -20,6 +20,7 @@ public protocol BarcodeScannerViewDelegate {
 
     private let implementation: BarcodeScanner
     private let settings: ScanSettings
+    private var captureDevice: AVCaptureDevice?
     private var captureSession: AVCaptureSession?
     private var barcodeScannerInstance: MLKitBarcodeScanner?
     private var videoPreviewLayer: AVCaptureVideoPreviewLayer?
@@ -55,7 +56,10 @@ public protocol BarcodeScannerViewDelegate {
         // block
         captureSessionQueue.sync {
             do {
-                let captureDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: AVMediaType.video, position: settings.lensFacing)
+                captureDevice = AVCaptureDevice.default(.builtInTripleCamera, for: AVMediaType.video, position: settings.lensFacing)
+                if captureDevice == nil {
+                    captureDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: AVMediaType.video, position: settings.lensFacing)
+                }
                 guard let captureDevice = captureDevice else {
                     throw RuntimeError(implementation.plugin.errorNoCaptureDeviceAvailable)
                 }
@@ -99,7 +103,9 @@ public protocol BarcodeScannerViewDelegate {
         }
 
         DispatchQueue.main.async {
+            guard let captureDevice = self.captureDevice else { return }
             guard let captureSession = self.captureSession else { return }
+            self.configureCaptureDevice(captureDevice)
             let formats = self.settings.formats.isEmpty ? BarcodeFormat.all : BarcodeFormat(self.settings.formats)
             self.barcodeScannerInstance = MLKitBarcodeScanner.barcodeScanner(options: BarcodeScannerOptions(formats: formats))
             self.setVideoPreviewLayer(AVCaptureVideoPreviewLayer(session: captureSession))
@@ -180,6 +186,35 @@ public protocol BarcodeScannerViewDelegate {
             }
         }
         onBarcodesDetected(barcodes: barcodes, imageSize: imageSize, videoOrientation: videoOrientation)
+    }
+    
+    public func getCaptureDevice() -> AVCaptureDevice? {
+        return self.captureDevice
+    }
+    
+    private func configureCaptureDevice(_ device: AVCaptureDevice) {
+        do {
+            try device.lockForConfiguration()
+
+            // Set appropriate zoom factor for triple camera
+            if device.deviceType == .builtInTripleCamera {
+                device.videoZoomFactor = 2.0
+            }
+            
+            // Set focus mode
+            if device.isFocusModeSupported(.continuousAutoFocus) {
+                device.focusMode = .continuousAutoFocus
+            }
+
+            // Set exposure mode
+            if device.isExposureModeSupported(.continuousAutoExposure) {
+                device.exposureMode = .continuousAutoExposure
+            }
+
+            device.unlockForConfiguration()
+        } catch {
+            // Silent failure is acceptable during setup
+        }
     }
 
     private func interfaceOrientationToVideoOrientation(_ orientation: UIInterfaceOrientation) -> AVCaptureVideoOrientation {
