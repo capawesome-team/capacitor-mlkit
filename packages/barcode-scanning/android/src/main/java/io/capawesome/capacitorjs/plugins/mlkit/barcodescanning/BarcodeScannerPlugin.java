@@ -85,23 +85,25 @@ public class BarcodeScannerPlugin extends Plugin {
             }
 
             getActivity()
-                .runOnUiThread(() -> {
-                    implementation.startScan(
-                        scanSettings,
-                        new StartScanResultCallback() {
-                            @Override
-                            public void success() {
-                                call.resolve();
-                            }
+                .runOnUiThread(
+                    () -> {
+                        implementation.startScan(
+                            scanSettings,
+                            new StartScanResultCallback() {
+                                @Override
+                                public void success() {
+                                    call.resolve();
+                                }
 
-                            @Override
-                            public void error(Exception exception) {
-                                Logger.error(TAG, exception.getMessage(), exception);
-                                call.reject(exception.getMessage());
+                                @Override
+                                public void error(Exception exception) {
+                                    Logger.error(TAG, exception.getMessage(), exception);
+                                    call.reject(exception.getMessage());
+                                }
                             }
-                        }
-                    );
-                });
+                        );
+                    }
+                );
         } catch (Exception exception) {
             Logger.error(TAG, exception.getMessage(), exception);
             call.reject(exception.getMessage());
@@ -112,10 +114,12 @@ public class BarcodeScannerPlugin extends Plugin {
     public void stopScan(PluginCall call) {
         try {
             getActivity()
-                .runOnUiThread(() -> {
-                    implementation.stopScan();
-                    call.resolve();
-                });
+                .runOnUiThread(
+                    () -> {
+                        implementation.stopScan();
+                        call.resolve();
+                    }
+                );
         } catch (Exception exception) {
             Logger.error(TAG, exception.getMessage(), exception);
             call.reject(exception.getMessage());
@@ -182,7 +186,8 @@ public class BarcodeScannerPlugin extends Plugin {
                         if (isAvailable) {
                             implementation.scan(
                                 scanSettings,
-                                (new ScanResultCallback() {
+                                (
+                                    new ScanResultCallback() {
                                         @Override
                                         public void success(Barcode barcode) {
                                             JSObject barcodeResult = BarcodeScannerHelper.createBarcodeResultForBarcode(
@@ -209,7 +214,8 @@ public class BarcodeScannerPlugin extends Plugin {
                                             Logger.error(TAG, exception.getMessage(), exception);
                                             call.reject(exception.getMessage());
                                         }
-                                    })
+                                    }
+                                )
                             );
                         } else {
                             call.reject(ERROR_GOOGLE_BARCODE_SCANNER_MODULE_NOT_AVAILABLE);
