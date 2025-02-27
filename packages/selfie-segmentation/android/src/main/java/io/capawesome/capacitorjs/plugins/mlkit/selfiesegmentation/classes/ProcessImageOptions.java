@@ -29,7 +29,8 @@ public class ProcessImageOptions {
         float scaleY = (height != null) ? (height * 1f) / inputImage.getHeight() : 0f;
 
         if (scaleX > 0f || scaleY > 0f) {
-            if (scaleX > 0f && scaleY == 0f) scaleY = scaleX; else if (scaleY > 0f && scaleX == 0f) scaleX = scaleY;
+            if (scaleX > 0f && scaleY == 0f) scaleY = scaleX;
+            else if (scaleY > 0f && scaleX == 0f) scaleX = scaleY;
 
             return InputImage.fromBitmap(
                 Bitmap.createScaledBitmap(
