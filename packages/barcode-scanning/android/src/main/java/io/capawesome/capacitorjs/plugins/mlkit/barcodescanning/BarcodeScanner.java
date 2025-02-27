@@ -24,6 +24,7 @@ import androidx.camera.core.CameraSelector;
 import androidx.camera.core.ImageAnalysis;
 import androidx.camera.core.ImageProxy;
 import androidx.camera.core.Preview;
+import androidx.camera.core.ZoomState;
 import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.camera.view.PreviewView;
 import androidx.core.content.ContextCompat;
@@ -38,6 +39,7 @@ import com.google.android.gms.common.moduleinstall.ModuleInstallStatusUpdate;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.mlkit.vision.barcode.BarcodeScannerOptions;
 import com.google.mlkit.vision.barcode.BarcodeScanning;
+import com.google.mlkit.vision.barcode.ZoomSuggestionOptions;
 import com.google.mlkit.vision.barcode.common.Barcode;
 import com.google.mlkit.vision.codescanner.GmsBarcodeScanner;
 import com.google.mlkit.vision.codescanner.GmsBarcodeScannerOptions;
@@ -263,10 +265,7 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
 
     public void setZoomRatio(SetZoomRatioOptions options) {
         float zoomRatio = options.getZoomRatio();
-        if (camera == null) {
-            return;
-        }
-        camera.getCameraControl().setZoomRatio(zoomRatio);
+        setZoomRatio(zoomRatio);
     }
 
     @Nullable
@@ -289,10 +288,7 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
 
     @Nullable
     public GetMaxZoomRatioResult getMaxZoomRatio() {
-        if (camera == null) {
-            return null;
-        }
-        float maxZoomRatio = camera.getCameraInfo().getZoomState().getValue().getMaxZoomRatio();
+        float maxZoomRatio = getMaxZoomRatio(1.0f);
         return new GetMaxZoomRatioResult(maxZoomRatio);
     }
 
@@ -408,14 +404,44 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
 
     private BarcodeScannerOptions buildBarcodeScannerOptions(ScanSettings scanSettings) {
         int[] formats = scanSettings.formats.length == 0 ? new int[] { Barcode.FORMAT_ALL_FORMATS } : scanSettings.formats;
-        BarcodeScannerOptions options = new BarcodeScannerOptions.Builder().setBarcodeFormats(formats[0], formats).build();
-        return options;
+        float maxSupportedZoomRatio = getMaxZoomRatio(1.0f);
+        ZoomSuggestionOptions zoomSuggestionOptions = new ZoomSuggestionOptions.Builder(
+            zoomRatio -> {
+                setZoomRatio(zoomRatio);
+                return true;
+            }
+        )
+            .setMaxSupportedZoomRatio(maxSupportedZoomRatio)
+            .build();
+        BarcodeScannerOptions.Builder options = new BarcodeScannerOptions.Builder().setBarcodeFormats(formats[0], formats).setZoomSuggestionOptions(zoomSuggestionOptions);
+        if (scanSettings.enableAutoFocus) {
+            options = options.setZoomSuggestionOptions(zoomSuggestionOptions);
+        }
+        return options.build();
     }
 
     private GmsBarcodeScannerOptions buildGmsBarcodeScannerOptions(ScanSettings scanSettings) {
         int[] formats = scanSettings.formats.length == 0 ? new int[] { Barcode.FORMAT_ALL_FORMATS } : scanSettings.formats;
         GmsBarcodeScannerOptions options = new GmsBarcodeScannerOptions.Builder().setBarcodeFormats(formats[0], formats).build();
         return options;
+    }
+
+    private float getMaxZoomRatio(float fallbackValue) {
+        if (camera == null) {
+            return fallbackValue;
+        }
+        ZoomState zoomState = camera.getCameraInfo().getZoomState().getValue();
+        if (zoomState == null) {
+            return fallbackValue;
+        }
+        return zoomState.getMaxZoomRatio();
+    }
+
+    private void setZoomRatio(float zoomRatio) {
+        if (camera == null) {
+            return;
+        }
+        camera.getCameraControl().setZoomRatio(zoomRatio);
     }
 
     @Nullable

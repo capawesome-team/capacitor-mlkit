@@ -10,6 +10,8 @@ import com.google.mlkit.vision.barcode.common.Barcode;
 
 public class ScanSettings {
 
+    public boolean enableAutoFocus = false;
+
     @Barcode.BarcodeFormat
     public int[] formats = new int[] {};
 
