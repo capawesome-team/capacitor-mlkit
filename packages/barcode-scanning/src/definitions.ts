@@ -499,13 +499,6 @@ export interface Barcode {
    */
   phone?: BarcodePhone;
   /**
-   * The raw bytes of the barcode.
-   *
-   * @since 7.1.0
-   * @example [67, 97, 112, 97, 99, 105, 116, 111, 114, 74, 83]
-   */
-  rawBytes?: number[];
-  /**
    * The barcode value in a machine readable format.
    *
    * This value is only available when the barcode is encoded
