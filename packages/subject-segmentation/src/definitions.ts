@@ -7,6 +7,30 @@ export interface SubjectSegmentationPlugin {
    * @since 7.2.0
    */
   processImage(options: ProcessImageOptions): Promise<ProcessImageResult>;
+
+
+  /**
+   * Check if the Google Subject Segmentation module is available.
+   *
+   * If the Google Subject Segmentation module is not available, you can install it by using `installGoogleSubjectSegmentationModule()`.
+   *
+   * Only available on Android.
+   *
+   * @since 7.2.0
+   */
+  isGoogleSubjectSegmentationModuleAvailable(): Promise<IsGoogleSubjectSegmentationModuleAvailableResult>;
+  /**
+   * Install the Google Subject Segmentation module.
+   *
+   * **Attention**: This only starts the installation.
+   * The `googleSubjectSegmentationModuleInstallProgress` event listener will
+   * notify you when the installation is complete.
+   *
+   * Only available on Android.
+   *
+   * @since 7.2.0
+   */
+  installGoogleSubjectSegmentationModule(): Promise<void>;
 }
 
 /**
@@ -66,4 +90,16 @@ export interface ProcessImageResult {
    * @since 7.2.0
    */
   height: number;
+}
+
+/**
+ * @since 7.2.0
+ */
+export interface IsGoogleSubjectSegmentationModuleAvailableResult {
+  /**
+   * Whether or not the Google Subject Segmentation module is available.
+   *
+   * @since 7.2.0
+   */
+  available: boolean;
 }
