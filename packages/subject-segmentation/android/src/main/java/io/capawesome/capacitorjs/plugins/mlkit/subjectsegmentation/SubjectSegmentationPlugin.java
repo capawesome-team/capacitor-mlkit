@@ -21,12 +21,12 @@ public class SubjectSegmentationPlugin extends Plugin {
 
     public static final float CONFIDENCE = 0.9f;
 
-    private SubjectSegmentationCapacitor implementation;
+    private SubjectSegmentation implementation;
 
     @Override
     public void load() {
         try {
-            implementation = new SubjectSegmentationCapacitor(this);
+            implementation = new SubjectSegmentation(this);
         } catch (Exception exception) {
             Logger.error(TAG, exception.getMessage(), exception);
         }

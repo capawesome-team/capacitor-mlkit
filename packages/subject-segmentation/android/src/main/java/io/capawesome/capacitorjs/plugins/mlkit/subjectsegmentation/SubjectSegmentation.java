@@ -12,7 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.google.mlkit.vision.common.InputImage;
 import com.google.mlkit.vision.segmentation.subject.Subject;
-import com.google.mlkit.vision.segmentation.subject.SubjectSegmentation;
 import com.google.mlkit.vision.segmentation.subject.SubjectSegmenter;
 import com.google.mlkit.vision.segmentation.subject.SubjectSegmenterOptions;
 import io.capawesome.capacitorjs.plugins.mlkit.subjectsegmentation.classes.ProcessImageOptions;
@@ -26,12 +25,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-public class SubjectSegmentationCapacitor {
+public class SubjectSegmentation {
 
     @NonNull
     private final SubjectSegmentationPlugin plugin;
 
-    public SubjectSegmentationCapacitor(@NonNull SubjectSegmentationPlugin plugin) {
+    public SubjectSegmentation(@NonNull SubjectSegmentationPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -58,7 +57,7 @@ public class SubjectSegmentationCapacitor {
             .enableForegroundConfidenceMask()
             .build();
 
-        final SubjectSegmenter segmenter = SubjectSegmentation.getClient(subjectSegmenterOptions);
+        final SubjectSegmenter segmenter = com.google.mlkit.vision.segmentation.subject.SubjectSegmentation.getClient(subjectSegmenterOptions);
 
         plugin
             .getActivity()
