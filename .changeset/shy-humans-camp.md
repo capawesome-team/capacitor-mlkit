@@ -2,4 +2,4 @@
 '@capacitor-mlkit/barcode-scanning': patch
 ---
 
-barcode-scanning: Resolve intermittent issue with preview display on iOS
+fix(barcode-scanning): opening and closing repeatedly occasionally results in a black screen

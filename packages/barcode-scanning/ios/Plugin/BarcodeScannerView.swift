@@ -83,6 +83,9 @@ public protocol BarcodeScannerViewDelegate {
                 } else {
                     throw RuntimeError(implementation.plugin.errorCannotAddCaptureOutput)
                 }
+                // Configure capture device to set the correct focus mode and exposure mode.
+                // This must be called before commiting the configuration to the capture session
+                // and after adding the device input to the capture session.
                 self.configureCaptureDevice(captureDevice)
 
                 captureSession.commitConfiguration()
