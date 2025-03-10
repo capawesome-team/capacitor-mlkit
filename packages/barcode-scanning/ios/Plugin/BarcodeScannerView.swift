@@ -83,6 +83,10 @@ public protocol BarcodeScannerViewDelegate {
                 } else {
                     throw RuntimeError(implementation.plugin.errorCannotAddCaptureOutput)
                 }
+                // Configure capture device to set the correct focus mode and exposure mode.
+                // This must be called before commiting the configuration to the capture session
+                // and after adding the device input to the capture session.
+                self.configureCaptureDevice(captureDevice)
 
                 captureSession.commitConfiguration()
                 self.captureSession = captureSession
@@ -105,7 +109,6 @@ public protocol BarcodeScannerViewDelegate {
         DispatchQueue.main.async {
             guard let captureDevice = self.captureDevice else { return }
             guard let captureSession = self.captureSession else { return }
-            self.configureCaptureDevice(captureDevice)
             let formats = self.settings.formats.isEmpty ? BarcodeFormat.all : BarcodeFormat(self.settings.formats)
             self.barcodeScannerInstance = MLKitBarcodeScanner.barcodeScanner(options: BarcodeScannerOptions(formats: formats))
             self.setVideoPreviewLayer(AVCaptureVideoPreviewLayer(session: captureSession))
