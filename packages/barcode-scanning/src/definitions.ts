@@ -502,7 +502,7 @@ export interface Barcode {
    * The barcode value in a machine readable format.
    *
    * This value is only available when the barcode is encoded
-   * in the UTF-8 character set. Otherwise, the `rawBytes` property
+   * in the UTF-8 character set. Otherwise, the `bytes` property
    * should be used and this property will be an empty string.
    *
    * @since 0.0.1
