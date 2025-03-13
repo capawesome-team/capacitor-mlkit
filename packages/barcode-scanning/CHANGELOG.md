@@ -1,5 +1,11 @@
 # Changelog
 
+## 7.1.1
+
+### Patch Changes
+
+- [`df6f50151b41dfac56b93f8c7b64ffa470a566cb`](https://github.com/capawesome-team/capacitor-mlkit/commit/df6f50151b41dfac56b93f8c7b64ffa470a566cb) ([#255](https://github.com/capawesome-team/capacitor-mlkit/pull/255)): fix(barcode-scanning): opening and closing repeatedly occasionally results in a black screen
+
 ## 7.1.0
 
 ### Minor Changes
