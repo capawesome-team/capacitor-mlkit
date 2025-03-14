@@ -5,7 +5,6 @@ import static com.google.android.gms.common.moduleinstall.ModuleInstallStatusUpd
 import static com.google.android.gms.common.moduleinstall.ModuleInstallStatusUpdate.InstallState.STATE_FAILED;
 
 import androidx.annotation.NonNull;
-
 import com.google.android.gms.common.moduleinstall.InstallStatusListener;
 import com.google.android.gms.common.moduleinstall.ModuleInstallStatusUpdate;
 
@@ -25,12 +24,13 @@ public class ModuleInstallProgressListener implements InstallStatusListener {
     @Override
     public void onInstallStatusUpdated(ModuleInstallStatusUpdate update) {
         ModuleInstallStatusUpdate.ProgressInfo progressInfo = update.getProgressInfo();
-        @ModuleInstallStatusUpdate.InstallState int state = update.getInstallState();
+        @ModuleInstallStatusUpdate.InstallState
+        int state = update.getInstallState();
         // Progress info is only set when modules are in the progress of downloading.
         Integer progress = null;
         if (progressInfo != null) {
             progress = (int) (100 * (progressInfo.getBytesDownloaded() / progressInfo.getTotalBytesToDownload()));
         }
-        implementation.handleSubjectSegmentationScannerModuleInstallProgress(state, progress);
+        implementation.handleGoogleSubjectSegmentationScannerModuleInstallProgress(state, progress);
     }
 }

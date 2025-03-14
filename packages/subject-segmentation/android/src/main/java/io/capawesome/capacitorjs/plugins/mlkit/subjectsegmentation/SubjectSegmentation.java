@@ -8,10 +8,8 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.net.Uri;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
 import com.google.android.gms.common.moduleinstall.InstallStatusListener;
 import com.google.android.gms.common.moduleinstall.ModuleInstall;
 import com.google.android.gms.common.moduleinstall.ModuleInstallClient;
@@ -21,10 +19,8 @@ import com.google.mlkit.vision.common.InputImage;
 import com.google.mlkit.vision.segmentation.subject.Subject;
 import com.google.mlkit.vision.segmentation.subject.SubjectSegmenter;
 import com.google.mlkit.vision.segmentation.subject.SubjectSegmenterOptions;
-
 import io.capawesome.capacitorjs.plugins.mlkit.subjectsegmentation.classes.ProcessImageOptions;
 import io.capawesome.capacitorjs.plugins.mlkit.subjectsegmentation.classes.ProcessImageResult;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
@@ -69,7 +65,9 @@ public class SubjectSegmentation {
             .enableForegroundConfidenceMask()
             .build();
 
-        final SubjectSegmenter segmenter = com.google.mlkit.vision.segmentation.subject.SubjectSegmentation.getClient(subjectSegmenterOptions);
+        final SubjectSegmenter segmenter = com.google.mlkit.vision.segmentation.subject.SubjectSegmentation.getClient(
+            subjectSegmenterOptions
+        );
 
         plugin
             .getActivity()
@@ -155,7 +153,9 @@ public class SubjectSegmentation {
     }
 
     public void isSubjectSegmentationScannerModuleAvailable(IsGoogleSubjectSegmentationModuleAvailableResultCallback callback) {
-        SubjectSegmenter segmenter = com.google.mlkit.vision.segmentation.subject.SubjectSegmentation.getClient(new SubjectSegmenterOptions.Builder().build());
+        SubjectSegmenter segmenter = com.google.mlkit.vision.segmentation.subject.SubjectSegmentation.getClient(
+            new SubjectSegmenterOptions.Builder().build()
+        );
         ModuleInstallClient moduleInstallClient = ModuleInstall.getClient(plugin.getContext());
         moduleInstallClient
             .areModulesAvailable(segmenter)
@@ -167,7 +167,9 @@ public class SubjectSegmentation {
     }
 
     public void installSubjectSegmentationScannerModule(InstallSubjectSegmentationScannerModuleResultCallback callback) {
-        SubjectSegmenter segmenter = com.google.mlkit.vision.segmentation.subject.SubjectSegmentation.getClient(new SubjectSegmenterOptions.Builder().build());
+        SubjectSegmenter segmenter = com.google.mlkit.vision.segmentation.subject.SubjectSegmentation.getClient(
+            new SubjectSegmenterOptions.Builder().build()
+        );
         InstallStatusListener listener = new ModuleInstallProgressListener(this);
         ModuleInstallRequest moduleInstallRequest = ModuleInstallRequest.newBuilder().addApi(segmenter).setListener(listener).build();
         ModuleInstallClient moduleInstallClient = ModuleInstall.getClient(plugin.getContext());
@@ -183,11 +185,11 @@ public class SubjectSegmentation {
             .addOnFailureListener(callback::error);
     }
 
-    public void handleSubjectSegmentationScannerModuleInstallProgress(
+    public void handleGoogleSubjectSegmentationScannerModuleInstallProgress(
         @ModuleInstallStatusUpdate.InstallState int state,
         @Nullable Integer progress
     ) {
-        plugin.notifySubjectSegmentationScannerModuleInstallProgressListener(state, progress);
+        plugin.notifyGoogleSubjectSegmentationScannerModuleInstallProgressListener(state, progress);
         boolean isTerminateState = ModuleInstallProgressListener.isTerminateState(state);
         if (isTerminateState && moduleInstallProgressListener != null) {
             ModuleInstallClient moduleInstallClient = ModuleInstall.getClient(plugin.getContext());
