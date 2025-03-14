@@ -4,22 +4,30 @@ import type {
   SubjectSegmentationPlugin,
   ProcessImageOptions,
   ProcessImageResult,
+  IsGoogleSubjectSegmentationModuleAvailableResult,
 } from './definitions';
 
 export class SubjectSegmentationWeb
   extends WebPlugin
-  implements SubjectSegmentationPlugin
-{
+  implements SubjectSegmentationPlugin {
   public async processImage(
     _options: ProcessImageOptions,
   ): Promise<ProcessImageResult> {
-    throw this.createUnimplementedException();
+    throw this.createUnavailableException();
   }
 
-  private createUnimplementedException(): CapacitorException {
+  private createUnavailableException(): CapacitorException {
     return new CapacitorException(
-      'This plugin method is not implemented on this platform.',
-      ExceptionCode.Unimplemented,
+      'This plugin method is not available on this platform.',
+      ExceptionCode.Unavailable,
     );
+  }
+
+  async isGoogleSubjectSegmentationModuleAvailable(): Promise<IsGoogleSubjectSegmentationModuleAvailableResult> {
+    throw this.createUnavailableException();
+  }
+
+  async installGoogleSubjectSegmentationModule(): Promise<void> {
+    throw this.createUnavailableException();
   }
 }
