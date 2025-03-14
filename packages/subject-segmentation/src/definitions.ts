@@ -1,3 +1,5 @@
+import { PluginListenerHandle } from "@capacitor/core";
+
 export interface SubjectSegmentationPlugin {
   /**
    * Performs segmentation on an input image.
@@ -31,6 +33,29 @@ export interface SubjectSegmentationPlugin {
    * @since 7.2.0
    */
   installGoogleSubjectSegmentationModule(): Promise<void>;
+
+  /**
+   * Called when the Google Subject Segmentation module is installed.
+   *
+   * Only available on Android.
+   *
+   * @since 7.2.0
+   */
+  addListener(
+    eventName: 'googleSubjectSegmentationModuleInstallProgress',
+    listenerFunc: (
+      event: GoogleSubjectSegmentationModuleInstallProgressEvent,
+    ) => void,
+  ): Promise<PluginListenerHandle>;
+
+  /**
+   * Remove all listeners for this plugin.
+   * 
+   * Only available on Android.
+   *
+   * @since 7.2.0
+   */
+  removeAllListeners(): Promise<void>;
 }
 
 /**
@@ -102,4 +127,61 @@ export interface IsGoogleSubjectSegmentationModuleAvailableResult {
    * @since 7.2.0
    */
   available: boolean;
+}
+
+
+/**
+ * @since 7.2.0
+ */
+export interface GoogleSubjectSegmentationModuleInstallProgressEvent {
+  /**
+   * The current state of the installation.
+   *
+   * @since 7.2.0
+   */
+  state: GoogleSubjectSegmentationModuleInstallState;
+  /**
+   * The progress of the installation in percent between 0 and 100.
+   *
+   * @since 7.2.0
+   */
+  progress?: number;
+}
+
+/**
+ * @since 7.2.0
+ */
+export enum GoogleSubjectSegmentationModuleInstallState {
+  /**
+   * @since 7.2.0
+   */
+  UNKNOWN = 0,
+  /**
+   * @since 7.2.0
+   */
+  PENDING = 1,
+  /**
+   * @since 7.2.0
+   */
+  DOWNLOADING = 2,
+  /**
+   * @since 7.2.0
+   */
+  CANCELED = 3,
+  /**
+   * @since 7.2.0
+   */
+  COMPLETED = 4,
+  /**
+   * @since 7.2.0
+   */
+  FAILED = 5,
+  /**
+   * @since 7.2.0
+   */
+  INSTALLING = 6,
+  /**
+   * @since 7.2.0
+   */
+  DOWNLOAD_PAUSED = 7,
 }

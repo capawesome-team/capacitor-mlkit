@@ -30,7 +30,10 @@ const processImage = async () => {
 * [`processImage(...)`](#processimage)
 * [`isGoogleSubjectSegmentationModuleAvailable()`](#isgooglesubjectsegmentationmoduleavailable)
 * [`installGoogleSubjectSegmentationModule()`](#installgooglesubjectsegmentationmodule)
+* [`addListener('googleSubjectSegmentationModuleInstallProgress', ...)`](#addlistenergooglesubjectsegmentationmoduleinstallprogress-)
+* [`removeAllListeners()`](#removealllisteners)
 * [Interfaces](#interfaces)
+* [Enums](#enums)
 
 </docgen-index>
 
@@ -96,6 +99,43 @@ Only available on Android.
 --------------------
 
 
+### addListener('googleSubjectSegmentationModuleInstallProgress', ...)
+
+```typescript
+addListener(eventName: 'googleSubjectSegmentationModuleInstallProgress', listenerFunc: (event: GoogleSubjectSegmentationModuleInstallProgressEvent) => void) => Promise<PluginListenerHandle>
+```
+
+Called when the Google Subject Segmentation module is installed.
+
+Only available on Android.
+
+| Param              | Type                                                                                                                                                    |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`eventName`**    | <code>'googleSubjectSegmentationModuleInstallProgress'</code>                                                                                           |
+| **`listenerFunc`** | <code>(event: <a href="#googlesubjectsegmentationmoduleinstallprogressevent">GoogleSubjectSegmentationModuleInstallProgressEvent</a>) =&gt; void</code> |
+
+**Returns:** <code>Promise&lt;<a href="#pluginlistenerhandle">PluginListenerHandle</a>&gt;</code>
+
+**Since:** 7.2.0
+
+--------------------
+
+
+### removeAllListeners()
+
+```typescript
+removeAllListeners() => Promise<void>
+```
+
+Remove all listeners for this plugin.
+
+Only available on Android.
+
+**Since:** 7.2.0
+
+--------------------
+
+
 ### Interfaces
 
 
@@ -123,5 +163,37 @@ Only available on Android.
 | Prop            | Type                 | Description                                                         | Since |
 | --------------- | -------------------- | ------------------------------------------------------------------- | ----- |
 | **`available`** | <code>boolean</code> | Whether or not the Google Subject Segmentation module is available. | 7.2.0 |
+
+
+#### PluginListenerHandle
+
+| Prop         | Type                                      |
+| ------------ | ----------------------------------------- |
+| **`remove`** | <code>() =&gt; Promise&lt;void&gt;</code> |
+
+
+#### GoogleSubjectSegmentationModuleInstallProgressEvent
+
+| Prop           | Type                                                                                                                | Description                                                    | Since |
+| -------------- | ------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------- | ----- |
+| **`state`**    | <code><a href="#googlesubjectsegmentationmoduleinstallstate">GoogleSubjectSegmentationModuleInstallState</a></code> | The current state of the installation.                         | 7.2.0 |
+| **`progress`** | <code>number</code>                                                                                                 | The progress of the installation in percent between 0 and 100. | 7.2.0 |
+
+
+### Enums
+
+
+#### GoogleSubjectSegmentationModuleInstallState
+
+| Members               | Value          | Since |
+| --------------------- | -------------- | ----- |
+| **`UNKNOWN`**         | <code>0</code> | 7.2.0 |
+| **`PENDING`**         | <code>1</code> | 7.2.0 |
+| **`DOWNLOADING`**     | <code>2</code> | 7.2.0 |
+| **`CANCELED`**        | <code>3</code> | 7.2.0 |
+| **`COMPLETED`**       | <code>4</code> | 7.2.0 |
+| **`FAILED`**          | <code>5</code> | 7.2.0 |
+| **`INSTALLING`**      | <code>6</code> | 7.2.0 |
+| **`DOWNLOAD_PAUSED`** | <code>7</code> | 7.2.0 |
 
 </docgen-api>
