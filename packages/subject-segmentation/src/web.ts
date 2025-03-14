@@ -13,13 +13,13 @@ export class SubjectSegmentationWeb
   public async processImage(
     _options: ProcessImageOptions,
   ): Promise<ProcessImageResult> {
-    throw this.createUnavailableException();
+    throw this.createUnimplementedException();
   }
 
-  private createUnavailableException(): CapacitorException {
+  private createUnimplementedException(): CapacitorException {
     return new CapacitorException(
-      'This Subject Segmentation plugin method is not available on this platform.',
-      ExceptionCode.Unavailable,
+      'This plugin method is not implemented on this platform.',
+      ExceptionCode.Unimplemented,
     );
   }
 }
