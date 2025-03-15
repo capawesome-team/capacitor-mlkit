@@ -1,13 +1,13 @@
-import { registerPlugin } from "@capacitor/core";
+import { registerPlugin } from '@capacitor/core';
 
-import type { SubjectSegmentationPlugin } from "./definitions";
+import type { SubjectSegmentationPlugin } from './definitions';
 
 const SubjectSegmentation = registerPlugin<SubjectSegmentationPlugin>(
-  "SubjectSegmentation",
+  'SubjectSegmentation',
   {
-    web: () => import("./web").then((m) => new m.SubjectSegmentationWeb()),
+    web: () => import('./web').then(m => new m.SubjectSegmentationWeb()),
   },
 );
 
-export * from "./definitions";
+export * from './definitions';
 export { SubjectSegmentation };
