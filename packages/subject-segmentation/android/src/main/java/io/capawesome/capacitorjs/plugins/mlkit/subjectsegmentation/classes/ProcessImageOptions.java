@@ -1,9 +1,7 @@
 package io.capawesome.capacitorjs.plugins.mlkit.subjectsegmentation.classes;
 
 import android.graphics.Bitmap;
-
 import com.google.mlkit.vision.common.InputImage;
-
 import java.util.Objects;
 
 public class ProcessImageOptions {

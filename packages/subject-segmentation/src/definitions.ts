@@ -1,4 +1,4 @@
-import type { PluginListenerHandle } from "@capacitor/core";
+import type { PluginListenerHandle } from '@capacitor/core';
 
 export interface SubjectSegmentationPlugin {
   /**
@@ -9,7 +9,6 @@ export interface SubjectSegmentationPlugin {
    * @since 7.2.0
    */
   processImage(options: ProcessImageOptions): Promise<ProcessImageResult>;
-
 
   /**
    * Check if the Google Subject Segmentation module is available.
@@ -50,7 +49,7 @@ export interface SubjectSegmentationPlugin {
 
   /**
    * Remove all listeners for this plugin.
-   * 
+   *
    * Only available on Android.
    *
    * @since 7.2.0
@@ -128,7 +127,6 @@ export interface IsGoogleSubjectSegmentationModuleAvailableResult {
    */
   available: boolean;
 }
-
 
 /**
  * @since 7.2.0

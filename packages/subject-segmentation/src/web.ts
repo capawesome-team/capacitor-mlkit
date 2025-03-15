@@ -9,7 +9,8 @@ import type {
 
 export class SubjectSegmentationWeb
   extends WebPlugin
-  implements SubjectSegmentationPlugin {
+  implements SubjectSegmentationPlugin
+{
   public async processImage(
     _options: ProcessImageOptions,
   ): Promise<ProcessImageResult> {
