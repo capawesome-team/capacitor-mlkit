@@ -9,6 +9,12 @@ npm install @capacitor-mlkit/subject-segmentation
 npx cap sync
 ```
 
+### Android
+
+#### API level
+
+This plugin requires a minimum API level of 24.
+
 ## Usage
 
 ```typescript
@@ -27,13 +33,13 @@ const processImage = async () => {
 
 <docgen-index>
 
-* [`processImage(...)`](#processimage)
-* [`isGoogleSubjectSegmentationModuleAvailable()`](#isgooglesubjectsegmentationmoduleavailable)
-* [`installGoogleSubjectSegmentationModule()`](#installgooglesubjectsegmentationmodule)
-* [`addListener('googleSubjectSegmentationModuleInstallProgress', ...)`](#addlistenergooglesubjectsegmentationmoduleinstallprogress-)
-* [`removeAllListeners()`](#removealllisteners)
-* [Interfaces](#interfaces)
-* [Enums](#enums)
+- [`processImage(...)`](#processimage)
+- [`isGoogleSubjectSegmentationModuleAvailable()`](#isgooglesubjectsegmentationmoduleavailable)
+- [`installGoogleSubjectSegmentationModule()`](#installgooglesubjectsegmentationmodule)
+- [`addListener('googleSubjectSegmentationModuleInstallProgress', ...)`](#addlistenergooglesubjectsegmentationmoduleinstallprogress-)
+- [`removeAllListeners()`](#removealllisteners)
+- [Interfaces](#interfaces)
+- [Enums](#enums)
 
 </docgen-index>
 
@@ -58,8 +64,7 @@ Only available on Android and iOS.
 
 **Since:** 7.2.0
 
---------------------
-
+---
 
 ### isGoogleSubjectSegmentationModuleAvailable()
 
@@ -77,8 +82,7 @@ Only available on Android.
 
 **Since:** 7.2.0
 
---------------------
-
+---
 
 ### installGoogleSubjectSegmentationModule()
 
@@ -96,8 +100,7 @@ Only available on Android.
 
 **Since:** 7.2.0
 
---------------------
-
+---
 
 ### addListener('googleSubjectSegmentationModuleInstallProgress', ...)
 
@@ -118,8 +121,7 @@ Only available on Android.
 
 **Since:** 7.2.0
 
---------------------
-
+---
 
 ### removeAllListeners()
 
@@ -133,11 +135,9 @@ Only available on Android.
 
 **Since:** 7.2.0
 
---------------------
-
+---
 
 ### Interfaces
-
 
 #### ProcessImageResult
 
@@ -146,7 +146,6 @@ Only available on Android.
 | **`path`**   | <code>string</code> | The path to the segmented image file. | 7.2.0 |
 | **`width`**  | <code>number</code> | Returns the width of the image file.  | 7.2.0 |
 | **`height`** | <code>number</code> | Returns the height of the image file. | 7.2.0 |
-
 
 #### ProcessImageOptions
 
@@ -157,20 +156,17 @@ Only available on Android.
 | **`height`**     | <code>number</code> | Scale the image to this height. If no `width` is given, it will respect the aspect ratio. |                  | 7.2.0 |
 | **`confidence`** | <code>number</code> | Sets the confidence threshold.                                                            | <code>0.9</code> | 7.2.0 |
 
-
 #### IsGoogleSubjectSegmentationModuleAvailableResult
 
 | Prop            | Type                 | Description                                                         | Since |
 | --------------- | -------------------- | ------------------------------------------------------------------- | ----- |
 | **`available`** | <code>boolean</code> | Whether or not the Google Subject Segmentation module is available. | 7.2.0 |
 
-
 #### PluginListenerHandle
 
 | Prop         | Type                                      |
 | ------------ | ----------------------------------------- |
 | **`remove`** | <code>() =&gt; Promise&lt;void&gt;</code> |
-
 
 #### GoogleSubjectSegmentationModuleInstallProgressEvent
 
@@ -179,9 +175,7 @@ Only available on Android.
 | **`state`**    | <code><a href="#googlesubjectsegmentationmoduleinstallstate">GoogleSubjectSegmentationModuleInstallState</a></code> | The current state of the installation.                         | 7.2.0 |
 | **`progress`** | <code>number</code>                                                                                                 | The progress of the installation in percent between 0 and 100. | 7.2.0 |
 
-
 ### Enums
-
 
 #### GoogleSubjectSegmentationModuleInstallState
 
