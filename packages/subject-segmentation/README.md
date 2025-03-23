@@ -15,6 +15,21 @@ npx cap sync
 
 This plugin requires a minimum API level of 24.
 
+#### Permissions
+
+This API requires the following permissions be added to your `AndroidManifest.xml` before the `application` tag:
+
+```xml
+<uses-permission android:name="android.permission.CAMERA" />
+```
+
+You also need to add the following meta data **in** the `application` tag in your `AndroidManifest.xml`:
+
+```xml
+<meta-data android:name="com.google.mlkit.vision.DEPENDENCIES" android:value="subject_segment"/>
+<!-- To use multiple models: android:value="face,model2,model3" -->
+```
+
 ## Usage
 
 ```typescript
