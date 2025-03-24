@@ -1076,7 +1076,7 @@ export enum Resolution {
    */
   '1920x1080' = 2,
   /**
-   * @since 7.0.0
+   * @since 7.2.0
    */
   '3840x2160' = 3,
 }
