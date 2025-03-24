@@ -350,6 +350,8 @@ public class BarcodeScannerHelper {
             return AVCaptureSession.Preset.vga640x480
         case 2:
             return AVCaptureSession.Preset.hd1920x1080
+        case 3:
+            return AVCaptureSession.Preset.hd4K3840x2160
         default:
             return AVCaptureSession.Preset.hd1280x720
         }

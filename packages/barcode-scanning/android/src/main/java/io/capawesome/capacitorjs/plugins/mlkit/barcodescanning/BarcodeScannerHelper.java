@@ -398,6 +398,7 @@ public class BarcodeScannerHelper {
         return switch (resolution) {
             case 0 -> new Size(640, 480);
             case 2 -> new Size(1920, 1080);
+            case 3 -> new Size(3840, 2160);
             default -> new Size(1280, 720);
         };
     }
