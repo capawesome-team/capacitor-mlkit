@@ -190,11 +190,11 @@ public protocol BarcodeScannerViewDelegate {
         }
         onBarcodesDetected(barcodes: barcodes, imageSize: imageSize, videoOrientation: videoOrientation)
     }
-    
+
     public func getCaptureDevice() -> AVCaptureDevice? {
         return self.captureDevice
     }
-    
+
     private func configureCaptureDevice(_ device: AVCaptureDevice) {
         do {
             try device.lockForConfiguration()
@@ -203,7 +203,7 @@ public protocol BarcodeScannerViewDelegate {
             if device.deviceType == .builtInTripleCamera {
                 device.videoZoomFactor = 2.0
             }
-            
+
             // Set focus mode
             if device.isFocusModeSupported(.continuousAutoFocus) {
                 device.focusMode = .continuousAutoFocus

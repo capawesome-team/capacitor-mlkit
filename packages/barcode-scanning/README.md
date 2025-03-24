@@ -940,6 +940,7 @@ Remove all listeners for this plugin.
 | **`'640x480'`**   | <code>0</code> | 7.0.0 |
 | **`'1280x720'`**  | <code>1</code> | 7.0.0 |
 | **`'1920x1080'`** | <code>2</code> | 7.0.0 |
+| **`'3840x2160'`** | <code>3</code> | 7.2.0 |
 
 
 #### AddressType
