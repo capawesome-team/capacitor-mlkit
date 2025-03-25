@@ -136,7 +136,7 @@ public class SubjectSegmentationPlugin extends Plugin {
     }
 
     @PluginMethod
-    public void installSubjectSegmentationScannerModule(PluginCall call) {
+    public void installGoogleSubjectSegmentationModule(PluginCall call) {
         try {
             implementation.installSubjectSegmentationScannerModule(
                 new InstallSubjectSegmentationScannerModuleResultCallback() {
