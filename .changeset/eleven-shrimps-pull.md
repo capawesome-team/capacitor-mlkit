@@ -1,5 +1,5 @@
 ---
-'@capacitor-mlkit/subject-segmentation': major
+'@capacitor-mlkit/subject-segmentation': minor
 ---
 
 Initial release 🎉
