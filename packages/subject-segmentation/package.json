@@ -1,7 +1,7 @@
 {
-  "name": "@capacitor-mlkit/face-mesh-detection",
+  "name": "@capacitor-mlkit/subject-segmentation",
   "version": "7.1.0",
-  "description": "Capacitor plugin for ML Kit Face Mesh Detection.",
+  "description": "Capacitor plugin for ML Kit Subject Segmentation.",
   "main": "dist/plugin.cjs.js",
   "module": "dist/esm/index.js",
   "types": "dist/esm/index.d.ts",
@@ -11,7 +11,7 @@
     "android/build.gradle",
     "dist/",
     "ios/Plugin/",
-    "CapacitorMlkitFaceMeshDetection.podspec"
+    "CapacitorMlkitSubjectSegmentation.podspec"
   ],
   "author": "Robin Genz <mail@robingenz.dev>",
   "license": "Apache-2.0",
@@ -32,7 +32,7 @@
       "url": "https://opencollective.com/capawesome"
     }
   ],
-  "homepage": "https://capawesome.io/plugins/mlkit/face-mesh-detection/",
+  "homepage": "https://capawesome.io/plugins/mlkit/subject-segmentation/",
   "keywords": [
     "capacitor",
     "plugin",
@@ -48,7 +48,7 @@
     "eslint": "eslint . --ext ts",
     "prettier": "prettier \"**/*.{css,html,ts,js,java}\"",
     "swiftlint": "node-swiftlint",
-    "docgen": "docgen --api FaceMeshDetectionPlugin --output-readme README.md --output-json dist/docs.json",
+    "docgen": "docgen --api SubjectSegmentationPlugin --output-readme README.md --output-json dist/docs.json",
     "build": "npm run clean && npm run docgen && tsc && rollup -c rollup.config.mjs",
     "clean": "rimraf ./dist",
     "watch": "tsc --watch",
