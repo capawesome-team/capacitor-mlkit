@@ -108,9 +108,6 @@ public class BarcodeScannerHelper {
         if let phone = barcode.phone {
             result["phone"] = extractPhoneProperties(phone)
         }
-        if let rawData = barcode.rawData {
-            result["rawBytes"] = convertDataToJsonArray(rawData)
-        }
         result["rawValue"] = barcode.rawValue ?? ""
         if let sms = barcode.sms {
             result["sms"] = extractSmsProperties(sms)
@@ -353,6 +350,8 @@ public class BarcodeScannerHelper {
             return AVCaptureSession.Preset.vga640x480
         case 2:
             return AVCaptureSession.Preset.hd1920x1080
+        case 3:
+            return AVCaptureSession.Preset.hd4K3840x2160
         default:
             return AVCaptureSession.Preset.hd1280x720
         }

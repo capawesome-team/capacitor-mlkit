@@ -499,17 +499,10 @@ export interface Barcode {
    */
   phone?: BarcodePhone;
   /**
-   * The raw bytes of the barcode.
-   *
-   * @since 7.1.0
-   * @example [67, 97, 112, 97, 99, 105, 116, 111, 114, 74, 83]
-   */
-  rawBytes?: number[];
-  /**
    * The barcode value in a machine readable format.
    *
    * This value is only available when the barcode is encoded
-   * in the UTF-8 character set. Otherwise, the `rawBytes` property
+   * in the UTF-8 character set. Otherwise, the `bytes` property
    * should be used and this property will be an empty string.
    *
    * @since 0.0.1
@@ -1082,6 +1075,10 @@ export enum Resolution {
    * @since 7.0.0
    */
   '1920x1080' = 2,
+  /**
+   * @since 7.2.0
+   */
+  '3840x2160' = 3,
 }
 
 /**

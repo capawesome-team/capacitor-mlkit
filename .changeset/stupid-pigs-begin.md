@@ -2,4 +2,4 @@
 '@capacitor-mlkit/barcode-scanning': minor
 ---
 
-feat: add web support
+feat: add `3840x2160` resolution

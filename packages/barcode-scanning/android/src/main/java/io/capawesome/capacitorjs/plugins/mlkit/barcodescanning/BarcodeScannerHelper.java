@@ -63,7 +63,6 @@ public class BarcodeScannerHelper {
         if (barcode.getPhone() != null) {
             result.put("phone", extractPhoneProperties(barcode.getPhone()));
         }
-        result.put("rawBytes", convertByteArrayToJsonArray(barcode.getRawBytes()));
         result.put("rawValue", barcode.getRawValue() == null ? "" : barcode.getRawValue());
         if (barcode.getSms() != null) {
             result.put("sms", extractSmsProperties(barcode.getSms()));
@@ -399,6 +398,7 @@ public class BarcodeScannerHelper {
         return switch (resolution) {
             case 0 -> new Size(640, 480);
             case 2 -> new Size(1920, 1080);
+            case 3 -> new Size(3840, 2160);
             default -> new Size(1280, 720);
         };
     }
