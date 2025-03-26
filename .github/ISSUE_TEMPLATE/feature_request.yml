@@ -13,6 +13,7 @@ body:
         - label: Face Detection
         - label: Face Mesh Detection
         - label: Selfie Segmentation
+        - label: Subject Segmentation
         - label: Translation
   - type: textarea
     attributes:

@@ -2,7 +2,9 @@
   "$schema": "https://unpkg.com/@changesets/config@1.7.0/schema.json",
   "changelog": [
     "@robingenz/changelog-github",
-    { "repo": "capawesome-team/capacitor-mlkit" }
+    {
+      "repo": "capawesome-team/capacitor-mlkit"
+    }
   ],
   "commit": false,
   "fixed": [
@@ -11,6 +13,7 @@
       "@capacitor-mlkit/face-detection",
       "@capacitor-mlkit/face-mesh-detection",
       "@capacitor-mlkit/selfie-segmentation",
+      "@capacitor-mlkit/subject-segmentation",
       "@capacitor-mlkit/translation"
     ]
   ],
