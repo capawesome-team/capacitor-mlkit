@@ -134,6 +134,33 @@ public class BarcodeScannerPlugin: CAPPlugin {
         ])
     }
 
+    @objc func enableTorch(_ call: CAPPluginCall) {
+        implementation?.enableTorch()
+        call.resolve()
+    }
+
+    @objc func disableTorch(_ call: CAPPluginCall) {
+        implementation?.disableTorch()
+        call.resolve()
+    }
+
+    @objc func toggleTorch(_ call: CAPPluginCall) {
+        implementation?.toggleTorch()
+        call.resolve()
+    }
+
+    @objc func isTorchEnabled(_ call: CAPPluginCall) {
+        call.resolve([
+            "enabled": implementation?.isTorchEnabled() ?? false
+        ])
+    }
+
+    @objc func isTorchAvailable(_ call: CAPPluginCall) {
+        call.resolve([
+            "available": implementation?.isTorchAvailable() ?? false
+        ])
+    }
+
     @objc func setZoomRatio(_ call: CAPPluginCall) {
         guard let zoomRatio = call.getFloat("zoomRatio") else {
             call.reject(errorZoomRatioMissing)

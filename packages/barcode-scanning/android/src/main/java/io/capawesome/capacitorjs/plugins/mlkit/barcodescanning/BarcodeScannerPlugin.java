@@ -242,6 +242,63 @@ public class BarcodeScannerPlugin extends Plugin {
     }
 
     @PluginMethod
+    public void enableTorch(PluginCall call) {
+        try {
+            implementation.enableTorch();
+            call.resolve();
+        } catch (Exception exception) {
+            Logger.error(TAG, exception.getMessage(), exception);
+            call.reject(exception.getMessage());
+        }
+    }
+
+    @PluginMethod
+    public void disableTorch(PluginCall call) {
+        try {
+            implementation.disableTorch();
+            call.resolve();
+        } catch (Exception exception) {
+            Logger.error(TAG, exception.getMessage(), exception);
+            call.reject(exception.getMessage());
+        }
+    }
+
+    @PluginMethod
+    public void toggleTorch(PluginCall call) {
+        try {
+            implementation.toggleTorch();
+            call.resolve();
+        } catch (Exception exception) {
+            Logger.error(TAG, exception.getMessage(), exception);
+            call.reject(exception.getMessage());
+        }
+    }
+
+    @PluginMethod
+    public void isTorchEnabled(PluginCall call) {
+        try {
+            JSObject result = new JSObject();
+            result.put("enabled", implementation.isTorchEnabled());
+            call.resolve(result);
+        } catch (Exception exception) {
+            Logger.error(TAG, exception.getMessage(), exception);
+            call.reject(exception.getMessage());
+        }
+    }
+
+    @PluginMethod
+    public void isTorchAvailable(PluginCall call) {
+        try {
+            JSObject result = new JSObject();
+            result.put("available", implementation.isTorchAvailable());
+            call.resolve(result);
+        } catch (Exception exception) {
+            Logger.error(TAG, exception.getMessage(), exception);
+            call.reject(exception.getMessage());
+        }
+    }
+
+    @PluginMethod
     public void setZoomRatio(PluginCall call) {
         try {
             Float zoomRatio = call.getFloat("zoomRatio");
