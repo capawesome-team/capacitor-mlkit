@@ -286,6 +286,11 @@ If you can't see the camera view, make sure all elements in the DOM are not visi
 * [`readBarcodesFromImage(...)`](#readbarcodesfromimage)
 * [`scan(...)`](#scan)
 * [`isSupported()`](#issupported)
+* [`enableTorch()`](#enabletorch)
+* [`disableTorch()`](#disabletorch)
+* [`toggleTorch()`](#toggletorch)
+* [`isTorchEnabled()`](#istorchenabled)
+* [`isTorchAvailable()`](#istorchavailable)
 * [`setZoomRatio(...)`](#setzoomratio)
 * [`getZoomRatio()`](#getzoomratio)
 * [`getMinZoomRatio()`](#getminzoomratio)
@@ -397,6 +402,85 @@ Returns whether or not the barcode scanner is supported.
 **Returns:** <code>Promise&lt;<a href="#issupportedresult">IsSupportedResult</a>&gt;</code>
 
 **Since:** 0.0.1
+
+--------------------
+
+
+### enableTorch()
+
+```typescript
+enableTorch() => Promise<void>
+```
+
+Enable camera's torch (flash) during a scan session.
+
+Only available on Android and iOS.
+
+**Since:** 7.2.0
+
+--------------------
+
+
+### disableTorch()
+
+```typescript
+disableTorch() => Promise<void>
+```
+
+Disable camera's torch (flash) during a scan session.
+
+Only available on Android and iOS.
+
+**Since:** 7.2.0
+
+--------------------
+
+
+### toggleTorch()
+
+```typescript
+toggleTorch() => Promise<void>
+```
+
+Toggle camera's torch (flash) during a scan session.
+
+Only available on Android and iOS.
+
+**Since:** 7.2.0
+
+--------------------
+
+
+### isTorchEnabled()
+
+```typescript
+isTorchEnabled() => Promise<IsTorchEnabledResult>
+```
+
+Returns whether or not the camera's torch (flash) is enabled.
+
+Only available on Android and iOS.
+
+**Returns:** <code>Promise&lt;<a href="#istorchenabledresult">IsTorchEnabledResult</a>&gt;</code>
+
+**Since:** 7.2.0
+
+--------------------
+
+
+### isTorchAvailable()
+
+```typescript
+isTorchAvailable() => Promise<IsTorchAvailableResult>
+```
+
+Returns whether or not the camera's torch (flash) is available.
+
+Only available on Android and iOS.
+
+**Returns:** <code>Promise&lt;<a href="#istorchavailableresult">IsTorchAvailableResult</a>&gt;</code>
+
+**Since:** 7.2.0
 
 --------------------
 
@@ -817,6 +901,20 @@ Remove all listeners for this plugin.
 | Prop            | Type                 | Description                                                                             | Since |
 | --------------- | -------------------- | --------------------------------------------------------------------------------------- | ----- |
 | **`supported`** | <code>boolean</code> | Whether or not the barcode scanner is supported by checking if the device has a camera. | 0.0.1 |
+
+
+#### IsTorchEnabledResult
+
+| Prop          | Type                 | Description                          | Since |
+| ------------- | -------------------- | ------------------------------------ | ----- |
+| **`enabled`** | <code>boolean</code> | Whether or not the torch is enabled. | 0.0.1 |
+
+
+#### IsTorchAvailableResult
+
+| Prop            | Type                 | Description                            | Since |
+| --------------- | -------------------- | -------------------------------------- | ----- |
+| **`available`** | <code>boolean</code> | Whether or not the torch is available. | 0.0.1 |
 
 
 #### SetZoomRatioOptions
