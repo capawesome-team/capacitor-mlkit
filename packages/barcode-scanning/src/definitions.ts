@@ -45,6 +45,46 @@ export interface BarcodeScannerPlugin {
    */
   isSupported(): Promise<IsSupportedResult>;
   /**
+   * Enable camera's torch (flash) during a scan session.
+   *
+   * Only available on Android and iOS.
+   *
+   * @since 7.2.0
+   */
+  enableTorch(): Promise<void>;
+  /**
+   * Disable camera's torch (flash) during a scan session.
+   *
+   * Only available on Android and iOS.
+   *
+   * @since 7.2.0
+   */
+  disableTorch(): Promise<void>;
+  /**
+   * Toggle camera's torch (flash) during a scan session.
+   *
+   * Only available on Android and iOS.
+   *
+   * @since 7.2.0
+   */
+  toggleTorch(): Promise<void>;
+  /**
+   * Returns whether or not the camera's torch (flash) is enabled.
+   *
+   * Only available on Android and iOS.
+   *
+   * @since 7.2.0
+   */
+  isTorchEnabled(): Promise<IsTorchEnabledResult>;
+  /**
+   * Returns whether or not the camera's torch (flash) is available.
+   *
+   * Only available on Android and iOS.
+   *
+   * @since 7.2.0
+   */
+  isTorchAvailable(): Promise<IsTorchAvailableResult>;
+  /**
    * Set the zoom ratio of the camera.
    *
    * Only available on Android and iOS.

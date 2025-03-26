@@ -157,6 +157,7 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
      */
     public void stopScan() {
         showWebViewBackground();
+        disableTorch();
         // Stop the camera
         if (processCameraProvider != null) {
             processCameraProvider.unbindAll();
@@ -245,6 +246,38 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
 
     public boolean isSupported() {
         return plugin.getContext().getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY);
+    }
+
+    public void enableTorch() {
+        if (camera == null) {
+            return;
+        }
+        camera.getCameraControl().enableTorch(true);
+        isTorchEnabled = true;
+    }
+
+    public void disableTorch() {
+        if (camera == null) {
+            return;
+        }
+        camera.getCameraControl().enableTorch(false);
+        isTorchEnabled = false;
+    }
+
+    public void toggleTorch() {
+        if (isTorchEnabled) {
+            disableTorch();
+        } else {
+            enableTorch();
+        }
+    }
+
+    public boolean isTorchEnabled() {
+        return isTorchEnabled;
+    }
+
+    public boolean isTorchAvailable() {
+        return plugin.getContext().getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
     }
 
     public void setZoomRatio(SetZoomRatioOptions options) {
