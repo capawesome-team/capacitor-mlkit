@@ -99,6 +99,11 @@ public protocol BarcodeScannerViewDelegate {
         if let error = setupError {
             throw error
         }
+        
+        // Moved videoPreview setup outside async task in main dispatch queue.
+        // This prevents inconsistent behavior when calling startScan() multiple times quickly.
+        // See https://github.com/capawesome-team/capacitor-mlkit/issues/258 for details
+        self.setVideoPreviewLayer(AVCaptureVideoPreviewLayer(session: captureSession))
 
         // Add Start task to the queue in the order, each task starts only after the previous task has
         // finished, ensuring captureSession.startRunning() starts after the sync block
@@ -111,7 +116,6 @@ public protocol BarcodeScannerViewDelegate {
             guard let captureSession = self.captureSession else { return }
             let formats = self.settings.formats.isEmpty ? BarcodeFormat.all : BarcodeFormat(self.settings.formats)
             self.barcodeScannerInstance = MLKitBarcodeScanner.barcodeScanner(options: BarcodeScannerOptions(formats: formats))
-            self.setVideoPreviewLayer(AVCaptureVideoPreviewLayer(session: captureSession))
 
             if self.settings.showUIElements {
                 self.addCancelButton()
