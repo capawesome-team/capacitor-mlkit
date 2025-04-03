@@ -1,5 +1,5 @@
 ---
-'@capacitor-mlkit/barcode-scanning': minor
+'@capacitor-mlkit/barcode-scanning': patch
 ---
 
-fix: moved video preview layer setup outside of async task to prevent race condition related crash on AVCaprtureSession.startRunning()
+fix(ios): prevent crash due to a race condition at the start of the scan
