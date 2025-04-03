@@ -105,6 +105,8 @@ public protocol BarcodeScannerViewDelegate {
         // See https://github.com/capawesome-team/capacitor-mlkit/issues/258 for details
         self.setVideoPreviewLayer(AVCaptureVideoPreviewLayer(session: captureSession))
 
+        // Add Start task to the queue in the order, each task starts only after the previous task has
+        // finished, ensuring captureSession.startRunning() starts after the sync block
         captureSessionQueue.async {
             captureSession.startRunning()
         }
