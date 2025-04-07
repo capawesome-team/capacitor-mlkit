@@ -1,6 +1,6 @@
 # @capacitor-mlkit/subject-segmentation
 
-Capacitor plugin for ML Kit Subject Segmentation.
+Unofficial Capacitor plugin for [ML Kit Subject Segmentation](https://developers.google.com/ml-kit/vision/subject-segmentation).[^1]
 
 ## Installation
 
@@ -48,13 +48,13 @@ const processImage = async () => {
 
 <docgen-index>
 
-- [`processImage(...)`](#processimage)
-- [`isGoogleSubjectSegmentationModuleAvailable()`](#isgooglesubjectsegmentationmoduleavailable)
-- [`installGoogleSubjectSegmentationModule()`](#installgooglesubjectsegmentationmodule)
-- [`addListener('googleSubjectSegmentationModuleInstallProgress', ...)`](#addlistenergooglesubjectsegmentationmoduleinstallprogress-)
-- [`removeAllListeners()`](#removealllisteners)
-- [Interfaces](#interfaces)
-- [Enums](#enums)
+* [`processImage(...)`](#processimage)
+* [`isGoogleSubjectSegmentationModuleAvailable()`](#isgooglesubjectsegmentationmoduleavailable)
+* [`installGoogleSubjectSegmentationModule()`](#installgooglesubjectsegmentationmodule)
+* [`addListener('googleSubjectSegmentationModuleInstallProgress', ...)`](#addlistenergooglesubjectsegmentationmoduleinstallprogress-)
+* [`removeAllListeners()`](#removealllisteners)
+* [Interfaces](#interfaces)
+* [Enums](#enums)
 
 </docgen-index>
 
@@ -79,7 +79,8 @@ Only available on Android and iOS.
 
 **Since:** 7.2.0
 
----
+--------------------
+
 
 ### isGoogleSubjectSegmentationModuleAvailable()
 
@@ -97,7 +98,8 @@ Only available on Android.
 
 **Since:** 7.2.0
 
----
+--------------------
+
 
 ### installGoogleSubjectSegmentationModule()
 
@@ -115,7 +117,8 @@ Only available on Android.
 
 **Since:** 7.2.0
 
----
+--------------------
+
 
 ### addListener('googleSubjectSegmentationModuleInstallProgress', ...)
 
@@ -136,7 +139,8 @@ Only available on Android.
 
 **Since:** 7.2.0
 
----
+--------------------
+
 
 ### removeAllListeners()
 
@@ -150,9 +154,11 @@ Only available on Android.
 
 **Since:** 7.2.0
 
----
+--------------------
+
 
 ### Interfaces
+
 
 #### ProcessImageResult
 
@@ -161,6 +167,7 @@ Only available on Android.
 | **`path`**   | <code>string</code> | The path to the segmented image file. | 7.2.0 |
 | **`width`**  | <code>number</code> | Returns the width of the image file.  | 7.2.0 |
 | **`height`** | <code>number</code> | Returns the height of the image file. | 7.2.0 |
+
 
 #### ProcessImageOptions
 
@@ -171,17 +178,20 @@ Only available on Android.
 | **`height`**     | <code>number</code> | Scale the image to this height. If no `width` is given, it will respect the aspect ratio. |                  | 7.2.0 |
 | **`confidence`** | <code>number</code> | Sets the confidence threshold.                                                            | <code>0.9</code> | 7.2.0 |
 
+
 #### IsGoogleSubjectSegmentationModuleAvailableResult
 
 | Prop            | Type                 | Description                                                         | Since |
 | --------------- | -------------------- | ------------------------------------------------------------------- | ----- |
 | **`available`** | <code>boolean</code> | Whether or not the Google Subject Segmentation module is available. | 7.2.0 |
 
+
 #### PluginListenerHandle
 
 | Prop         | Type                                      |
 | ------------ | ----------------------------------------- |
 | **`remove`** | <code>() =&gt; Promise&lt;void&gt;</code> |
+
 
 #### GoogleSubjectSegmentationModuleInstallProgressEvent
 
@@ -190,7 +200,9 @@ Only available on Android.
 | **`state`**    | <code><a href="#googlesubjectsegmentationmoduleinstallstate">GoogleSubjectSegmentationModuleInstallState</a></code> | The current state of the installation.                         | 7.2.0 |
 | **`progress`** | <code>number</code>                                                                                                 | The progress of the installation in percent between 0 and 100. | 7.2.0 |
 
+
 ### Enums
+
 
 #### GoogleSubjectSegmentationModuleInstallState
 
@@ -206,3 +218,21 @@ Only available on Android.
 | **`DOWNLOAD_PAUSED`** | <code>7</code> | 7.2.0 |
 
 </docgen-api>
+
+## Terms & Privacy
+
+This plugin uses the [Google ML Kit](https://developers.google.com/ml-kit):
+
+- [Terms & Privacy](https://developers.google.com/ml-kit/terms)
+- [Android Data Disclosure](https://developers.google.com/ml-kit/android-data-disclosure)
+- [iOS Data Disclosure](https://developers.google.com/ml-kit/ios-data-disclosure)
+
+## Changelog
+
+See [CHANGELOG.md](https://github.com/capawesome-team/capacitor-mlkit/blob/main/packages/subject-segmentation/CHANGELOG.md).
+
+## License
+
+See [LICENSE](https://github.com/capawesome-team/capacitor-mlkit/blob/main/packages/subject-segmentation/LICENSE).
+
+[^1]: This project is not affiliated with, endorsed by, sponsored by, or approved by Google LLC or any of their affiliates or subsidiaries.
