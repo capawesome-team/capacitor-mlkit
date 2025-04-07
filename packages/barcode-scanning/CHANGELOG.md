@@ -1,5 +1,11 @@
 # Changelog
 
+## 7.2.1
+
+### Patch Changes
+
+- [`772932311a6f6e55214d5fe58970fd66a79ce8ff`](https://github.com/capawesome-team/capacitor-mlkit/commit/772932311a6f6e55214d5fe58970fd66a79ce8ff) ([#265](https://github.com/capawesome-team/capacitor-mlkit/pull/265)): fix(ios): prevent crash due to a race condition at the start of the scan
+
 ## 7.2.0
 
 ### Minor Changes
