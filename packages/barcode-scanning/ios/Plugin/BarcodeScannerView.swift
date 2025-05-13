@@ -48,7 +48,6 @@ public protocol BarcodeScannerViewDelegate {
 
         let captureSession = AVCaptureSession()
         captureSession.beginConfiguration()
-        captureSession.sessionPreset = settings.resolution
 
         // Prepare capture session and preview layer
         // It executes tasks one at a time in the order they are added (FIFO), ensuring that no other
@@ -63,6 +62,15 @@ public protocol BarcodeScannerViewDelegate {
                 guard let captureDevice = captureDevice else {
                     throw RuntimeError(implementation.plugin.errorNoCaptureDeviceAvailable)
                 }
+
+                // Check if the capture device supports the requested resolution (session preset)
+                // and if the capture session can set the session preset
+                // Otherwise, the default session preset will be used (which usually is .high)
+                if captureDevice.supportsSessionPreset(settings.resolution)
+                    && captureSession.canSetSessionPreset(settings.resolution) {
+                    captureSession.sessionPreset = settings.resolution
+                }
+
                 var deviceInput: AVCaptureDeviceInput
                 deviceInput = try AVCaptureDeviceInput(device: captureDevice)
 
