@@ -220,6 +220,8 @@ export interface StartScanOptions {
   lensFacing?: LensFacing;
   /**
    * Configure the resolution of the captured image that is used for barcode scanning.
+   * 
+   * If the resolution is not supported by the device, the closest supported resolution will be used.
    *
    * Only available on Android and iOS.
    *
