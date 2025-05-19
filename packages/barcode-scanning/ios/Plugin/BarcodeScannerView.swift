@@ -107,7 +107,7 @@ public protocol BarcodeScannerViewDelegate {
         if let error = setupError {
             throw error
         }
-        
+
         // Moved videoPreview setup outside async task in main dispatch queue.
         // This prevents inconsistent behavior when calling startScan() multiple times quickly.
         // See https://github.com/capawesome-team/capacitor-mlkit/issues/258 for details
