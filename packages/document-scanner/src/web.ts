@@ -1,13 +1,18 @@
-import { WebPlugin } from "@capacitor/core";
+import { WebPlugin } from '@capacitor/core';
 
-import type { DocumentScannerPlugin } from "./definitions";
+import type { DocumentScannerPlugin, ScanResult } from './definitions';
 
 export class DocumentScannerWeb
   extends WebPlugin
   implements DocumentScannerPlugin
 {
   async echo(options: { value: string }): Promise<{ value: string }> {
-    console.log("ECHO", options);
+    console.log('ECHO', options);
     return options;
+  }
+
+  async scanDocument(): Promise<ScanResult> {
+    console.warn('Document scanning is not available on the web.');
+    throw this.unavailable('Document scanning is not available on the web.');
   }
 }
