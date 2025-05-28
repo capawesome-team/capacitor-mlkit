@@ -29,7 +29,12 @@ public class ModuleInstallProgressListener implements InstallStatusListener {
         // Progress info is only set when modules are in the progress of downloading.
         Integer progress = null;
         if (progressInfo != null) {
-            progress = (int) (100 * (progressInfo.getBytesDownloaded() / progressInfo.getTotalBytesToDownload()));
+            if (progressInfo.getTotalBytesToDownload() > 0) {
+                progress = (int) ((100.0 * progressInfo.getBytesDownloaded()) / progressInfo.getTotalBytesToDownload());
+            } else {
+                // avoid division by zero if total bytes is 0, though unlikely for actual progress
+                progress = 0;
+            }
         }
         implementation.handleGoogleDocumentScannerModuleInstallProgress(state, progress);
     }
