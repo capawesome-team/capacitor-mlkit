@@ -1,3 +1,5 @@
+import type { PluginListenerHandle } from '@capacitor/core';
+
 export interface DocumentScannerPlugin {
   /**
    * Starts the document scanning process.
@@ -8,7 +10,53 @@ export interface DocumentScannerPlugin {
    * @param options Configuration options for the scanner.
    * @returns A promise that resolves with the scan result.
    */
-  scanDocument(options?: ScanOptions): Promise<ScanResult>;
+  scanDocument(options: ScanOptions): Promise<ScanResult>;
+
+  /**
+   * Check if the Google Document Scanner module is available.
+   *
+   * If the Google Document Scanner module is not available, you can install it by using `installGoogleDocumentScannerModule()`.
+   *
+   * Only available on Android.
+   *
+   * @since 7.2.1
+   */
+  isGoogleDocumentScannerModuleAvailable(): Promise<IsGoogleDocumentScannerModuleAvailableResult>;
+  /**
+   * Install the Google Document Scanner module.
+   *
+   * **Attention**: This only starts the installation.
+   * The `googleDocumentScannerModuleInstallProgress` event listener will
+   * notify you when the installation is complete.
+   *
+   * Only available on Android.
+   *
+   * @since 7.2.1
+   */
+  installGoogleDocumentScannerModule(): Promise<void>;
+
+  /**
+   * Called when the Google Document Scanner module is installed.
+   *
+   * Only available on Android.
+   *
+   * @since 7.2.1
+   */
+  addListener(
+    eventName: 'googleDocumentScannerModuleInstallProgress',
+    listenerFunc: (
+      event: GoogleDocumentScannerModuleInstallProgressEvent,
+    ) => void,
+  ): Promise<PluginListenerHandle>;
+
+  /**
+   * Remove all listeners for this plugin.
+   *
+   * Only available on Android.
+   *
+   * @since 7.2.1
+   */
+  removeAllListeners(): Promise<void>;
 }
 
 /**
@@ -80,4 +128,72 @@ export interface ScanResult {
    * @since 7.2.1
    */
   pdf?: PdfInfo;
+}
+
+/**
+ * @since 7.2.1
+ */
+export interface IsGoogleDocumentScannerModuleAvailableResult {
+  /**
+   * Whether or not the Google Document Scanner module is available.
+   *
+   * @since 7.2.1
+   */
+  available: boolean;
+}
+
+/**
+ * @since 7.2.1
+ */
+export interface GoogleDocumentScannerModuleInstallProgressEvent {
+  /**
+   * The current state of the installation.
+   *
+   * @since 7.2.1
+   */
+  state: GoogleDocumentScannerModuleInstallState;
+  /**
+   * The progress of the installation in percent between 0 and 100.
+   *
+   * @since 7.2.1
+   */
+  progress?: number;
+}
+
+/**
+ * @since 7.2.1
+ */
+export enum GoogleDocumentScannerModuleInstallState {
+  /**
+   * @since 7.2.1
+   */
+  UNKNOWN = 0,
+  /**
+   * @since 7.2.1
+   */
+  PENDING = 1,
+  /**
+   * @since 7.2.1
+   */
+  DOWNLOADING = 2,
+  /**
+   * @since 7.2.1
+   */
+  CANCELED = 3,
+  /**
+   * @since 7.2.1
+   */
+  COMPLETED = 4,
+  /**
+   * @since 7.2.1
+   */
+  FAILED = 5,
+  /**
+   * @since 7.2.1
+   */
+  INSTALLING = 6,
+  /**
+   * @since 7.2.1
+   */
+  DOWNLOAD_PAUSED = 7,
 }

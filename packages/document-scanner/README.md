@@ -52,7 +52,12 @@ async function startScan() {
 <docgen-index>
 
 * [`scanDocument(...)`](#scandocument)
+* [`isGoogleDocumentScannerModuleAvailable()`](#isgoogledocumentscannermoduleavailable)
+* [`installGoogleDocumentScannerModule()`](#installgoogledocumentscannermodule)
+* [`addListener('googleDocumentScannerModuleInstallProgress', ...)`](#addlistenergoogledocumentscannermoduleinstallprogress-)
+* [`removeAllListeners()`](#removealllisteners)
 * [Interfaces](#interfaces)
+* [Enums](#enums)
 
 </docgen-index>
 
@@ -62,7 +67,7 @@ async function startScan() {
 ### scanDocument(...)
 
 ```typescript
-scanDocument(options?: ScanOptions | undefined) => Promise<ScanResult>
+scanDocument(options: ScanOptions) => Promise<ScanResult>
 ```
 
 Starts the document scanning process.
@@ -74,6 +79,81 @@ Only available on Android.
 | **`options`** | <code><a href="#scanoptions">ScanOptions</a></code> | Configuration options for the scanner. |
 
 **Returns:** <code>Promise&lt;<a href="#scanresult">ScanResult</a>&gt;</code>
+
+**Since:** 7.2.1
+
+--------------------
+
+
+### isGoogleDocumentScannerModuleAvailable()
+
+```typescript
+isGoogleDocumentScannerModuleAvailable() => Promise<IsGoogleDocumentScannerModuleAvailableResult>
+```
+
+Check if the Google Document Scanner module is available.
+
+If the Google Document Scanner module is not available, you can install it by using `installGoogleDocumentScannerModule()`.
+
+Only available on Android.
+
+**Returns:** <code>Promise&lt;<a href="#isgoogledocumentscannermoduleavailableresult">IsGoogleDocumentScannerModuleAvailableResult</a>&gt;</code>
+
+**Since:** 7.2.1
+
+--------------------
+
+
+### installGoogleDocumentScannerModule()
+
+```typescript
+installGoogleDocumentScannerModule() => Promise<void>
+```
+
+Install the Google Document Scanner module.
+
+**Attention**: This only starts the installation.
+The `googleDocumentScannerModuleInstallProgress` event listener will
+notify you when the installation is complete.
+
+Only available on Android.
+
+**Since:** 7.2.1
+
+--------------------
+
+
+### addListener('googleDocumentScannerModuleInstallProgress', ...)
+
+```typescript
+addListener(eventName: 'googleDocumentScannerModuleInstallProgress', listenerFunc: (event: GoogleDocumentScannerModuleInstallProgressEvent) => void) => Promise<PluginListenerHandle>
+```
+
+Called when the Google Document Scanner module is installed.
+
+Only available on Android.
+
+| Param              | Type                                                                                                                                            |
+| ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`eventName`**    | <code>'googleDocumentScannerModuleInstallProgress'</code>                                                                                       |
+| **`listenerFunc`** | <code>(event: <a href="#googledocumentscannermoduleinstallprogressevent">GoogleDocumentScannerModuleInstallProgressEvent</a>) =&gt; void</code> |
+
+**Returns:** <code>Promise&lt;<a href="#pluginlistenerhandle">PluginListenerHandle</a>&gt;</code>
+
+**Since:** 7.2.1
+
+--------------------
+
+
+### removeAllListeners()
+
+```typescript
+removeAllListeners() => Promise<void>
+```
+
+Remove all listeners for this plugin.
+
+Only available on Android.
 
 **Since:** 7.2.1
 
@@ -114,11 +194,50 @@ Options for the document scanner.
 | **`resultFormats`**        | <code>'JPEG' \| 'PDF' \| 'JPEG_PDF'</code>          | The desired result formats. Can be 'JPEG', 'PDF', or 'JPEG_PDF'.                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | <code>'JPEG_PDF'</code> | 7.2.1 |
 | **`scannerMode`**          | <code>'FULL' \| 'BASE' \| 'BASE_WITH_FILTER'</code> | The scanner mode. BASE: Basic editing capabilities (crop, rotate, reorder pages, etc.). BASE_WITH_FILTER: Adds image filters (grayscale, auto image enhancement, etc.) to the BASE mode. FULL: Adds ML-enabled image cleaning capabilities (erase stains, fingers, etc.) to the BASE_WITH_FILTER mode. This mode will also allow future major features to be automatically added along with Google Play services updates, while the other two modes will maintain their current feature sets and only receive minor refinements. | <code>"FULL"</code>     | 7.2.1 |
 
+
+#### IsGoogleDocumentScannerModuleAvailableResult
+
+| Prop            | Type                 | Description                                                     | Since |
+| --------------- | -------------------- | --------------------------------------------------------------- | ----- |
+| **`available`** | <code>boolean</code> | Whether or not the Google Document Scanner module is available. | 7.2.1 |
+
+
+#### PluginListenerHandle
+
+| Prop         | Type                                      |
+| ------------ | ----------------------------------------- |
+| **`remove`** | <code>() =&gt; Promise&lt;void&gt;</code> |
+
+
+#### GoogleDocumentScannerModuleInstallProgressEvent
+
+| Prop           | Type                                                                                                        | Description                                                    | Since |
+| -------------- | ----------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------- | ----- |
+| **`state`**    | <code><a href="#googledocumentscannermoduleinstallstate">GoogleDocumentScannerModuleInstallState</a></code> | The current state of the installation.                         | 7.2.1 |
+| **`progress`** | <code>number</code>                                                                                         | The progress of the installation in percent between 0 and 100. | 7.2.1 |
+
+
+### Enums
+
+
+#### GoogleDocumentScannerModuleInstallState
+
+| Members               | Value          | Since |
+| --------------------- | -------------- | ----- |
+| **`UNKNOWN`**         | <code>0</code> | 7.2.1 |
+| **`PENDING`**         | <code>1</code> | 7.2.1 |
+| **`DOWNLOADING`**     | <code>2</code> | 7.2.1 |
+| **`CANCELED`**        | <code>3</code> | 7.2.1 |
+| **`COMPLETED`**       | <code>4</code> | 7.2.1 |
+| **`FAILED`**          | <code>5</code> | 7.2.1 |
+| **`INSTALLING`**      | <code>6</code> | 7.2.1 |
+| **`DOWNLOAD_PAUSED`** | <code>7</code> | 7.2.1 |
+
 </docgen-api>
 
 ## Important Notes
 
-- The ML Kit Document Scanner models, scanning logic, and UI flow are dynamically downloaded by Google Play services. Users might have to wait for these to download before the first use.
+- The ML Kit Document Scanner models, scanning logic, and UI flow are dynamically downloaded by Google Play services. Users might have to wait for these to download before the first use. You can use the isGoogleDocumentScannerModuleAvailable and installGoogleDocumentScannerModule methods to check for and install the module, and listen to the googleDocumentScannerModuleInstallProgress event for progress updates.
 - This API requires Android API level 21 or above.
 - It also requires a minimal device total RAM of 1.7GB. If lower, it returns an `MlKitException` with error code `UNSUPPORTED` when calling the API (this plugin will reject the promise).
 - Consider that generating document files takes time and requires processing power, so only request the output formats (JPEG, or PDF, or both) you actually need via the `resultFormats` option.

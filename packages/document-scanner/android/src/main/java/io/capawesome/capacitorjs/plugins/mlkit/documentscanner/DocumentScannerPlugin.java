@@ -1,12 +1,12 @@
 package io.capawesome.capacitorjs.plugins.mlkit.documentscanner;
 
 import android.app.Activity;
-import android.content.IntentSender;
-import android.net.Uri;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.IntentSenderRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.Nullable;
 import com.getcapacitor.JSObject;
+import com.getcapacitor.Logger;
 import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
@@ -19,13 +19,26 @@ import org.json.JSONArray;
 @CapacitorPlugin(name = "DocumentScanner")
 public class DocumentScannerPlugin extends Plugin {
 
-    private DocumentScanner implementation = new DocumentScanner();
+    public static final String TAG = "DocumentScanner";
+
+    public static final String GOOGLE_DOCUMENT_SCANNER_MODULE_INSTALL_PROGRESS_EVENT = "googleDocumentScannerModuleInstallProgress";
+    public static final String ERROR_GOOGLE_DOCUMENT_SCANNER_MODULE_NOT_AVAILABLE =
+        "The Google Document Scanner Module is not available. You must install it first using the installGoogleDocumentScannerModule method.";
+    public static final String ERROR_GOOGLE_DOCUMENT_SCANNER_MODULE_ALREADY_INSTALLED =
+        "The Google Document Scanner Module is already installed.";
+
+    private DocumentScanner implementation;
     private ActivityResultLauncher<IntentSenderRequest> scannerLauncher;
     private PluginCall savedCall;
 
     @Override
     public void load() {
         super.load();
+        try {
+            implementation = new DocumentScanner(this);
+        } catch (Exception exception) {
+            Logger.error(TAG, exception.getMessage(), exception);
+        }
         scannerLauncher = getActivity()
             .registerForActivityResult(new ActivityResultContracts.StartIntentSenderForResult(), activityResult -> {
                 if (savedCall == null) {
@@ -70,5 +83,67 @@ public class DocumentScannerPlugin extends Plugin {
     public void scanDocument(PluginCall call) {
         this.savedCall = call;
         implementation.startScan(getActivity(), call, scannerLauncher);
+    }
+
+    @PluginMethod
+    public void isGoogleDocumentScannerModuleAvailable(PluginCall call) {
+        try {
+            implementation.isGoogleDocumentScannerModuleAvailable(
+                new IsGoogleDocumentScannerModuleAvailableResultCallback() {
+                    @Override
+                    public void success(boolean isAvailable) {
+                        JSObject result = new JSObject();
+                        result.put("available", isAvailable);
+                        call.resolve(result);
+                    }
+
+                    @Override
+                    public void error(Exception exception) {
+                        Logger.error(TAG, exception.getMessage(), exception);
+                        call.reject(exception.getMessage());
+                    }
+                }
+            );
+        } catch (Exception exception) {
+            Logger.error(TAG, exception.getMessage(), exception);
+            call.reject(exception.getMessage());
+        }
+    }
+
+    @PluginMethod
+    public void installGoogleDocumentScannerModule(PluginCall call) {
+        try {
+            implementation.installGoogleDocumentScannerModule(
+                new InstallDocumentScannerModuleResultCallback() {
+                    @Override
+                    public void success() {
+                        call.resolve();
+                    }
+
+                    @Override
+                    public void error(Exception exception) {
+                        Logger.error(TAG, exception.getMessage(), exception);
+                        call.reject(exception.getMessage());
+                    }
+                }
+            );
+        } catch (Exception exception) {
+            Logger.error(TAG, exception.getMessage(), exception);
+            call.reject(exception.getMessage());
+        }
+    }
+
+    public void notifyGoogleDocumentScannerModuleInstallProgressListener(int state, @Nullable Integer progress) {
+        try {
+            JSObject result = new JSObject();
+            result.put("state", state);
+            if (progress != null) {
+                result.put("progress", progress);
+            }
+
+            notifyListeners(GOOGLE_DOCUMENT_SCANNER_MODULE_INSTALL_PROGRESS_EVENT, result);
+        } catch (Exception exception) {
+            Logger.error(TAG, exception.getMessage(), exception);
+        }
     }
 }
