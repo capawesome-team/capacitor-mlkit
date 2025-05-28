@@ -9,12 +9,6 @@ npm install @capacitor-mlkit/document-scanner
 npx cap sync
 ```
 
-## Supported Platforms
-
-- [x] Android
-- [ ] iOS (Not available)
-- [ ] Web (Not available - native feature)
-
 ### Android
 
 #### API level
@@ -73,11 +67,15 @@ scanDocument(options?: ScanOptions | undefined) => Promise<ScanResult>
 
 Starts the document scanning process.
 
+Only available on Android.
+
 | Param         | Type                                                | Description                            |
 | ------------- | --------------------------------------------------- | -------------------------------------- |
 | **`options`** | <code><a href="#scanoptions">ScanOptions</a></code> | Configuration options for the scanner. |
 
 **Returns:** <code>Promise&lt;<a href="#scanresult">ScanResult</a>&gt;</code>
+
+**Since:** 7.2.1
 
 --------------------
 
@@ -89,32 +87,32 @@ Starts the document scanning process.
 
 Result of a document scan operation.
 
-| Prop                | Type                                        | Description                                                                                                          |
-| ------------------- | ------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
-| **`scannedImages`** | <code>string[]</code>                       | An array of URIs for the scanned image pages (JPEG). Present if 'JPEG' or 'JPEG_PDF' was requested in resultFormats. |
-| **`pdf`**           | <code><a href="#pdfinfo">PdfInfo</a></code> | Information about the generated PDF. Present if 'PDF' or 'JPEG_PDF' was requested in resultFormats.                  |
+| Prop                | Type                                        | Description                                                                                                          | Since |
+| ------------------- | ------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- | ----- |
+| **`scannedImages`** | <code>string[]</code>                       | An array of URIs for the scanned image pages (JPEG). Present if 'JPEG' or 'JPEG_PDF' was requested in resultFormats. | 7.2.1 |
+| **`pdf`**           | <code><a href="#pdfinfo">PdfInfo</a></code> | Information about the generated PDF. Present if 'PDF' or 'JPEG_PDF' was requested in resultFormats.                  | 7.2.1 |
 
 
 #### PdfInfo
 
 Information about a generated PDF document.
 
-| Prop            | Type                | Description                        |
-| --------------- | ------------------- | ---------------------------------- |
-| **`uri`**       | <code>string</code> | The URI of the generated PDF file. |
-| **`pageCount`** | <code>number</code> | The number of pages in the PDF.    |
+| Prop            | Type                | Description                        | Since |
+| --------------- | ------------------- | ---------------------------------- | ----- |
+| **`uri`**       | <code>string</code> | The URI of the generated PDF file. | 7.2.1 |
+| **`pageCount`** | <code>number</code> | The number of pages in the PDF.    | 7.2.1 |
 
 
 #### ScanOptions
 
 Options for the document scanner.
 
-| Prop                       | Type                                                | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      | Default                 |
-| -------------------------- | --------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------- |
-| **`galleryImportAllowed`** | <code>boolean</code>                                | Whether to allow importing from the photo gallery.                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | <code>false</code>      |
-| **`pageLimit`**            | <code>number</code>                                 | The maximum number of pages that can be scanned.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | <code>10</code>         |
-| **`resultFormats`**        | <code>'JPEG' \| 'PDF' \| 'JPEG_PDF'</code>          | The desired result formats. Can be 'JPEG', 'PDF', or 'JPEG_PDF'.                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | <code>'JPEG_PDF'</code> |
-| **`scannerMode`**          | <code>'FULL' \| 'BASE' \| 'BASE_WITH_FILTER'</code> | The scanner mode. BASE: Basic editing capabilities (crop, rotate, reorder pages, etc.). BASE_WITH_FILTER: Adds image filters (grayscale, auto image enhancement, etc.) to the BASE mode. FULL: Adds ML-enabled image cleaning capabilities (erase stains, fingers, etc.) to the BASE_WITH_FILTER mode. This mode will also allow future major features to be automatically added along with Google Play services updates, while the other two modes will maintain their current feature sets and only receive minor refinements. | <code>"FULL"</code>     |
+| Prop                       | Type                                                | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      | Default                 | Since |
+| -------------------------- | --------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------- | ----- |
+| **`galleryImportAllowed`** | <code>boolean</code>                                | Whether to allow importing from the photo gallery.                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | <code>false</code>      | 7.2.1 |
+| **`pageLimit`**            | <code>number</code>                                 | The maximum number of pages that can be scanned.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | <code>10</code>         | 7.2.1 |
+| **`resultFormats`**        | <code>'JPEG' \| 'PDF' \| 'JPEG_PDF'</code>          | The desired result formats. Can be 'JPEG', 'PDF', or 'JPEG_PDF'.                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | <code>'JPEG_PDF'</code> | 7.2.1 |
+| **`scannerMode`**          | <code>'FULL' \| 'BASE' \| 'BASE_WITH_FILTER'</code> | The scanner mode. BASE: Basic editing capabilities (crop, rotate, reorder pages, etc.). BASE_WITH_FILTER: Adds image filters (grayscale, auto image enhancement, etc.) to the BASE mode. FULL: Adds ML-enabled image cleaning capabilities (erase stains, fingers, etc.) to the BASE_WITH_FILTER mode. This mode will also allow future major features to be automatically added along with Google Play services updates, while the other two modes will maintain their current feature sets and only receive minor refinements. | <code>"FULL"</code>     | 7.2.1 |
 
 </docgen-api>
 
