@@ -1,5 +1,5 @@
 ---
-'@capacitor-mlkit/document-scanner': major
+'@capacitor-mlkit/document-scanner': minor
 ---
 
 Initial release 🎉

@@ -11,14 +11,16 @@ npx cap sync
 
 ### Android
 
-#### API level
+#### Variables
 
-This plugin requires a minimum API level of 21.
+This plugin will use the following project variables (defined in your app’s `variables.gradle` file):
+
+- `$mlkitDocumentScannerVersion` version of `com.google.android.gms:play-services-mlkit-document-scanner` (default: `16.0.0-beta1`)
 
 ## Usage
 
 ```typescript
-import { DocumentScanner } from 'capacitor-mlkit-doc-scanner';
+import { DocumentScanner } from '@capacitor-mlkit/document-scanner';
 
 async function startScan() {
   try {
@@ -235,7 +237,7 @@ Options for the document scanner.
 
 </docgen-api>
 
-## Important Notes
+## Notes
 
 - The ML Kit Document Scanner models, scanning logic, and UI flow are dynamically downloaded by Google Play services. Users might have to wait for these to download before the first use. You can use the isGoogleDocumentScannerModuleAvailable and installGoogleDocumentScannerModule methods to check for and install the module, and listen to the googleDocumentScannerModuleInstallProgress event for progress updates.
 - This API requires Android API level 21 or above.
@@ -248,5 +250,14 @@ This plugin uses the [Google ML Kit](https://developers.google.com/ml-kit):
 
 - [Terms & Privacy](https://developers.google.com/ml-kit/terms)
 - [Android Data Disclosure](https://developers.google.com/ml-kit/android-data-disclosure)
+- [iOS Data Disclosure](https://developers.google.com/ml-kit/ios-data-disclosure)
+
+## Changelog
+
+See [CHANGELOG.md](https://github.com/capawesome-team/capacitor-mlkit/blob/main/packages/document-scanner/CHANGELOG.md).
+
+## License
+
+See [LICENSE](https://github.com/capawesome-team/capacitor-mlkit/blob/main/packages/document-scanner/LICENSE).
 
 [^1]: This project is not affiliated with, endorsed by, sponsored by, or approved by Google LLC or any of their affiliates or subsidiaries.
