@@ -10,14 +10,10 @@ public class DocumentScannerPlugin: CAPPlugin, CAPBridgedPlugin {
     public let identifier = "DocumentScannerPlugin"
     public let jsName = "DocumentScanner"
     public let pluginMethods: [CAPPluginMethod] = [
-        CAPPluginMethod(name: "echo", returnType: CAPPluginReturnPromise)
+        CAPPluginMethod(name: "scanDocument", returnType: CAPPluginReturnPromise)
     ]
-    private let implementation = DocumentScanner()
 
-    @objc func echo(_ call: CAPPluginCall) {
-        let value = call.getString("value") ?? ""
-        call.resolve([
-            "value": implementation.echo(value)
-        ])
+    @objc func scanDocument(_ call: CAPPluginCall) {
+        call.reject("Not available on iOS")
     }
 }
