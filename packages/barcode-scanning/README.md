@@ -52,7 +52,7 @@ You also need to add the following meta data **in** the `application` tag in you
 
 #### Variables
 
-This plugin will use the following project variables (defined in your app’s `variables.gradle` file):
+If needed, you can define the following project variable in your app’s `variables.gradle` file to change the default version of the dependency:
 
 - `$androidxCameraCamera2Version` version of `com.google.mlkit:barcode-scanning` (default: `1.1.0`)
 - `$androidxCameraCoreVersion` version of `com.google.mlkit:barcode-scanning` (default: `1.1.0`)
@@ -60,6 +60,8 @@ This plugin will use the following project variables (defined in your app’s `v
 - `$androidxCameraViewVersion` version of `com.google.mlkit:barcode-scanning` (default: `1.1.0`)
 - `$mlkitBarcodeScanningVersion` version of `com.google.mlkit:barcode-scanning` (default: `17.3.0`)
 - `$playServicesCodeScannerVersion` version of `com.google.android.gms:play-services-code-scanner` (default: `16.1.0`)
+
+This can be useful if you encounter dependency conflicts with other plugins in your project.
 
 ### iOS
 
