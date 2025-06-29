@@ -13,9 +13,11 @@ npx cap sync
 
 #### Variables
 
-This plugin will use the following project variables (defined in your app’s `variables.gradle` file):
+If needed, you can define the following project variable in your app’s `variables.gradle` file to change the default version of the dependency:
 
 - `$mlkitTranslateVersion` version of `com.google.mlkit:translate` (default: `17.0.3`)
+
+This can be useful if you encounter dependency conflicts with other plugins in your project.
 
 ### iOS
 

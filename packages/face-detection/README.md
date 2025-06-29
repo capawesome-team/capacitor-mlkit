@@ -22,10 +22,12 @@ You need to add the following meta data **in** the `application` tag in your `An
 
 #### Variables
 
-This plugin will use the following project variables (defined in your app’s `variables.gradle` file):
+If needed, you can define the following project variable in your app’s `variables.gradle` file to change the default version of the dependency:
 
 - `$mlkitFaceDetectionVersion` version of `com.google.mlkit:face-detection` (default: `16.1.7`)
 - `$playServicesMlkitFaceDetectionVersion` version of `com.google.android.gms:play-services-mlkit-face-detection` (default: `17.1.0`)
+
+This can be useful if you encounter dependency conflicts with other plugins in your project.
 
 ### iOS
 
