@@ -15,6 +15,7 @@ import type {
   ReadBarcodesFromImageOptions,
   ReadBarcodesFromImageResult,
   ScanResult,
+  SetFocusPointOptions,
   SetZoomRatioOptions,
   StartScanOptions,
   IsTorchEnabledResult,
@@ -136,6 +137,10 @@ export class BarcodeScannerWeb
   }
 
   async getMaxZoomRatio(): Promise<GetMaxZoomRatioResult> {
+    throw this.createUnavailableException();
+  }
+
+  async setFocusPoint(_options: SetFocusPointOptions): Promise<void> {
     throw this.createUnavailableException();
   }
 

@@ -297,6 +297,7 @@ If you can't see the camera view, make sure all elements in the DOM are not visi
 * [`getZoomRatio()`](#getzoomratio)
 * [`getMinZoomRatio()`](#getminzoomratio)
 * [`getMaxZoomRatio()`](#getmaxzoomratio)
+* [`setFocusPoint(...)`](#setfocuspoint)
 * [`openSettings()`](#opensettings)
 * [`isGoogleBarcodeScannerModuleAvailable()`](#isgooglebarcodescannermoduleavailable)
 * [`installGoogleBarcodeScannerModule()`](#installgooglebarcodescannermodule)
@@ -553,6 +554,25 @@ Only available on Android and iOS.
 **Returns:** <code>Promise&lt;<a href="#getmaxzoomratioresult">GetMaxZoomRatioResult</a>&gt;</code>
 
 **Since:** 5.4.0
+
+--------------------
+
+
+### setFocusPoint(...)
+
+```typescript
+setFocusPoint(options: SetFocusPointOptions) => Promise<void>
+```
+
+Set the camera's focus point using normalized coordinates.
+
+Only available on Android and iOS.
+
+| Param         | Type                                                                  |
+| ------------- | --------------------------------------------------------------------- |
+| **`options`** | <code><a href="#setfocuspointoptions">SetFocusPointOptions</a></code> |
+
+**Since:** 8.0.0
 
 --------------------
 
@@ -945,6 +965,14 @@ Remove all listeners for this plugin.
 | Prop            | Type                | Description             | Since |
 | --------------- | ------------------- | ----------------------- | ----- |
 | **`zoomRatio`** | <code>number</code> | The maximum zoom ratio. | 5.4.0 |
+
+
+#### SetFocusPointOptions
+
+| Prop    | Type                | Description                            | Since |
+| ------- | ------------------- | -------------------------------------- | ----- |
+| **`x`** | <code>number</code> | X coordinate (0.0 = left, 1.0 = right) | 8.0.0 |
+| **`y`** | <code>number</code> | Y coordinate (0.0 = top, 1.0 = bottom) | 8.0.0 |
 
 
 #### IsGoogleBarcodeScannerModuleAvailableResult

@@ -208,6 +208,23 @@ public class BarcodeScannerPlugin: CAPPlugin {
         }
     }
 
+    @objc func setFocusPoint(_ call: CAPPluginCall) {
+        guard let x = call.getFloat("x"), let y = call.getFloat("y") else {
+            call.reject("x and y coordinates must be provided.")
+            return
+        }
+
+        let options = SetFocusPointOptions(x: x, y: y)
+
+        do {
+            try implementation?.setFocusPoint(options)
+            call.resolve()
+        } catch {
+            CAPLog.print("[", self.tag, "] ", error)
+            call.reject(error.localizedDescription)
+        }
+    }
+
     @objc func openSettings(_ call: CAPPluginCall) {
         implementation?.openSettings(completion: { error in
             if let error = error {
