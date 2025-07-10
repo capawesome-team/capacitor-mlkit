@@ -2,6 +2,12 @@
 
 Unofficial Capacitor plugin for [ML Kit Barcode Scanning](https://developers.google.com/ml-kit/vision/barcode-scanning).[^1][^2]
 
+<div class="capawesome-z29o10a">
+  <a href="https://cloud.capawesome.io/" target="_blank">
+    <img alt="Deliver Live Updates to your Capacitor app with Capawesome Cloud" src="https://cloud.capawesome.io/assets/banners/cloud-deploy-real-time-app-updates.png?t=1" />
+  </a>
+</div>
+
 ## Features
 
 - 🧩 Optional ready-to-use interface without webview customizations
