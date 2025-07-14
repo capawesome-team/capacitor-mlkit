@@ -54,6 +54,7 @@ public class BarcodeScannerPlugin extends Plugin {
     public static final String ERROR_GOOGLE_BARCODE_SCANNER_MODULE_ALREADY_INSTALLED =
         "The Google Barcode Scanner Module is already installed.";
     public static final String ERROR_PERMISSION_DENIED = "User denied access to camera.";
+    public static final String ERROR_FOCUS_POINT_MISSING = "x and y coordinates must be provided.";
 
     private BarcodeScanner implementation;
 
@@ -381,7 +382,7 @@ public class BarcodeScannerPlugin extends Plugin {
             Float y = call.getFloat("y");
             
             if (x == null || y == null) {
-                call.reject("x and y coordinates must be provided.");
+                call.reject(ERROR_FOCUS_POINT_MISSING);
                 return;
             }
 
