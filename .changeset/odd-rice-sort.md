@@ -2,4 +2,4 @@
 '@capacitor-mlkit/barcode-scanning': minor
 ---
 
-Implement focus suppport
+feat: add `setFocusPoint(...)` method
