@@ -186,7 +186,7 @@ typealias MLKitBarcodeScanner = MLKitBarcodeScanning.BarcodeScanner
         }
         
         guard device.isFocusPointOfInterestSupported else {
-            throw RuntimeError("Focus point not supported")
+            throw RuntimeError(BarcodeScannerPlugin.errorFocusPointNotSupported)
         }
         
         let x = CGFloat(options.getX())
@@ -205,16 +205,12 @@ typealias MLKitBarcodeScanner = MLKitBarcodeScanning.BarcodeScanner
         
         let devicePoint = previewLayer.captureDevicePointConverted(fromLayerPoint: layerPoint)
         
-        do {
-            try device.lockForConfiguration()
+        try device.lockForConfiguration()
             
-            device.focusPointOfInterest = devicePoint
-            device.focusMode = .autoFocus
+        device.focusPointOfInterest = devicePoint
+        device.focusMode = .autoFocus
             
-            device.unlockForConfiguration()
-        } catch {
-            throw error
-        }
+        device.unlockForConfiguration()
     }
 
     @objc func openSettings(completion: @escaping (Error?) -> Void) {
