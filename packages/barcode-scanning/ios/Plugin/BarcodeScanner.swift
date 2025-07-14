@@ -186,7 +186,7 @@ typealias MLKitBarcodeScanner = MLKitBarcodeScanning.BarcodeScanner
         }
         
         guard device.isFocusPointOfInterestSupported else {
-            throw RuntimeError(BarcodeScannerPlugin.errorFocusPointNotSupported)
+            throw RuntimeError(plugin.errorFocusPointNotSupported)
         }
         
         let x = CGFloat(options.getX())
