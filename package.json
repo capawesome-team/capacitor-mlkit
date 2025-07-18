@@ -1,6 +1,6 @@
 {
   "name": "@foodji/capacitor-mlkit",
-  "version": "7.1.2",
+  "version": "7.1.5",
   "private": false,
   "packageManager": "npm@8.3.0",
   "workspaces": [

@@ -1,6 +1,6 @@
 {
   "name": "@foodji/face-mesh-detection",
-  "version": "7.1.2",
+  "version": "7.1.5",
   "description": "Capacitor plugin for ML Kit Face Mesh Detection.",
   "main": "dist/plugin.cjs.js",
   "module": "dist/esm/index.js",

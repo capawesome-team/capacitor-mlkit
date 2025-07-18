@@ -1,3 +1,19 @@
+# Forked lib to apply barcode-scanning fixes from capacitor 7 on  capacitor 6
+
+`npm i`
+`npm run build`
+`cd packages/barcode-scanning && npm run build`
+`npm run verify:android`
+`npm run verify:ios`
+`npm publish --verbose`
+`cd packages/barcode-scanning && npm publish --verbose`
+
+`npm install @foodji/barcode-scanning@7.1.5`
+
+
+
+
+
 # @capacitor-mlkit/barcode-scanning
 
 Unofficial Capacitor plugin for [ML Kit Barcode Scanning](https://developers.google.com/ml-kit/vision/barcode-scanning).[^1][^2]

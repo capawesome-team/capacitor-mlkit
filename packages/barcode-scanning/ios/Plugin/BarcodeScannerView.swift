@@ -20,6 +20,7 @@ public protocol BarcodeScannerViewDelegate {
 
     private let implementation: BarcodeScanner
     private let settings: ScanSettings
+    private var captureDevice: AVCaptureDevice?
     private var captureSession: AVCaptureSession?
     private var barcodeScannerInstance: MLKitBarcodeScanner?
     private var videoPreviewLayer: AVCaptureVideoPreviewLayer?
@@ -29,58 +30,98 @@ public protocol BarcodeScannerViewDelegate {
     private var detectionAreaView: UIView?
     private var detectionAreaViewFrame: CGRect?
 
-    init (implementation: BarcodeScanner, settings: ScanSettings) throws {
+    init(implementation: BarcodeScanner, settings: ScanSettings) throws {
         self.implementation = implementation
         self.settings = settings
 
         super.init(frame: UIScreen.main.bounds)
 
+        // Set autoresizing mask to fill the screen
+        // This is necessary for the view to resize when the device orientation changes
+        super.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+
+        // creates a serial DispatchQueue, which ensures operations are executed in a First In, First Out
+        // (FIFO) order, meaning tasks are completed one at a time in the exact order they were added to
+        // the queue.
+        let captureSessionQueue = DispatchQueue(label: "com.google.mlkit.visiondetector.CaptureSessionQueue")
+        var setupError: Error?
+
         let captureSession = AVCaptureSession()
         captureSession.beginConfiguration()
         captureSession.sessionPreset = settings.resolution
 
-        let captureDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: AVMediaType.video, position: settings.lensFacing)
-        guard let captureDevice = captureDevice else {
-            throw RuntimeError(implementation.plugin.errorNoCaptureDeviceAvailable)
-        }
-        var deviceInput: AVCaptureDeviceInput
-        deviceInput = try AVCaptureDeviceInput(device: captureDevice)
-        if captureSession.canAddInput(deviceInput) {
-            captureSession.addInput(deviceInput)
-        } else {
-            throw RuntimeError(implementation.plugin.errorCannotAddCaptureInput)
-        }
-        let deviceOutput = AVCaptureVideoDataOutput()
-        deviceOutput.videoSettings = [kCVPixelBufferPixelFormatTypeKey as String: Int(kCVPixelFormatType_32BGRA)]
-        deviceOutput.alwaysDiscardsLateVideoFrames = true
-        let outputQueue = DispatchQueue(label: "com.google.mlkit.visiondetector.VideoDataOutputQueue")
-        deviceOutput.setSampleBufferDelegate(self, queue: outputQueue)
-        if captureSession.canAddOutput(deviceOutput) {
-            captureSession.addOutput(deviceOutput)
-        } else {
-            throw RuntimeError(implementation.plugin.errorCannotAddCaptureOutput)
-        }
-        captureSession.commitConfiguration()
-        // `session.startRunning()` should be called after `session.commitConfiguration()` is complete.
-        // However, occacsionally `commitConfiguration()` runs asynchronously, so when `startRunning()`
-        // is called, `commitConfiguration()` is still in progress and the state is still `uncommited`.
-        // This can be reproduced by repeatedly switching or toggling the camera using the plugin demo.
-        // Adding a 100ms delay ensures that `session.commitConfiguration()` is complete before calling
-        // `session.startRunning()`.
-        Thread.sleep(forTimeInterval: 0.1)
-        DispatchQueue.global(qos: .background).async {
-            captureSession.startRunning()
-        }
-        self.captureSession = captureSession
-        let formats = settings.formats.count == 0 ? BarcodeFormat.all : BarcodeFormat(settings.formats)
-        self.barcodeScannerInstance = MLKitBarcodeScanner.barcodeScanner(options: BarcodeScannerOptions(formats: formats))
+        // Prepare capture session and preview layer
+        // It executes tasks one at a time in the order they are added (FIFO), ensuring that no other
+        // tasks on the same queue can run simultaneously or out of order with respect to the synchronous
+        // block
+        captureSessionQueue.sync {
+            do {
+                captureDevice = AVCaptureDevice.default(.builtInTripleCamera, for: AVMediaType.video, position: settings.lensFacing)
+                if captureDevice == nil {
+                    captureDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: AVMediaType.video, position: settings.lensFacing)
+                }
+                guard let captureDevice = captureDevice else {
+                    throw RuntimeError(implementation.plugin.errorNoCaptureDeviceAvailable)
+                }
+                var deviceInput: AVCaptureDeviceInput
+                deviceInput = try AVCaptureDeviceInput(device: captureDevice)
 
+                if captureSession.canAddInput(deviceInput) {
+                    captureSession.addInput(deviceInput)
+                } else {
+                    throw RuntimeError(implementation.plugin.errorCannotAddCaptureInput)
+                }
+
+                let deviceOutput = AVCaptureVideoDataOutput()
+                deviceOutput.videoSettings = [kCVPixelBufferPixelFormatTypeKey as String: Int(kCVPixelFormatType_32BGRA)]
+                deviceOutput.alwaysDiscardsLateVideoFrames = true
+                let outputQueue = DispatchQueue(label: "com.google.mlkit.visiondetector.VideoDataOutputQueue")
+                deviceOutput.setSampleBufferDelegate(self, queue: outputQueue)
+
+                if captureSession.canAddOutput(deviceOutput) {
+                    captureSession.addOutput(deviceOutput)
+                } else {
+                    throw RuntimeError(implementation.plugin.errorCannotAddCaptureOutput)
+                }
+                // Configure capture device to set the correct focus mode and exposure mode.
+                // This must be called before commiting the configuration to the capture session
+                // and after adding the device input to the capture session.
+                self.configureCaptureDevice(captureDevice)
+
+                captureSession.commitConfiguration()
+                self.captureSession = captureSession
+            } catch {
+                print("Failed to configure AVCaptureSession: \(error)")
+                setupError = error
+            }
+        }
+
+        if let error = setupError {
+            throw error
+        }
+        
+        // Moved videoPreview setup outside async task in main dispatch queue.
+        // This prevents inconsistent behavior when calling startScan() multiple times quickly.
+        // See https://github.com/capawesome-team/capacitor-mlkit/issues/258 for details
         self.setVideoPreviewLayer(AVCaptureVideoPreviewLayer(session: captureSession))
 
-        if settings.showUIElements {
-            self.addCancelButton()
-            if implementation.isTorchAvailable() {
-                self.addTorchButton()
+        // Add Start task to the queue in the order, each task starts only after the previous task has
+        // finished, ensuring captureSession.startRunning() starts after the sync block
+        captureSessionQueue.async {
+            captureSession.startRunning()
+        }
+
+        DispatchQueue.main.async {
+            guard let captureDevice = self.captureDevice else { return }
+            guard let captureSession = self.captureSession else { return }
+            let formats = self.settings.formats.isEmpty ? BarcodeFormat.all : BarcodeFormat(self.settings.formats)
+            self.barcodeScannerInstance = MLKitBarcodeScanner.barcodeScanner(options: BarcodeScannerOptions(formats: formats))
+
+            if self.settings.showUIElements {
+                self.addCancelButton()
+                if self.implementation.isTorchAvailable() {
+                    self.addTorchButton()
+                }
             }
         }
     }
@@ -152,6 +193,35 @@ public protocol BarcodeScannerViewDelegate {
             }
         }
         onBarcodesDetected(barcodes: barcodes, imageSize: imageSize, videoOrientation: videoOrientation)
+    }
+
+    public func getCaptureDevice() -> AVCaptureDevice? {
+        return self.captureDevice
+    }
+
+    private func configureCaptureDevice(_ device: AVCaptureDevice) {
+        do {
+            try device.lockForConfiguration()
+
+            // Set appropriate zoom factor for triple camera
+            if device.deviceType == .builtInTripleCamera {
+                device.videoZoomFactor = 2.0
+            }
+
+            // Set focus mode
+            if device.isFocusModeSupported(.continuousAutoFocus) {
+                device.focusMode = .continuousAutoFocus
+            }
+
+            // Set exposure mode
+            if device.isExposureModeSupported(.continuousAutoExposure) {
+                device.exposureMode = .continuousAutoExposure
+            }
+
+            device.unlockForConfiguration()
+        } catch {
+            // Silent failure is acceptable during setup
+        }
     }
 
     private func interfaceOrientationToVideoOrientation(_ orientation: UIInterfaceOrientation) -> AVCaptureVideoOrientation {

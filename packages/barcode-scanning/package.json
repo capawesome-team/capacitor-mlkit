@@ -1,6 +1,6 @@
 {
   "name": "@foodji/barcode-scanning",
-  "version": "7.1.2",
+  "version": "7.1.5",
   "description": "Capacitor plugin for ML Kit Barcode Scanning.",
   "main": "dist/plugin.cjs.js",
   "module": "dist/esm/index.js",
@@ -11,7 +11,7 @@
     "android/build.gradle",
     "dist/",
     "ios/Plugin/",
-    "CapacitorMlkitBarcodeScanning.podspec"
+    "FoodjiBarcodeScanning.podspec"
   ],
   "author": "Robin Genz <mail@robingenz.dev>",
   "license": "Apache-2.0",
