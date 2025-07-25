@@ -10,6 +10,7 @@
   "fixed": [
     [
       "@capacitor-mlkit/barcode-scanning",
+      "@capacitor-mlkit/document-scanner",
       "@capacitor-mlkit/face-detection",
       "@capacitor-mlkit/face-mesh-detection",
       "@capacitor-mlkit/selfie-segmentation",
