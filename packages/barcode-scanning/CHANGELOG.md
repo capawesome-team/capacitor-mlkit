@@ -1,5 +1,11 @@
 # Changelog
 
+## 7.3.0
+
+### Patch Changes
+
+- [`b9ed103471993568e8a53cf33759386f520fe7d6`](https://github.com/capawesome-team/capacitor-mlkit/commit/b9ed103471993568e8a53cf33759386f520fe7d6) ([#270](https://github.com/capawesome-team/capacitor-mlkit/pull/270)): fix(ios): 3840x2160 resolution not supported on older iOS devices
+
 ## 7.2.1
 
 ### Patch Changes
