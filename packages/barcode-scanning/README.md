@@ -30,6 +30,7 @@ A working example can be found here: [https://github.com/robingenz/capacitor-mlk
 
 ## Guides
 
+- [Announcing the Capacitor ML Kit Barcode Scanning Plugin](https://capawesome.io/blog/announcing-the-capacitor-mlkit-barcode-scanner-plugin/)
 - [How to build an Ionic Barcode Scanner with Capacitor](https://ionic.io/blog/how-to-build-an-ionic-barcode-scanner-with-capacitor)
 
 ## Installation
