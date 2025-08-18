@@ -207,6 +207,10 @@ public protocol BarcodeScannerViewDelegate {
         return self.captureDevice
     }
 
+    public func getPreviewLayer() -> AVCaptureVideoPreviewLayer? {
+        return self.videoPreviewLayer
+    }
+
     private func configureCaptureDevice(_ device: AVCaptureDevice) {
         do {
             try device.lockForConfiguration()
