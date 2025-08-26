@@ -1,5 +1,11 @@
 # Changelog
 
+## 7.3.1
+
+### Patch Changes
+
+- [`07036e32e74aad71a05337ba4ca572dc6ef1853a`](https://github.com/capawesome-team/capacitor-mlkit/commit/07036e32e74aad71a05337ba4ca572dc6ef1853a): fix(web): `isTorchAvailable()` method no longer throws an error on web
+
 ## 7.3.0
 
 ### Patch Changes
