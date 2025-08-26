@@ -99,7 +99,11 @@ This plugin uses the [Barcode Detection API](https://developer.mozilla.org/en-US
 npm install barcode-detector
 ```
 
-This package provides a polyfill that uses [ZXing-C++ WebAssembly](https://github.com/Sec-ant/zxing-wasm) under the hood.
+This package provides a polyfill that uses [ZXing-C++ WebAssembly](https://github.com/Sec-ant/zxing-wasm) under the hood. After installing the package, you just need to import the polyfill in your code:
+
+```js
+import "barcode-detector/polyfill";
+```
 
 ## Configuration
 
