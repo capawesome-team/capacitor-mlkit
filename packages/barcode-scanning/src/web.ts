@@ -120,7 +120,7 @@ export class BarcodeScannerWeb
   }
 
   async isTorchAvailable(): Promise<IsTorchAvailableResult> {
-    throw this.createUnavailableException();
+    return { available: false };
   }
 
   async setZoomRatio(_options: SetZoomRatioOptions): Promise<void> {
