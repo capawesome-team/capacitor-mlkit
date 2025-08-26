@@ -69,12 +69,6 @@ jobs:
       - name: Install all CocoaPods dependencies
         if: github.ref == 'refs/heads/main'
         run: npm run ios:pod:install
-      - name: Install SPM dependencies of packages affected by changes
-        if: github.ref != 'refs/heads/main'
-        run: npm run affected:ios:spm:install
-      - name: Install all SPM dependencies
-        if: github.ref == 'refs/heads/main'
-        run: npm run ios:spm:install
       - name: Build packages affected by changes
         if: github.ref != 'refs/heads/main'
         run: npm run affected:verify:ios
