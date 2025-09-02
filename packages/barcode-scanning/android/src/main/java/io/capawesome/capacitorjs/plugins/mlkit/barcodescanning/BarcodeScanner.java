@@ -21,8 +21,11 @@ import androidx.annotation.Nullable;
 import androidx.camera.core.Camera;
 import androidx.camera.core.CameraControl;
 import androidx.camera.core.CameraSelector;
+import androidx.camera.core.FocusMeteringAction;
 import androidx.camera.core.ImageAnalysis;
 import androidx.camera.core.ImageProxy;
+import androidx.camera.core.MeteringPoint;
+import androidx.camera.core.MeteringPointFactory;
 import androidx.camera.core.Preview;
 import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.camera.view.PreviewView;
@@ -43,6 +46,7 @@ import com.google.mlkit.vision.codescanner.GmsBarcodeScanner;
 import com.google.mlkit.vision.codescanner.GmsBarcodeScannerOptions;
 import com.google.mlkit.vision.codescanner.GmsBarcodeScanning;
 import com.google.mlkit.vision.common.InputImage;
+import io.capawesome.capacitorjs.plugins.mlkit.barcodescanning.classes.options.SetFocusPointOptions;
 import io.capawesome.capacitorjs.plugins.mlkit.barcodescanning.classes.options.SetZoomRatioOptions;
 import io.capawesome.capacitorjs.plugins.mlkit.barcodescanning.classes.results.GetMaxZoomRatioResult;
 import io.capawesome.capacitorjs.plugins.mlkit.barcodescanning.classes.results.GetMinZoomRatioResult;
@@ -313,6 +317,25 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
         }
         float maxZoomRatio = camera.getCameraInfo().getZoomState().getValue().getMaxZoomRatio();
         return new GetMaxZoomRatioResult(maxZoomRatio);
+    }
+
+    public void setFocusPoint(SetFocusPointOptions options) {
+        if (camera == null || previewView == null) {
+            return;
+        }
+        
+        float x = options.getX();
+        float y = options.getY();
+        
+        // Clamp coordinates to valid range [0.0, 1.0]
+        x = Math.max(0.0f, Math.min(1.0f, x));
+        y = Math.max(0.0f, Math.min(1.0f, y));
+        
+        MeteringPointFactory factory = previewView.getMeteringPointFactory();
+        MeteringPoint point = factory.createPoint(x * previewView.getWidth(), y * previewView.getHeight());
+        FocusMeteringAction action = new FocusMeteringAction.Builder(point).build();
+        
+        camera.getCameraControl().startFocusAndMetering(action);
     }
 
     public void openSettings(PluginCall call) {
