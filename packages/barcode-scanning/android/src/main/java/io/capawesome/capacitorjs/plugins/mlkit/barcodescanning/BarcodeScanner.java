@@ -78,6 +78,8 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
 
     private boolean isTorchEnabled = false;
 
+    private boolean isPaused = false;
+
     public BarcodeScanner(BarcodeScannerPlugin plugin) {
         this.plugin = plugin;
     }
@@ -170,7 +172,22 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
         }
         barcodeScannerInstance = null;
         scanSettings = null;
+        isPaused = false;
         barcodeRawValueVotes.clear();
+    }
+
+    /**
+     * Must run on UI thread.
+     */
+    public void pauseScan() {
+        isPaused = true;
+    }
+
+    /**
+     * Must run on UI thread.
+     */
+    public void resumeScan() {
+        isPaused = false;
     }
 
     public void readBarcodesFromImage(String path, ScanSettings scanSettings, ReadBarcodesFromImageResultCallback callback)
@@ -347,6 +364,11 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
 
     @Override
     public void analyze(@NonNull ImageProxy imageProxy) {
+        if (isPaused) {
+            imageProxy.close();
+            return;
+        }
+
         @SuppressLint("UnsafeOptInUsageError")
         Image image = imageProxy.getImage();
 

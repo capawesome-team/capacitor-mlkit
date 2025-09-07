@@ -89,6 +89,36 @@ export class BarcodeScannerWeb
     }
   }
 
+  async pauseScan(): Promise<void> {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+      this.intervalId = undefined;
+    }
+  }
+
+  async resumeScan(): Promise<void> {
+    if (!this._isSupported) {
+      throw this.createUnavailableException();
+    }
+    if (!this.videoElement) {
+      throw new Error(this.errorVideoElementMissing);
+    }
+    if (!this.stream) {
+      throw new Error('Stream is not available, call startScan first.');
+    }
+
+    const barcodeDetector = new BarcodeDetector();
+    this.intervalId = window.setInterval(async () => {
+      if (!this.videoElement) {
+        return;
+      }
+      const barcodes = await barcodeDetector.detect(this.videoElement);
+      if (barcodes.length > 0) {
+        this.handleScannedBarcodes(barcodes);
+      }
+    }, 500);
+  }
+
   async readBarcodesFromImage(
     _options: ReadBarcodesFromImageOptions,
   ): Promise<ReadBarcodesFromImageResult> {
