@@ -904,9 +904,10 @@ Remove all listeners for this plugin.
 
 #### ScanOptions
 
-| Prop          | Type                         | Description                                                                              | Since |
-| ------------- | ---------------------------- | ---------------------------------------------------------------------------------------- | ----- |
-| **`formats`** | <code>BarcodeFormat[]</code> | Improve the speed of the barcode scanner by configuring the barcode formats to scan for. | 0.0.1 |
+| Prop            | Type                         | Description                                                                              | Since |
+| --------------- | ---------------------------- | ---------------------------------------------------------------------------------------- | ----- |
+| **`formats`**   | <code>BarcodeFormat[]</code> | Improve the speed of the barcode scanner by configuring the barcode formats to scan for. | 0.0.1 |
+| **`autoFocus`** | <code>boolean</code>         | Toggle the autofocus feature.                                                            | 7.3.0 |
 
 
 #### IsSupportedResult
