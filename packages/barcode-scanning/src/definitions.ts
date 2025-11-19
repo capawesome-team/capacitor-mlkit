@@ -284,7 +284,7 @@ export interface ScanOptions {
   /**
    * Toggle the autofocus feature.
    *
-   * @since 7.3.0
+   * @since 7.4.0
    */
   autoFocus?: boolean;
 }

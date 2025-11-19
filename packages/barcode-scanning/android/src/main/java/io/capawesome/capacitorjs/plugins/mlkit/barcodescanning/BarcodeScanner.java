@@ -430,10 +430,10 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
         boolean autoFocus = scanSettings.autoFocus;
         GmsBarcodeScannerOptions options;
 
-        if (!autoFocus) {
-            options = new GmsBarcodeScannerOptions.Builder().setBarcodeFormats(formats[0], formats).build();
-        } else {
+        if (autoFocus) {
             options = new GmsBarcodeScannerOptions.Builder().setBarcodeFormats(formats[0], formats).enableAutoZoom().build();
+        } else {
+            options = new GmsBarcodeScannerOptions.Builder().setBarcodeFormats(formats[0], formats).build();
         }
 
         return options;

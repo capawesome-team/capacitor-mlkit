@@ -176,6 +176,7 @@ const scanSingleBarcode = async () => {
 const scan = async () => {
   const { barcodes } = await BarcodeScanner.scan({
     formats: [BarcodeFormat.QrCode],
+    autoFocus: true,
   });
   return barcodes;
 };
@@ -907,7 +908,7 @@ Remove all listeners for this plugin.
 | Prop            | Type                         | Description                                                                              | Since |
 | --------------- | ---------------------------- | ---------------------------------------------------------------------------------------- | ----- |
 | **`formats`**   | <code>BarcodeFormat[]</code> | Improve the speed of the barcode scanner by configuring the barcode formats to scan for. | 0.0.1 |
-| **`autoFocus`** | <code>boolean</code>         | Toggle the autofocus feature.                                                            | 7.3.0 |
+| **`autoFocus`** | <code>boolean</code>         | Toggle the autofocus feature.                                                            | 7.4.0 |
 
 
 #### IsSupportedResult
