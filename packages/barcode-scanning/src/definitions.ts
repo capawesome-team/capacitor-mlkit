@@ -282,11 +282,11 @@ export interface ScanOptions {
    */
   formats?: BarcodeFormat[];
   /**
-   * Toggle the autofocus feature.
+   * Toggle the auto zoom feature.
    *
    * @since 7.4.0
    */
-  autoFocus?: boolean;
+  autoZoom?: boolean;
 }
 
 /**
