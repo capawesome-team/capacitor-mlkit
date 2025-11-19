@@ -281,6 +281,12 @@ export interface ScanOptions {
    * @since 0.0.1
    */
   formats?: BarcodeFormat[];
+  /**
+   * Toggle the autofocus feature.
+   *
+   * @since 0.0.1
+   */
+  autoFocus?: boolean;
 }
 
 /**

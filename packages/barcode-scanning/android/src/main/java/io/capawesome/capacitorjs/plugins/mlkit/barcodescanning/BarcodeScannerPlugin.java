@@ -170,10 +170,13 @@ public class BarcodeScannerPlugin extends Plugin {
     public void scan(PluginCall call) {
         try {
             List<String> formatsOption = call.getArray("formats", new JSArray()).toList();
+            boolean autoFocus = call.getBoolean("autoFocus", false);
+
             int[] formats = BarcodeScannerHelper.convertStringsToBarcodeScannerFormats(formatsOption.toArray(new String[0]));
 
             ScanSettings scanSettings = new ScanSettings();
             scanSettings.formats = formats;
+            scanSettings.autoFocus = autoFocus;
 
             implementation.isGoogleBarcodeScannerModuleAvailable(
                 new IsGoogleBarodeScannerModuleAvailableResultCallback() {

@@ -427,7 +427,18 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
 
     private GmsBarcodeScannerOptions buildGmsBarcodeScannerOptions(ScanSettings scanSettings) {
         int[] formats = scanSettings.formats.length == 0 ? new int[] { Barcode.FORMAT_ALL_FORMATS } : scanSettings.formats;
-        GmsBarcodeScannerOptions options = new GmsBarcodeScannerOptions.Builder().setBarcodeFormats(formats[0], formats).build();
+        boolean autoFocus = scanSettings.autoFocus;
+        GmsBarcodeScannerOptions options;
+
+        if (!autoFocus) {
+            options = new GmsBarcodeScannerOptions.Builder().setBarcodeFormats(formats[0], formats).build();
+        } else {
+             options = new GmsBarcodeScannerOptions.Builder()
+                    .setBarcodeFormats(formats[0], formats)
+                    .enableAutoZoom()
+                    .build();
+        }
+
         return options;
     }
 
