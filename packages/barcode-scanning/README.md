@@ -176,6 +176,7 @@ const scanSingleBarcode = async () => {
 const scan = async () => {
   const { barcodes } = await BarcodeScanner.scan({
     formats: [BarcodeFormat.QrCode],
+    autoZoom: true,
   });
   return barcodes;
 };
@@ -904,9 +905,10 @@ Remove all listeners for this plugin.
 
 #### ScanOptions
 
-| Prop          | Type                         | Description                                                                              | Since |
-| ------------- | ---------------------------- | ---------------------------------------------------------------------------------------- | ----- |
-| **`formats`** | <code>BarcodeFormat[]</code> | Improve the speed of the barcode scanner by configuring the barcode formats to scan for. | 0.0.1 |
+| Prop            | Type                         | Description                                                                              | Since |
+| --------------- | ---------------------------- | ---------------------------------------------------------------------------------------- | ----- |
+| **`formats`**   | <code>BarcodeFormat[]</code> | Improve the speed of the barcode scanner by configuring the barcode formats to scan for. | 0.0.1 |
+| **`autoZoom`** | <code>boolean</code>         | Toggle the auto zoom feature.                                                            | 7.4.0 |
 
 
 #### IsSupportedResult

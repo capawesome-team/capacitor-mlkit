@@ -281,6 +281,12 @@ export interface ScanOptions {
    * @since 0.0.1
    */
   formats?: BarcodeFormat[];
+  /**
+   * Toggle the auto zoom feature.
+   *
+   * @since 7.4.0
+   */
+  autoZoom?: boolean;
 }
 
 /**
