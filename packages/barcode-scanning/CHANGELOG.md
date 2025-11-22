@@ -1,5 +1,15 @@
 # Changelog
 
+## 7.4.0
+
+### Minor Changes
+
+- [`953540837c2f1b5c38dde23e5bd6e03b64e168fa`](https://github.com/capawesome-team/capacitor-mlkit/commit/953540837c2f1b5c38dde23e5bd6e03b64e168fa) ([#305](https://github.com/capawesome-team/capacitor-mlkit/pull/305)): feat(android): add `autoZoom` option
+
+### Patch Changes
+
+- [`07036e32e74aad71a05337ba4ca572dc6ef1853a`](https://github.com/capawesome-team/capacitor-mlkit/commit/07036e32e74aad71a05337ba4ca572dc6ef1853a): fix(web): `isTorchAvailable()` method no longer throws an error on web
+
 ## 7.3.0
 
 ### Patch Changes
