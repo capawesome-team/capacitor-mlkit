@@ -739,6 +739,7 @@ Remove all listeners for this plugin.
 | **`formats`**      | <code>BarcodeFormat[]</code>                      | Improve the speed of the barcode scanner by configuring the barcode formats to scan for. Only available on Android and iOS.                                                                                           |                                     | 0.0.1 |
 | **`lensFacing`**   | <code><a href="#lensfacing">LensFacing</a></code> | Configure the camera (front or back) to use.                                                                                                                                                                          |                                     | 0.0.1 |
 | **`resolution`**   | <code><a href="#resolution">Resolution</a></code> | Configure the resolution of the captured image that is used for barcode scanning. If the resolution is not supported by the device, the closest supported resolution will be used. Only available on Android and iOS. | <code>Resolution['1280x720']</code> | 7.0.0 |
+| **`enableMultitaskingCameraAccess`** | <code>boolean</code> | Allow camera usage while iPad is in multitasking mode. Only available on iOS. | <code>false</code> | 7.5.0 |
 | **`videoElement`** | <code>HTMLVideoElement</code>                     | The HTML video element to use for the camera preview. Only available on web.                                                                                                                                          |                                     | 7.1.0 |
 
 
