@@ -230,6 +230,15 @@ export interface StartScanOptions {
    */
   resolution?: Resolution;
   /**
+   * Allow camera usage on iPad while in multitasking mode.
+   *
+   * Only available on iOS (16.0+).
+   *
+   * @since 7.5.0
+   * @default false
+   */
+  enableMultitaskingCameraAccess?: boolean;
+  /**
    * The HTML video element to use for the camera preview.
    *
    * Only available on web.
