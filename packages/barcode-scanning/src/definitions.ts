@@ -232,9 +232,10 @@ export interface StartScanOptions {
   /**
    * Allow camera usage on iPad while in multitasking mode.
    *
-   * Only available on iOS. Defaults to false.
+   * Only available on iOS (16.0+).
    *
    * @since 7.5.0
+   * @default false
    */
   enableMultitaskingCameraAccess?: boolean;
   /**
