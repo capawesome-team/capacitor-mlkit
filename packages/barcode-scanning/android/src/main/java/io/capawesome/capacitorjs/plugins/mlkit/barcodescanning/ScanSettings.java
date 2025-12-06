@@ -14,6 +14,9 @@ public class ScanSettings {
     public int[] formats = new int[] {};
 
     @Nullable
+    public boolean autoZoom = false;
+
+    @Nullable
     @CameraSelector.LensFacing
     public Integer lensFacing;
 

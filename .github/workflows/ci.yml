@@ -6,12 +6,12 @@ on:
       - main
       - next
     paths-ignore:
-      - '**.md'
-      - '.vscode/**'
+      - "**.md"
+      - ".vscode/**"
   pull_request:
     paths-ignore:
-      - '**.md'
-      - '.vscode/**'
+      - "**.md"
+      - ".vscode/**"
   workflow_dispatch:
 
 env:
@@ -35,7 +35,7 @@ jobs:
       - name: Set up Java ${{ env.JAVA_VERSION }}
         uses: actions/setup-java@v4
         with:
-          distribution: 'zulu'
+          distribution: "zulu"
           java-version: ${{ env.JAVA_VERSION }}
       - name: Install Node.js dependencies
         run: npm ci
@@ -60,7 +60,7 @@ jobs:
       - name: Setup Xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: latest-stable
+          xcode-version: "26.0"
       - name: Install Node.js dependencies
         run: npm ci
       - name: Install CocoaPods dependencies of packages affected by changes
@@ -90,7 +90,7 @@ jobs:
       - name: Set up Java ${{ env.JAVA_VERSION }}
         uses: actions/setup-java@v4
         with:
-          distribution: 'zulu'
+          distribution: "zulu"
           java-version: ${{ env.JAVA_VERSION }}
       - name: Install Node.js dependencies
         run: npm ci

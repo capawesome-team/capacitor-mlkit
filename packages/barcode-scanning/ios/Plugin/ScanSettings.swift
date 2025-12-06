@@ -10,4 +10,5 @@ import AVFoundation
     public var formats: [BarcodeFormat] = []
     public var lensFacing: AVCaptureDevice.Position = .back
     public var resolution: AVCaptureSession.Preset = AVCaptureSession.Preset.hd1280x720
+    public var enableMultitaskingCameraAccess: Bool = false
 }

@@ -479,7 +479,15 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
 
     private GmsBarcodeScannerOptions buildGmsBarcodeScannerOptions(ScanSettings scanSettings) {
         int[] formats = scanSettings.formats.length == 0 ? new int[] { Barcode.FORMAT_ALL_FORMATS } : scanSettings.formats;
-        GmsBarcodeScannerOptions options = new GmsBarcodeScannerOptions.Builder().setBarcodeFormats(formats[0], formats).build();
+        boolean autoZoom = scanSettings.autoZoom;
+        GmsBarcodeScannerOptions options;
+
+        if (autoZoom) {
+            options = new GmsBarcodeScannerOptions.Builder().setBarcodeFormats(formats[0], formats).enableAutoZoom().build();
+        } else {
+            options = new GmsBarcodeScannerOptions.Builder().setBarcodeFormats(formats[0], formats).build();
+        }
+
         return options;
     }
 
