@@ -125,10 +125,11 @@ public class BarcodeScannerPlugin extends Plugin {
     @PluginMethod
     public void pauseScan(PluginCall call) {
         try {
-            getActivity().runOnUiThread(() -> {
-                implementation.pauseScan();
-                call.resolve();
-            });
+            getActivity()
+                .runOnUiThread(() -> {
+                    implementation.pauseScan();
+                    call.resolve();
+                });
         } catch (Exception exception) {
             Logger.error(TAG, exception.getMessage(), exception);
             call.reject(exception.getMessage());
@@ -138,10 +139,11 @@ public class BarcodeScannerPlugin extends Plugin {
     @PluginMethod
     public void resumeScan(PluginCall call) {
         try {
-            getActivity().runOnUiThread(() -> {
-                implementation.resumeScan();
-                call.resolve();
-            });
+            getActivity()
+                .runOnUiThread(() -> {
+                    implementation.resumeScan();
+                    call.resolve();
+                });
         } catch (Exception exception) {
             Logger.error(TAG, exception.getMessage(), exception);
             call.reject(exception.getMessage());

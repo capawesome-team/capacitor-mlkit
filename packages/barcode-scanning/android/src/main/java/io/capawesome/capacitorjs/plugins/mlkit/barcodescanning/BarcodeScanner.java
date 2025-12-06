@@ -198,31 +198,23 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
 
         try {
             ImageAnalysis imageAnalysis = new ImageAnalysis.Builder()
-                    .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
-                    .setTargetResolution(scanSettings.resolution)
-                    .build();
+                .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
+                .setTargetResolution(scanSettings.resolution)
+                .build();
             imageAnalysis.setAnalyzer(ContextCompat.getMainExecutor(plugin.getContext()), this);
 
-            CameraSelector cameraSelector = new CameraSelector.Builder()
-                    .requireLensFacing(scanSettings.lensFacing)
-                    .build();
+            CameraSelector cameraSelector = new CameraSelector.Builder().requireLensFacing(scanSettings.lensFacing).build();
 
             Preview preview = new Preview.Builder().build();
             if (previewView != null) {
                 preview.setSurfaceProvider(previewView.getSurfaceProvider());
             }
 
-            camera = processCameraProvider.bindToLifecycle(
-                    (LifecycleOwner) plugin.getContext(),
-                    cameraSelector,
-                    preview,
-                    imageAnalysis
-            );
+            camera = processCameraProvider.bindToLifecycle((LifecycleOwner) plugin.getContext(), cameraSelector, preview, imageAnalysis);
 
             if (isTorchEnabled && camera != null) {
                 camera.getCameraControl().enableTorch(true);
             }
-
         } catch (Exception exception) {
             handleScanError(exception);
         }
