@@ -23,6 +23,8 @@ public class BarcodeScannerPlugin: CAPPlugin {
     public let errorZoomRatioMissing = "zoomRatio must be provided."
     public let errorPermissionDenied = "User denied access to camera."
     public let errorOpenSettingsFailed = "Cannot open settings."
+    public let errorFocusPointNotSupported = "Focus point not supported."
+    public let errorFocusPointMissing = "x and y coordinates must be provided."
     public let barcodeScannedEvent = "barcodeScanned"
     public let barcodesScannedEvent = "barcodesScanned"
 
@@ -209,6 +211,23 @@ public class BarcodeScannerPlugin: CAPPlugin {
         }
         if let result = result.toJSObject() as? JSObject {
             call.resolve(result)
+        }
+    }
+
+    @objc func setFocusPoint(_ call: CAPPluginCall) {
+        guard let x = call.getFloat("x"), let y = call.getFloat("y") else {
+            call.reject(errorFocusPointMissing)
+            return
+        }
+
+        let options = SetFocusPointOptions(x: x, y: y)
+
+        do {
+            try implementation?.setFocusPoint(options)
+            call.resolve()
+        } catch {
+            CAPLog.print("[", self.tag, "] ", error)
+            call.reject(error.localizedDescription)
         }
     }
 
