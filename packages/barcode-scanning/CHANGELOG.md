@@ -1,5 +1,11 @@
 # Changelog
 
+## 7.5.0
+
+### Minor Changes
+
+- [`5c71c6b2192bbce7b40433db575a2dad14b2593e`](https://github.com/capawesome-team/capacitor-mlkit/commit/5c71c6b2192bbce7b40433db575a2dad14b2593e) ([#307](https://github.com/capawesome-team/capacitor-mlkit/pull/307)): feat: add `enableMultitaskingCameraAccess` option
+
 ## 7.4.0
 
 ### Minor Changes
