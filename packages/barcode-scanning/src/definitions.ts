@@ -558,14 +558,14 @@ export interface Barcode {
   /**
    * The barcode value in a machine readable format.
    *
-   * This value is only available when the barcode is encoded
+   * This value is only available if the barcode is encoded
    * in the UTF-8 character set. Otherwise, the `bytes` property
-   * should be used and this property will be an empty string.
+   * should be used.
    *
    * @since 0.0.1
    * @example "CapacitorJS"
    */
-  rawValue: string;
+  rawValue?: string;
   /**
    * A sms message from a 'SMS:'.
    *
