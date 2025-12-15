@@ -5,4 +5,4 @@
 '@capacitor-mlkit/face-detection': major
 ---
 
-fix: throw correct error code for unimplemented methods
+fix: throw correct error code for unimplemented methods (see `BREAKING.md`)
