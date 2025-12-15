@@ -8,6 +8,13 @@ Unofficial Capacitor plugin for [ML Kit Face Mesh Detection](https://developers.
   </a>
 </div>
 
+## Compatibility
+
+| Plugin Version | Capacitor Version | Status         |
+| -------------- | ----------------- | -------------- |
+| 8.x.x          | >=8.x.x           | Active support |
+| 6.x.x          | 6.x.x             | Deprecated     |
+
 ## Installation
 
 ```bash
