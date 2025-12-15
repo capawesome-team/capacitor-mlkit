@@ -70,10 +70,10 @@ You also need to add the following meta data **in** the `application` tag in you
 
 If needed, you can define the following project variable in your app’s `variables.gradle` file to change the default version of the dependency:
 
-- `$androidxCameraCamera2Version` version of `androidx.camera:camera-camera2` (default: `1.1.0`)
-- `$androidxCameraCoreVersion` version of `androidx.camera:camera-core` (default: `1.1.0`)
-- `$androidxCameraLifecycleVersion` version of `androidx.camera:camera-lifecycle` (default: `1.1.0`)
-- `$androidxCameraViewVersion` version of `androidx.camera:camera-view` (default: `1.1.0`)
+- `$androidxCameraCamera2Version` version of `androidx.camera:camera-camera2` (default: `1.5.2`)
+- `$androidxCameraCoreVersion` version of `androidx.camera:camera-core` (default: `1.5.2`)
+- `$androidxCameraLifecycleVersion` version of `androidx.camera:camera-lifecycle` (default: `1.5.2`)
+- `$androidxCameraViewVersion` version of `androidx.camera:camera-view` (default: `1.5.2`)
 - `$mlkitBarcodeScanningVersion` version of `com.google.mlkit:barcode-scanning` (default: `17.3.0`)
 - `$playServicesCodeScannerVersion` version of `com.google.android.gms:play-services-code-scanner` (default: `16.1.0`)
 
