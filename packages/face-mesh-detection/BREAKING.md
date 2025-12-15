@@ -17,6 +17,8 @@ This plugin now supports **Capacitor 8**. The minimum Android SDK version is **3
 
 On **Web**, unimplemented methods now throw an error with code `Unimplemented` instead of `Unavailable`.
 
+On **iOS**, the `processImage` method now throws an error with code `Unimplemented` instead of a generic error message.
+
 ## Version 6.x.x
 
 ### Variables

@@ -19,6 +19,8 @@ This plugin now supports **Capacitor 8**. The minimum Android SDK version is **3
 
 On **Web**, unimplemented methods now throw an error with code `Unimplemented` instead of `Unavailable`.
 
+On **iOS**, the `isGoogleBarcodeScannerModuleAvailable` and `installGoogleBarcodeScannerModule` methods now throw an error with code `Unimplemented` instead of a generic error message.
+
 ### Variables
 
 - On Android, the `androidxCameraCamera2Version` variable has been updated to `1.5.2`.
