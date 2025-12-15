@@ -15,6 +15,10 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 
 This plugin now supports **Capacitor 8**. The minimum Android SDK version is **36**. Ensure your project meets these requirements before upgrading.
 
+### Error codes
+
+On **Web**, unimplemented methods now throw an error with code `Unimplemented` instead of `Unavailable`.
+
 ### Variables
 
 - On Android, the `androidxCameraCamera2Version` variable has been updated to `1.5.2`.

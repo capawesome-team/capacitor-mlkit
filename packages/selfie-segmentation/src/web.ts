@@ -13,13 +13,13 @@ export class SelfieSegmentationWeb
   public async processImage(
     _options: ProcessImageOptions,
   ): Promise<ProcessImageResult> {
-    throw this.createUnavailableException();
+    throw this.createUnimplementedException();
   }
 
-  private createUnavailableException(): CapacitorException {
+  private createUnimplementedException(): CapacitorException {
     return new CapacitorException(
-      'This Selfie Segmentation plugin method is not available on this platform.',
-      ExceptionCode.Unavailable,
+      'This method is not implemented on web.',
+      ExceptionCode.Unimplemented,
     );
   }
 }
