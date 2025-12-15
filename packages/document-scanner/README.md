@@ -8,6 +8,12 @@ Unofficial Capacitor plugin for [ML Kit Document Scanner](https://developers.goo
   </a>
 </div>
 
+## Compatibility
+
+| Plugin Version | Capacitor Version | Status         |
+| -------------- | ----------------- | -------------- |
+| 8.x.x          | >=8.x.x           | Active support |
+
 ## Installation
 
 ```bash
