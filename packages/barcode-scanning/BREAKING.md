@@ -22,6 +22,10 @@ This plugin now supports **Capacitor 8**. The minimum Android SDK version is **3
 - On Android, the `androidxCameraLifecycleVersion` variable has been updated to `1.5.2`.
 - On Android, the `androidxCameraViewVersion` variable has been updated to `1.5.2`.
 
+### `rawValue` property
+
+The `rawValue` property in the `Barcode` interface is now optional since a raw value is only available if the barcode is encoded in the UTF-8 character set. Previously, if the barcode was encoded in a different character set, the `rawValue` property was an empty string.
+
 ## Version 7.x.x
 
 ### Variables
