@@ -49,6 +49,8 @@ npm install @capacitor-mlkit/barcode-scanning
 npx cap sync
 ```
 
+**Attention**: This plugin **only supports CocoaPods** for iOS dependency management. Swift Package Manager (SPM) is not supported for the ML Kit SDK, see [this comment](https://github.com/googlesamples/mlkit/issues/180#issuecomment-1298964099).
+
 ### Android
 
 #### Permissions
