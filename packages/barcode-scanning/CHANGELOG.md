@@ -1,5 +1,23 @@
 # Changelog
 
+## 8.0.0
+
+### Major Changes
+
+- [`e8ec64384fa5d01104be4d4cb61bc2e7c037e9e1`](https://github.com/capawesome-team/capacitor-mlkit/commit/e8ec64384fa5d01104be4d4cb61bc2e7c037e9e1) ([#316](https://github.com/capawesome-team/capacitor-mlkit/pull/316)): fix: throw correct error code for unimplemented methods (see `BREAKING.md`)
+
+- [`36dc42aeee4af509e84d2904d4be1a6a87f78fac`](https://github.com/capawesome-team/capacitor-mlkit/commit/36dc42aeee4af509e84d2904d4be1a6a87f78fac) ([#313](https://github.com/capawesome-team/capacitor-mlkit/pull/313)): feat!: update dependencies to the latest versions (see `BREAKING.md`)
+
+- [`e39ac78b6dafa79e8bc972dcf7291fce14fcdce0`](https://github.com/capawesome-team/capacitor-mlkit/commit/e39ac78b6dafa79e8bc972dcf7291fce14fcdce0) ([#315](https://github.com/capawesome-team/capacitor-mlkit/pull/315)): fix!: `rawValue` can be undefined (see `BREAKING.md`)
+
+- [`7c34e5f74f0339aa0b1a210f0060ccb31d0720bd`](https://github.com/capawesome-team/capacitor-mlkit/commit/7c34e5f74f0339aa0b1a210f0060ccb31d0720bd): fix!: throw correct error code (see `BREAKING.md`)
+
+- [`e5a827f63dd47ae190a189760a484f7f5403fca3`](https://github.com/capawesome-team/capacitor-mlkit/commit/e5a827f63dd47ae190a189760a484f7f5403fca3) ([#311](https://github.com/capawesome-team/capacitor-mlkit/pull/311)): feat!: update to Capacitor 8 (see `BREAKING.md`)
+
+### Patch Changes
+
+- [`5005b3faddb92611bfd69339696ec94de99e0f28`](https://github.com/capawesome-team/capacitor-mlkit/commit/5005b3faddb92611bfd69339696ec94de99e0f28) ([#314](https://github.com/capawesome-team/capacitor-mlkit/pull/314)): fix(android): corner points were calculated somewhat inaccurately
+
 ## 7.5.0
 
 ### Minor Changes
