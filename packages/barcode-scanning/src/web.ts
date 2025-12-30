@@ -1,7 +1,7 @@
-import { CapacitorException, ExceptionCode, WebPlugin } from '@capacitor/core';
+import {CapacitorException, ExceptionCode, WebPlugin} from '@capacitor/core';
 
-import type { DetectedBarcode } from './barcode-detector';
-import { BarcodeValueType, LensFacing } from './definitions';
+import type {DetectedBarcode} from './barcode-detector';
+import {BarcodeValueType, LensFacing} from './definitions';
 import type {
   BarcodeFormat,
   BarcodesScannedEvent,
@@ -28,8 +28,7 @@ declare global {
 
 export class BarcodeScannerWeb
   extends WebPlugin
-  implements BarcodeScannerPlugin
-{
+  implements BarcodeScannerPlugin {
   private readonly _isSupported = 'BarcodeDetector' in window;
   private readonly errorVideoElementMissing = 'videoElement must be provided.';
   private readonly eventBarcodesScanned = 'barcodesScanned';
@@ -107,6 +106,10 @@ export class BarcodeScannerWeb
       throw new Error('Stream is not available, call startScan first.');
     }
 
+    if (!('BarcodeDetector' in window)) {
+      throw new Error('Barcode scanning is not supported on this platform.');
+    }
+
     const barcodeDetector = new BarcodeDetector();
     this.intervalId = window.setInterval(async () => {
       if (!this.videoElement) {
@@ -130,7 +133,7 @@ export class BarcodeScannerWeb
   }
 
   async isSupported(): Promise<IsSupportedResult> {
-    return { supported: this._isSupported };
+    return {supported: this._isSupported};
   }
 
   async enableTorch(): Promise<void> {
@@ -150,7 +153,7 @@ export class BarcodeScannerWeb
   }
 
   async isTorchAvailable(): Promise<IsTorchAvailableResult> {
-    return { available: false };
+    return {available: false};
   }
 
   async setZoomRatio(_options: SetZoomRatioOptions): Promise<void> {
@@ -198,7 +201,7 @@ export class BarcodeScannerWeb
 
   async requestPermissions(): Promise<PermissionStatus> {
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      const stream = await navigator.mediaDevices.getUserMedia({video: true});
       stream.getTracks().forEach(track => track.stop());
       return {
         camera: 'granted',

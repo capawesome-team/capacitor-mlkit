@@ -367,7 +367,7 @@ pauseScan() => Promise<void>
 
 Pause scanning for barcodes.
 
-**Since:** 7.3.1
+**Since:** 7.5.0
 
 --------------------
 
@@ -380,7 +380,7 @@ resumeScan() => Promise<void>
 
 Resume scanning for barcodes.
 
-**Since:** 7.3.1
+**Since:** 7.5.0
 
 --------------------
 
