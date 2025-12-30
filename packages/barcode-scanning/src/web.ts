@@ -39,7 +39,7 @@ export class BarcodeScannerWeb
 
   async startScan(options?: StartScanOptions): Promise<void> {
     if (!this._isSupported) {
-      throw this.createUnavailableException();
+      throw this.createUnimplementedException();
     }
     if (!options?.videoElement) {
       throw new Error(this.errorVideoElementMissing);
@@ -72,7 +72,7 @@ export class BarcodeScannerWeb
 
   async stopScan(): Promise<void> {
     if (!this._isSupported) {
-      throw this.createUnavailableException();
+      throw this.createUnimplementedException();
     }
     if (this.intervalId) {
       clearInterval(this.intervalId);
@@ -125,11 +125,11 @@ export class BarcodeScannerWeb
   async readBarcodesFromImage(
     _options: ReadBarcodesFromImageOptions,
   ): Promise<ReadBarcodesFromImageResult> {
-    throw this.createUnavailableException();
+    throw this.createUnimplementedException();
   }
 
   async scan(): Promise<ScanResult> {
-    throw this.createUnavailableException();
+    throw this.createUnimplementedException();
   }
 
   async isSupported(): Promise<IsSupportedResult> {
@@ -137,19 +137,19 @@ export class BarcodeScannerWeb
   }
 
   async enableTorch(): Promise<void> {
-    throw this.createUnavailableException();
+    throw this.createUnimplementedException();
   }
 
   async disableTorch(): Promise<void> {
-    throw this.createUnavailableException();
+    throw this.createUnimplementedException();
   }
 
   async toggleTorch(): Promise<void> {
-    throw this.createUnavailableException();
+    throw this.createUnimplementedException();
   }
 
   async isTorchEnabled(): Promise<IsTorchEnabledResult> {
-    throw this.createUnavailableException;
+    throw this.createUnimplementedException();
   }
 
   async isTorchAvailable(): Promise<IsTorchAvailableResult> {
@@ -157,31 +157,31 @@ export class BarcodeScannerWeb
   }
 
   async setZoomRatio(_options: SetZoomRatioOptions): Promise<void> {
-    throw this.createUnavailableException();
+    throw this.createUnimplementedException();
   }
 
   async getZoomRatio(): Promise<GetZoomRatioResult> {
-    throw this.createUnavailableException();
+    throw this.createUnimplementedException();
   }
 
   async getMinZoomRatio(): Promise<GetMinZoomRatioResult> {
-    throw this.createUnavailableException();
+    throw this.createUnimplementedException();
   }
 
   async getMaxZoomRatio(): Promise<GetMaxZoomRatioResult> {
-    throw this.createUnavailableException();
+    throw this.createUnimplementedException();
   }
 
   async openSettings(): Promise<void> {
-    throw this.createUnavailableException();
+    throw this.createUnimplementedException();
   }
 
   async isGoogleBarcodeScannerModuleAvailable(): Promise<IsGoogleBarcodeScannerModuleAvailableResult> {
-    throw this.createUnavailableException();
+    throw this.createUnimplementedException();
   }
 
   async installGoogleBarcodeScannerModule(): Promise<void> {
-    throw this.createUnavailableException();
+    throw this.createUnimplementedException();
   }
 
   async checkPermissions(): Promise<PermissionStatus> {
@@ -213,10 +213,10 @@ export class BarcodeScannerWeb
     }
   }
 
-  private createUnavailableException(): CapacitorException {
+  private createUnimplementedException(): CapacitorException {
     return new CapacitorException(
-      'This plugin method is not available on this platform.',
-      ExceptionCode.Unavailable,
+      'This method is not implemented on web.',
+      ExceptionCode.Unimplemented,
     );
   }
 

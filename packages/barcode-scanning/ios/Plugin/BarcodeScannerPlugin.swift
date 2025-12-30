@@ -233,11 +233,11 @@ public class BarcodeScannerPlugin: CAPPlugin {
     }
 
     @objc func isGoogleBarcodeScannerModuleAvailable(_ call: CAPPluginCall) {
-        call.reject("Not available on iOS")
+        rejectCallAsUnimplemented(call)
     }
 
     @objc func installGoogleBarcodeScannerModule(_ call: CAPPluginCall) {
-        call.reject("Not available on iOS")
+        rejectCallAsUnimplemented(call)
     }
 
     @objc override public func checkPermissions(_ call: CAPPluginCall) {
@@ -250,6 +250,14 @@ public class BarcodeScannerPlugin: CAPPlugin {
         AVCaptureDevice.requestAccess(for: .video) { _ in
             self.checkPermissions(call)
         }
+    }
+
+    private func rejectCallAsUnavailable(_ call: CAPPluginCall) {
+        call.unavailable("This method is not available on this platform.")
+    }
+
+    private func rejectCallAsUnimplemented(_ call: CAPPluginCall) {
+        call.unimplemented("This method is not available on this platform.")
     }
 
     func notifyBarcodeScannedListener(barcode: Barcode, imageSize: CGSize, videoOrientation: AVCaptureVideoOrientation?) {

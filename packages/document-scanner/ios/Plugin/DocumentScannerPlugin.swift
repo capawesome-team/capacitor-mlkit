@@ -14,6 +14,14 @@ public class DocumentScannerPlugin: CAPPlugin, CAPBridgedPlugin {
     ]
 
     @objc func scanDocument(_ call: CAPPluginCall) {
-        call.reject("Not available on iOS")
+        rejectCallAsUnimplemented(call)
+    }
+
+    private func rejectCallAsUnavailable(_ call: CAPPluginCall) {
+        call.unavailable("This method is not available on this platform.")
+    }
+
+    private func rejectCallAsUnimplemented(_ call: CAPPluginCall) {
+        call.unimplemented("This method is not available on this platform.")
     }
 }

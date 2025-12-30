@@ -8,6 +8,12 @@ Unofficial Capacitor plugin for [ML Kit Document Scanner](https://developers.goo
   </a>
 </div>
 
+## Compatibility
+
+| Plugin Version | Capacitor Version | Status         |
+| -------------- | ----------------- | -------------- |
+| 8.x.x          | >=8.x.x           | Active support |
+
 ## Installation
 
 ```bash
@@ -21,7 +27,7 @@ npx cap sync
 
 If needed, you can define the following project variable in your app’s `variables.gradle` file to change the default version of the dependency:
 
-- `$mlkitDocumentScannerVersion` version of `com.google.android.gms:play-services-mlkit-document-scanner` (default: `16.0.0-beta1`)
+- `$mlkitDocumentScannerVersion` version of `com.google.android.gms:play-services-mlkit-document-scanner` (default: `16.0.0`)
 
 This can be useful if you encounter dependency conflicts with other plugins in your project.
 

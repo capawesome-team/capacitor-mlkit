@@ -20,6 +20,15 @@ Unofficial Capacitor plugin for [ML Kit Barcode Scanning](https://developers.goo
 
 For a complete list of **supported barcodes**, see [BarcodeFormat](#barcodeformat).
 
+## Compatibility
+
+| Plugin Version | Capacitor Version | Status         |
+| -------------- | ----------------- | -------------- |
+| 8.x.x          | >=8.x.x           | Active support |
+| 7.x.x          | 7.x.x             | Deprecated     |
+| 6.x.x          | 6.x.x             | Deprecated     |
+| 5.x.x          | 5.x.x             | Deprecated     |
+
 ## Demo
 
 A working example can be found here: [https://github.com/robingenz/capacitor-mlkit-plugin-demo](https://github.com/robingenz/capacitor-mlkit-plugin-demo)
@@ -39,6 +48,8 @@ A working example can be found here: [https://github.com/robingenz/capacitor-mlk
 npm install @capacitor-mlkit/barcode-scanning
 npx cap sync
 ```
+
+**Attention**: This plugin **only supports CocoaPods** for iOS dependency management. Swift Package Manager (SPM) is not supported for the ML Kit SDK, see [this comment](https://github.com/googlesamples/mlkit/issues/180#issuecomment-1298964099).
 
 ### Android
 
@@ -61,10 +72,10 @@ You also need to add the following meta data **in** the `application` tag in you
 
 If needed, you can define the following project variable in your app’s `variables.gradle` file to change the default version of the dependency:
 
-- `$androidxCameraCamera2Version` version of `androidx.camera:camera-camera2` (default: `1.1.0`)
-- `$androidxCameraCoreVersion` version of `androidx.camera:camera-core` (default: `1.1.0`)
-- `$androidxCameraLifecycleVersion` version of `androidx.camera:camera-lifecycle` (default: `1.1.0`)
-- `$androidxCameraViewVersion` version of `androidx.camera:camera-view` (default: `1.1.0`)
+- `$androidxCameraCamera2Version` version of `androidx.camera:camera-camera2` (default: `1.5.2`)
+- `$androidxCameraCoreVersion` version of `androidx.camera:camera-core` (default: `1.5.2`)
+- `$androidxCameraLifecycleVersion` version of `androidx.camera:camera-lifecycle` (default: `1.5.2`)
+- `$androidxCameraViewVersion` version of `androidx.camera:camera-view` (default: `1.5.2`)
 - `$mlkitBarcodeScanningVersion` version of `com.google.mlkit:barcode-scanning` (default: `17.3.0`)
 - `$playServicesCodeScannerVersion` version of `com.google.android.gms:play-services-code-scanner` (default: `16.1.0`)
 
@@ -780,23 +791,23 @@ Remove all listeners for this plugin.
 
 #### Barcode
 
-| Prop                | Type                                                                                  | Description                                                                                                                                                                                                                    | Since |
-| ------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----- |
-| **`bytes`**         | <code>number[]</code>                                                                 | Raw bytes as it was encoded in the barcode.                                                                                                                                                                                    | 0.0.1 |
-| **`calendarEvent`** | <code><a href="#barcodecalendarevent">BarcodeCalendarEvent</a></code>                 | Calendar event info.                                                                                                                                                                                                           | 7.0.0 |
-| **`contactInfo`**   | <code><a href="#barcodecontactinfo">BarcodeContactInfo</a></code>                     | Person's or organization's business card.                                                                                                                                                                                      | 7.0.0 |
-| **`cornerPoints`**  | <code>[[number, number], [number, number], [number, number], [number, number]]</code> | The four corner points of the barcode in clockwise order starting with top-left. This property is currently only supported by the `startScan(...)` method.                                                                     | 0.0.1 |
-| **`displayValue`**  | <code>string</code>                                                                   | The barcode value in a human readable format.                                                                                                                                                                                  | 0.0.1 |
-| **`driverLicense`** | <code><a href="#barcodedriverlicense">BarcodeDriverLicense</a></code>                 | Driver license or ID card.                                                                                                                                                                                                     | 7.0.0 |
-| **`email`**         | <code><a href="#barcodeemail">BarcodeEmail</a></code>                                 | An email message from a 'MAILTO:'.                                                                                                                                                                                             | 7.0.0 |
-| **`format`**        | <code><a href="#barcodeformat">BarcodeFormat</a></code>                               | The barcode format.                                                                                                                                                                                                            | 0.0.1 |
-| **`geoPoint`**      | <code><a href="#barcodegeopoint">BarcodeGeoPoint</a></code>                           | GPS coordinates from a 'GEO:'.                                                                                                                                                                                                 | 7.0.0 |
-| **`phone`**         | <code><a href="#barcodephone">BarcodePhone</a></code>                                 | Phone number info.                                                                                                                                                                                                             | 7.0.0 |
-| **`rawValue`**      | <code>string</code>                                                                   | The barcode value in a machine readable format. This value is only available when the barcode is encoded in the UTF-8 character set. Otherwise, the `bytes` property should be used and this property will be an empty string. | 0.0.1 |
-| **`sms`**           | <code><a href="#barcodesms">BarcodeSms</a></code>                                     | A sms message from a 'SMS:'.                                                                                                                                                                                                   | 7.0.0 |
-| **`urlBookmark`**   | <code><a href="#barcodeurlbookmark">BarcodeUrlBookmark</a></code>                     | A URL and title from a 'MEBKM:'.                                                                                                                                                                                               | 7.0.0 |
-| **`valueType`**     | <code><a href="#barcodevaluetype">BarcodeValueType</a></code>                         | The barcode value type.                                                                                                                                                                                                        | 0.0.1 |
-| **`wifi`**          | <code><a href="#barcodewifi">BarcodeWifi</a></code>                                   | A wifi network parameters from a 'WIFI:'.                                                                                                                                                                                      | 7.0.0 |
+| Prop                | Type                                                                                  | Description                                                                                                                                                                        | Since |
+| ------------------- | ------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
+| **`bytes`**         | <code>number[]</code>                                                                 | Raw bytes as it was encoded in the barcode.                                                                                                                                        | 0.0.1 |
+| **`calendarEvent`** | <code><a href="#barcodecalendarevent">BarcodeCalendarEvent</a></code>                 | Calendar event info.                                                                                                                                                               | 7.0.0 |
+| **`contactInfo`**   | <code><a href="#barcodecontactinfo">BarcodeContactInfo</a></code>                     | Person's or organization's business card.                                                                                                                                          | 7.0.0 |
+| **`cornerPoints`**  | <code>[[number, number], [number, number], [number, number], [number, number]]</code> | The four corner points of the barcode in clockwise order starting with top-left. This property is currently only supported by the `startScan(...)` method.                         | 0.0.1 |
+| **`displayValue`**  | <code>string</code>                                                                   | The barcode value in a human readable format.                                                                                                                                      | 0.0.1 |
+| **`driverLicense`** | <code><a href="#barcodedriverlicense">BarcodeDriverLicense</a></code>                 | Driver license or ID card.                                                                                                                                                         | 7.0.0 |
+| **`email`**         | <code><a href="#barcodeemail">BarcodeEmail</a></code>                                 | An email message from a 'MAILTO:'.                                                                                                                                                 | 7.0.0 |
+| **`format`**        | <code><a href="#barcodeformat">BarcodeFormat</a></code>                               | The barcode format.                                                                                                                                                                | 0.0.1 |
+| **`geoPoint`**      | <code><a href="#barcodegeopoint">BarcodeGeoPoint</a></code>                           | GPS coordinates from a 'GEO:'.                                                                                                                                                     | 7.0.0 |
+| **`phone`**         | <code><a href="#barcodephone">BarcodePhone</a></code>                                 | Phone number info.                                                                                                                                                                 | 7.0.0 |
+| **`rawValue`**      | <code>string</code>                                                                   | The barcode value in a machine readable format. This value is only available if the barcode is encoded in the UTF-8 character set. Otherwise, the `bytes` property should be used. | 0.0.1 |
+| **`sms`**           | <code><a href="#barcodesms">BarcodeSms</a></code>                                     | A sms message from a 'SMS:'.                                                                                                                                                       | 7.0.0 |
+| **`urlBookmark`**   | <code><a href="#barcodeurlbookmark">BarcodeUrlBookmark</a></code>                     | A URL and title from a 'MEBKM:'.                                                                                                                                                   | 7.0.0 |
+| **`valueType`**     | <code><a href="#barcodevaluetype">BarcodeValueType</a></code>                         | The barcode value type.                                                                                                                                                            | 0.0.1 |
+| **`wifi`**          | <code><a href="#barcodewifi">BarcodeWifi</a></code>                                   | A wifi network parameters from a 'WIFI:'.                                                                                                                                          | 7.0.0 |
 
 
 #### BarcodeCalendarEvent
