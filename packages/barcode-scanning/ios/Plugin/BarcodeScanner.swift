@@ -54,6 +54,26 @@ typealias MLKitBarcodeScanner = MLKitBarcodeScanning.BarcodeScanner
         self.barcodeRawValueVotes.removeAll()
     }
 
+    @objc public func pauseScan() {
+        DispatchQueue.main.async {
+            if let session = self.cameraView?.getCaptureSession() {
+                if session.isRunning {
+                    session.stopRunning()
+                }
+            }
+        }
+    }
+
+    @objc public func resumeScan() {
+        DispatchQueue.main.async {
+            if let session = self.cameraView?.getCaptureSession() {
+                if !session.isRunning {
+                    session.startRunning()
+                }
+            }
+        }
+    }
+
     @objc public func readBarcodesFromImage(imageUrl: URL, settings: ScanSettings, completion: @escaping ([Barcode]?, String?) -> Void) {
         let image = UIImage.init(contentsOfFile: imageUrl.path)
         guard let image = image else {

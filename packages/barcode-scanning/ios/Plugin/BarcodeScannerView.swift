@@ -215,6 +215,10 @@ public protocol BarcodeScannerViewDelegate {
         return self.captureDevice
     }
 
+    public func getCaptureSession() -> AVCaptureSession? {
+        return self.captureSession
+    }
+
     private func configureCaptureDevice(_ device: AVCaptureDevice) {
         do {
             try device.lockForConfiguration()

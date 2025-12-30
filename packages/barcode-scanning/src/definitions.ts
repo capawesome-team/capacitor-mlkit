@@ -14,6 +14,18 @@ export interface BarcodeScannerPlugin {
    */
   stopScan(): Promise<void>;
   /**
+   * Pause scanning for barcodes.
+   *
+   * @since 7.5.0
+   */
+  pauseScan(): Promise<void>;
+  /**
+   * Resume scanning for barcodes.
+   *
+   * @since 7.5.0
+   */
+  resumeScan(): Promise<void>;
+  /**
    * Read barcodes from an image.
    *
    * Only available on Android and iOS.
