@@ -6,6 +6,8 @@
 CAP_PLUGIN(BarcodeScannerPlugin, "BarcodeScanner",
            CAP_PLUGIN_METHOD(startScan, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(stopScan, CAPPluginReturnPromise);
+           CAP_PLUGIN_METHOD(pauseScan, CAPPluginReturnPromise);
+           CAP_PLUGIN_METHOD(resumeScan, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(readBarcodesFromImage, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(scan, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(isSupported, CAPPluginReturnPromise);
