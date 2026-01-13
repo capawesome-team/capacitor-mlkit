@@ -16,13 +16,13 @@ export interface BarcodeScannerPlugin {
   /**
    * Pause scanning for barcodes.
    *
-   * @since 7.5.0
+   * @since 8.1.0
    */
   pauseScan(): Promise<void>;
   /**
    * Resume scanning for barcodes.
    *
-   * @since 7.5.0
+   * @since 8.1.0
    */
   resumeScan(): Promise<void>;
   /**

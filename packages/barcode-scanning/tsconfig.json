@@ -14,8 +14,6 @@
     "pretty": true,
     "sourceMap": true,
     "strict": true,
-    "target": "es2017",
-    "types": []
   },
   "files": ["src/index.ts"]
 }
