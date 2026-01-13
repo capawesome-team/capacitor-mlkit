@@ -5,7 +5,7 @@
 <h3 align="center">ML Kit</h3>
 <br />
 <p align="center">
-  <a href="https://github.com/capawesome-team/capacitor-mlkit"><img src="https://img.shields.io/maintenance/yes/2025?style=flat-square" /></a>
+  <a href="https://github.com/capawesome-team/capacitor-mlkit"><img src="https://img.shields.io/maintenance/yes/2026?style=flat-square" /></a>
   <a href="https://github.com/capawesome-team/capacitor-mlkit/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/capawesome-team/capacitor-mlkit/ci.yml?branch=main&style=flat-square" /></a>
   <a href="https://github.com/capawesome-team/capacitor-mlkit"><img src="https://img.shields.io/github/license/capawesome-team/capacitor-mlkit?style=flat-square" /></a>
   <a href="https://github.com/capawesome-team"><img src="https://img.shields.io/badge/part%20of-capawesome-%234f46e5?style=flat-square" /></a>
