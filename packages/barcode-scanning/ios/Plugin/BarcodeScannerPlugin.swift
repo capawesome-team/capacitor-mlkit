@@ -68,6 +68,16 @@ public class BarcodeScannerPlugin: CAPPlugin {
         call.resolve()
     }
 
+    @objc func pauseScan(_ call: CAPPluginCall) {
+        self.implementation?.pauseScan()
+        call.resolve()
+    }
+
+    @objc func resumeScan(_ call: CAPPluginCall) {
+        self.implementation?.resumeScan()
+        call.resolve()
+    }
+
     @objc func readBarcodesFromImage(_ call: CAPPluginCall) {
         let formatsOption = call.getArray("formats") as? [String]
         let formats = BarcodeScannerHelper.convertStringsToBarcodeScannerFormats(formatsOption ?? [])

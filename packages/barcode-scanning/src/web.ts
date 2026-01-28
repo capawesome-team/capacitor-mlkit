@@ -89,6 +89,48 @@ export class BarcodeScannerWeb
     }
   }
 
+  async pauseScan(): Promise<void> {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+      this.intervalId = undefined;
+    }
+  }
+
+  async resumeScan(): Promise<void> {
+    if (!this.videoElement) {
+      throw new Error(this.errorVideoElementMissing);
+    }
+    if (!this.stream) {
+      throw new Error('Scan was not started. Call startScan() first.');
+    }
+    if (this.intervalId) {
+      return;
+    }
+
+    if (!('BarcodeDetector' in window)) {
+      throw new CapacitorException(
+        'BarcodeDetector Web API is not available in this browser.',
+        ExceptionCode.Unavailable,
+      );
+    }
+
+    const barcodeDetector = new BarcodeDetector();
+
+    this.intervalId = window.setInterval(async () => {
+      if (!this.videoElement) return;
+
+      try {
+        const barcodes = await barcodeDetector.detect(this.videoElement);
+
+        if (barcodes.length > 0) {
+          this.handleScannedBarcodes(barcodes);
+        }
+      } catch (err) {
+        console.error('Barcode detection failed', err);
+      }
+    }, 300);
+  }
+
   async readBarcodesFromImage(
     _options: ReadBarcodesFromImageOptions,
   ): Promise<ReadBarcodesFromImageResult> {

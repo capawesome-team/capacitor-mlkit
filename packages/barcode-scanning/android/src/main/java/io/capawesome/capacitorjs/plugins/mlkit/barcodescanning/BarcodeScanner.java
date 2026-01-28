@@ -80,6 +80,8 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
 
     private boolean isTorchEnabled = false;
 
+    private boolean isPaused = false;
+
     public BarcodeScanner(BarcodeScannerPlugin plugin) {
         this.plugin = plugin;
     }
@@ -177,7 +179,52 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
         }
         barcodeScannerInstance = null;
         scanSettings = null;
+        isPaused = false;
         barcodeRawValueVotes.clear();
+    }
+
+    /**
+     * Must run on UI thread.
+     */
+    public void pauseScan() {
+        isPaused = true;
+        if (processCameraProvider != null) {
+            processCameraProvider.unbindAll();
+        }
+    }
+
+    /**
+     * Must run on UI thread.
+     */
+    public void resumeScan() {
+        if (!isPaused || scanSettings == null || processCameraProvider == null) {
+            return;
+        }
+
+        isPaused = false;
+
+        try {
+            ImageAnalysis imageAnalysis = new ImageAnalysis.Builder()
+                .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
+                .setTargetResolution(scanSettings.resolution)
+                .build();
+            imageAnalysis.setAnalyzer(ContextCompat.getMainExecutor(plugin.getContext()), this);
+
+            CameraSelector cameraSelector = new CameraSelector.Builder().requireLensFacing(scanSettings.lensFacing).build();
+
+            Preview preview = new Preview.Builder().build();
+            if (previewView != null) {
+                preview.setSurfaceProvider(previewView.getSurfaceProvider());
+            }
+
+            camera = processCameraProvider.bindToLifecycle((LifecycleOwner) plugin.getContext(), cameraSelector, preview, imageAnalysis);
+
+            if (isTorchEnabled && camera != null) {
+                camera.getCameraControl().enableTorch(true);
+            }
+        } catch (Exception exception) {
+            handleScanError(exception);
+        }
     }
 
     public void readBarcodesFromImage(String path, ScanSettings scanSettings, ReadBarcodesFromImageResultCallback callback)
@@ -354,6 +401,11 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
 
     @Override
     public void analyze(@NonNull ImageProxy imageProxy) {
+        if (isPaused) {
+            imageProxy.close();
+            return;
+        }
+
         @SuppressLint("UnsafeOptInUsageError")
         Image image = imageProxy.getImage();
 
