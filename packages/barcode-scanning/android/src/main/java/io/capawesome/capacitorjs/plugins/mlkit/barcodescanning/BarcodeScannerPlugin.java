@@ -22,6 +22,7 @@ import com.getcapacitor.annotation.CapacitorPlugin;
 import com.getcapacitor.annotation.Permission;
 import com.getcapacitor.annotation.PermissionCallback;
 import com.google.mlkit.vision.barcode.common.Barcode;
+import io.capawesome.capacitorjs.plugins.mlkit.barcodescanning.classes.options.SetFocusPointOptions;
 import io.capawesome.capacitorjs.plugins.mlkit.barcodescanning.classes.options.SetZoomRatioOptions;
 import io.capawesome.capacitorjs.plugins.mlkit.barcodescanning.classes.results.GetMaxZoomRatioResult;
 import io.capawesome.capacitorjs.plugins.mlkit.barcodescanning.classes.results.GetMinZoomRatioResult;
@@ -53,6 +54,7 @@ public class BarcodeScannerPlugin extends Plugin {
     public static final String ERROR_GOOGLE_BARCODE_SCANNER_MODULE_ALREADY_INSTALLED =
         "The Google Barcode Scanner Module is already installed.";
     public static final String ERROR_PERMISSION_DENIED = "User denied access to camera.";
+    public static final String ERROR_FOCUS_POINT_MISSING = "x and y coordinates must be provided.";
 
     private BarcodeScanner implementation;
 
@@ -364,6 +366,35 @@ public class BarcodeScannerPlugin extends Plugin {
 
             GetMaxZoomRatioResult result = implementation.getMaxZoomRatio();
             call.resolve(result.toJSObject());
+        } catch (Exception exception) {
+            Logger.error(TAG, exception.getMessage(), exception);
+            call.reject(exception.getMessage());
+        }
+    }
+
+    @PluginMethod
+    public void setFocusPoint(PluginCall call) {
+        try {
+            boolean isCameraActive = implementation.isCameraActive();
+            if (!isCameraActive) {
+                call.reject(ERROR_NO_ACTIVE_SCAN_SESSION);
+                return;
+            }
+
+            Float x = call.getFloat("x");
+            Float y = call.getFloat("y");
+            
+            if (x == null || y == null) {
+                call.reject(ERROR_FOCUS_POINT_MISSING);
+                return;
+            }
+
+            SetFocusPointOptions options = new SetFocusPointOptions(x, y);
+            getActivity()
+                .runOnUiThread(() -> {
+                    implementation.setFocusPoint(options);
+                    call.resolve();
+                });
         } catch (Exception exception) {
             Logger.error(TAG, exception.getMessage(), exception);
             call.reject(exception.getMessage());

@@ -117,6 +117,14 @@ export interface BarcodeScannerPlugin {
    */
   getMaxZoomRatio(): Promise<GetMaxZoomRatioResult>;
   /**
+   * Set the camera's focus point using normalized coordinates.
+   *
+   * Only available on Android and iOS.
+   *
+   * @since 8.0.0
+   */
+  setFocusPoint(options: SetFocusPointOptions): Promise<void>;
+  /**
    * Open the settings of the app so that the user can grant the camera permission.
    *
    * Only available on Android and iOS.
@@ -395,6 +403,24 @@ export interface GetMaxZoomRatioResult {
    * @since 5.4.0
    */
   zoomRatio: number;
+}
+
+/**
+ * @since 8.0.0
+ */
+export interface SetFocusPointOptions {
+  /**
+   * X coordinate (0.0 = left, 1.0 = right)
+   *
+   * @since 8.0.0
+   */
+  x: number;
+  /**
+   * Y coordinate (0.0 = top, 1.0 = bottom)
+   *
+   * @since 8.0.0
+   */
+  y: number;
 }
 
 /**

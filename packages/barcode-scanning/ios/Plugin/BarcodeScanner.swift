@@ -179,6 +179,40 @@ typealias MLKitBarcodeScanner = MLKitBarcodeScanning.BarcodeScanner
         return GetMaxZoomRatioResult(zoomRatio: device.maxAvailableVideoZoomFactor)
     }
 
+    @objc public func setFocusPoint(_ options: SetFocusPointOptions) throws {
+        guard let device = cameraView?.getCaptureDevice(),
+              let previewLayer = cameraView?.getPreviewLayer() else {
+            throw RuntimeError(plugin.errorNoCaptureDeviceAvailable)
+        }
+        
+        guard device.isFocusPointOfInterestSupported else {
+            throw RuntimeError(plugin.errorFocusPointNotSupported)
+        }
+        
+        let x = CGFloat(options.getX())
+        let y = CGFloat(options.getY())
+        
+        // Clamp coordinates to valid range [0.0, 1.0]
+        let clampedX = max(0.0, min(1.0, x))
+        let clampedY = max(0.0, min(1.0, y))
+        
+        // Convert normalized coordinates to layer coordinates
+        let layerBounds = previewLayer.bounds
+        let layerPoint = CGPoint(
+            x: clampedX * layerBounds.width,
+            y: clampedY * layerBounds.height
+        )
+        
+        let devicePoint = previewLayer.captureDevicePointConverted(fromLayerPoint: layerPoint)
+        
+        try device.lockForConfiguration()
+            
+        device.focusPointOfInterest = devicePoint
+        device.focusMode = .autoFocus
+            
+        device.unlockForConfiguration()
+    }
+
     @objc func openSettings(completion: @escaping (Error?) -> Void) {
         let url = URL(string: UIApplication.openSettingsURLString)
         DispatchQueue.main.async {
