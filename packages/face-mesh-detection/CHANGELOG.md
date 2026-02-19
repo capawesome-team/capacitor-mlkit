@@ -1,5 +1,11 @@
 # Changelog
 
+## 8.0.1
+
+### Patch Changes
+
+- [`98affd15ab9879702ff277e4487f40af14253e91`](https://github.com/capawesome-team/capacitor-mlkit/commit/98affd15ab9879702ff277e4487f40af14253e91) ([#321](https://github.com/capawesome-team/capacitor-mlkit/pull/321)): fix(android): AGP 9.0 no longer supports `proguard-android.txt`
+
 ## 8.0.0
 
 ### Major Changes
