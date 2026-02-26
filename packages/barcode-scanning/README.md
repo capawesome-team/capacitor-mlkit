@@ -308,6 +308,8 @@ If you can't see the camera view, make sure all elements in the DOM are not visi
 
 * [`startScan(...)`](#startscan)
 * [`stopScan()`](#stopscan)
+* [`pauseScan()`](#pausescan)
+* [`resumeScan()`](#resumescan)
 * [`readBarcodesFromImage(...)`](#readbarcodesfromimage)
 * [`scan(...)`](#scan)
 * [`isSupported()`](#issupported)
@@ -364,6 +366,32 @@ stopScan() => Promise<void>
 Stop scanning for barcodes.
 
 **Since:** 0.0.1
+
+--------------------
+
+
+### pauseScan()
+
+```typescript
+pauseScan() => Promise<void>
+```
+
+Pause scanning for barcodes.
+
+**Since:** 8.1.0
+
+--------------------
+
+
+### resumeScan()
+
+```typescript
+resumeScan() => Promise<void>
+```
+
+Resume scanning for barcodes.
+
+**Since:** 8.1.0
 
 --------------------
 
