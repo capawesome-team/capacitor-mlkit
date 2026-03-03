@@ -5,7 +5,7 @@
 <h3 align="center">ML Kit</h3>
 <br />
 <p align="center">
-  <a href="https://github.com/capawesome-team/capacitor-mlkit"><img src="https://img.shields.io/maintenance/yes/2023?style=flat-square" /></a>
+  <a href="https://github.com/capawesome-team/capacitor-mlkit"><img src="https://img.shields.io/maintenance/yes/2026?style=flat-square" /></a>
   <a href="https://github.com/capawesome-team/capacitor-mlkit/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/capawesome-team/capacitor-mlkit/ci.yml?branch=main&style=flat-square" /></a>
   <a href="https://github.com/capawesome-team/capacitor-mlkit"><img src="https://img.shields.io/github/license/capawesome-team/capacitor-mlkit?style=flat-square" /></a>
   <a href="https://github.com/capawesome-team"><img src="https://img.shields.io/badge/part%20of-capawesome-%234f46e5?style=flat-square" /></a>
@@ -18,7 +18,7 @@
 Capacitor ML Kit is a collection of Capacitor plugins that enable the use of the [ML Kit SDKs](https://developers.google.com/ml-kit) in Capacitor.[^1]
 
 - 🔋 Supports **Android and iOS**
-- ⚡️ **Capacitor 5** support
+- ⚡️ **Capacitor 7** support
 - 🦋 Consistent versioning (no more SDK versions conflicts)
 - 👁 Unified Typescript definitions
 - 📄 Full documentation
@@ -30,18 +30,6 @@ Capacitor ML Kit is a collection of Capacitor plugins that enable the use of the
 | ---------- | ----------------------------------------- | --------------------------------------------- |
 | Robin Genz | [robingenz](https://github.com/robingenz) | [@robin_genz](https://twitter.com/robin_genz) |
 
-## Sponsors
-
-This is an Apache-2.0-licensed open source project.
-It can grow thanks to the support by these awesome people.
-If you'd like to join them, please read more [here](https://github.com/sponsors/capawesome-team).
-
-<p align="center">
-  <a href="https://cdn.jsdelivr.net/gh/capawesome-team/static/images/sponsors/sponsors.svg">
-    <img src="https://cdn.jsdelivr.net/gh/capawesome-team/static/images/sponsors/sponsors.svg" />
-  </a>
-</p>
-
 ## Installation
 
 Each plugin has its own installation instructions.
@@ -49,13 +37,14 @@ Click on the name of the desired plugin under the [`Plugins`](#plugins) section 
 
 ## Plugins
 
-| Name                                                  | Package                                | Version                                                                                                                                                                 | Downloads                                                                                                                                                                    |
-| ----------------------------------------------------- | -------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Barcode Scanning](./packages/barcode-scanning)       | `@capacitor-mlkit/barcode-scanning`    | [![npm badge](https://img.shields.io/npm/v/@capacitor-mlkit/barcode-scanning?style=flat-square)](https://www.npmjs.com/package/@capacitor-mlkit/barcode-scanning)       | [![npm downloads](https://img.shields.io/npm/dw/@capacitor-mlkit/barcode-scanning?style=flat-square)](https://www.npmjs.com/package/@capacitor-mlkit/barcode-scanning)       |
-| [Face Detection](./packages/face-detection)           | `@capacitor-mlkit/face-detection`      | [![npm badge](https://img.shields.io/npm/v/@capacitor-mlkit/face-detection?style=flat-square)](https://www.npmjs.com/package/@capacitor-mlkit/face-detection)           | [![npm downloads](https://img.shields.io/npm/dw/@capacitor-mlkit/face-detection?style=flat-square)](https://www.npmjs.com/package/@capacitor-mlkit/face-detection)           |
-| [Face Mesh Detection](./packages/face-mesh-detection) | `@capacitor-mlkit/face-mesh-detection` | [![npm badge](https://img.shields.io/npm/v/@capacitor-mlkit/face-mesh-detection?style=flat-square)](https://www.npmjs.com/package/@capacitor-mlkit/face-mesh-detection) | [![npm downloads](https://img.shields.io/npm/dw/@capacitor-mlkit/face-mesh-detection?style=flat-square)](https://www.npmjs.com/package/@capacitor-mlkit/face-mesh-detection) |
-| [Selfie Segmentation](./packages/selfie-segmentation) | `@capacitor-mlkit/selfie-segmentation` | [![npm badge](https://img.shields.io/npm/v/@capacitor-mlkit/selfie-segmentation?style=flat-square)](https://www.npmjs.com/package/@capacitor-mlkit/selfie-segmentation) | [![npm downloads](https://img.shields.io/npm/dw/@capacitor-mlkit/selfie-segmentation?style=flat-square)](https://www.npmjs.com/package/@capacitor-mlkit/selfie-segmentation) |
-| [Translation](./packages/translation)                 | `@capacitor-mlkit/translation`         | [![npm badge](https://img.shields.io/npm/v/@capacitor-mlkit/translation?style=flat-square)](https://www.npmjs.com/package/@capacitor-mlkit/translation)                 | [![npm downloads](https://img.shields.io/npm/dw/@capacitor-mlkit/translation?style=flat-square)](https://www.npmjs.com/package/@capacitor-mlkit/translation)                 |
+| Name                                                    | Package                                 | Version                                                                                                                                                                   | Downloads                                                                                                                                                                      |
+| ------------------------------------------------------- | --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| [Barcode Scanning](./packages/barcode-scanning)         | `@capacitor-mlkit/barcode-scanning`     | [![npm badge](https://img.shields.io/npm/v/@capacitor-mlkit/barcode-scanning?style=flat-square)](https://www.npmjs.com/package/@capacitor-mlkit/barcode-scanning)         | [![npm downloads](https://img.shields.io/npm/dw/@capacitor-mlkit/barcode-scanning?style=flat-square)](https://www.npmjs.com/package/@capacitor-mlkit/barcode-scanning)         |
+| [Face Detection](./packages/face-detection)             | `@capacitor-mlkit/face-detection`       | [![npm badge](https://img.shields.io/npm/v/@capacitor-mlkit/face-detection?style=flat-square)](https://www.npmjs.com/package/@capacitor-mlkit/face-detection)             | [![npm downloads](https://img.shields.io/npm/dw/@capacitor-mlkit/face-detection?style=flat-square)](https://www.npmjs.com/package/@capacitor-mlkit/face-detection)             |
+| [Face Mesh Detection](./packages/face-mesh-detection)   | `@capacitor-mlkit/face-mesh-detection`  | [![npm badge](https://img.shields.io/npm/v/@capacitor-mlkit/face-mesh-detection?style=flat-square)](https://www.npmjs.com/package/@capacitor-mlkit/face-mesh-detection)   | [![npm downloads](https://img.shields.io/npm/dw/@capacitor-mlkit/face-mesh-detection?style=flat-square)](https://www.npmjs.com/package/@capacitor-mlkit/face-mesh-detection)   |
+| [Selfie Segmentation](./packages/selfie-segmentation)   | `@capacitor-mlkit/selfie-segmentation`  | [![npm badge](https://img.shields.io/npm/v/@capacitor-mlkit/selfie-segmentation?style=flat-square)](https://www.npmjs.com/package/@capacitor-mlkit/selfie-segmentation)   | [![npm downloads](https://img.shields.io/npm/dw/@capacitor-mlkit/selfie-segmentation?style=flat-square)](https://www.npmjs.com/package/@capacitor-mlkit/selfie-segmentation)   |
+| [Subject Segmentation](./packages/subject-segmentation) | `@capacitor-mlkit/subject-segmentation` | [![npm badge](https://img.shields.io/npm/v/@capacitor-mlkit/subject-segmentation?style=flat-square)](https://www.npmjs.com/package/@capacitor-mlkit/subject-segmentation) | [![npm downloads](https://img.shields.io/npm/dw/@capacitor-mlkit/subject-segmentation?style=flat-square)](https://www.npmjs.com/package/@capacitor-mlkit/subject-segmentation) |
+| [Translation](./packages/translation)                   | `@capacitor-mlkit/translation`          | [![npm badge](https://img.shields.io/npm/v/@capacitor-mlkit/translation?style=flat-square)](https://www.npmjs.com/package/@capacitor-mlkit/translation)                   | [![npm downloads](https://img.shields.io/npm/dw/@capacitor-mlkit/translation?style=flat-square)](https://www.npmjs.com/package/@capacitor-mlkit/translation)                   |
 
 ## Changelogs
 

@@ -2,6 +2,12 @@
 
 Unofficial Capacitor plugin for [ML Kit Barcode Scanning](https://developers.google.com/ml-kit/vision/barcode-scanning).[^1][^2]
 
+<div class="capawesome-z29o10a">
+  <a href="https://cloud.capawesome.io/" target="_blank">
+    <img alt="Deliver Live Updates to your Capacitor app with Capawesome Cloud" src="https://cloud.capawesome.io/assets/banners/cloud-build-and-deploy-capacitor-apps.png?t=1" />
+  </a>
+</div>
+
 ## Features
 
 - 🧩 Optional ready-to-use interface without webview customizations
@@ -10,9 +16,18 @@ Unofficial Capacitor plugin for [ML Kit Barcode Scanning](https://developers.goo
 - ⏺️ Define detection area
 - 🏞️ Reading barcodes from images
 - 🔦 Torch and Autofocus support
-- 🔋 Supports Android and iOS
+- 🔋 Supports Android, iOS and web
 
 For a complete list of **supported barcodes**, see [BarcodeFormat](#barcodeformat).
+
+## Compatibility
+
+| Plugin Version | Capacitor Version | Status         |
+| -------------- | ----------------- | -------------- |
+| 8.x.x          | >=8.x.x           | Active support |
+| 7.x.x          | 7.x.x             | Deprecated     |
+| 6.x.x          | 6.x.x             | Deprecated     |
+| 5.x.x          | 5.x.x             | Deprecated     |
 
 ## Demo
 
@@ -24,6 +39,7 @@ A working example can be found here: [https://github.com/robingenz/capacitor-mlk
 
 ## Guides
 
+- [Announcing the Capacitor ML Kit Barcode Scanning Plugin](https://capawesome.io/blog/announcing-the-capacitor-mlkit-barcode-scanner-plugin/)
 - [How to build an Ionic Barcode Scanner with Capacitor](https://ionic.io/blog/how-to-build-an-ionic-barcode-scanner-with-capacitor)
 
 ## Installation
@@ -33,15 +49,16 @@ npm install @capacitor-mlkit/barcode-scanning
 npx cap sync
 ```
 
+**Attention**: This plugin **only supports CocoaPods** for iOS dependency management. Swift Package Manager (SPM) is not supported for the ML Kit SDK, see [this comment](https://github.com/googlesamples/mlkit/issues/180#issuecomment-1298964099).
+
 ### Android
+
+#### Permissions
 
 This API requires the following permissions be added to your `AndroidManifest.xml` before the `application` tag:
 
 ```xml
-<!-- To get access to the camera. -->
 <uses-permission android:name="android.permission.CAMERA" />
-<!-- To get access to the flashlight. -->
-<uses-permission android:name="android.permission.FLASHLIGHT"/>
 ```
 
 You also need to add the following meta data **in** the `application` tag in your `AndroidManifest.xml`:
@@ -53,22 +70,50 @@ You also need to add the following meta data **in** the `application` tag in you
 
 #### Variables
 
-This plugin will use the following project variables (defined in your app’s `variables.gradle` file):
+If needed, you can define the following project variable in your app’s `variables.gradle` file to change the default version of the dependency:
 
-- `$androidxCameraCamera2Version` version of `com.google.mlkit:barcode-scanning` (default: `1.1.0`)
-- `$androidxCameraCoreVersion` version of `com.google.mlkit:barcode-scanning` (default: `1.1.0`)
-- `$androidxCameraLifecycleVersion` version of `com.google.mlkit:barcode-scanning` (default: `1.1.0`)
-- `$androidxCameraViewVersion` version of `com.google.mlkit:barcode-scanning` (default: `1.1.0`)
-- `$mlkitBarcodeScanningVersion` version of `com.google.mlkit:barcode-scanning` (default: `17.1.0`)
-- `$playServicesCodeScannerVersion` version of `com.google.mlkit:barcode-scanning` (default: `16.0.0`)
+- `$androidxCameraCamera2Version` version of `androidx.camera:camera-camera2` (default: `1.5.2`)
+- `$androidxCameraCoreVersion` version of `androidx.camera:camera-core` (default: `1.5.2`)
+- `$androidxCameraLifecycleVersion` version of `androidx.camera:camera-lifecycle` (default: `1.5.2`)
+- `$androidxCameraViewVersion` version of `androidx.camera:camera-view` (default: `1.5.2`)
+- `$mlkitBarcodeScanningVersion` version of `com.google.mlkit:barcode-scanning` (default: `17.3.0`)
+- `$playServicesCodeScannerVersion` version of `com.google.android.gms:play-services-code-scanner` (default: `16.1.0`)
+
+This can be useful if you encounter dependency conflicts with other plugins in your project.
 
 ### iOS
+
+#### Minimum Deployment Target
+
+Make sure to set the deployment target in your `ios/App/Podfile` to at least `15.5`:
+
+```ruby
+platform :ios, '15.5'
+```
+
+### Usage Description
 
 Add the `NSCameraUsageDescription` key to the `ios/App/App/Info.plist` file, which tells the user why the app needs to use the camera:
 
 ```diff
 + <key>NSCameraUsageDescription</key>
 + <string>The app enables the scanning of various barcodes.</string>
+```
+
+### Web
+
+#### Polyfill
+
+This plugin uses the [Barcode Detection API](https://developer.mozilla.org/en-US/docs/Web/API/Barcode_Detection_API) to scan barcodes in the browser. This API is not yet supported in all browsers. You can check the compatibility [here](https://caniuse.com/mdn-api_barcodedetector). For this reason, we recommend installing the [barcode-detector](https://www.npmjs.com/package/barcode-detector) package for a better compatibility:
+
+```bash
+npm install barcode-detector
+```
+
+This package provides a polyfill that uses [ZXing-C++ WebAssembly](https://github.com/Sec-ant/zxing-wasm) under the hood. After installing the package, you just need to import the polyfill in your code:
+
+```js
+import "barcode-detector/polyfill";
 ```
 
 ## Configuration
@@ -87,6 +132,7 @@ import {
   BarcodeFormat,
   LensFacing,
 } from '@capacitor-mlkit/barcode-scanning';
+import { Torch } from '@capawesome/capacitor-torch';
 
 const startScan = async () => {
   // The camera is visible behind the WebView, so that you can customize the UI in the WebView.
@@ -141,6 +187,7 @@ const scanSingleBarcode = async () => {
 const scan = async () => {
   const { barcodes } = await BarcodeScanner.scan({
     formats: [BarcodeFormat.QrCode],
+    autoZoom: true,
   });
   return barcodes;
 };
@@ -151,25 +198,44 @@ const isSupported = async () => {
 };
 
 const enableTorch = async () => {
-  await BarcodeScanner.enableTorch();
+  await Torch.enable();
 };
 
 const disableTorch = async () => {
-  await BarcodeScanner.disableTorch();
+  await Torch.disable();
 };
 
 const toggleTorch = async () => {
-  await BarcodeScanner.toggleTorch();
+  await Torch.toggle();
 };
 
 const isTorchEnabled = async () => {
-  const { enabled } = await BarcodeScanner.isTorchEnabled();
+  const { enabled } = await Torch.isEnabled();
   return enabled;
 };
 
 const isTorchAvailable = async () => {
-  const { available } = await BarcodeScanner.isTorchAvailable();
+  const { available } = await Torch.isAvailable();
   return available;
+};
+
+const setZoomRatio = async () => {
+  await BarcodeScanner.setZoomRatio({ zoomRatio: 0.5 });
+};
+
+const getZoomRatio = async () => {
+  const { zoomRatio } = await BarcodeScanner.getZoomRatio();
+  return zoomRatio;
+};
+
+const getMinZoomRatio = async () => {
+  const { zoomRatio } = await BarcodeScanner.getMinZoomRatio();
+  return zoomRatio;
+};
+
+const getMaxZoomRatio = async () => {
+  const { zoomRatio } = await BarcodeScanner.getMaxZoomRatio();
+  return zoomRatio;
 };
 
 const openSettings = async () => {
@@ -250,14 +316,18 @@ If you can't see the camera view, make sure all elements in the DOM are not visi
 * [`toggleTorch()`](#toggletorch)
 * [`isTorchEnabled()`](#istorchenabled)
 * [`isTorchAvailable()`](#istorchavailable)
+* [`setZoomRatio(...)`](#setzoomratio)
+* [`getZoomRatio()`](#getzoomratio)
+* [`getMinZoomRatio()`](#getminzoomratio)
+* [`getMaxZoomRatio()`](#getmaxzoomratio)
 * [`openSettings()`](#opensettings)
 * [`isGoogleBarcodeScannerModuleAvailable()`](#isgooglebarcodescannermoduleavailable)
 * [`installGoogleBarcodeScannerModule()`](#installgooglebarcodescannermodule)
 * [`checkPermissions()`](#checkpermissions)
 * [`requestPermissions()`](#requestpermissions)
-* [`addListener('barcodeScanned', ...)`](#addlistenerbarcodescanned)
-* [`addListener('scanError', ...)`](#addlistenerscanerror)
-* [`addListener('googleBarcodeScannerModuleInstallProgress', ...)`](#addlistenergooglebarcodescannermoduleinstallprogress)
+* [`addListener('barcodesScanned', ...)`](#addlistenerbarcodesscanned-)
+* [`addListener('scanError', ...)`](#addlistenerscanerror-)
+* [`addListener('googleBarcodeScannerModuleInstallProgress', ...)`](#addlistenergooglebarcodescannermoduleinstallprogress-)
 * [`removeAllListeners()`](#removealllisteners)
 * [Interfaces](#interfaces)
 * [Type Aliases](#type-aliases)
@@ -276,8 +346,6 @@ startScan(options?: StartScanOptions | undefined) => Promise<void>
 
 Start scanning for barcodes.
 
-Only available on Android and iOS.
-
 | Param         | Type                                                          |
 | ------------- | ------------------------------------------------------------- |
 | **`options`** | <code><a href="#startscanoptions">StartScanOptions</a></code> |
@@ -294,8 +362,6 @@ stopScan() => Promise<void>
 ```
 
 Stop scanning for barcodes.
-
-Only available on Android and iOS.
 
 **Since:** 0.0.1
 
@@ -358,8 +424,6 @@ isSupported() => Promise<IsSupportedResult>
 
 Returns whether or not the barcode scanner is supported.
 
-Available on Android and iOS.
-
 **Returns:** <code>Promise&lt;<a href="#issupportedresult">IsSupportedResult</a>&gt;</code>
 
 **Since:** 0.0.1
@@ -377,7 +441,7 @@ Enable camera's torch (flash) during a scan session.
 
 Only available on Android and iOS.
 
-**Since:** 0.0.1
+**Since:** 7.2.0
 
 --------------------
 
@@ -392,7 +456,7 @@ Disable camera's torch (flash) during a scan session.
 
 Only available on Android and iOS.
 
-**Since:** 0.0.1
+**Since:** 7.2.0
 
 --------------------
 
@@ -407,7 +471,7 @@ Toggle camera's torch (flash) during a scan session.
 
 Only available on Android and iOS.
 
-**Since:** 0.0.1
+**Since:** 7.2.0
 
 --------------------
 
@@ -424,7 +488,7 @@ Only available on Android and iOS.
 
 **Returns:** <code>Promise&lt;<a href="#istorchenabledresult">IsTorchEnabledResult</a>&gt;</code>
 
-**Since:** 0.0.1
+**Since:** 7.2.0
 
 --------------------
 
@@ -441,7 +505,77 @@ Only available on Android and iOS.
 
 **Returns:** <code>Promise&lt;<a href="#istorchavailableresult">IsTorchAvailableResult</a>&gt;</code>
 
-**Since:** 0.0.1
+**Since:** 7.2.0
+
+--------------------
+
+
+### setZoomRatio(...)
+
+```typescript
+setZoomRatio(options: SetZoomRatioOptions) => Promise<void>
+```
+
+Set the zoom ratio of the camera.
+
+Only available on Android and iOS.
+
+| Param         | Type                                                                |
+| ------------- | ------------------------------------------------------------------- |
+| **`options`** | <code><a href="#setzoomratiooptions">SetZoomRatioOptions</a></code> |
+
+**Since:** 5.4.0
+
+--------------------
+
+
+### getZoomRatio()
+
+```typescript
+getZoomRatio() => Promise<GetZoomRatioResult>
+```
+
+Get the zoom ratio of the camera.
+
+Only available on Android and iOS.
+
+**Returns:** <code>Promise&lt;<a href="#getzoomratioresult">GetZoomRatioResult</a>&gt;</code>
+
+**Since:** 5.4.0
+
+--------------------
+
+
+### getMinZoomRatio()
+
+```typescript
+getMinZoomRatio() => Promise<GetMinZoomRatioResult>
+```
+
+Get the minimum zoom ratio of the camera.
+
+Only available on Android and iOS.
+
+**Returns:** <code>Promise&lt;<a href="#getminzoomratioresult">GetMinZoomRatioResult</a>&gt;</code>
+
+**Since:** 5.4.0
+
+--------------------
+
+
+### getMaxZoomRatio()
+
+```typescript
+getMaxZoomRatio() => Promise<GetMaxZoomRatioResult>
+```
+
+Get the maximum zoom ratio of the camera.
+
+Only available on Android and iOS.
+
+**Returns:** <code>Promise&lt;<a href="#getmaxzoomratioresult">GetMaxZoomRatioResult</a>&gt;</code>
+
+**Since:** 5.4.0
 
 --------------------
 
@@ -507,8 +641,6 @@ checkPermissions() => Promise<PermissionStatus>
 
 Check camera permission.
 
-Only available on Android and iOS.
-
 **Returns:** <code>Promise&lt;<a href="#permissionstatus">PermissionStatus</a>&gt;</code>
 
 **Since:** 0.0.1
@@ -524,8 +656,6 @@ requestPermissions() => Promise<PermissionStatus>
 
 Request camera permission.
 
-Only available on Android and iOS.
-
 **Returns:** <code>Promise&lt;<a href="#permissionstatus">PermissionStatus</a>&gt;</code>
 
 **Since:** 0.0.1
@@ -533,24 +663,22 @@ Only available on Android and iOS.
 --------------------
 
 
-### addListener('barcodeScanned', ...)
+### addListener('barcodesScanned', ...)
 
 ```typescript
-addListener(eventName: 'barcodeScanned', listenerFunc: (event: BarcodeScannedEvent) => void) => Promise<PluginListenerHandle> & PluginListenerHandle
+addListener(eventName: 'barcodesScanned', listenerFunc: (event: BarcodesScannedEvent) => void) => Promise<PluginListenerHandle>
 ```
 
-Called when a barcode is scanned.
+Called when barcodes are scanned.
 
-Available on Android and iOS.
+| Param              | Type                                                                                      |
+| ------------------ | ----------------------------------------------------------------------------------------- |
+| **`eventName`**    | <code>'barcodesScanned'</code>                                                            |
+| **`listenerFunc`** | <code>(event: <a href="#barcodesscannedevent">BarcodesScannedEvent</a>) =&gt; void</code> |
 
-| Param              | Type                                                                                    |
-| ------------------ | --------------------------------------------------------------------------------------- |
-| **`eventName`**    | <code>'barcodeScanned'</code>                                                           |
-| **`listenerFunc`** | <code>(event: <a href="#barcodescannedevent">BarcodeScannedEvent</a>) =&gt; void</code> |
+**Returns:** <code>Promise&lt;<a href="#pluginlistenerhandle">PluginListenerHandle</a>&gt;</code>
 
-**Returns:** <code>Promise&lt;<a href="#pluginlistenerhandle">PluginListenerHandle</a>&gt; & <a href="#pluginlistenerhandle">PluginListenerHandle</a></code>
-
-**Since:** 0.0.1
+**Since:** 6.2.0
 
 --------------------
 
@@ -558,7 +686,7 @@ Available on Android and iOS.
 ### addListener('scanError', ...)
 
 ```typescript
-addListener(eventName: 'scanError', listenerFunc: (event: ScanErrorEvent) => void) => Promise<PluginListenerHandle> & PluginListenerHandle
+addListener(eventName: 'scanError', listenerFunc: (event: ScanErrorEvent) => void) => Promise<PluginListenerHandle>
 ```
 
 Called when an error occurs during the scan.
@@ -570,7 +698,7 @@ Available on Android and iOS.
 | **`eventName`**    | <code>'scanError'</code>                                                      |
 | **`listenerFunc`** | <code>(event: <a href="#scanerrorevent">ScanErrorEvent</a>) =&gt; void</code> |
 
-**Returns:** <code>Promise&lt;<a href="#pluginlistenerhandle">PluginListenerHandle</a>&gt; & <a href="#pluginlistenerhandle">PluginListenerHandle</a></code>
+**Returns:** <code>Promise&lt;<a href="#pluginlistenerhandle">PluginListenerHandle</a>&gt;</code>
 
 **Since:** 0.0.1
 
@@ -580,7 +708,7 @@ Available on Android and iOS.
 ### addListener('googleBarcodeScannerModuleInstallProgress', ...)
 
 ```typescript
-addListener(eventName: 'googleBarcodeScannerModuleInstallProgress', listenerFunc: (event: GoogleBarcodeScannerModuleInstallProgressEvent) => void) => Promise<PluginListenerHandle> & PluginListenerHandle
+addListener(eventName: 'googleBarcodeScannerModuleInstallProgress', listenerFunc: (event: GoogleBarcodeScannerModuleInstallProgressEvent) => void) => Promise<PluginListenerHandle>
 ```
 
 Called when the Google <a href="#barcode">Barcode</a> Scanner module is installed.
@@ -592,7 +720,7 @@ Available on Android.
 | **`eventName`**    | <code>'googleBarcodeScannerModuleInstallProgress'</code>                                                                                      |
 | **`listenerFunc`** | <code>(event: <a href="#googlebarcodescannermoduleinstallprogressevent">GoogleBarcodeScannerModuleInstallProgressEvent</a>) =&gt; void</code> |
 
-**Returns:** <code>Promise&lt;<a href="#pluginlistenerhandle">PluginListenerHandle</a>&gt; & <a href="#pluginlistenerhandle">PluginListenerHandle</a></code>
+**Returns:** <code>Promise&lt;<a href="#pluginlistenerhandle">PluginListenerHandle</a>&gt;</code>
 
 **Since:** 5.1.0
 
@@ -617,10 +745,13 @@ Remove all listeners for this plugin.
 
 #### StartScanOptions
 
-| Prop             | Type                                              | Description                                                                              | Since |
-| ---------------- | ------------------------------------------------- | ---------------------------------------------------------------------------------------- | ----- |
-| **`formats`**    | <code>BarcodeFormat[]</code>                      | Improve the speed of the barcode scanner by configuring the barcode formats to scan for. | 0.0.1 |
-| **`lensFacing`** | <code><a href="#lensfacing">LensFacing</a></code> | Configure the camera (front or back) to use.                                             | 0.0.1 |
+| Prop                                 | Type                                              | Description                                                                                                                                                                                                           | Default                             | Since |
+| ------------------------------------ | ------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------- | ----- |
+| **`formats`**                        | <code>BarcodeFormat[]</code>                      | Improve the speed of the barcode scanner by configuring the barcode formats to scan for. Only available on Android and iOS.                                                                                           |                                     | 0.0.1 |
+| **`lensFacing`**                     | <code><a href="#lensfacing">LensFacing</a></code> | Configure the camera (front or back) to use.                                                                                                                                                                          |                                     | 0.0.1 |
+| **`resolution`**                     | <code><a href="#resolution">Resolution</a></code> | Configure the resolution of the captured image that is used for barcode scanning. If the resolution is not supported by the device, the closest supported resolution will be used. Only available on Android and iOS. | <code>Resolution['1280x720']</code> | 7.0.0 |
+| **`enableMultitaskingCameraAccess`** | <code>boolean</code>                              | Allow camera usage on iPad while in multitasking mode. Only available on iOS (16.0+).                                                                                                                                 | <code>false</code>                  | 7.5.0 |
+| **`videoElement`**                   | <code>HTMLVideoElement</code>                     | The HTML video element to use for the camera preview. Only available on web.                                                                                                                                          |                                     | 7.1.0 |
 
 
 #### ReadBarcodesFromImageResult
@@ -632,14 +763,141 @@ Remove all listeners for this plugin.
 
 #### Barcode
 
-| Prop               | Type                                                                                  | Description                                                                                                                                                | Since |
-| ------------------ | ------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
-| **`bytes`**        | <code>number[]</code>                                                                 | Raw bytes as it was encoded in the barcode.                                                                                                                | 0.0.1 |
-| **`cornerPoints`** | <code>[[number, number], [number, number], [number, number], [number, number]]</code> | The four corner points of the barcode in clockwise order starting with top-left. This property is currently only supported by the `startScan(...)` method. | 0.0.1 |
-| **`displayValue`** | <code>string</code>                                                                   | The barcode value in a human readable format.                                                                                                              | 0.0.1 |
-| **`format`**       | <code><a href="#barcodeformat">BarcodeFormat</a></code>                               | The barcode format.                                                                                                                                        | 0.0.1 |
-| **`rawValue`**     | <code>string</code>                                                                   | The barcode value in a machine readable format.                                                                                                            | 0.0.1 |
-| **`valueType`**    | <code><a href="#barcodevaluetype">BarcodeValueType</a></code>                         | The barcode value type.                                                                                                                                    | 0.0.1 |
+| Prop                | Type                                                                                  | Description                                                                                                                                                                        | Since |
+| ------------------- | ------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
+| **`bytes`**         | <code>number[]</code>                                                                 | Raw bytes as it was encoded in the barcode.                                                                                                                                        | 0.0.1 |
+| **`calendarEvent`** | <code><a href="#barcodecalendarevent">BarcodeCalendarEvent</a></code>                 | Calendar event info.                                                                                                                                                               | 7.0.0 |
+| **`contactInfo`**   | <code><a href="#barcodecontactinfo">BarcodeContactInfo</a></code>                     | Person's or organization's business card.                                                                                                                                          | 7.0.0 |
+| **`cornerPoints`**  | <code>[[number, number], [number, number], [number, number], [number, number]]</code> | The four corner points of the barcode in clockwise order starting with top-left. This property is currently only supported by the `startScan(...)` method.                         | 0.0.1 |
+| **`displayValue`**  | <code>string</code>                                                                   | The barcode value in a human readable format.                                                                                                                                      | 0.0.1 |
+| **`driverLicense`** | <code><a href="#barcodedriverlicense">BarcodeDriverLicense</a></code>                 | Driver license or ID card.                                                                                                                                                         | 7.0.0 |
+| **`email`**         | <code><a href="#barcodeemail">BarcodeEmail</a></code>                                 | An email message from a 'MAILTO:'.                                                                                                                                                 | 7.0.0 |
+| **`format`**        | <code><a href="#barcodeformat">BarcodeFormat</a></code>                               | The barcode format.                                                                                                                                                                | 0.0.1 |
+| **`geoPoint`**      | <code><a href="#barcodegeopoint">BarcodeGeoPoint</a></code>                           | GPS coordinates from a 'GEO:'.                                                                                                                                                     | 7.0.0 |
+| **`phone`**         | <code><a href="#barcodephone">BarcodePhone</a></code>                                 | Phone number info.                                                                                                                                                                 | 7.0.0 |
+| **`rawValue`**      | <code>string</code>                                                                   | The barcode value in a machine readable format. This value is only available if the barcode is encoded in the UTF-8 character set. Otherwise, the `bytes` property should be used. | 0.0.1 |
+| **`sms`**           | <code><a href="#barcodesms">BarcodeSms</a></code>                                     | A sms message from a 'SMS:'.                                                                                                                                                       | 7.0.0 |
+| **`urlBookmark`**   | <code><a href="#barcodeurlbookmark">BarcodeUrlBookmark</a></code>                     | A URL and title from a 'MEBKM:'.                                                                                                                                                   | 7.0.0 |
+| **`valueType`**     | <code><a href="#barcodevaluetype">BarcodeValueType</a></code>                         | The barcode value type.                                                                                                                                                            | 0.0.1 |
+| **`wifi`**          | <code><a href="#barcodewifi">BarcodeWifi</a></code>                                   | A wifi network parameters from a 'WIFI:'.                                                                                                                                          | 7.0.0 |
+
+
+#### BarcodeCalendarEvent
+
+| Prop              | Type                | Description                              | Since |
+| ----------------- | ------------------- | ---------------------------------------- | ----- |
+| **`description`** | <code>string</code> | The event description.                   | 7.0.0 |
+| **`end`**         | <code>string</code> | The event end date as ISO 8601 string.   | 7.0.0 |
+| **`location`**    | <code>string</code> | The event location.                      | 7.0.0 |
+| **`organizer`**   | <code>string</code> | The event organizer.                     | 7.0.0 |
+| **`start`**       | <code>string</code> | The event start date as ISO 8601 string. | 7.0.0 |
+| **`status`**      | <code>string</code> | The event status.                        | 7.0.0 |
+| **`summary`**     | <code>string</code> | The event summary.                       | 7.0.0 |
+
+
+#### BarcodeContactInfo
+
+| Prop               | Type                                              | Description                 | Since |
+| ------------------ | ------------------------------------------------- | --------------------------- | ----- |
+| **`addresses`**    | <code>Address[]</code>                            | The contact's addresses.    | 7.0.0 |
+| **`emails`**       | <code>BarcodeEmail[]</code>                       | The contact's emails.       | 7.0.0 |
+| **`personName`**   | <code><a href="#personname">PersonName</a></code> | The contact's name.         | 7.0.0 |
+| **`organization`** | <code>string</code>                               | The contact's organization. | 7.0.0 |
+| **`phones`**       | <code>BarcodePhone[]</code>                       | The contact's phones.       | 7.0.0 |
+| **`title`**        | <code>string</code>                               | The contact's title.        | 7.0.0 |
+| **`urls`**         | <code>string[]</code>                             | The contact's urls.         | 7.0.0 |
+
+
+#### Address
+
+| Prop               | Type                                                | Description                                         | Since |
+| ------------------ | --------------------------------------------------- | --------------------------------------------------- | ----- |
+| **`addressLines`** | <code>string[]</code>                               | Formatted address, multiple lines when appropriate. | 7.0.0 |
+| **`type`**         | <code><a href="#addresstype">AddressType</a></code> | <a href="#address">Address</a> type.                | 7.0.0 |
+
+
+#### BarcodeEmail
+
+| Prop          | Type                                                        | Description             | Since |
+| ------------- | ----------------------------------------------------------- | ----------------------- | ----- |
+| **`address`** | <code>string</code>                                         | The email address.      | 7.0.0 |
+| **`body`**    | <code>string</code>                                         | The email body.         | 7.0.0 |
+| **`subject`** | <code>string</code>                                         | The email subject.      | 7.0.0 |
+| **`type`**    | <code><a href="#emailformattype">EmailFormatType</a></code> | The email address type. | 7.0.0 |
+
+
+#### PersonName
+
+| Prop                | Type                | Description                                                                          | Since |
+| ------------------- | ------------------- | ------------------------------------------------------------------------------------ | ----- |
+| **`first`**         | <code>string</code> | First name.                                                                          | 7.0.0 |
+| **`formattedName`** | <code>string</code> | The formatted name.                                                                  | 7.0.0 |
+| **`last`**          | <code>string</code> | Last name.                                                                           | 7.0.0 |
+| **`middle`**        | <code>string</code> | Middle name.                                                                         | 7.0.0 |
+| **`prefix`**        | <code>string</code> | Name prefix.                                                                         | 7.0.0 |
+| **`pronunciation`** | <code>string</code> | Text string to be set as the kana name in the phonebook. Used for Japanese contacts. | 7.0.0 |
+| **`suffix`**        | <code>string</code> | Name suffix.                                                                         | 7.0.0 |
+
+
+#### BarcodePhone
+
+| Prop         | Type                                                        | Description            | Since |
+| ------------ | ----------------------------------------------------------- | ---------------------- | ----- |
+| **`number`** | <code>string</code>                                         | The phone number.      | 7.0.0 |
+| **`type`**   | <code><a href="#phoneformattype">PhoneFormatType</a></code> | The phone number type. | 7.0.0 |
+
+
+#### BarcodeDriverLicense
+
+| Prop                 | Type                | Description                                        | Since |
+| -------------------- | ------------------- | -------------------------------------------------- | ----- |
+| **`addressCity`**    | <code>string</code> | City of holder's address.                          | 7.0.0 |
+| **`addressState`**   | <code>string</code> | State of holder's address.                         | 7.0.0 |
+| **`addressStreet`**  | <code>string</code> | Street of holder's address.                        | 7.0.0 |
+| **`addressZip`**     | <code>string</code> | Postal code of holder's address.                   | 7.0.0 |
+| **`birthDate`**      | <code>string</code> | Birthdate of the holder.                           | 7.0.0 |
+| **`documentType`**   | <code>string</code> | "DL" for driver's licenses, "ID" for ID cards.     | 7.0.0 |
+| **`expiryDate`**     | <code>string</code> | Expiration date of the license.                    | 7.0.0 |
+| **`firstName`**      | <code>string</code> | Holder's first name.                               | 7.0.0 |
+| **`gender`**         | <code>string</code> | Holder's gender.                                   | 7.0.0 |
+| **`issueDate`**      | <code>string</code> | Issue date of the license.                         | 7.0.0 |
+| **`issuingCountry`** | <code>string</code> | ISO 3166-1 alpha-3 code in which DL/ID was issued. | 7.0.0 |
+| **`lastName`**       | <code>string</code> | Holder's last name.                                | 7.0.0 |
+| **`licenseNumber`**  | <code>string</code> | Driver license ID number.                          | 7.0.0 |
+| **`middleName`**     | <code>string</code> | Holder's middle name.                              | 7.0.0 |
+
+
+#### BarcodeGeoPoint
+
+| Prop            | Type                | Description | Since |
+| --------------- | ------------------- | ----------- | ----- |
+| **`latitude`**  | <code>number</code> | Latitude.   | 7.0.0 |
+| **`longitude`** | <code>number</code> | Longitude.  | 7.0.0 |
+
+
+#### BarcodeSms
+
+| Prop              | Type                | Description                     | Since |
+| ----------------- | ------------------- | ------------------------------- | ----- |
+| **`phoneNumber`** | <code>string</code> | The phone number of the sms.    | 7.0.0 |
+| **`message`**     | <code>string</code> | The message content of the sms. | 7.0.0 |
+
+
+#### BarcodeUrlBookmark
+
+| Prop        | Type                | Description                | Since |
+| ----------- | ------------------- | -------------------------- | ----- |
+| **`url`**   | <code>string</code> | The URL of the bookmark.   | 7.0.0 |
+| **`title`** | <code>string</code> | The title of the bookmark. | 7.0.0 |
+
+
+#### BarcodeWifi
+
+| Prop                 | Type                                                              | Description                   | Since |
+| -------------------- | ----------------------------------------------------------------- | ----------------------------- | ----- |
+| **`encryptionType`** | <code><a href="#wifiencryptiontype">WifiEncryptionType</a></code> | Encryption type of the WI-FI. | 7.0.0 |
+| **`password`**       | <code>string</code>                                               | Password of the WI-FI.        | 7.0.0 |
+| **`ssid`**           | <code>string</code>                                               | SSID of the WI-FI.            | 7.0.0 |
 
 
 #### ReadBarcodesFromImageOptions
@@ -659,9 +917,10 @@ Remove all listeners for this plugin.
 
 #### ScanOptions
 
-| Prop          | Type                         | Description                                                                              | Since |
-| ------------- | ---------------------------- | ---------------------------------------------------------------------------------------- | ----- |
-| **`formats`** | <code>BarcodeFormat[]</code> | Improve the speed of the barcode scanner by configuring the barcode formats to scan for. | 0.0.1 |
+| Prop           | Type                         | Description                                                                              | Since |
+| -------------- | ---------------------------- | ---------------------------------------------------------------------------------------- | ----- |
+| **`formats`**  | <code>BarcodeFormat[]</code> | Improve the speed of the barcode scanner by configuring the barcode formats to scan for. | 0.0.1 |
+| **`autoZoom`** | <code>boolean</code>         | Toggle the auto zoom feature.                                                            | 7.4.0 |
 
 
 #### IsSupportedResult
@@ -685,6 +944,34 @@ Remove all listeners for this plugin.
 | **`available`** | <code>boolean</code> | Whether or not the torch is available. | 0.0.1 |
 
 
+#### SetZoomRatioOptions
+
+| Prop            | Type                | Description            | Since |
+| --------------- | ------------------- | ---------------------- | ----- |
+| **`zoomRatio`** | <code>number</code> | The zoom ratio to set. | 5.4.0 |
+
+
+#### GetZoomRatioResult
+
+| Prop            | Type                | Description     | Since |
+| --------------- | ------------------- | --------------- | ----- |
+| **`zoomRatio`** | <code>number</code> | The zoom ratio. | 5.4.0 |
+
+
+#### GetMinZoomRatioResult
+
+| Prop            | Type                | Description             | Since |
+| --------------- | ------------------- | ----------------------- | ----- |
+| **`zoomRatio`** | <code>number</code> | The minimum zoom ratio. | 5.4.0 |
+
+
+#### GetMaxZoomRatioResult
+
+| Prop            | Type                | Description             | Since |
+| --------------- | ------------------- | ----------------------- | ----- |
+| **`zoomRatio`** | <code>number</code> | The maximum zoom ratio. | 5.4.0 |
+
+
 #### IsGoogleBarcodeScannerModuleAvailableResult
 
 | Prop            | Type                 | Description                                                                           | Since |
@@ -706,11 +993,11 @@ Remove all listeners for this plugin.
 | **`remove`** | <code>() =&gt; Promise&lt;void&gt;</code> |
 
 
-#### BarcodeScannedEvent
+#### BarcodesScannedEvent
 
-| Prop          | Type                                        | Description         | Since |
-| ------------- | ------------------------------------------- | ------------------- | ----- |
-| **`barcode`** | <code><a href="#barcode">Barcode</a></code> | A detected barcode. | 0.0.1 |
+| Prop           | Type                   | Description            | Since |
+| -------------- | ---------------------- | ---------------------- | ----- |
+| **`barcodes`** | <code>Barcode[]</code> | The detected barcodes. | 6.2.0 |
 
 
 #### ScanErrorEvent
@@ -771,6 +1058,45 @@ Remove all listeners for this plugin.
 | **`Back`**  | <code>'BACK'</code>  | 0.0.1 |
 
 
+#### Resolution
+
+| Members           | Value          | Since |
+| ----------------- | -------------- | ----- |
+| **`'640x480'`**   | <code>0</code> | 7.0.0 |
+| **`'1280x720'`**  | <code>1</code> | 7.0.0 |
+| **`'1920x1080'`** | <code>2</code> | 7.0.0 |
+| **`'3840x2160'`** | <code>3</code> | 7.2.0 |
+
+
+#### AddressType
+
+| Members       | Value          | Since |
+| ------------- | -------------- | ----- |
+| **`HOME`**    | <code>0</code> | 7.0.0 |
+| **`UNKNOWN`** | <code>1</code> | 7.0.0 |
+| **`WORK`**    | <code>2</code> | 7.0.0 |
+
+
+#### EmailFormatType
+
+| Members       | Value          | Since |
+| ------------- | -------------- | ----- |
+| **`HOME`**    | <code>0</code> | 7.0.0 |
+| **`UNKNOWN`** | <code>1</code> | 7.0.0 |
+| **`WORK`**    | <code>2</code> | 7.0.0 |
+
+
+#### PhoneFormatType
+
+| Members       | Value          | Since |
+| ------------- | -------------- | ----- |
+| **`FAX`**     | <code>0</code> | 7.0.0 |
+| **`HOME`**    | <code>1</code> | 7.0.0 |
+| **`MOBILE`**  | <code>2</code> | 7.0.0 |
+| **`UNKNOWN`** | <code>3</code> | 7.0.0 |
+| **`WORK`**    | <code>4</code> | 7.0.0 |
+
+
 #### BarcodeValueType
 
 | Members              | Value                          | Since |
@@ -788,6 +1114,15 @@ Remove all listeners for this plugin.
 | **`Url`**            | <code>'URL'</code>             | 0.0.1 |
 | **`Wifi`**           | <code>'WIFI'</code>            | 0.0.1 |
 | **`Unknown`**        | <code>'UNKNOWN'</code>         | 0.0.1 |
+
+
+#### WifiEncryptionType
+
+| Members    | Value          | Since |
+| ---------- | -------------- | ----- |
+| **`OPEN`** | <code>1</code> | 7.0.0 |
+| **`WEP`**  | <code>2</code> | 7.0.0 |
+| **`WPA`**  | <code>3</code> | 7.0.0 |
 
 
 #### GoogleBarcodeScannerModuleInstallState

@@ -50,30 +50,22 @@ public class FaceDetection {
         final FaceDetector faceDetector = com.google.mlkit.vision.face.FaceDetection.getClient(faceDetectorOptions);
         plugin
             .getActivity()
-            .runOnUiThread(
-                () -> {
-                    faceDetector
-                        .process(inputImage)
-                        .addOnSuccessListener(
-                            faces -> {
-                                faceDetector.close();
-                                ProcessImageResult result = new ProcessImageResult(faces);
-                                callback.success(result);
-                            }
-                        )
-                        .addOnCanceledListener(
-                            () -> {
-                                faceDetector.close();
-                                callback.cancel();
-                            }
-                        )
-                        .addOnFailureListener(
-                            exception -> {
-                                faceDetector.close();
-                                callback.error(exception);
-                            }
-                        );
-                }
-            );
+            .runOnUiThread(() -> {
+                faceDetector
+                    .process(inputImage)
+                    .addOnSuccessListener(faces -> {
+                        faceDetector.close();
+                        ProcessImageResult result = new ProcessImageResult(faces);
+                        callback.success(result);
+                    })
+                    .addOnCanceledListener(() -> {
+                        faceDetector.close();
+                        callback.cancel();
+                    })
+                    .addOnFailureListener(exception -> {
+                        faceDetector.close();
+                        callback.error(exception);
+                    });
+            });
     }
 }

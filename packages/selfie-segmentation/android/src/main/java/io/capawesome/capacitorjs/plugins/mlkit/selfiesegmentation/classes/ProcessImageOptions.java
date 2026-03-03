@@ -25,11 +25,12 @@ public class ProcessImageOptions {
     }
 
     private InputImage scaledImage(InputImage inputImage, Integer width, Integer height) {
-        float scaleX = (width != null) ? width * 1f / inputImage.getWidth() : 0f;
-        float scaleY = (height != null) ? height * 1f / inputImage.getHeight() : 0f;
+        float scaleX = (width != null) ? (width * 1f) / inputImage.getWidth() : 0f;
+        float scaleY = (height != null) ? (height * 1f) / inputImage.getHeight() : 0f;
 
         if (scaleX > 0f || scaleY > 0f) {
-            if (scaleX > 0f && scaleY == 0f) scaleY = scaleX; else if (scaleY > 0f && scaleX == 0f) scaleX = scaleY;
+            if (scaleX > 0f && scaleY == 0f) scaleY = scaleX;
+            else if (scaleY > 0f && scaleX == 0f) scaleX = scaleY;
 
             return InputImage.fromBitmap(
                 Bitmap.createScaledBitmap(

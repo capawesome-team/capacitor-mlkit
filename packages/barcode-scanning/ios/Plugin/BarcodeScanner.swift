@@ -14,7 +14,8 @@ typealias MLKitBarcodeScanner = MLKitBarcodeScanning.BarcodeScanner
     public let plugin: BarcodeScannerPlugin
 
     private var cameraView: BarcodeScannerView?
-    private var scanCompletionHandler: (([Barcode]?, String?) -> Void)?
+    private var scanCompletionHandler: (([Barcode]?, AVCaptureVideoOrientation?, String?) -> Void)?
+    private var barcodeRawValueVotes = [String: Int]()
 
     init(plugin: BarcodeScannerPlugin) {
         self.plugin = plugin
@@ -50,6 +51,7 @@ typealias MLKitBarcodeScanner = MLKitBarcodeScanning.BarcodeScanner
             self.cameraView = nil
         }
         self.scanCompletionHandler = nil
+        self.barcodeRawValueVotes.removeAll()
     }
 
     @objc public func readBarcodesFromImage(imageUrl: URL, settings: ScanSettings, completion: @escaping ([Barcode]?, String?) -> Void) {
@@ -66,15 +68,11 @@ typealias MLKitBarcodeScanner = MLKitBarcodeScanning.BarcodeScanner
                 completion(nil, error.localizedDescription)
                 return
             }
-            CAPLog.print("\(features?.count ?? 0)")
-            guard let features = features, !features.isEmpty else {
-                return
-            }
             completion(features, nil)
         }
     }
 
-    @objc public func scan(settings: ScanSettings, completion: @escaping (([Barcode]?, String?) -> Void)) {
+    public func scan(settings: ScanSettings, completion: @escaping (([Barcode]?, AVCaptureVideoOrientation?, String?) -> Void)) {
         self.stopScan()
 
         guard let webView = self.plugin.webView else {
@@ -90,7 +88,7 @@ typealias MLKitBarcodeScanner = MLKitBarcodeScanning.BarcodeScanner
                 self.cameraView = cameraView
             } catch let error {
                 CAPLog.print(error.localizedDescription, error)
-                completion(nil, error.localizedDescription)
+                completion(nil, nil, error.localizedDescription)
                 return
             }
         }
@@ -101,7 +99,7 @@ typealias MLKitBarcodeScanner = MLKitBarcodeScanning.BarcodeScanner
     }
 
     @objc public func enableTorch() {
-        guard let device = AVCaptureDevice.default(for: AVMediaType.video) else { return }
+        guard let device = cameraView?.getCaptureDevice() else { return }
         guard device.hasTorch else { return }
         do {
             try device.lockForConfiguration()
@@ -117,7 +115,7 @@ typealias MLKitBarcodeScanner = MLKitBarcodeScanning.BarcodeScanner
     }
 
     @objc public func disableTorch() {
-        guard let device = AVCaptureDevice.default(for: AVMediaType.video) else { return }
+        guard let device = cameraView?.getCaptureDevice() else { return }
         guard device.hasTorch else { return }
         do {
             try device.lockForConfiguration()
@@ -137,16 +135,48 @@ typealias MLKitBarcodeScanner = MLKitBarcodeScanning.BarcodeScanner
     }
 
     @objc public func isTorchEnabled() -> Bool {
-        guard let device = AVCaptureDevice.default(for: AVMediaType.video) else { return false }
+        guard let device = cameraView?.getCaptureDevice() else { return false }
         guard device.hasTorch else { return false }
         return device.torchMode == AVCaptureDevice.TorchMode.on
     }
 
     @objc public func isTorchAvailable() -> Bool {
-        guard let device = AVCaptureDevice.default(for: AVMediaType.video) else {
+        guard let device = cameraView?.getCaptureDevice() else {
             return false
         }
         return device.hasTorch
+    }
+
+    @objc public func setZoomRatio(_ options: SetZoomRatioOptions) throws {
+        let zoomRatio = options.getZoomRatio()
+
+        guard let device = cameraView?.getCaptureDevice() else {
+            return
+        }
+        try device.lockForConfiguration()
+        device.videoZoomFactor = zoomRatio
+        device.unlockForConfiguration()
+    }
+
+    @objc public func getZoomRatio() -> GetZoomRatioResult? {
+        guard let device = cameraView?.getCaptureDevice() else {
+            return nil
+        }
+        return GetZoomRatioResult(zoomRatio: device.videoZoomFactor)
+    }
+
+    @objc public func getMinZoomRatio() -> GetMinZoomRatioResult? {
+        guard let device = cameraView?.getCaptureDevice() else {
+            return nil
+        }
+        return GetMinZoomRatioResult(zoomRatio: device.minAvailableVideoZoomFactor)
+    }
+
+    @objc public func getMaxZoomRatio() -> GetMaxZoomRatioResult? {
+        guard let device = cameraView?.getCaptureDevice() else {
+            return nil
+        }
+        return GetMaxZoomRatioResult(zoomRatio: device.maxAvailableVideoZoomFactor)
     }
 
     @objc func openSettings(completion: @escaping (Error?) -> Void) {
@@ -226,27 +256,57 @@ typealias MLKitBarcodeScanner = MLKitBarcodeScanning.BarcodeScanner
         webView.scrollView.backgroundColor = UIColor.white
     }
 
-    private func handleScannedBarcode(barcode: Barcode, imageSize: CGSize) {
-        plugin.notifyBarcodeScannedListener(barcode: barcode, imageSize: imageSize)
+    private func handleScannedBarcode(barcode: Barcode, imageSize: CGSize, videoOrientation: AVCaptureVideoOrientation?) {
+        plugin.notifyBarcodeScannedListener(barcode: barcode, imageSize: imageSize, videoOrientation: videoOrientation)
     }
 
+    private func handleScannedBarcodes(barcodes: [Barcode], imageSize: CGSize, videoOrientation: AVCaptureVideoOrientation?) {
+        plugin.notifyBarcodesScannedListener(barcodes: barcodes, imageSize: imageSize, videoOrientation: videoOrientation)
+    }
+
+    private func voteForBarcode(barcode: Barcode) -> Int? {
+        guard let rawValue = barcode.rawValue else {
+            return nil
+        }
+        if let votes = self.barcodeRawValueVotes[rawValue] {
+            self.barcodeRawValueVotes[rawValue] = votes + 1
+        } else {
+            self.barcodeRawValueVotes[rawValue] = 1
+        }
+        return self.barcodeRawValueVotes[rawValue] ?? 1
+    }
+
+    private func voteForBarcodes(barcodes: [Barcode]) -> [Barcode] {
+        return barcodes.filter { barcode in
+            if let votes = self.voteForBarcode(barcode: barcode) {
+                return votes >= 10
+            } else {
+                // Do not filter out barcodes without raw value.
+                return true
+            }
+        }
+    }
 }
 
 extension BarcodeScanner: BarcodeScannerViewDelegate {
-    public func onBarcodesDetected(barcodes: [Barcode], imageSize: CGSize) {
+    public func onBarcodesDetected(barcodes: [Barcode], imageSize: CGSize, videoOrientation: AVCaptureVideoOrientation?) {
         if let scanCompletionHandler = self.scanCompletionHandler {
-            scanCompletionHandler(barcodes, nil)
+            scanCompletionHandler(barcodes, videoOrientation, nil)
             self.stopScan()
         } else {
-            for barcode in barcodes {
-                self.handleScannedBarcode(barcode: barcode, imageSize: imageSize)
+            let barcodesWithEnoughVotes = self.voteForBarcodes(barcodes: barcodes)
+            for barcode in barcodesWithEnoughVotes {
+                self.handleScannedBarcode(barcode: barcode, imageSize: imageSize, videoOrientation: videoOrientation)
+            }
+            if barcodesWithEnoughVotes.count > 0 {
+                self.handleScannedBarcodes(barcodes: barcodesWithEnoughVotes, imageSize: imageSize, videoOrientation: videoOrientation)
             }
         }
     }
 
     public func onCancel() {
         if let scanCompletionHandler = self.scanCompletionHandler {
-            scanCompletionHandler(nil, plugin.errorScanCanceled)
+            scanCompletionHandler(nil, nil, plugin.errorScanCanceled)
         }
         self.stopScan()
     }

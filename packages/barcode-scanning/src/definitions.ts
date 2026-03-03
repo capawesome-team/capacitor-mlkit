@@ -4,15 +4,11 @@ export interface BarcodeScannerPlugin {
   /**
    * Start scanning for barcodes.
    *
-   * Only available on Android and iOS.
-   *
    * @since 0.0.1
    */
   startScan(options?: StartScanOptions): Promise<void>;
   /**
    * Stop scanning for barcodes.
-   *
-   * Only available on Android and iOS.
    *
    * @since 0.0.1
    */
@@ -45,8 +41,6 @@ export interface BarcodeScannerPlugin {
   /**
    * Returns whether or not the barcode scanner is supported.
    *
-   * Available on Android and iOS.
-   *
    * @since 0.0.1
    */
   isSupported(): Promise<IsSupportedResult>;
@@ -55,7 +49,7 @@ export interface BarcodeScannerPlugin {
    *
    * Only available on Android and iOS.
    *
-   * @since 0.0.1
+   * @since 7.2.0
    */
   enableTorch(): Promise<void>;
   /**
@@ -63,7 +57,7 @@ export interface BarcodeScannerPlugin {
    *
    * Only available on Android and iOS.
    *
-   * @since 0.0.1
+   * @since 7.2.0
    */
   disableTorch(): Promise<void>;
   /**
@@ -71,7 +65,7 @@ export interface BarcodeScannerPlugin {
    *
    * Only available on Android and iOS.
    *
-   * @since 0.0.1
+   * @since 7.2.0
    */
   toggleTorch(): Promise<void>;
   /**
@@ -79,7 +73,7 @@ export interface BarcodeScannerPlugin {
    *
    * Only available on Android and iOS.
    *
-   * @since 0.0.1
+   * @since 7.2.0
    */
   isTorchEnabled(): Promise<IsTorchEnabledResult>;
   /**
@@ -87,9 +81,41 @@ export interface BarcodeScannerPlugin {
    *
    * Only available on Android and iOS.
    *
-   * @since 0.0.1
+   * @since 7.2.0
    */
   isTorchAvailable(): Promise<IsTorchAvailableResult>;
+  /**
+   * Set the zoom ratio of the camera.
+   *
+   * Only available on Android and iOS.
+   *
+   * @since 5.4.0
+   */
+  setZoomRatio(options: SetZoomRatioOptions): Promise<void>;
+  /**
+   * Get the zoom ratio of the camera.
+   *
+   * Only available on Android and iOS.
+   *
+   * @since 5.4.0
+   */
+  getZoomRatio(): Promise<GetZoomRatioResult>;
+  /**
+   * Get the minimum zoom ratio of the camera.
+   *
+   * Only available on Android and iOS.
+   *
+   * @since 5.4.0
+   */
+  getMinZoomRatio(): Promise<GetMinZoomRatioResult>;
+  /**
+   * Get the maximum zoom ratio of the camera.
+   *
+   * Only available on Android and iOS.
+   *
+   * @since 5.4.0
+   */
+  getMaxZoomRatio(): Promise<GetMaxZoomRatioResult>;
   /**
    * Open the settings of the app so that the user can grant the camera permission.
    *
@@ -123,30 +149,24 @@ export interface BarcodeScannerPlugin {
   /**
    * Check camera permission.
    *
-   * Only available on Android and iOS.
-   *
    * @since 0.0.1
    */
   checkPermissions(): Promise<PermissionStatus>;
   /**
    * Request camera permission.
    *
-   * Only available on Android and iOS.
-   *
    * @since 0.0.1
    */
   requestPermissions(): Promise<PermissionStatus>;
   /**
-   * Called when a barcode is scanned.
+   * Called when barcodes are scanned.
    *
-   * Available on Android and iOS.
-   *
-   * @since 0.0.1
+   * @since 6.2.0
    */
   addListener(
-    eventName: 'barcodeScanned',
-    listenerFunc: (event: BarcodeScannedEvent) => void,
-  ): Promise<PluginListenerHandle> & PluginListenerHandle;
+    eventName: 'barcodesScanned',
+    listenerFunc: (event: BarcodesScannedEvent) => void,
+  ): Promise<PluginListenerHandle>;
   /**
    * Called when an error occurs during the scan.
    *
@@ -157,7 +177,7 @@ export interface BarcodeScannerPlugin {
   addListener(
     eventName: 'scanError',
     listenerFunc: (event: ScanErrorEvent) => void,
-  ): Promise<PluginListenerHandle> & PluginListenerHandle;
+  ): Promise<PluginListenerHandle>;
   /**
    * Called when the Google Barcode Scanner module is installed.
    *
@@ -170,7 +190,7 @@ export interface BarcodeScannerPlugin {
     listenerFunc: (
       event: GoogleBarcodeScannerModuleInstallProgressEvent,
     ) => void,
-  ): Promise<PluginListenerHandle> & PluginListenerHandle;
+  ): Promise<PluginListenerHandle>;
   /**
    * Remove all listeners for this plugin.
    *
@@ -187,6 +207,8 @@ export interface StartScanOptions {
    * Improve the speed of the barcode scanner by configuring
    * the barcode formats to scan for.
    *
+   * Only available on Android and iOS.
+   *
    * @since 0.0.1
    */
   formats?: BarcodeFormat[];
@@ -196,6 +218,34 @@ export interface StartScanOptions {
    * @since 0.0.1
    */
   lensFacing?: LensFacing;
+  /**
+   * Configure the resolution of the captured image that is used for barcode scanning.
+   *
+   * If the resolution is not supported by the device, the closest supported resolution will be used.
+   *
+   * Only available on Android and iOS.
+   *
+   * @since 7.0.0
+   * @default Resolution['1280x720']
+   */
+  resolution?: Resolution;
+  /**
+   * Allow camera usage on iPad while in multitasking mode.
+   *
+   * Only available on iOS (16.0+).
+   *
+   * @since 7.5.0
+   * @default false
+   */
+  enableMultitaskingCameraAccess?: boolean;
+  /**
+   * The HTML video element to use for the camera preview.
+   *
+   * Only available on web.
+   *
+   * @since 7.1.0
+   */
+  videoElement?: HTMLVideoElement;
 }
 
 /**
@@ -240,6 +290,12 @@ export interface ScanOptions {
    * @since 0.0.1
    */
   formats?: BarcodeFormat[];
+  /**
+   * Toggle the auto zoom feature.
+   *
+   * @since 7.4.0
+   */
+  autoZoom?: boolean;
 }
 
 /**
@@ -294,6 +350,54 @@ export interface IsTorchAvailableResult {
 }
 
 /**
+ * @since 5.4.0
+ */
+export interface SetZoomRatioOptions {
+  /**
+   * The zoom ratio to set.
+   *
+   * @since 5.4.0
+   */
+  zoomRatio: number;
+}
+
+/**
+ * @since 5.4.0
+ */
+export interface GetZoomRatioResult {
+  /**
+   * The zoom ratio.
+   *
+   * @since 5.4.0
+   */
+  zoomRatio: number;
+}
+
+/**
+ * @since 5.4.0
+ */
+export interface GetMinZoomRatioResult {
+  /**
+   * The minimum zoom ratio.
+   *
+   * @since 5.4.0
+   */
+  zoomRatio: number;
+}
+
+/**
+ * @since 5.4.0
+ */
+export interface GetMaxZoomRatioResult {
+  /**
+   * The maximum zoom ratio.
+   *
+   * @since 5.4.0
+   */
+  zoomRatio: number;
+}
+
+/**
  * @since 5.1.0
  */
 export interface IsGoogleBarcodeScannerModuleAvailableResult {
@@ -330,6 +434,18 @@ export interface BarcodeScannedEvent {
    * @since 0.0.1
    */
   barcode: Barcode;
+}
+
+/**
+ * @since 6.2.0
+ */
+export interface BarcodesScannedEvent {
+  /**
+   * The detected barcodes.
+   *
+   * @since 6.2.0
+   */
+  barcodes: Barcode[];
 }
 
 /**
@@ -374,6 +490,18 @@ export interface Barcode {
    */
   bytes?: number[];
   /**
+   * Calendar event info.
+   *
+   * @since 7.0.0
+   */
+  calendarEvent?: BarcodeCalendarEvent;
+  /**
+   * Person's or organization's business card.
+   *
+   * @since 7.0.0
+   */
+  contactInfo?: BarcodeContactInfo;
+  /**
    * The four corner points of the barcode in clockwise
    * order starting with top-left.
    *
@@ -397,6 +525,18 @@ export interface Barcode {
    */
   displayValue: string;
   /**
+   * Driver license or ID card.
+   *
+   * @since 7.0.0
+   */
+  driverLicense?: BarcodeDriverLicense;
+  /**
+   * An email message from a 'MAILTO:'.
+   *
+   * @since 7.0.0
+   */
+  email?: BarcodeEmail;
+  /**
    * The barcode format.
    *
    * @since 0.0.1
@@ -404,12 +544,40 @@ export interface Barcode {
    */
   format: BarcodeFormat;
   /**
+   * GPS coordinates from a 'GEO:'.
+   *
+   * @since 7.0.0
+   */
+  geoPoint?: BarcodeGeoPoint;
+  /**
+   * Phone number info.
+   *
+   * @since 7.0.0
+   */
+  phone?: BarcodePhone;
+  /**
    * The barcode value in a machine readable format.
+   *
+   * This value is only available if the barcode is encoded
+   * in the UTF-8 character set. Otherwise, the `bytes` property
+   * should be used.
    *
    * @since 0.0.1
    * @example "CapacitorJS"
    */
-  rawValue: string;
+  rawValue?: string;
+  /**
+   * A sms message from a 'SMS:'.
+   *
+   * @since 7.0.0
+   */
+  sms?: BarcodeSms;
+  /**
+   * A URL and title from a 'MEBKM:'.
+   *
+   * @since 7.0.0
+   */
+  urlBookmark?: BarcodeUrlBookmark;
   /**
    * The barcode value type.
    *
@@ -417,6 +585,393 @@ export interface Barcode {
    * @example "TEXT"
    */
   valueType: BarcodeValueType;
+  /**
+   * A wifi network parameters from a 'WIFI:'.
+   *
+   * @since 7.0.0
+   */
+  wifi?: BarcodeWifi;
+}
+
+/**
+ * @since 7.0.0
+ */
+export interface BarcodeCalendarEvent {
+  /**
+   * The event description.
+   *
+   * @since 7.0.0
+   */
+  description?: string;
+  /**
+   * The event end date as ISO 8601 string.
+   *
+   * @since 7.0.0
+   * @example "2022-12-31T23:59:59.999Z"
+   */
+  end?: string;
+  /**
+   * The event location.
+   *
+   * @since 7.0.0
+   */
+  location?: string;
+  /**
+   * The event organizer.
+   *
+   * @since 7.0.0
+   */
+  organizer?: string;
+  /**
+   * The event start date as ISO 8601 string.
+   *
+   * @since 7.0.0
+   * @example "2022-01-01T00:00:00.000Z"
+   */
+  start?: string;
+  /**
+   * The event status.
+   *
+   * @since 7.0.0
+   */
+  status?: string;
+  /**
+   * The event summary.
+   *
+   * @since 7.0.0
+   */
+  summary?: string;
+}
+
+/**
+ * @since 7.0.0
+ */
+export interface BarcodeContactInfo {
+  /**
+   * The contact's addresses.
+   *
+   * @since 7.0.0
+   */
+  addresses?: Address[];
+  /**
+   * The contact's emails.
+   *
+   * @since 7.0.0
+   */
+  emails?: BarcodeEmail[];
+  /**
+   * The contact's name.
+   *
+   * @since 7.0.0
+   */
+  personName?: PersonName;
+  /**
+   * The contact's organization.
+   *
+   * @since 7.0.0
+   */
+  organization?: string;
+  /**
+   * The contact's phones.
+   *
+   * @since 7.0.0
+   */
+  phones?: BarcodePhone[];
+  /**
+   * The contact's title.
+   *
+   * @since 7.0.0
+   */
+  title?: string;
+  /**
+   * The contact's urls.
+   *
+   * @since 7.0.0
+   */
+  urls?: string[];
+}
+
+/**
+ * @since 7.0.0
+ */
+export interface Address {
+  /**
+   * Formatted address, multiple lines when appropriate.
+   *
+   * @since 7.0.0
+   */
+  addressLines?: string[];
+  /**
+   * Address type.
+   *
+   * @since 7.0.0
+   */
+  type?: AddressType;
+}
+
+/**
+ * @since 7.0.0
+ */
+export interface BarcodeDriverLicense {
+  /**
+   * City of holder's address.
+   *
+   * @since 7.0.0
+   */
+  addressCity?: string;
+  /**
+   * State of holder's address.
+   *
+   * @since 7.0.0
+   */
+  addressState?: string;
+  /**
+   * Street of holder's address.
+   *
+   * @since 7.0.0
+   */
+  addressStreet?: string;
+  /**
+   * Postal code of holder's address.
+   *
+   * @since 7.0.0
+   */
+  addressZip?: string;
+  /**
+   * Birthdate of the holder.
+   *
+   * @since 7.0.0
+   */
+  birthDate?: string;
+  /**
+   * "DL" for driver's licenses, "ID" for ID cards.
+   *
+   * @since 7.0.0
+   */
+  documentType?: string;
+  /**
+   * Expiration date of the license.
+   *
+   * @since 7.0.0
+   */
+  expiryDate?: string;
+  /**
+   * Holder's first name.
+   *
+   * @since 7.0.0
+   */
+  firstName?: string;
+  /**
+   * Holder's gender.
+   *
+   * @since 7.0.0
+   */
+  gender?: string;
+
+  /**
+   * Issue date of the license.
+   *
+   * @since 7.0.0
+   */
+  issueDate?: string;
+  /**
+   * ISO 3166-1 alpha-3 code in which DL/ID was issued.
+   *
+   * @since 7.0.0
+   */
+  issuingCountry?: string;
+  /**
+   * Holder's last name.
+   *
+   * @since 7.0.0
+   */
+  lastName?: string;
+  /**
+   * Driver license ID number.
+   *
+   * @since 7.0.0
+   */
+  licenseNumber?: string;
+  /**
+   * Holder's middle name.
+   *
+   * @since 7.0.0
+   */
+  middleName?: string;
+}
+
+/**
+ * @since 7.0.0
+ */
+export interface BarcodeEmail {
+  /**
+   * The email address.
+   *
+   * @since 7.0.0
+   */
+  address?: string;
+  /**
+   * The email body.
+   *
+   * @since 7.0.0
+   */
+  body?: string;
+  /**
+   * The email subject.
+   *
+   * @since 7.0.0
+   */
+  subject?: string;
+  /**
+   * The email address type.
+   *
+   * @since 7.0.0
+   */
+  type: EmailFormatType;
+}
+
+/**
+ * @since 7.0.0
+ */
+export interface BarcodeGeoPoint {
+  /**
+   * Latitude.
+   *
+   * @since 7.0.0
+   */
+  latitude?: number;
+  /**
+   * Longitude.
+   *
+   * @since 7.0.0
+   */
+  longitude?: number;
+}
+
+/**
+ * @since 7.0.0
+ */
+export interface BarcodePhone {
+  /**
+   * The phone number.
+   *
+   * @since 7.0.0
+   */
+  number?: string;
+  /**
+   * The phone number type.
+   *
+   * @since 7.0.0
+   */
+  type?: PhoneFormatType;
+}
+
+/**
+ * @since 7.0.0
+ */
+export interface PersonName {
+  /**
+   * First name.
+   *
+   * @since 7.0.0
+   */
+  first?: string;
+  /**
+   * The formatted name.
+   *
+   * @since 7.0.0
+   */
+  formattedName?: string;
+  /**
+   * Last name.
+   *
+   * @since 7.0.0
+   */
+  last?: string;
+  /**
+   * Middle name.
+   *
+   * @since 7.0.0
+   */
+  middle?: string;
+  /**
+   * Name prefix.
+   *
+   * @since 7.0.0
+   */
+  prefix?: string;
+  /**
+   * Text string to be set as the kana name in the phonebook. Used for Japanese contacts.
+   *
+   * @since 7.0.0
+   */
+  pronunciation?: string;
+  /**
+   * Name suffix.
+   *
+   * @since 7.0.0
+   */
+  suffix?: string;
+}
+
+/**
+ * @since 7.0.0
+ */
+export interface BarcodeSms {
+  /**
+   * The phone number of the sms.
+   *
+   * @since 7.0.0
+   */
+  phoneNumber?: string;
+  /**
+   * The message content of the sms.
+   *
+   * @since 7.0.0
+   */
+  message?: string;
+}
+
+/**
+ * @since 7.0.0
+ */
+export interface BarcodeUrlBookmark {
+  /**
+   * The URL of the bookmark.
+   *
+   * @since 7.0.0
+   */
+  url?: string;
+  /**
+   * The title of the bookmark.
+   *
+   * @since 7.0.0
+   */
+  title?: string;
+}
+
+/**
+ * @since 7.0.0
+ */
+export interface BarcodeWifi {
+  /**
+   * Encryption type of the WI-FI.
+   *
+   * @since 7.0.0
+   */
+  encryptionType: WifiEncryptionType;
+  /**
+   * Password of the WI-FI.
+   *
+   * @since 7.0.0
+   */
+  password?: string;
+  /**
+   * SSID of the WI-FI.
+   *
+   * @since 7.0.0
+   */
+  ssid?: string;
 }
 
 /**
@@ -562,6 +1117,28 @@ export enum BarcodeValueType {
 }
 
 /**
+ * @since 7.0.0
+ */
+export enum Resolution {
+  /**
+   * @since 7.0.0
+   */
+  '640x480' = 0,
+  /**
+   * @since 7.0.0
+   */
+  '1280x720' = 1,
+  /**
+   * @since 7.0.0
+   */
+  '1920x1080' = 2,
+  /**
+   * @since 7.2.0
+   */
+  '3840x2160' = 3,
+}
+
+/**
  * @since 0.0.1
  */
 export enum LensFacing {
@@ -611,4 +1188,84 @@ export enum GoogleBarcodeScannerModuleInstallState {
    * @since 5.1.0
    */
   DOWNLOAD_PAUSED = 7,
+}
+
+/**
+ * @since 7.0.0
+ */
+export enum AddressType {
+  /**
+   * @since 7.0.0
+   */
+  HOME = 0,
+  /**
+   * @since 7.0.0
+   */
+  UNKNOWN = 1,
+  /**
+   * @since 7.0.0
+   */
+  WORK = 2,
+}
+
+/**
+ * @since 7.0.0
+ */
+export enum EmailFormatType {
+  /**
+   * @since 7.0.0
+   */
+  HOME = 0,
+  /**
+   * @since 7.0.0
+   */
+  UNKNOWN = 1,
+  /**
+   * @since 7.0.0
+   */
+  WORK = 2,
+}
+
+/**
+ * @since 7.0.0
+ */
+export enum PhoneFormatType {
+  /**
+   * @since 7.0.0
+   */
+  FAX = 0,
+  /**
+   * @since 7.0.0
+   */
+  HOME = 1,
+  /**
+   * @since 7.0.0
+   */
+  MOBILE = 2,
+  /**
+   * @since 7.0.0
+   */
+  UNKNOWN = 3,
+  /**
+   * @since 7.0.0
+   */
+  WORK = 4,
+}
+
+/**
+ * @since 7.0.0
+ */
+export enum WifiEncryptionType {
+  /**
+   * @since 7.0.0
+   */
+  OPEN = 1,
+  /**
+   * @since 7.0.0
+   */
+  WEP = 2,
+  /**
+   * @since 7.0.0
+   */
+  WPA = 3,
 }

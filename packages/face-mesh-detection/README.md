@@ -2,6 +2,19 @@
 
 Unofficial Capacitor plugin for [ML Kit Face Mesh Detection](https://developers.google.com/ml-kit/vision/face-mesh-detection).[^1]
 
+<div class="capawesome-z29o10a">
+  <a href="https://cloud.capawesome.io/" target="_blank">
+    <img alt="Deliver Live Updates to your Capacitor app with Capawesome Cloud" src="https://cloud.capawesome.io/assets/banners/cloud-build-and-deploy-capacitor-apps.png?t=1" />
+  </a>
+</div>
+
+## Compatibility
+
+| Plugin Version | Capacitor Version | Status         |
+| -------------- | ----------------- | -------------- |
+| 8.x.x          | >=8.x.x           | Active support |
+| 6.x.x          | 6.x.x             | Deprecated     |
+
 ## Installation
 
 ```bash
@@ -13,9 +26,11 @@ npx cap sync
 
 #### Variables
 
-This plugin will use the following project variables (defined in your app’s `variables.gradle` file):
+If needed, you can define the following project variable in your app’s `variables.gradle` file to change the default version of the dependency:
 
 - `$mlkitFaceMeshDetectionVersion` version of `com.google.mlkit:face-mesh-detection` (default: `16.0.0-beta1`)
+
+This can be useful if you encounter dependency conflicts with other plugins in your project.
 
 ## Configuration
 

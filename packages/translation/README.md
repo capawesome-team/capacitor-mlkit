@@ -2,6 +2,21 @@
 
 Unofficial Capacitor plugin for [ML Kit Translation](https://developers.google.com/ml-kit/language/translation).[^1]
 
+<div class="capawesome-z29o10a">
+  <a href="https://cloud.capawesome.io/" target="_blank">
+    <img alt="Deliver Live Updates to your Capacitor app with Capawesome Cloud" src="https://cloud.capawesome.io/assets/banners/cloud-build-and-deploy-capacitor-apps.png?t=1" />
+  </a>
+</div>
+
+## Compatibility
+
+| Plugin Version | Capacitor Version | Status         |
+| -------------- | ----------------- | -------------- |
+| 8.x.x          | >=8.x.x           | Active support |
+| 7.x.x          | 7.x.x             | Deprecated     |
+| 6.x.x          | 6.x.x             | Deprecated     |
+| 5.x.x          | 5.x.x             | Deprecated     |
+
 ## Installation
 
 ```bash
@@ -9,13 +24,27 @@ npm install @capacitor-mlkit/translation
 npx cap sync
 ```
 
+**Attention**: This plugin **only supports CocoaPods** for iOS dependency management. Swift Package Manager (SPM) is not supported for the ML Kit SDK, see [this comment](https://github.com/googlesamples/mlkit/issues/180#issuecomment-1298964099).
+
 ### Android
 
 #### Variables
 
-This plugin will use the following project variables (defined in your app’s `variables.gradle` file):
+If needed, you can define the following project variable in your app’s `variables.gradle` file to change the default version of the dependency:
 
-- `$mlkitTranslateVersion` version of `com.google.mlkit:translate` (default: `17.0.1`)
+- `$mlkitTranslateVersion` version of `com.google.mlkit:translate` (default: `17.0.3`)
+
+This can be useful if you encounter dependency conflicts with other plugins in your project.
+
+### iOS
+
+#### Minimum Deployment Target
+
+Make sure to set the deployment target in your `ios/App/Podfile` to at least `15.5`:
+
+```ruby
+platform :ios, '15.5'
+```
 
 ## Configuration
 

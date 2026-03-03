@@ -1,5 +1,191 @@
 # Changelog
 
+## 8.0.1
+
+### Patch Changes
+
+- [`98affd15ab9879702ff277e4487f40af14253e91`](https://github.com/capawesome-team/capacitor-mlkit/commit/98affd15ab9879702ff277e4487f40af14253e91) ([#321](https://github.com/capawesome-team/capacitor-mlkit/pull/321)): fix(android): AGP 9.0 no longer supports `proguard-android.txt`
+
+## 8.0.0
+
+### Major Changes
+
+- [`e8ec64384fa5d01104be4d4cb61bc2e7c037e9e1`](https://github.com/capawesome-team/capacitor-mlkit/commit/e8ec64384fa5d01104be4d4cb61bc2e7c037e9e1) ([#316](https://github.com/capawesome-team/capacitor-mlkit/pull/316)): fix: throw correct error code for unimplemented methods (see `BREAKING.md`)
+
+- [`36dc42aeee4af509e84d2904d4be1a6a87f78fac`](https://github.com/capawesome-team/capacitor-mlkit/commit/36dc42aeee4af509e84d2904d4be1a6a87f78fac) ([#313](https://github.com/capawesome-team/capacitor-mlkit/pull/313)): feat!: update dependencies to the latest versions (see `BREAKING.md`)
+
+- [`e39ac78b6dafa79e8bc972dcf7291fce14fcdce0`](https://github.com/capawesome-team/capacitor-mlkit/commit/e39ac78b6dafa79e8bc972dcf7291fce14fcdce0) ([#315](https://github.com/capawesome-team/capacitor-mlkit/pull/315)): fix!: `rawValue` can be undefined (see `BREAKING.md`)
+
+- [`7c34e5f74f0339aa0b1a210f0060ccb31d0720bd`](https://github.com/capawesome-team/capacitor-mlkit/commit/7c34e5f74f0339aa0b1a210f0060ccb31d0720bd): fix!: throw correct error code (see `BREAKING.md`)
+
+- [`e5a827f63dd47ae190a189760a484f7f5403fca3`](https://github.com/capawesome-team/capacitor-mlkit/commit/e5a827f63dd47ae190a189760a484f7f5403fca3) ([#311](https://github.com/capawesome-team/capacitor-mlkit/pull/311)): feat!: update to Capacitor 8 (see `BREAKING.md`)
+
+### Patch Changes
+
+- [`5005b3faddb92611bfd69339696ec94de99e0f28`](https://github.com/capawesome-team/capacitor-mlkit/commit/5005b3faddb92611bfd69339696ec94de99e0f28) ([#314](https://github.com/capawesome-team/capacitor-mlkit/pull/314)): fix(android): corner points were calculated somewhat inaccurately
+
+## 7.5.0
+
+### Minor Changes
+
+- [`5c71c6b2192bbce7b40433db575a2dad14b2593e`](https://github.com/capawesome-team/capacitor-mlkit/commit/5c71c6b2192bbce7b40433db575a2dad14b2593e) ([#307](https://github.com/capawesome-team/capacitor-mlkit/pull/307)): feat: add `enableMultitaskingCameraAccess` option
+
+## 7.4.0
+
+### Minor Changes
+
+- [`953540837c2f1b5c38dde23e5bd6e03b64e168fa`](https://github.com/capawesome-team/capacitor-mlkit/commit/953540837c2f1b5c38dde23e5bd6e03b64e168fa) ([#305](https://github.com/capawesome-team/capacitor-mlkit/pull/305)): feat(android): add `autoZoom` option
+
+### Patch Changes
+
+- [`07036e32e74aad71a05337ba4ca572dc6ef1853a`](https://github.com/capawesome-team/capacitor-mlkit/commit/07036e32e74aad71a05337ba4ca572dc6ef1853a): fix(web): `isTorchAvailable()` method no longer throws an error on web
+
+## 7.3.0
+
+### Patch Changes
+
+- [`b9ed103471993568e8a53cf33759386f520fe7d6`](https://github.com/capawesome-team/capacitor-mlkit/commit/b9ed103471993568e8a53cf33759386f520fe7d6) ([#270](https://github.com/capawesome-team/capacitor-mlkit/pull/270)): fix(ios): 3840x2160 resolution not supported on older iOS devices
+
+## 7.2.1
+
+### Patch Changes
+
+- [`772932311a6f6e55214d5fe58970fd66a79ce8ff`](https://github.com/capawesome-team/capacitor-mlkit/commit/772932311a6f6e55214d5fe58970fd66a79ce8ff) ([#265](https://github.com/capawesome-team/capacitor-mlkit/pull/265)): fix(ios): prevent crash due to a race condition at the start of the scan
+
+## 7.2.0
+
+### Minor Changes
+
+- [`fe565604ca6a73f5a1eac47490e7760f3844f9c2`](https://github.com/capawesome-team/capacitor-mlkit/commit/fe565604ca6a73f5a1eac47490e7760f3844f9c2) ([#261](https://github.com/capawesome-team/capacitor-mlkit/pull/261)): feat: add `3840x2160` resolution
+
+- [`b5fdd4067573dd4ae077fd4cfb8e4678396c22c6`](https://github.com/capawesome-team/capacitor-mlkit/commit/b5fdd4067573dd4ae077fd4cfb8e4678396c22c6) ([#263](https://github.com/capawesome-team/capacitor-mlkit/pull/263)): feat: add torch support
+
+### Patch Changes
+
+- [`df6f50151b41dfac56b93f8c7b64ffa470a566cb`](https://github.com/capawesome-team/capacitor-mlkit/commit/df6f50151b41dfac56b93f8c7b64ffa470a566cb) ([#255](https://github.com/capawesome-team/capacitor-mlkit/pull/255)): fix(barcode-scanning): opening and closing repeatedly occasionally results in a black screen
+
+## 7.1.0
+
+### Minor Changes
+
+- [`5c144d97ae7adefb2cc7633c0d2e3b02e44ef561`](https://github.com/capawesome-team/capacitor-mlkit/commit/5c144d97ae7adefb2cc7633c0d2e3b02e44ef561) ([#251](https://github.com/capawesome-team/capacitor-mlkit/pull/251)): feat(ios): support auto focus
+
+- [`29ee50aa15a1a853ca558e1764b880370c3d304d`](https://github.com/capawesome-team/capacitor-mlkit/commit/29ee50aa15a1a853ca558e1764b880370c3d304d) ([#238](https://github.com/capawesome-team/capacitor-mlkit/pull/238)): feat: add web support
+
+### Patch Changes
+
+- [`d7e805e0a234d495cc2392d1de830437895d1213`](https://github.com/capawesome-team/capacitor-mlkit/commit/d7e805e0a234d495cc2392d1de830437895d1213) ([#248](https://github.com/capawesome-team/capacitor-mlkit/pull/248)): fix(ios): resize the barcode scanner view when the device orientation changes
+
+- [`958dfeda1bfea6116804d9fc3d921c811ec3c6eb`](https://github.com/capawesome-team/capacitor-mlkit/commit/958dfeda1bfea6116804d9fc3d921c811ec3c6eb) ([#240](https://github.com/capawesome-team/capacitor-mlkit/pull/240)): fix(ios): `resolution` option was ignored
+
+## 7.0.0
+
+### Major Changes
+
+- [`744d4572de0561992ddff7e0f52742b31efb7ec4`](https://github.com/capawesome-team/capacitor-mlkit/commit/744d4572de0561992ddff7e0f52742b31efb7ec4) ([#233](https://github.com/capawesome-team/capacitor-mlkit/pull/233)): fix(ios): update `GoogleMLKit` pods to version `7.0.0`
+
+- [`744d4572de0561992ddff7e0f52742b31efb7ec4`](https://github.com/capawesome-team/capacitor-mlkit/commit/744d4572de0561992ddff7e0f52742b31efb7ec4) ([#233](https://github.com/capawesome-team/capacitor-mlkit/pull/233)): refactor: remove deprecated code (see `BREAKING.md`)
+
+- [`744d4572de0561992ddff7e0f52742b31efb7ec4`](https://github.com/capawesome-team/capacitor-mlkit/commit/744d4572de0561992ddff7e0f52742b31efb7ec4) ([#233](https://github.com/capawesome-team/capacitor-mlkit/pull/233)): feat: update to Capacitor 7
+
+- [`744d4572de0561992ddff7e0f52742b31efb7ec4`](https://github.com/capawesome-team/capacitor-mlkit/commit/744d4572de0561992ddff7e0f52742b31efb7ec4) ([#233](https://github.com/capawesome-team/capacitor-mlkit/pull/233)): feat: add option for image resolution
+
+- [`744d4572de0561992ddff7e0f52742b31efb7ec4`](https://github.com/capawesome-team/capacitor-mlkit/commit/744d4572de0561992ddff7e0f52742b31efb7ec4) ([#233](https://github.com/capawesome-team/capacitor-mlkit/pull/233)): chore(deps): update the ML Kit SDK to the latest version
+
+### Minor Changes
+
+- [`744d4572de0561992ddff7e0f52742b31efb7ec4`](https://github.com/capawesome-team/capacitor-mlkit/commit/744d4572de0561992ddff7e0f52742b31efb7ec4) ([#233](https://github.com/capawesome-team/capacitor-mlkit/pull/233)): feat(barcode-scanning): support `cornerPoints` in `readBarcodesFromImage(...)`
+
+- [`744d4572de0561992ddff7e0f52742b31efb7ec4`](https://github.com/capawesome-team/capacitor-mlkit/commit/744d4572de0561992ddff7e0f52742b31efb7ec4) ([#233](https://github.com/capawesome-team/capacitor-mlkit/pull/233)): feat: support all barcode types
+
+- [`744d4572de0561992ddff7e0f52742b31efb7ec4`](https://github.com/capawesome-team/capacitor-mlkit/commit/744d4572de0561992ddff7e0f52742b31efb7ec4) ([#233](https://github.com/capawesome-team/capacitor-mlkit/pull/233)): feat: add compatibility for the Torch plugin
+
+### Patch Changes
+
+- [`744d4572de0561992ddff7e0f52742b31efb7ec4`](https://github.com/capawesome-team/capacitor-mlkit/commit/744d4572de0561992ddff7e0f52742b31efb7ec4) ([#233](https://github.com/capawesome-team/capacitor-mlkit/pull/233)): fix(ios): resize the barcode scanner view when the device orientation changes
+
+- [`744d4572de0561992ddff7e0f52742b31efb7ec4`](https://github.com/capawesome-team/capacitor-mlkit/commit/744d4572de0561992ddff7e0f52742b31efb7ec4) ([#233](https://github.com/capawesome-team/capacitor-mlkit/pull/233)): fix(ios): update `GoogleMLKit` pods to version `6.0.0`
+
+- [`744d4572de0561992ddff7e0f52742b31efb7ec4`](https://github.com/capawesome-team/capacitor-mlkit/commit/744d4572de0561992ddff7e0f52742b31efb7ec4) ([#233](https://github.com/capawesome-team/capacitor-mlkit/pull/233)): fix(ios): use queue for synchronizing the session configuration and start operations of the `scan(...)` method
+
+- [`744d4572de0561992ddff7e0f52742b31efb7ec4`](https://github.com/capawesome-team/capacitor-mlkit/commit/744d4572de0561992ddff7e0f52742b31efb7ec4) ([#233](https://github.com/capawesome-team/capacitor-mlkit/pull/233)): fix(ios): destroy the preview view when the scan stops
+
+## 7.0.0-next.3
+
+### Major Changes
+
+- [`e392fb7`](https://github.com/capawesome-team/capacitor-mlkit/commit/e392fb72b312452d56665e60249dbbcc48460f2a) ([#221](https://github.com/capawesome-team/capacitor-mlkit/pull/221)): feat: add option for image resolution
+
+### Patch Changes
+
+- [`dd12ea8`](https://github.com/capawesome-team/capacitor-mlkit/commit/dd12ea8b8f5906f0ab56f3c1672d09e5a48426bb) ([#224](https://github.com/capawesome-team/capacitor-mlkit/pull/224)): fix(ios): resize the barcode scanner view when the device orientation changes
+
+## 7.0.0-next.2
+
+### Minor Changes
+
+- [`c0c29b9`](https://github.com/capawesome-team/capacitor-mlkit/commit/c0c29b9326a59814134dd8080f3fffc72f0ee502) ([#206](https://github.com/capawesome-team/capacitor-mlkit/pull/206)): feat: support all barcode types
+
+* [`6a73faf`](https://github.com/capawesome-team/capacitor-mlkit/commit/6a73faffcc9da148fcd49ed12dd7fdffd1bba3e7) ([#210](https://github.com/capawesome-team/capacitor-mlkit/pull/210)): feat: add compatibility for the Torch plugin
+
+## 7.0.0-next.1
+
+### Major Changes
+
+- [`257ef27`](https://github.com/capawesome-team/capacitor-mlkit/commit/257ef27371cb3e401490024dde19fcf6ed5e601a) ([#202](https://github.com/capawesome-team/capacitor-mlkit/pull/202)): fix(ios): update `GoogleMLKit` pods to version `7.0.0`
+
+## 7.0.0-next.0
+
+### Patch Changes
+
+- [`2901e1b`](https://github.com/capawesome-team/capacitor-mlkit/commit/2901e1b0a1a952f91c70b8824b468eba60b7444d) ([#179](https://github.com/capawesome-team/capacitor-mlkit/pull/179)): fix(ios): update `GoogleMLKit` pods to version `6.0.0`
+
+## 6.2.0
+
+### Minor Changes
+
+- [`fa76d3c`](https://github.com/capawesome-team/capacitor-mlkit/commit/fa76d3c0eafa1c60143421caa04f3c553401c87f) ([#195](https://github.com/capawesome-team/capacitor-mlkit/pull/195)): feat: add `barcodesScanned` listener
+
+* [`c3672b4`](https://github.com/capawesome-team/capacitor-mlkit/commit/c3672b47e3e6f9f190bd432e9518aae0f87c302f): feat: vote system
+
+### Patch Changes
+
+- [`a0198b6`](https://github.com/capawesome-team/capacitor-mlkit/commit/a0198b6844a7200ccc6a3303700a30f43b680293) ([#188](https://github.com/capawesome-team/capacitor-mlkit/pull/188)): fix(ios): add delay before starting camera session
+
+## 6.1.0
+
+### Minor Changes
+
+- [`79011e7`](https://github.com/capawesome-team/capacitor-mlkit/commit/79011e7fa310f2a275179d6179d89c3ea0324150) ([#150](https://github.com/capawesome-team/capacitor-mlkit/pull/150)): feat(ios): update `GoogleMLKit` dependencies to `5.0.0`
+
+## 6.0.0
+
+### Major Changes
+
+- [`bfcfaff`](https://github.com/capawesome-team/capacitor-mlkit/commit/bfcfaff900218f19b2b6bdfa27e940b02d451b24) ([#134](https://github.com/capawesome-team/capacitor-mlkit/pull/134)): chore(deps): update Android SDKs
+
+* [`13a86f9`](https://github.com/capawesome-team/capacitor-mlkit/commit/13a86f9377d053ab29fe90b3ea059e95f3c39938): feat: update to Capacitor 6
+
+### Patch Changes
+
+- [`cb63726`](https://github.com/capawesome-team/capacitor-mlkit/commit/cb63726e4a7c21822d13faa6987abfc169f733af) ([#138](https://github.com/capawesome-team/capacitor-mlkit/pull/138)): fix(android): enable the databinding library
+
+* [`a86df95`](https://github.com/capawesome-team/capacitor-mlkit/commit/a86df95af16c3fe64922795ce15668e882f596e8) ([#145](https://github.com/capawesome-team/capacitor-mlkit/pull/145)): fix(android): invalid `progress` values
+
+## 5.4.0
+
+### Minor Changes
+
+- [`2b390c1`](https://github.com/capawesome-team/capacitor-mlkit/commit/2b390c126fccf6e5d71772153c38bd81d27854c4) ([#112](https://github.com/capawesome-team/capacitor-mlkit/pull/112)): feat: zoom functionality
+
+### Patch Changes
+
+- [`c297f7e`](https://github.com/capawesome-team/capacitor-mlkit/commit/c297f7e531c978ea946cd7f152e8cdf569b0695d): fix(ios): `readBarcodesFromImage(...)` does not resolve
+
+* [`4ca54ae`](https://github.com/capawesome-team/capacitor-mlkit/commit/4ca54ae5ef517db0f6794e14ab29958eb3ad6731) ([#128](https://github.com/capawesome-team/capacitor-mlkit/pull/128)): fix(ios): incorrect coordinate calculation in landscape mode
+
+- [`454bad4`](https://github.com/capawesome-team/capacitor-mlkit/commit/454bad459b2cec0d3c0316cb20ad9638b0f98714) ([#127](https://github.com/capawesome-team/capacitor-mlkit/pull/127)): fix(ios): incorrect coordinate calculation
+
 ## 5.3.0
 
 ## 5.2.0
