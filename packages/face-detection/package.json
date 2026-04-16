@@ -11,7 +11,8 @@
     "android/build.gradle",
     "dist/",
     "ios/Plugin/",
-    "CapacitorMlkitFaceDetection.podspec"
+    "CapacitorMlkitFaceDetection.podspec",
+    "Package.swift"
   ],
   "author": "Robin Genz <mail@robingenz.dev>",
   "license": "Apache-2.0",
