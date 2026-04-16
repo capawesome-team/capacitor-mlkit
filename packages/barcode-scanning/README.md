@@ -364,7 +364,8 @@ readBarcodesFromImage(options: ReadBarcodesFromImageOptions) => Promise<ReadBarc
 
 Read barcodes from an image.
 
-Only available on Android and iOS.
+On **web**, the `path` parameter should be a URL (e.g. a blob URL,
+data URL, or any URL accessible to the browser).
 
 | Param         | Type                                                                                  |
 | ------------- | ------------------------------------------------------------------------------------- |

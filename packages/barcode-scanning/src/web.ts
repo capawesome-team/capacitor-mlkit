@@ -1,25 +1,29 @@
 import { CapacitorException, ExceptionCode, WebPlugin } from '@capacitor/core';
 
-import type { DetectedBarcode } from './barcode-detector';
-import { BarcodeValueType, LensFacing } from './definitions';
 import type {
+  BarcodeDetectorFormat,
+  DetectedBarcode,
+} from './barcode-detector';
+import type {
+  Barcode,
   BarcodeFormat,
-  BarcodesScannedEvent,
   BarcodeScannerPlugin,
+  BarcodesScannedEvent,
   GetMaxZoomRatioResult,
   GetMinZoomRatioResult,
   GetZoomRatioResult,
   IsGoogleBarcodeScannerModuleAvailableResult,
   IsSupportedResult,
+  IsTorchAvailableResult,
+  IsTorchEnabledResult,
   PermissionStatus,
   ReadBarcodesFromImageOptions,
   ReadBarcodesFromImageResult,
   ScanResult,
   SetZoomRatioOptions,
   StartScanOptions,
-  IsTorchEnabledResult,
-  IsTorchAvailableResult,
 } from './definitions';
+import { BarcodeValueType, LensFacing } from './definitions';
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/consistent-type-imports
@@ -32,6 +36,7 @@ export class BarcodeScannerWeb
 {
   private readonly _isSupported = 'BarcodeDetector' in window;
   private readonly errorVideoElementMissing = 'videoElement must be provided.';
+  private readonly errorPathMissing = 'path must be provided.';
   private readonly eventBarcodesScanned = 'barcodesScanned';
 
   private intervalId: number | undefined;
@@ -90,9 +95,27 @@ export class BarcodeScannerWeb
   }
 
   async readBarcodesFromImage(
-    _options: ReadBarcodesFromImageOptions,
+    options: ReadBarcodesFromImageOptions,
   ): Promise<ReadBarcodesFromImageResult> {
-    throw this.createUnavailableException();
+    if (!this._isSupported) {
+      throw this.createUnavailableException();
+    }
+    if (!options.path) {
+      throw new Error(this.errorPathMissing);
+    }
+    const formats = options.formats?.map(
+      format => format.toLowerCase() as BarcodeDetectorFormat,
+    );
+    const barcodeDetector = new BarcodeDetector(
+      formats?.length ? { formats } : undefined,
+    );
+    const fetchResponse = await fetch(options.path);
+    const imageBlob = await fetchResponse.blob();
+    const imageBitmap = await createImageBitmap(imageBlob);
+    const detectedBarcodes = await barcodeDetector.detect(imageBitmap);
+    return {
+      barcodes: this.convertDetectedBarcodesToBarcodes(detectedBarcodes),
+    };
   }
 
   async scan(): Promise<ScanResult> {
@@ -189,19 +212,25 @@ export class BarcodeScannerWeb
 
   private handleScannedBarcodes(barcodes: DetectedBarcode[]): void {
     const result: BarcodesScannedEvent = {
-      barcodes: barcodes.map(barcode => ({
-        cornerPoints: [
-          [barcode.cornerPoints[0].x, barcode.cornerPoints[0].y],
-          [barcode.cornerPoints[1].x, barcode.cornerPoints[1].y],
-          [barcode.cornerPoints[2].x, barcode.cornerPoints[2].y],
-          [barcode.cornerPoints[3].x, barcode.cornerPoints[3].y],
-        ],
-        displayValue: barcode.rawValue,
-        rawValue: barcode.rawValue,
-        format: barcode.format.toUpperCase() as BarcodeFormat,
-        valueType: BarcodeValueType.Unknown,
-      })),
+      barcodes: this.convertDetectedBarcodesToBarcodes(barcodes),
     };
     this.notifyListeners(this.eventBarcodesScanned, result);
+  }
+
+  private convertDetectedBarcodesToBarcodes(
+    barcodes: DetectedBarcode[],
+  ): Barcode[] {
+    return barcodes.map(barcode => ({
+      cornerPoints: [
+        [barcode.cornerPoints[0].x, barcode.cornerPoints[0].y],
+        [barcode.cornerPoints[1].x, barcode.cornerPoints[1].y],
+        [barcode.cornerPoints[2].x, barcode.cornerPoints[2].y],
+        [barcode.cornerPoints[3].x, barcode.cornerPoints[3].y],
+      ],
+      displayValue: barcode.rawValue,
+      rawValue: barcode.rawValue,
+      format: barcode.format.toUpperCase() as BarcodeFormat,
+      valueType: BarcodeValueType.Unknown,
+    }));
   }
 }
