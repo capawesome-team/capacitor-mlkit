@@ -63,7 +63,7 @@ public class BarcodeScannerHelper {
         if (barcode.getPhone() != null) {
             result.put("phone", extractPhoneProperties(barcode.getPhone()));
         }
-        result.put("rawValue", barcode.getRawValue() == null ? "" : barcode.getRawValue());
+        result.put("rawValue", barcode.getRawValue());
         if (barcode.getSms() != null) {
             result.put("sms", extractSmsProperties(barcode.getSms()));
         }

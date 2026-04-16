@@ -1,12 +1,36 @@
 # Breaking Changes
 
-This is a comprehensive list of the breaking changes introduced in the major version releases of Capacitor ML Kit Barcode Scanning plugin.
+This is a comprehensive list of the breaking changes introduced in the major version releases.
 
 ## Versions
 
+- [Version 8.x.x](#version-8xx)
 - [Version 7.x.x](#version-7xx)
 - [Version 6.x.x](#version-6xx)
 - [Version 5.x.x](#version-5xx)
+
+## Version 8.x.x
+
+### Capacitor 8
+
+This plugin now supports **Capacitor 8**. The minimum Android SDK version is **24**. Ensure your project meets these requirements before upgrading.
+
+### Error codes
+
+On **Web**, unimplemented methods now throw an error with code `Unimplemented` instead of `Unavailable`.
+
+On **iOS**, the `isGoogleBarcodeScannerModuleAvailable` and `installGoogleBarcodeScannerModule` methods now throw an error with code `Unimplemented` instead of a generic error message.
+
+### Variables
+
+- On Android, the `androidxCameraCamera2Version` variable has been updated to `1.5.2`.
+- On Android, the `androidxCameraCoreVersion` variable has been updated to `1.5.2`.
+- On Android, the `androidxCameraLifecycleVersion` variable has been updated to `1.5.2`.
+- On Android, the `androidxCameraViewVersion` variable has been updated to `1.5.2`.
+
+### `rawValue` property
+
+The `rawValue` property in the `Barcode` interface is now optional since a raw value is only available if the barcode is encoded in the UTF-8 character set. Previously, if the barcode was encoded in a different character set, the `rawValue` property was an empty string.
 
 ## Version 7.x.x
 

@@ -24,6 +24,8 @@ import androidx.camera.core.CameraSelector;
 import androidx.camera.core.ImageAnalysis;
 import androidx.camera.core.ImageProxy;
 import androidx.camera.core.Preview;
+import androidx.camera.core.resolutionselector.ResolutionSelector;
+import androidx.camera.core.resolutionselector.ResolutionStrategy;
 import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.camera.view.PreviewView;
 import androidx.core.content.ContextCompat;
@@ -108,10 +110,15 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
         BarcodeScannerOptions options = buildBarcodeScannerOptions(scanSettings);
         barcodeScannerInstance = BarcodeScanning.getClient(options);
 
+        ResolutionSelector resolutionSelector = new ResolutionSelector.Builder()
+            .setResolutionStrategy(new ResolutionStrategy(scanSettings.resolution, ResolutionStrategy.FALLBACK_RULE_CLOSEST_LOWER))
+            .build();
+
         ImageAnalysis imageAnalysis = new ImageAnalysis.Builder()
             .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
-            .setTargetResolution(scanSettings.resolution)
+            .setResolutionSelector(resolutionSelector)
             .build();
+
         imageAnalysis.setAnalyzer(ContextCompat.getMainExecutor(plugin.getContext()), this);
 
         ListenableFuture<ProcessCameraProvider> cameraProviderFuture = ProcessCameraProvider.getInstance(plugin.getContext());
@@ -427,7 +434,15 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
 
     private GmsBarcodeScannerOptions buildGmsBarcodeScannerOptions(ScanSettings scanSettings) {
         int[] formats = scanSettings.formats.length == 0 ? new int[] { Barcode.FORMAT_ALL_FORMATS } : scanSettings.formats;
-        GmsBarcodeScannerOptions options = new GmsBarcodeScannerOptions.Builder().setBarcodeFormats(formats[0], formats).build();
+        boolean autoZoom = scanSettings.autoZoom;
+        GmsBarcodeScannerOptions options;
+
+        if (autoZoom) {
+            options = new GmsBarcodeScannerOptions.Builder().setBarcodeFormats(formats[0], formats).enableAutoZoom().build();
+        } else {
+            options = new GmsBarcodeScannerOptions.Builder().setBarcodeFormats(formats[0], formats).build();
+        }
+
         return options;
     }
 

@@ -96,6 +96,14 @@ public protocol BarcodeScannerViewDelegate {
                 // and after adding the device input to the capture session.
                 self.configureCaptureDevice(captureDevice)
 
+                // Allow camera usage while in iPad multitasking if enableMultitaskingCameraAccess setting is enabled
+                if #available(iOS 16.0, *) {
+                    if settings.enableMultitaskingCameraAccess
+                        && captureSession.isMultitaskingCameraAccessSupported {
+                        captureSession.isMultitaskingCameraAccessEnabled = true
+                    }
+                }
+
                 captureSession.commitConfiguration()
                 self.captureSession = captureSession
             } catch {

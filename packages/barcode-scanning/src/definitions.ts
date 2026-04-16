@@ -231,6 +231,15 @@ export interface StartScanOptions {
    */
   resolution?: Resolution;
   /**
+   * Allow camera usage on iPad while in multitasking mode.
+   *
+   * Only available on iOS (16.0+).
+   *
+   * @since 7.5.0
+   * @default false
+   */
+  enableMultitaskingCameraAccess?: boolean;
+  /**
    * The HTML video element to use for the camera preview.
    *
    * Only available on web.
@@ -282,6 +291,12 @@ export interface ScanOptions {
    * @since 0.0.1
    */
   formats?: BarcodeFormat[];
+  /**
+   * Toggle the auto zoom feature.
+   *
+   * @since 7.4.0
+   */
+  autoZoom?: boolean;
 }
 
 /**
@@ -544,14 +559,14 @@ export interface Barcode {
   /**
    * The barcode value in a machine readable format.
    *
-   * This value is only available when the barcode is encoded
+   * This value is only available if the barcode is encoded
    * in the UTF-8 character set. Otherwise, the `bytes` property
-   * should be used and this property will be an empty string.
+   * should be used.
    *
    * @since 0.0.1
    * @example "CapacitorJS"
    */
-  rawValue: string;
+  rawValue?: string;
   /**
    * A sms message from a 'SMS:'.
    *

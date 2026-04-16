@@ -39,12 +39,14 @@ public class BarcodeScannerPlugin: CAPPlugin {
         let lensFacing = lensFacingOption == "FRONT" ? AVCaptureDevice.Position.front : AVCaptureDevice.Position.back
         let resolutionOption = call.getInt("resolution", 1)
         let resolution = BarcodeScannerHelper.convertIntToCapturePreset(resolutionOption)
+        let enableMultitaskingCameraAccess = call.getBool("enableMultitaskingCameraAccess") ?? false
 
         let settings = ScanSettings()
         settings.showUIElements = false
         settings.formats = formats
         settings.lensFacing = lensFacing
         settings.resolution = resolution
+        settings.enableMultitaskingCameraAccess = enableMultitaskingCameraAccess
 
         self.implementation?.requestCameraPermissionIfNotDetermined(completion: { error in
             if let error = error {
@@ -101,11 +103,13 @@ public class BarcodeScannerPlugin: CAPPlugin {
         let formats = BarcodeScannerHelper.convertStringsToBarcodeScannerFormats(formatsOption ?? [])
         let lensFacingOption = call.getString("lensFacing", "BACK")
         let lensFacing = lensFacingOption == "FRONT" ? AVCaptureDevice.Position.front : AVCaptureDevice.Position.back
+        let enableMultitaskingCameraAccess = call.getBool("enableMultitaskingCameraAccess") ?? false
 
         let settings = ScanSettings()
         settings.showUIElements = true
         settings.formats = formats
         settings.lensFacing = lensFacing
+        settings.enableMultitaskingCameraAccess = enableMultitaskingCameraAccess
 
         self.implementation?.requestCameraPermissionIfNotDetermined(completion: { error in
             if let error = error {
@@ -219,11 +223,11 @@ public class BarcodeScannerPlugin: CAPPlugin {
     }
 
     @objc func isGoogleBarcodeScannerModuleAvailable(_ call: CAPPluginCall) {
-        call.reject("Not available on iOS")
+        rejectCallAsUnimplemented(call)
     }
 
     @objc func installGoogleBarcodeScannerModule(_ call: CAPPluginCall) {
-        call.reject("Not available on iOS")
+        rejectCallAsUnimplemented(call)
     }
 
     @objc override public func checkPermissions(_ call: CAPPluginCall) {
@@ -236,6 +240,14 @@ public class BarcodeScannerPlugin: CAPPlugin {
         AVCaptureDevice.requestAccess(for: .video) { _ in
             self.checkPermissions(call)
         }
+    }
+
+    private func rejectCallAsUnavailable(_ call: CAPPluginCall) {
+        call.unavailable("This method is not available on this platform.")
+    }
+
+    private func rejectCallAsUnimplemented(_ call: CAPPluginCall) {
+        call.unimplemented("This method is not available on this platform.")
     }
 
     func notifyBarcodeScannedListener(barcode: Barcode, imageSize: CGSize, videoOrientation: AVCaptureVideoOrientation?) {
