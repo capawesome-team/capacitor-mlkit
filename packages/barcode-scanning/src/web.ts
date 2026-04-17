@@ -45,7 +45,7 @@ export class BarcodeScannerWeb
 
   async startScan(options?: StartScanOptions): Promise<void> {
     if (!this._isSupported) {
-      throw this.createUnimplementedException();
+      throw this.createUnavailableException();
     }
     if (!options?.videoElement) {
       throw new Error(this.errorVideoElementMissing);
@@ -78,7 +78,7 @@ export class BarcodeScannerWeb
 
   async stopScan(): Promise<void> {
     if (!this._isSupported) {
-      throw this.createUnimplementedException();
+      throw this.createUnavailableException();
     }
     if (this.intervalId) {
       clearInterval(this.intervalId);
@@ -98,7 +98,7 @@ export class BarcodeScannerWeb
     options: ReadBarcodesFromImageOptions,
   ): Promise<ReadBarcodesFromImageResult> {
     if (!this._isSupported) {
-      throw this.createUnimplementedException();
+      throw this.createUnavailableException();
     }
     if (!options.blob) {
       throw new Error(this.errorBlobMissing);
@@ -199,6 +199,13 @@ export class BarcodeScannerWeb
         camera: 'denied',
       };
     }
+  }
+
+  private createUnavailableException(): CapacitorException {
+    return new CapacitorException(
+      'This plugin method is not available on this platform.',
+      ExceptionCode.Unavailable,
+    );
   }
 
   private createUnimplementedException(): CapacitorException {
