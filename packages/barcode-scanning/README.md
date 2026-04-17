@@ -398,8 +398,6 @@ readBarcodesFromImage(options: ReadBarcodesFromImageOptions) => Promise<ReadBarc
 
 Read barcodes from an image.
 
-Only available on Android and iOS.
-
 | Param         | Type                                                                                  |
 | ------------- | ------------------------------------------------------------------------------------- |
 | **`options`** | <code><a href="#readbarcodesfromimageoptions">ReadBarcodesFromImageOptions</a></code> |
@@ -926,8 +924,9 @@ Remove all listeners for this plugin.
 
 | Prop          | Type                         | Description                                                                              | Since |
 | ------------- | ---------------------------- | ---------------------------------------------------------------------------------------- | ----- |
+| **`blob`**    | <code>Blob</code>            | The blob instance of the image file. Only available on Web.                              | 7.4.0 |
 | **`formats`** | <code>BarcodeFormat[]</code> | Improve the speed of the barcode scanner by configuring the barcode formats to scan for. | 0.0.1 |
-| **`path`**    | <code>string</code>          | The local path to the image file.                                                        | 0.0.1 |
+| **`path`**    | <code>string</code>          | The local path to the image file. Only available on Android and iOS.                     | 0.0.1 |
 
 
 #### ScanResult

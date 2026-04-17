@@ -16,8 +16,6 @@ export interface BarcodeScannerPlugin {
   /**
    * Read barcodes from an image.
    *
-   * Only available on Android and iOS.
-   *
    * @since 0.0.1
    */
   readBarcodesFromImage(
@@ -253,6 +251,14 @@ export interface StartScanOptions {
  */
 export interface ReadBarcodesFromImageOptions {
   /**
+   * The blob instance of the image file.
+   *
+   * Only available on Web.
+   *
+   * @since 7.4.0
+   */
+  blob?: Blob;
+  /**
    * Improve the speed of the barcode scanner by configuring
    * the barcode formats to scan for.
    *
@@ -262,9 +268,11 @@ export interface ReadBarcodesFromImageOptions {
   /**
    * The local path to the image file.
    *
+   * Only available on Android and iOS.
+   *
    * @since 0.0.1
    */
-  path: string;
+  path?: string;
 }
 
 /**
