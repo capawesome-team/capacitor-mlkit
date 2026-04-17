@@ -98,7 +98,7 @@ export class BarcodeScannerWeb
     options: ReadBarcodesFromImageOptions,
   ): Promise<ReadBarcodesFromImageResult> {
     if (!this._isSupported) {
-      throw this.createUnavailableException();
+      throw this.createUnimplementedException();
     }
     if (!options.blob) {
       throw new Error(this.errorBlobMissing);
