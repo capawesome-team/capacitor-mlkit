@@ -43,8 +43,6 @@ npm install @capacitor-mlkit/translation
 npx cap sync
 ```
 
-**Attention**: This plugin **only supports CocoaPods** for iOS dependency management. Swift Package Manager (SPM) is not supported for the ML Kit SDK, see [this comment](https://github.com/googlesamples/mlkit/issues/180#issuecomment-1298964099).
-
 ### Android
 
 #### Variables
@@ -64,6 +62,11 @@ Make sure to set the deployment target in your `ios/App/Podfile` to at least `15
 ```ruby
 platform :ios, '15.5'
 ```
+
+#### Swift Package Manager
+
+> [!WARNING]
+> SPM support is **experimental**. The [ML Kit SDKs do not officially support SPM](https://github.com/googlesamples/mlkit/issues/180#issuecomment-1298964099), so this plugin resolves ML Kit via the unofficial [`d-date/google-mlkit-swiftpm`](https://github.com/d-date/google-mlkit-swiftpm) package. For production, CocoaPods is recommended.
 
 ## Configuration
 
