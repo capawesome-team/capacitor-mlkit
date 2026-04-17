@@ -17,7 +17,8 @@ on:
 env:
   NODE_VERSION: 20
   JAVA_VERSION: 21
-  TURBO_SCM_BASE: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || github.event.before }}
+  TURBO_SCM_BASE: ${{ github.event_name == 'pull_request' &&
+    github.event.pull_request.base.sha || github.event.before }}
 
 jobs:
   build-android:
@@ -69,6 +70,12 @@ jobs:
       - name: Install all CocoaPods dependencies
         if: github.ref == 'refs/heads/main'
         run: npm run ios:pod:install
+      - name: Install SPM dependencies of packages affected by changes
+        if: github.ref != 'refs/heads/main'
+        run: npm run affected:ios:spm:install
+      - name: Install all SPM dependencies
+        if: github.ref == 'refs/heads/main'
+        run: npm run ios:spm:install
       - name: Build packages affected by changes
         if: github.ref != 'refs/heads/main'
         run: npm run affected:verify:ios
@@ -103,7 +110,7 @@ jobs:
   lint:
     name: Lint
     runs-on: macos-15
-    needs: [build-android, build-ios, build-web]
+    needs: [ build-android, build-ios, build-web ]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -124,7 +131,7 @@ jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
-    needs: [lint]
+    needs: [ lint ]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
