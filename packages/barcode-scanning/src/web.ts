@@ -36,7 +36,7 @@ export class BarcodeScannerWeb
 {
   private readonly _isSupported = 'BarcodeDetector' in window;
   private readonly errorVideoElementMissing = 'videoElement must be provided.';
-  private readonly errorPathMissing = 'path must be provided.';
+  private readonly errorBlobMissing = 'blob must be provided.';
   private readonly eventBarcodesScanned = 'barcodesScanned';
 
   private intervalId: number | undefined;
@@ -100,8 +100,8 @@ export class BarcodeScannerWeb
     if (!this._isSupported) {
       throw this.createUnavailableException();
     }
-    if (!options.path) {
-      throw new Error(this.errorPathMissing);
+    if (!options.blob) {
+      throw new Error(this.errorBlobMissing);
     }
     const formats = options.formats?.map(
       format => format.toLowerCase() as BarcodeDetectorFormat,
@@ -109,9 +109,7 @@ export class BarcodeScannerWeb
     const barcodeDetector = new BarcodeDetector(
       formats?.length ? { formats } : undefined,
     );
-    const fetchResponse = await fetch(options.path);
-    const imageBlob = await fetchResponse.blob();
-    const imageBitmap = await createImageBitmap(imageBlob);
+    const imageBitmap = await createImageBitmap(options.blob);
     const detectedBarcodes = await barcodeDetector.detect(imageBitmap);
     return {
       barcodes: this.convertDetectedBarcodesToBarcodes(detectedBarcodes),
