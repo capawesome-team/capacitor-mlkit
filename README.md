@@ -1,6 +1,3 @@
-> [!WARNING]
-> These plugins do **not** support Swift Package Manager (SPM) because the underlying [ML Kit SDKs do not support SPM](https://github.com/googlesamples/mlkit/issues/180#issuecomment-1298964099) (see [#186](https://github.com/capawesome-team/capacitor-mlkit/issues/186)).
-
 <br />
 <div align="center">
   <img src="https://avatars.githubusercontent.com/u/105555861" width="128" height="128" />
