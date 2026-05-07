@@ -95,6 +95,7 @@ If needed, you can define the following project variable in your app’s `variab
 - `$androidxCameraCoreVersion` version of `androidx.camera:camera-core` (default: `1.5.2`)
 - `$androidxCameraLifecycleVersion` version of `androidx.camera:camera-lifecycle` (default: `1.5.2`)
 - `$androidxCameraViewVersion` version of `androidx.camera:camera-view` (default: `1.5.2`)
+- `$listenableFutureVersion` version of `com.google.guava:listenablefuture` (default: `1.0`)
 - `$mlkitBarcodeScanningVersion` version of `com.google.mlkit:barcode-scanning` (default: `17.3.0`)
 - `$playServicesCodeScannerVersion` version of `com.google.android.gms:play-services-code-scanner` (default: `16.1.0`)
 
