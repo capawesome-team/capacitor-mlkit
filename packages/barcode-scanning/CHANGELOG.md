@@ -1,5 +1,15 @@
 # Changelog
 
+## 8.1.0
+
+### Minor Changes
+
+- [`dc954e2aaa8e129d868c04383ce19db2642617ca`](https://github.com/capawesome-team/capacitor-mlkit/commit/dc954e2aaa8e129d868c04383ce19db2642617ca) ([#329](https://github.com/capawesome-team/capacitor-mlkit/pull/329)): feat(web): support `readBarcodesFromImage(...)` method
+
+### Patch Changes
+
+- [`b98ddc8dfe57bd9ff805bb48fd1bc5afdef95106`](https://github.com/capawesome-team/capacitor-mlkit/commit/b98ddc8dfe57bd9ff805bb48fd1bc5afdef95106) ([#332](https://github.com/capawesome-team/capacitor-mlkit/pull/332)): fix(barcode-scanning): add missing `listenablefuture` dependency
+
 ## 8.0.1
 
 ### Patch Changes
