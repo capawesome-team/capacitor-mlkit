@@ -7,6 +7,7 @@ ext {
     androidxCameraCoreVersion = project.hasProperty('androidxCameraCoreVersion') ? rootProject.ext.androidxCameraCoreVersion : '1.5.2'
     androidxCameraLifecycleVersion = project.hasProperty('androidxCameraLifecycleVersion') ? rootProject.ext.androidxCameraLifecycleVersion : '1.5.2'
     androidxCameraViewVersion = project.hasProperty('androidxCameraViewVersion') ? rootProject.ext.androidxCameraViewVersion : '1.5.2'
+    listenableFutureVersion = project.hasProperty('listenableFutureVersion') ? rootProject.ext.listenableFutureVersion : '1.0'
     mlkitBarcodeScanningVersion = project.hasProperty('mlkitBarcodeScanningVersion') ? rootProject.ext.mlkitBarcodeScanningVersion : '17.3.0'
     playServicesCodeScannerVersion = project.hasProperty('playServicesCodeScannerVersion') ? rootProject.ext.playServicesCodeScannerVersion : '16.1.0'
 }
@@ -62,6 +63,7 @@ dependencies {
     implementation "androidx.camera:camera-core:$androidxCameraCoreVersion"
     implementation "androidx.camera:camera-lifecycle:$androidxCameraLifecycleVersion"
     implementation "androidx.camera:camera-view:$androidxCameraViewVersion"
+    implementation "com.google.guava:listenablefuture:$listenableFutureVersion"
     implementation "com.google.mlkit:barcode-scanning:$mlkitBarcodeScanningVersion"
     implementation "com.google.android.gms:play-services-code-scanner:$playServicesCodeScannerVersion"
     testImplementation "junit:junit:$junitVersion"
