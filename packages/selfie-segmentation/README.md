@@ -74,7 +74,7 @@ A working example can be found here: [robingenz/capacitor-mlkit-plugin-demo](htt
 
 | Android                                                                                                                           | iOS                                                                                                                               |
 | --------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| <img src="https://github.com/capawesome-team/capacitor-mlkit/assets/13857929/1cef9ea9-570e-47d9-a751-d778535ffdff" width="324" /> | <img src="https://github.com/capawesome-team/capacitor-mlkit/assets/13857929/b9caa88c-31b9-4a25-a731-961625207af4" width="324" /> |
+| <img src="https://github.com/capawesome-team/capacitor-mlkit/assets/13857929/1cef9ea9-570e-47d9-a751-d778535ffdff" width="324" alt="Android demo of the Selfie Segmentation plugin" /> | <img src="https://github.com/capawesome-team/capacitor-mlkit/assets/13857929/b9caa88c-31b9-4a25-a731-961625207af4" width="324" alt="iOS demo of the Selfie Segmentation plugin" /> |
 
 ## Usage
 

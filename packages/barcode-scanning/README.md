@@ -39,7 +39,7 @@ A working example can be found here: [https://github.com/robingenz/capacitor-mlk
 
 | Android                                                                                                                         |
 | ------------------------------------------------------------------------------------------------------------------------------- |
-| <img src="https://user-images.githubusercontent.com/13857929/224423595-b7e97595-8b2b-4cd7-b500-b30e10e11dfc.gif" width="324" /> |
+| <img src="https://user-images.githubusercontent.com/13857929/224423595-b7e97595-8b2b-4cd7-b500-b30e10e11dfc.gif" width="324" alt="Android demo of the ML Kit Barcode Scanning plugin" /> |
 
 ## Guides
 
