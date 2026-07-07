@@ -1,4 +1,4 @@
-# @capacitor-mlkit/translation
+# Capacitor ML Kit Translation Plugin
 
 Unofficial Capacitor plugin for [ML Kit Translation](https://developers.google.com/ml-kit/language/translation).[^1]
 
