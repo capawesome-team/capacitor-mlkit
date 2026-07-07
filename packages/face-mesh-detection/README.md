@@ -1,4 +1,4 @@
-# @capacitor-mlkit/face-mesh-detection
+# Capacitor ML Kit Face Mesh Detection Plugin
 
 Unofficial Capacitor plugin for [ML Kit Face Mesh Detection](https://developers.google.com/ml-kit/vision/face-mesh-detection).[^1]
 

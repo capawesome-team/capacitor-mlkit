@@ -1,4 +1,4 @@
-# @capacitor-mlkit/face-detection
+# Capacitor ML Kit Face Detection Plugin
 
 Unofficial Capacitor plugin for [ML Kit Face Detection](https://developers.google.com/ml-kit/vision/face-detection).[^1]
 

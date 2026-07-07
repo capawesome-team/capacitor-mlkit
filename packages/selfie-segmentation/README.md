@@ -1,4 +1,4 @@
-# @capacitor-mlkit/selfie-segmentation
+# Capacitor ML Kit Selfie Segmentation Plugin
 
 Unofficial Capacitor plugin for [ML Kit Selfie Segmentation](https://developers.google.com/ml-kit/vision/selfie-segmentation).[^1]
 

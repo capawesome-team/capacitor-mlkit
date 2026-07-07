@@ -1,4 +1,4 @@
-# @capacitor-mlkit/subject-segmentation
+# Capacitor ML Kit Subject Segmentation Plugin
 
 Unofficial Capacitor plugin for [ML Kit Subject Segmentation](https://developers.google.com/ml-kit/vision/subject-segmentation).[^1]
 

@@ -1,4 +1,4 @@
-# @capacitor-mlkit/document-scanner
+# Capacitor ML Kit Document Scanner Plugin
 
 Unofficial Capacitor plugin for [ML Kit Document Scanner](https://developers.google.com/ml-kit/vision/doc-scanner).[^1]
 
