@@ -62,7 +62,7 @@ const startScan = async () => {
 
 ### Torch support
 
-All the methods related to the torch have been moved into a separate [Torch](https://capawesome.io/plugins/torch/) plugin. If you want to use the torch, just install the `@capawesome/capacitor-torch` package:
+All the methods related to the torch have been moved into a separate [Torch](https://capawesome.io/docs/sdks/capacitor/torch/) plugin. If you want to use the torch, just install the `@capawesome/capacitor-torch` package:
 
 ```bash
 npm install @capawesome/capacitor-torch

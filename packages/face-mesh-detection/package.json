@@ -32,7 +32,7 @@
       "url": "https://opencollective.com/capawesome"
     }
   ],
-  "homepage": "https://capawesome.io/plugins/mlkit/face-mesh-detection/",
+  "homepage": "https://capawesome.io/docs/sdks/capacitor/mlkit/face-mesh-detection/",
   "keywords": [
     "capacitor",
     "plugin",
