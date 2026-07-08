@@ -8,9 +8,14 @@ Unofficial Capacitor plugin for [ML Kit Face Mesh Detection](https://developers.
   </a>
 </div>
 
-## Newsletter
+## Use Cases
 
-Stay up to date with the latest news and updates about the Capawesome, Capacitor, and Ionic ecosystem by subscribing to our [Capawesome Newsletter](https://cloud.capawesome.io/newsletter/).
+The Face Mesh Detection plugin is typically used whenever an app needs detailed facial geometry, for example:
+
+- **Face filters and effects**: Use the 468 3D face mesh points and triangle surfaces to align virtual makeup, masks, or other effects with a face.
+- **Facial feature analysis**: Work with the contours of the face oval, eyebrows, eyes, lips, and nose bridge.
+- **Fast face localization**: Use the `BoundingBoxOnly` use case to quickly get the bounding boxes of detected faces.
+- **Selfie tools**: Analyze up to 2 faces in detail using the full face mesh information.
 
 ## Compatibility
 
@@ -60,6 +65,12 @@ No configuration required for this plugin.
 A working example can be found here: [robingenz/capacitor-mlkit-plugin-demo](https://github.com/robingenz/capacitor-mlkit-plugin-demo)
 
 ## Usage
+
+The following example shows how to detect face meshes in an image.
+
+### Detect face meshes in an image
+
+Detect face meshes in an image at a local path. Choose the `BoundingBoxOnly` use case for fast bounding box detection or the `FaceMesh` use case to also receive the 468 3D face mesh points and triangle information. Only available on Android:
 
 ```typescript
 import { FaceMeshDetection, UseCase } from '@capacitor-mlkit/face-mesh-detection';
@@ -222,6 +233,34 @@ Represents a triangle with 3 generic points.
 
 </docgen-api>
 
+## FAQ
+
+### Which platforms are supported by this plugin?
+
+The `processImage(...)` method is only available on Android. iOS and Web are not supported by the underlying ML Kit Face Mesh Detection SDK.
+
+### What is the difference between the `BoundingBoxOnly` and `FaceMesh` use cases?
+
+With `BoundingBoxOnly`, the result only contains a valid bounding box for each detected face, which is faster. With `FaceMesh` (the default), the result additionally contains a group of 468 3D face mesh points, contours, and triangle information, but it detects at most 2 faces and is slower.
+
+### What exactly is a face mesh point?
+
+A face mesh point is a 3D point on a detected face with an index between 0 and 467, where each index always refers to the same fixed position on the face. The `x` and `y` values are pixel locations in the input image, while the `z` value describes the distance to the camera: the smaller the value, the closer that point is to the camera.
+
+### What is the difference between this plugin and the Face Detection plugin?
+
+The [ML Kit Face Detection](https://capawesome.io/docs/sdks/capacitor/mlkit/face-detection/) plugin detects faces with bounding boxes, landmarks, contours, and classifications such as smiling probability, and works on Android and iOS. This plugin returns a much denser mesh of 468 3D points and triangle information for detailed facial geometry, but is only available on Android.
+
+### Can I use this plugin with Ionic, React, Vue or Angular?
+
+Yes, the plugin is framework-agnostic. It works in any Capacitor app regardless of the web framework, including Ionic with Angular, React, or Vue, as well as plain JavaScript projects.
+
+## Related Plugins
+
+- [ML Kit Face Detection](https://capawesome.io/docs/sdks/capacitor/mlkit/face-detection/): Detect faces with landmarks, contours, and classifications in images.
+- [ML Kit Selfie Segmentation](https://capawesome.io/docs/sdks/capacitor/mlkit/selfie-segmentation/): Segment selfies from the background with ML Kit Selfie Segmentation.
+- [ML Kit Subject Segmentation](https://capawesome.io/docs/sdks/capacitor/mlkit/subject-segmentation/): Separate subjects from the background with ML Kit Subject Segmentation.
+
 ## Terms & Privacy
 
 This plugin uses the [Google ML Kit](https://developers.google.com/ml-kit):
@@ -229,6 +268,10 @@ This plugin uses the [Google ML Kit](https://developers.google.com/ml-kit):
 - [Terms & Privacy](https://developers.google.com/ml-kit/terms)
 - [Android Data Disclosure](https://developers.google.com/ml-kit/android-data-disclosure)
 - [iOS Data Disclosure](https://developers.google.com/ml-kit/ios-data-disclosure)
+
+## Newsletter
+
+Stay up to date with the latest news and updates about the Capawesome, Capacitor, and Ionic ecosystem by subscribing to our [Capawesome Newsletter](https://cloud.capawesome.io/newsletter/).
 
 ## Changelog
 

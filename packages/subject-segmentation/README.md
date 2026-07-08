@@ -8,9 +8,13 @@ Unofficial Capacitor plugin for [ML Kit Subject Segmentation](https://developers
   </a>
 </div>
 
-## Newsletter
+## Use Cases
 
-Stay up to date with the latest news and updates about the Capawesome, Capacitor, and Ionic ecosystem by subscribing to our [Capawesome Newsletter](https://cloud.capawesome.io/newsletter/).
+The Subject Segmentation plugin is typically used to separate the subject of a picture from its background, for example:
+
+- **Background removal**: Remove or replace the background of a photo, for example for product images or portraits.
+- **Photo editing**: Build editing features that combine the segmented image with new backgrounds or effects.
+- **Sticker creation**: Turn photos into cutouts or stickers that users can share in chats and posts.
 
 ## Compatibility
 
@@ -46,15 +50,9 @@ npx cap sync
 
 This plugin requires a minimum API level of 24.
 
-#### Permissions
+#### Metadata
 
-This API requires the following permissions be added to your `AndroidManifest.xml` before the `application` tag:
-
-```xml
-<uses-permission android:name="android.permission.CAMERA" />
-```
-
-You also need to add the following meta data **in** the `application` tag in your `AndroidManifest.xml`:
+You need to add the following meta data **in** the `application` tag in your `AndroidManifest.xml`:
 
 ```xml
 <meta-data android:name="com.google.mlkit.vision.DEPENDENCIES" android:value="subject_segment"/>
@@ -62,6 +60,12 @@ You also need to add the following meta data **in** the `application` tag in you
 ```
 
 ## Usage
+
+The following example shows how to segment a subject from the background.
+
+### Segment a subject from the background
+
+Pass the local path of an image file to `processImage(...)` to perform the segmentation. You can optionally scale the image using the `width` and `height` options and adjust the confidence threshold. The result contains the path to the segmented image file along with its width and height:
 
 ```typescript
 import { SubjectSegmentation } from '@capacitor-mlkit/subject-segmentation';
@@ -250,6 +254,38 @@ Only available on Android.
 
 </docgen-api>
 
+## FAQ
+
+### What are the requirements to use this plugin on Android?
+
+The plugin requires a minimum Android API level of 24. You also need to add the `com.google.mlkit.vision.DEPENDENCIES` meta data to your `AndroidManifest.xml` as described in the [Installation](#installation) section.
+
+### Why do I need the Google Subject Segmentation module on Android?
+
+On Android, the segmentation is performed by the Google Subject Segmentation module. Use the `isGoogleSubjectSegmentationModuleAvailable()` method to check if the module is available on the device and the `installGoogleSubjectSegmentationModule()` method to install it if it is not.
+
+### How do I know when the module installation is complete?
+
+The `installGoogleSubjectSegmentationModule()` method only starts the installation. Add a listener for the `googleSubjectSegmentationModuleInstallProgress` event to get notified about the current state of the installation and its progress in percent.
+
+### How can I adjust the accuracy of the segmentation?
+
+You can set the confidence threshold using the `confidence` option of the `processImage(...)` method. The default value is `0.9`. Experiment with different values to find the best result for your images.
+
+### How can I scale the image before it is processed?
+
+Use the `width` and `height` options of the `processImage(...)` method to scale the image. If only one of the two values is given, the aspect ratio of the image is respected.
+
+### Can I use this plugin with Ionic, React, Vue or Angular?
+
+Yes, the plugin is framework-agnostic. It works in any Capacitor app regardless of the web framework, including Ionic with Angular, React, or Vue, as well as plain JavaScript projects.
+
+## Related Plugins
+
+- [Selfie Segmentation](https://capawesome.io/docs/sdks/capacitor/mlkit/selfie-segmentation/): Unofficial Capacitor plugin for ML Kit Selfie Segmentation.
+- [Face Detection](https://capawesome.io/docs/sdks/capacitor/mlkit/face-detection/): Unofficial Capacitor plugin for ML Kit Face Detection.
+- [Face Mesh Detection](https://capawesome.io/docs/sdks/capacitor/mlkit/face-mesh-detection/): Unofficial Capacitor plugin for ML Kit Face Mesh Detection.
+
 ## Terms & Privacy
 
 This plugin uses the [Google ML Kit](https://developers.google.com/ml-kit):
@@ -257,6 +293,10 @@ This plugin uses the [Google ML Kit](https://developers.google.com/ml-kit):
 - [Terms & Privacy](https://developers.google.com/ml-kit/terms)
 - [Android Data Disclosure](https://developers.google.com/ml-kit/android-data-disclosure)
 - [iOS Data Disclosure](https://developers.google.com/ml-kit/ios-data-disclosure)
+
+## Newsletter
+
+Stay up to date with the latest news and updates about the Capawesome, Capacitor, and Ionic ecosystem by subscribing to our [Capawesome Newsletter](https://cloud.capawesome.io/newsletter/).
 
 ## Changelog
 

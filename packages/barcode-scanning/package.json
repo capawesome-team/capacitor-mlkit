@@ -1,7 +1,7 @@
 {
   "name": "@capacitor-mlkit/barcode-scanning",
   "version": "8.1.0",
-  "description": "Capacitor plugin for ML Kit Barcode Scanning.",
+  "description": "Capacitor plugin for ML Kit Barcode Scanning on Android, iOS, and Web.",
   "main": "dist/plugin.cjs.js",
   "module": "dist/esm/index.js",
   "types": "dist/esm/index.d.ts",
@@ -36,7 +36,15 @@
   "keywords": [
     "capacitor",
     "plugin",
-    "native"
+    "native",
+    "capacitor-plugin",
+    "barcode scanner",
+    "barcode scanning",
+    "barcode reader",
+    "qr code scanner",
+    "qr code reader",
+    "code scanner",
+    "mlkit"
   ],
   "scripts": {
     "verify": "npm run verify:ios && npm run verify:android && npm run verify:web",

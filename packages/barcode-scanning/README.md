@@ -20,9 +20,15 @@ Unofficial Capacitor plugin for [ML Kit Barcode Scanning](https://developers.goo
 
 For a complete list of **supported barcodes**, see [BarcodeFormat](#barcodeformat).
 
-## Newsletter
+## Use Cases
 
-Stay up to date with the latest news and updates about the Capawesome, Capacitor, and Ionic ecosystem by subscribing to our [Capawesome Newsletter](https://cloud.capawesome.io/newsletter/).
+The Barcode Scanning plugin is typically used whenever an app needs to read a barcode or QR code with the camera, for example:
+
+- **QR code scanning**: Read QR codes containing URLs, Wi-Fi credentials, contact details, or calendar events.
+- **Product lookup and inventory**: Scan EAN and UPC product barcodes in retail, warehouse, or inventory apps.
+- **Ticket and access validation**: Check in visitors by scanning tickets or badges encoded as Aztec, PDF417, or Data Matrix codes.
+- **Identity capture**: Read driver licenses and ID cards that encode their data in a barcode.
+- **Importing barcodes from images**: Read barcodes from existing photos, for example a screenshot of a QR code.
 
 ## Compatibility
 
@@ -146,13 +152,14 @@ A working example can be found here: [robingenz/capacitor-mlkit-plugin-demo](htt
 
 ## Usage
 
+The following examples show how to scan barcodes with your own UI or the ready-to-use interface, control the torch and zoom, install the Google Barcode Scanner module, and manage camera permissions.
+
+### Scan barcodes with your own UI
+
+The `startScan(...)` method renders the camera behind the WebView so that you can build your own scanning UI on top of it. Add a listener to be notified about scanned barcodes and call `stopScan()` when you are done:
+
 ```typescript
-import {
-  BarcodeScanner,
-  BarcodeFormat,
-  LensFacing,
-} from '@capacitor-mlkit/barcode-scanning';
-import { Torch } from '@capawesome/capacitor-torch';
+import { BarcodeScanner } from '@capacitor-mlkit/barcode-scanning';
 
 const startScan = async () => {
   // The camera is visible behind the WebView, so that you can customize the UI in the WebView.
@@ -183,6 +190,14 @@ const stopScan = async () => {
   // Stop the barcode scanner
   await BarcodeScanner.stopScan();
 };
+```
+
+### Scan a single barcode
+
+If you only need one result, remove the listener and stop the scan as soon as the first barcode is scanned:
+
+```typescript
+import { BarcodeScanner } from '@capacitor-mlkit/barcode-scanning';
 
 const scanSingleBarcode = async () => {
   return new Promise(async resolve => {
@@ -203,6 +218,14 @@ const scanSingleBarcode = async () => {
     await BarcodeScanner.startScan();
   });
 };
+```
+
+### Scan with the ready-to-use interface
+
+The `scan(...)` method opens a ready-to-use scanning interface without any WebView customization. Only available on Android and iOS. On Android, this requires the Google Barcode Scanner module (see [below](#install-the-google-barcode-scanner-module)), but no camera permission:
+
+```typescript
+import { BarcodeScanner, BarcodeFormat } from '@capacitor-mlkit/barcode-scanning';
 
 const scan = async () => {
   const { barcodes } = await BarcodeScanner.scan({
@@ -211,11 +234,27 @@ const scan = async () => {
   });
   return barcodes;
 };
+```
+
+### Check if the barcode scanner is supported
+
+Check whether the device has a camera that can be used for barcode scanning:
+
+```typescript
+import { BarcodeScanner } from '@capacitor-mlkit/barcode-scanning';
 
 const isSupported = async () => {
   const { supported } = await BarcodeScanner.isSupported();
   return supported;
 };
+```
+
+### Control the torch
+
+Use the [Capacitor Torch](https://capawesome.io/docs/sdks/capacitor/torch/) plugin to switch the flashlight on and off during a scan session:
+
+```typescript
+import { Torch } from '@capawesome/capacitor-torch';
 
 const enableTorch = async () => {
   await Torch.enable();
@@ -238,6 +277,14 @@ const isTorchAvailable = async () => {
   const { available } = await Torch.isAvailable();
   return available;
 };
+```
+
+### Control the zoom
+
+Set and read the zoom ratio of the camera. These methods are only available on Android and iOS:
+
+```typescript
+import { BarcodeScanner } from '@capacitor-mlkit/barcode-scanning';
 
 const setZoomRatio = async () => {
   await BarcodeScanner.setZoomRatio({ zoomRatio: 0.5 });
@@ -257,10 +304,14 @@ const getMaxZoomRatio = async () => {
   const { zoomRatio } = await BarcodeScanner.getMaxZoomRatio();
   return zoomRatio;
 };
+```
 
-const openSettings = async () => {
-  await BarcodeScanner.openSettings();
-};
+### Install the Google Barcode Scanner module
+
+On Android, the `scan(...)` method requires the Google Barcode Scanner module. Check if it is available and install it if needed. The installation only starts with this call; the `googleBarcodeScannerModuleInstallProgress` event notifies you about the progress. Only available on Android:
+
+```typescript
+import { BarcodeScanner } from '@capacitor-mlkit/barcode-scanning';
 
 const isGoogleBarcodeScannerModuleAvailable = async () => {
   const { available } =
@@ -271,6 +322,14 @@ const isGoogleBarcodeScannerModuleAvailable = async () => {
 const installGoogleBarcodeScannerModule = async () => {
   await BarcodeScanner.installGoogleBarcodeScannerModule();
 };
+```
+
+### Check and request permissions
+
+The `startScan(...)` method requires the camera permission. You can check and request it, and open the app settings so that the user can grant the permission manually:
+
+```typescript
+import { BarcodeScanner } from '@capacitor-mlkit/barcode-scanning';
 
 const checkPermissions = async () => {
   const { camera } = await BarcodeScanner.checkPermissions();
@@ -281,9 +340,15 @@ const requestPermissions = async () => {
   const { camera } = await BarcodeScanner.requestPermissions();
   return camera;
 };
+
+const openSettings = async () => {
+  await BarcodeScanner.openSettings();
+};
 ```
 
-An example of the CSS class `barcode-scanner-active` **with** Ionic Framework could be:
+### Hide all WebView elements during a scan
+
+Since the camera is rendered behind the WebView when using `startScan(...)`, you have to hide all elements that should not be visible. An example of the CSS class `barcode-scanner-active` **with** Ionic Framework could be:
 
 ```css
 // Hide all elements
@@ -1159,6 +1224,38 @@ Remove all listeners for this plugin.
 
 </docgen-api>
 
+## FAQ
+
+### What is the difference between `startScan` and `scan`?
+
+The `startScan(...)` method renders the camera behind the WebView so that you can build a completely custom scanning UI, but it requires you to hide all WebView elements that should not be visible (see the [usage example](#hide-all-webview-elements-during-a-scan)). The `scan(...)` method opens a ready-to-use interface without any WebView customization and is only available on Android and iOS. On Android, `scan(...)` requires the Google Barcode Scanner module but no camera permission.
+
+### Why is the camera view not visible during a scan?
+
+When using `startScan(...)`, the camera is rendered behind the WebView. If any element in the DOM is visible or has an opaque background, it covers the camera view. Make sure to hide all elements or give them a transparent background, as shown in the [usage example](#hide-all-webview-elements-during-a-scan).
+
+### Which barcode formats are supported?
+
+The plugin supports 13 barcode formats on Android and iOS, including QR Code, Aztec, Codabar, Code 39, Code 93, Code 128, Data Matrix, EAN-8, EAN-13, ITF, PDF417, UPC-A, and UPC-E. See [BarcodeFormat](#barcodeformat) for the complete list. You can improve the scanning speed by restricting the formats via the `formats` option.
+
+### Does the plugin work in the browser?
+
+Yes, on the Web the plugin uses the [Barcode Detection API](https://developer.mozilla.org/en-US/docs/Web/API/Barcode_Detection_API), which is not yet supported in all browsers. For better compatibility, it is recommended to install the [barcode-detector](https://www.npmjs.com/package/barcode-detector) polyfill as described in the [Installation](#installation) section.
+
+### Do I need the camera permission to scan barcodes?
+
+The `startScan(...)` method requires the camera permission, which is why you have to declare the `CAMERA` permission in your `AndroidManifest.xml` and add the `NSCameraUsageDescription` key to your `Info.plist`. The `scan(...)` method on Android is provided by Google Play Services and therefore requires no camera permission.
+
+### Can I use this plugin with Ionic, React, Vue or Angular?
+
+Yes, the plugin is framework-agnostic. It works in any Capacitor app regardless of the web framework, including Ionic with Angular, React, or Vue, as well as plain JavaScript projects.
+
+## Related Plugins
+
+- [Torch](https://capawesome.io/docs/sdks/capacitor/torch/): Switch the flashlight on and off during a scan session.
+- [File Picker](https://capawesome.io/docs/sdks/capacitor/file-picker/): Let the user select an image from the file system or gallery to read barcodes from.
+- [ML Kit Document Scanner](https://capawesome.io/docs/sdks/capacitor/mlkit/document-scanner/): Scan physical documents with ML Kit Document Scanner.
+
 ## Terms & Privacy
 
 This plugin uses the [Google ML Kit](https://developers.google.com/ml-kit):
@@ -1166,6 +1263,10 @@ This plugin uses the [Google ML Kit](https://developers.google.com/ml-kit):
 - [Terms & Privacy](https://developers.google.com/ml-kit/terms)
 - [Android Data Disclosure](https://developers.google.com/ml-kit/android-data-disclosure)
 - [iOS Data Disclosure](https://developers.google.com/ml-kit/ios-data-disclosure)
+
+## Newsletter
+
+Stay up to date with the latest news and updates about the Capawesome, Capacitor, and Ionic ecosystem by subscribing to our [Capawesome Newsletter](https://cloud.capawesome.io/newsletter/).
 
 ## Changelog
 

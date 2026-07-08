@@ -1,7 +1,7 @@
 {
   "name": "@capacitor-mlkit/face-mesh-detection",
   "version": "8.1.0",
-  "description": "Capacitor plugin for ML Kit Face Mesh Detection.",
+  "description": "Capacitor plugin for ML Kit Face Mesh Detection on Android.",
   "main": "dist/plugin.cjs.js",
   "module": "dist/esm/index.js",
   "types": "dist/esm/index.d.ts",
@@ -36,7 +36,15 @@
   "keywords": [
     "capacitor",
     "plugin",
-    "native"
+    "native",
+    "capacitor-plugin",
+    "face mesh",
+    "face mesh detection",
+    "face detection",
+    "face landmarks",
+    "3d face mesh",
+    "face contours",
+    "mlkit"
   ],
   "scripts": {
     "verify": "npm run verify:ios && npm run verify:android && npm run verify:web",
