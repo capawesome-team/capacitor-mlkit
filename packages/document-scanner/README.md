@@ -8,9 +8,14 @@ Unofficial Capacitor plugin for [ML Kit Document Scanner](https://developers.goo
   </a>
 </div>
 
-## Newsletter
+## Use Cases
 
-Stay up to date with the latest news and updates about the Capawesome, Capacitor, and Ionic ecosystem by subscribing to our [Capawesome Newsletter](https://cloud.capawesome.io/newsletter/).
+The Document Scanner plugin is typically used whenever an app needs to digitize paper documents with the camera, for example:
+
+- **Receipt and expense capture**: Let users scan receipts and invoices as JPEG images or PDF files for expense tracking.
+- **Document archiving**: Digitize contracts, letters, and other paperwork into multi-page PDF documents.
+- **Form submission**: Let users scan and submit signed forms or supporting documents in your app.
+- **Clean document photos**: Use the ML-enabled image cleaning capabilities to remove stains and fingers from scanned pages.
 
 ## Compatibility
 
@@ -52,9 +57,17 @@ This can be useful if you encounter dependency conflicts with other plugins in y
 
 ## Usage
 
+Import the plugin and call its methods:
+
 ```typescript
 import { DocumentScanner } from '@capacitor-mlkit/document-scanner';
+```
 
+### Scan a document
+
+Start the document scanning process, which opens the ML Kit Document Scanner UI. You can allow gallery imports, limit the number of pages, and choose the result formats and scanner mode. Only available on Android:
+
+```typescript
 const scanDocument = async () => {
   const result = await DocumentScanner.scanDocument({
     galleryImportAllowed: true,
@@ -66,7 +79,13 @@ const scanDocument = async () => {
   console.log('Scanned images:', result.scannedImages);
   console.log('PDF info:', result.pdf);
 };
+```
 
+### Check and install the Google Document Scanner module
+
+The document scanner models, scanning logic, and UI flow are dynamically downloaded by Google Play services. Check if the module is available and install it if needed. The installation only starts with this call; the `googleDocumentScannerModuleInstallProgress` event notifies you about the progress. Only available on Android:
+
+```typescript
 const isGoogleDocumentScannerModuleAvailable = async () => {
   const result = await DocumentScanner.isGoogleDocumentScannerModuleAvailable();
   console.log('Is Google Document Scanner module available:', result.available);
@@ -274,6 +293,38 @@ Result of a document scan operation.
 - It also requires a minimal device total RAM of 1.7GB. If lower, it returns an `MlKitException` with error code `UNSUPPORTED` when calling the API (this plugin will reject the promise).
 - Consider that generating document files takes time and requires processing power, so only request the output formats (JPEG, or PDF, or both) you actually need via the `resultFormats` option.
 
+## FAQ
+
+### Which platforms are supported by this plugin?
+
+The plugin is only available on Android, since the underlying ML Kit Document Scanner is provided by Google Play services. All methods reject on other platforms.
+
+### Why is the document scanner not available on first use?
+
+The ML Kit Document Scanner models, scanning logic, and UI flow are dynamically downloaded by Google Play services, so users might have to wait for the download before the first use. Use `isGoogleDocumentScannerModuleAvailable()` to check for the module, `installGoogleDocumentScannerModule()` to install it, and listen to the `googleDocumentScannerModuleInstallProgress` event for progress updates.
+
+### Which result formats can I get from a scan?
+
+You can request JPEG images, a PDF file, or both via the `resultFormats` option. The result then contains an array of URIs for the scanned image pages and/or information about the generated PDF, including its URI and page count. Since generating document files takes time and processing power, only request the formats you actually need.
+
+### What is the difference between the scanner modes?
+
+The `BASE` mode provides basic editing capabilities such as crop, rotate, and reorder pages. The `BASE_WITH_FILTER` mode adds image filters such as grayscale and auto image enhancement. The `FULL` mode (the default) additionally provides ML-enabled image cleaning capabilities, for example erasing stains and fingers, and will automatically receive future major features along with Google Play services updates.
+
+### Are there any device requirements?
+
+Yes, the API requires Android API level 21 or above and a minimal device total RAM of 1.7 GB. On devices with less RAM, the API returns an `MlKitException` with error code `UNSUPPORTED` and the plugin rejects the promise.
+
+### Can users import existing photos instead of scanning?
+
+Yes, set the `galleryImportAllowed` option to `true` to allow importing pages from the photo gallery. It is disabled by default.
+
+## Related Plugins
+
+- [ML Kit Barcode Scanning](https://capawesome.io/docs/sdks/capacitor/mlkit/barcode-scanning/): Scan barcodes and QR codes with ML Kit Barcode Scanning.
+- [PDF Viewer](https://capawesome.io/docs/sdks/capacitor/pdf-viewer/): Display PDF documents in a fullscreen native viewer.
+- [File Opener](https://capawesome.io/docs/sdks/capacitor/file-opener/): Open a scanned file with the default application.
+
 ## Terms & Privacy
 
 This plugin uses the [Google ML Kit](https://developers.google.com/ml-kit):
@@ -281,6 +332,10 @@ This plugin uses the [Google ML Kit](https://developers.google.com/ml-kit):
 - [Terms & Privacy](https://developers.google.com/ml-kit/terms)
 - [Android Data Disclosure](https://developers.google.com/ml-kit/android-data-disclosure)
 - [iOS Data Disclosure](https://developers.google.com/ml-kit/ios-data-disclosure)
+
+## Newsletter
+
+Stay up to date with the latest news and updates about the Capawesome, Capacitor, and Ionic ecosystem by subscribing to our [Capawesome Newsletter](https://cloud.capawesome.io/newsletter/).
 
 ## Changelog
 

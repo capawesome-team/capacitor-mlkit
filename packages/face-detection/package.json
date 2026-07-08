@@ -1,7 +1,7 @@
 {
   "name": "@capacitor-mlkit/face-detection",
   "version": "8.1.0",
-  "description": "Capacitor plugin for ML Kit Face Detection.",
+  "description": "Capacitor plugin for ML Kit Face Detection on Android and iOS.",
   "main": "dist/plugin.cjs.js",
   "module": "dist/esm/index.js",
   "types": "dist/esm/index.d.ts",
@@ -36,7 +36,15 @@
   "keywords": [
     "capacitor",
     "plugin",
-    "native"
+    "native",
+    "capacitor-plugin",
+    "face detection",
+    "face detector",
+    "face landmarks",
+    "face contours",
+    "smile detection",
+    "face tracking",
+    "mlkit"
   ],
   "scripts": {
     "verify": "npm run verify:ios && npm run verify:android && npm run verify:web",

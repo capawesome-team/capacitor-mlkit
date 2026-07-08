@@ -1,7 +1,7 @@
 {
   "name": "@capacitor-mlkit/subject-segmentation",
   "version": "8.1.0",
-  "description": "Capacitor plugin for ML Kit Subject Segmentation.",
+  "description": "Capacitor plugin for ML Kit Subject Segmentation on Android.",
   "main": "dist/plugin.cjs.js",
   "module": "dist/esm/index.js",
   "types": "dist/esm/index.d.ts",
@@ -36,7 +36,16 @@
   "keywords": [
     "capacitor",
     "plugin",
-    "native"
+    "native",
+    "capacitor-plugin",
+    "mlkit",
+    "ml kit",
+    "subject segmentation",
+    "image segmentation",
+    "object segmentation",
+    "background removal",
+    "photo cutout",
+    "remove background"
   ],
   "scripts": {
     "verify": "npm run verify:ios && npm run verify:android && npm run verify:web",

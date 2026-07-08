@@ -1,7 +1,7 @@
 {
   "name": "@capacitor-mlkit/document-scanner",
   "version": "8.1.0",
-  "description": "Capacitor plugin for ML Kit Document Scanner.",
+  "description": "Capacitor plugin for ML Kit Document Scanner on Android.",
   "main": "dist/plugin.cjs.js",
   "module": "dist/esm/index.js",
   "types": "dist/esm/index.d.ts",
@@ -36,7 +36,14 @@
   "keywords": [
     "capacitor",
     "plugin",
-    "native"
+    "native",
+    "capacitor-plugin",
+    "document scanner",
+    "document scanning",
+    "pdf scanner",
+    "receipt scanner",
+    "scan documents",
+    "mlkit"
   ],
   "scripts": {
     "verify": "npm run verify:ios && npm run verify:android && npm run verify:web",

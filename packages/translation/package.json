@@ -1,7 +1,7 @@
 {
   "name": "@capacitor-mlkit/translation",
   "version": "8.1.0",
-  "description": "Capacitor plugin for ML Kit Translation.",
+  "description": "Capacitor plugin for ML Kit Translation on Android and iOS.",
   "main": "dist/plugin.cjs.js",
   "module": "dist/esm/index.js",
   "types": "dist/esm/index.d.ts",
@@ -36,7 +36,16 @@
   "keywords": [
     "capacitor",
     "plugin",
-    "native"
+    "native",
+    "capacitor-plugin",
+    "mlkit",
+    "ml kit",
+    "translation",
+    "translate",
+    "translator",
+    "text translation",
+    "language translation",
+    "offline translation"
   ],
   "scripts": {
     "verify": "npm run verify:ios && npm run verify:android && npm run verify:web",
