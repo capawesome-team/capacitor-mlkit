@@ -66,17 +66,15 @@ A working example can be found here: [robingenz/capacitor-mlkit-plugin-demo](htt
 
 ## Usage
 
-Import the plugin and call its methods:
-
-```typescript
-import { FaceMeshDetection, UseCase } from '@capacitor-mlkit/face-mesh-detection';
-```
+The following example shows how to detect face meshes in an image.
 
 ### Detect face meshes in an image
 
 Detect face meshes in an image at a local path. Choose the `BoundingBoxOnly` use case for fast bounding box detection or the `FaceMesh` use case to also receive the 468 3D face mesh points and triangle information. Only available on Android:
 
 ```typescript
+import { FaceMeshDetection, UseCase } from '@capacitor-mlkit/face-mesh-detection';
+
 const processImage = async () => {
   const { faceMeshs } = await FaceMeshDetection.processImage({
     path: 'path/to/image.jpg',

@@ -61,17 +61,15 @@ You need to add the following meta data **in** the `application` tag in your `An
 
 ## Usage
 
-Import the plugin and call its methods:
-
-```typescript
-import { SubjectSegmentation } from '@capacitor-mlkit/subject-segmentation';
-```
+The following example shows how to segment a subject from the background.
 
 ### Segment a subject from the background
 
 Pass the local path of an image file to `processImage(...)` to perform the segmentation. You can optionally scale the image using the `width` and `height` options and adjust the confidence threshold. The result contains the path to the segmented image file along with its width and height:
 
 ```typescript
+import { SubjectSegmentation } from '@capacitor-mlkit/subject-segmentation';
+
 const processImage = async () => {
   const { path } = await SubjectSegmentation.processImage({
     path: 'path/to/image.jpg',

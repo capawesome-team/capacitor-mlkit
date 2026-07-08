@@ -89,17 +89,21 @@ A working example can be found here: [robingenz/capacitor-mlkit-plugin-demo](htt
 
 ## Usage
 
-Import the plugin and call its methods:
-
-```typescript
-import { FaceDetection, PerformanceMode, LandmarkMode, ContourMode, ClassificationMode } from '@capacitor-mlkit/face-detection';
-```
+The following example shows how to detect faces in an image.
 
 ### Detect faces in an image
 
 Detect human faces in an image at a local path. You can configure the accuracy/speed trade-off and enable landmarks, contours, classification (smiling and eyes open probabilities), and face tracking. Only available on Android and iOS:
 
 ```typescript
+import {
+  FaceDetection,
+  PerformanceMode,
+  LandmarkMode,
+  ContourMode,
+  ClassificationMode,
+} from '@capacitor-mlkit/face-detection';
+
 const processImage = async () => {
   const { faces } = await FaceDetection.processImage({
     path: 'path/to/image.jpg',

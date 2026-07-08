@@ -82,17 +82,15 @@ A working example can be found here: [robingenz/capacitor-mlkit-plugin-demo](htt
 
 ## Usage
 
-Import the plugin and call its methods:
-
-```typescript
-import { SelfieSegmentation } from '@capacitor-mlkit/selfie-segmentation';
-```
+The following example shows how to segment a person from the background.
 
 ### Segment a person from the background
 
 Pass the local path of an image file to `processImage(...)` to perform the segmentation. You can optionally scale the image using the `width` and `height` options and adjust the confidence threshold. The result contains the path to the segmented image file along with its width and height. Only available on Android and iOS:
 
 ```typescript
+import { SelfieSegmentation } from '@capacitor-mlkit/selfie-segmentation';
+
 const processImage = async () => {
   const { path } = await SelfieSegmentation.processImage({
     path: 'path/to/image.jpg',

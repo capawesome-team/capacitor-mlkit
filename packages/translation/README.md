@@ -80,17 +80,15 @@ A working example can be found here: [robingenz/capacitor-mlkit-plugin-demo](htt
 
 ## Usage
 
-Import the plugin and call its methods:
-
-```typescript
-import { Translation, Language } from '@capacitor-mlkit/translation';
-```
+The following examples show how to translate a text, download a language model, list the downloaded language models, and delete a downloaded language model.
 
 ### Translate a text
 
 Use the `translate(...)` method to translate a text from a source language to a target language. If the language model for the given languages is not downloaded yet, it will be downloaded automatically, which may take some time. Only available on Android and iOS:
 
 ```typescript
+import { Translation, Language } from '@capacitor-mlkit/translation';
+
 const translate = async () => {
   const { text } = await Translation.translate({
     text: 'Good morning!',
@@ -106,6 +104,8 @@ const translate = async () => {
 Download a language model in advance to enable offline translation. Language models are around 30MB in size, so be sure to only download the models you need and only download them using a WiFi connection unless the user has specified otherwise. Only available on Android and iOS:
 
 ```typescript
+import { Translation, Language } from '@capacitor-mlkit/translation';
+
 const downloadModel = async () => {
   await Translation.downloadModel({
     language: Language.English,
@@ -118,6 +118,8 @@ const downloadModel = async () => {
 Get the languages for which a model has already been downloaded to the device. Only available on Android and iOS:
 
 ```typescript
+import { Translation } from '@capacitor-mlkit/translation';
+
 const getDownloadedModels = async () => {
   const { languages } = await Translation.getDownloadedModels();
   return languages;
@@ -129,6 +131,8 @@ const getDownloadedModels = async () => {
 Delete the language model for a given language, for example to free up storage space on the device. Only available on Android and iOS:
 
 ```typescript
+import { Translation, Language } from '@capacitor-mlkit/translation';
+
 const deleteDownloadedModel = async () => {
   await Translation.deleteDownloadedModel({
     language: Language.English,

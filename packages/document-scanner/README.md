@@ -57,17 +57,15 @@ This can be useful if you encounter dependency conflicts with other plugins in y
 
 ## Usage
 
-Import the plugin and call its methods:
-
-```typescript
-import { DocumentScanner } from '@capacitor-mlkit/document-scanner';
-```
+The following examples show how to scan a document and how to check and install the Google Document Scanner module.
 
 ### Scan a document
 
 Start the document scanning process, which opens the ML Kit Document Scanner UI. You can allow gallery imports, limit the number of pages, and choose the result formats and scanner mode. Only available on Android:
 
 ```typescript
+import { DocumentScanner } from '@capacitor-mlkit/document-scanner';
+
 const scanDocument = async () => {
   const result = await DocumentScanner.scanDocument({
     galleryImportAllowed: true,
@@ -86,6 +84,8 @@ const scanDocument = async () => {
 The document scanner models, scanning logic, and UI flow are dynamically downloaded by Google Play services. Check if the module is available and install it if needed. The installation only starts with this call; the `googleDocumentScannerModuleInstallProgress` event notifies you about the progress. Only available on Android:
 
 ```typescript
+import { DocumentScanner } from '@capacitor-mlkit/document-scanner';
+
 const isGoogleDocumentScannerModuleAvailable = async () => {
   const result = await DocumentScanner.isGoogleDocumentScannerModuleAvailable();
   console.log('Is Google Document Scanner module available:', result.available);

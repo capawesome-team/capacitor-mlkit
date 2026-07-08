@@ -152,21 +152,15 @@ A working example can be found here: [robingenz/capacitor-mlkit-plugin-demo](htt
 
 ## Usage
 
-Import the plugin and call its methods:
-
-```typescript
-import {
-  BarcodeScanner,
-  BarcodeFormat,
-  LensFacing,
-} from '@capacitor-mlkit/barcode-scanning';
-```
+The following examples show how to scan barcodes with your own UI or the ready-to-use interface, control the torch and zoom, install the Google Barcode Scanner module, and manage camera permissions.
 
 ### Scan barcodes with your own UI
 
 The `startScan(...)` method renders the camera behind the WebView so that you can build your own scanning UI on top of it. Add a listener to be notified about scanned barcodes and call `stopScan()` when you are done:
 
 ```typescript
+import { BarcodeScanner } from '@capacitor-mlkit/barcode-scanning';
+
 const startScan = async () => {
   // The camera is visible behind the WebView, so that you can customize the UI in the WebView.
   // However, this means that you have to hide all elements that should not be visible.
@@ -203,6 +197,8 @@ const stopScan = async () => {
 If you only need one result, remove the listener and stop the scan as soon as the first barcode is scanned:
 
 ```typescript
+import { BarcodeScanner } from '@capacitor-mlkit/barcode-scanning';
+
 const scanSingleBarcode = async () => {
   return new Promise(async resolve => {
     document.querySelector('body')?.classList.add('barcode-scanner-active');
@@ -229,6 +225,8 @@ const scanSingleBarcode = async () => {
 The `scan(...)` method opens a ready-to-use scanning interface without any WebView customization. Only available on Android and iOS. On Android, this requires the Google Barcode Scanner module (see [below](#install-the-google-barcode-scanner-module)), but no camera permission:
 
 ```typescript
+import { BarcodeScanner, BarcodeFormat } from '@capacitor-mlkit/barcode-scanning';
+
 const scan = async () => {
   const { barcodes } = await BarcodeScanner.scan({
     formats: [BarcodeFormat.QrCode],
@@ -243,6 +241,8 @@ const scan = async () => {
 Check whether the device has a camera that can be used for barcode scanning:
 
 ```typescript
+import { BarcodeScanner } from '@capacitor-mlkit/barcode-scanning';
+
 const isSupported = async () => {
   const { supported } = await BarcodeScanner.isSupported();
   return supported;
@@ -284,6 +284,8 @@ const isTorchAvailable = async () => {
 Set and read the zoom ratio of the camera. These methods are only available on Android and iOS:
 
 ```typescript
+import { BarcodeScanner } from '@capacitor-mlkit/barcode-scanning';
+
 const setZoomRatio = async () => {
   await BarcodeScanner.setZoomRatio({ zoomRatio: 0.5 });
 };
@@ -309,6 +311,8 @@ const getMaxZoomRatio = async () => {
 On Android, the `scan(...)` method requires the Google Barcode Scanner module. Check if it is available and install it if needed. The installation only starts with this call; the `googleBarcodeScannerModuleInstallProgress` event notifies you about the progress. Only available on Android:
 
 ```typescript
+import { BarcodeScanner } from '@capacitor-mlkit/barcode-scanning';
+
 const isGoogleBarcodeScannerModuleAvailable = async () => {
   const { available } =
     await BarcodeScanner.isGoogleBarcodeScannerModuleAvailable();
@@ -325,6 +329,8 @@ const installGoogleBarcodeScannerModule = async () => {
 The `startScan(...)` method requires the camera permission. You can check and request it, and open the app settings so that the user can grant the permission manually:
 
 ```typescript
+import { BarcodeScanner } from '@capacitor-mlkit/barcode-scanning';
+
 const checkPermissions = async () => {
   const { camera } = await BarcodeScanner.checkPermissions();
   return camera;
