@@ -50,15 +50,9 @@ npx cap sync
 
 This plugin requires a minimum API level of 24.
 
-#### Permissions
+#### Metadata
 
-This API requires the following permissions be added to your `AndroidManifest.xml` before the `application` tag:
-
-```xml
-<uses-permission android:name="android.permission.CAMERA" />
-```
-
-You also need to add the following meta data **in** the `application` tag in your `AndroidManifest.xml`:
+You need to add the following meta data **in** the `application` tag in your `AndroidManifest.xml`:
 
 ```xml
 <meta-data android:name="com.google.mlkit.vision.DEPENDENCIES" android:value="subject_segment"/>
@@ -266,7 +260,7 @@ Only available on Android.
 
 ### What are the requirements to use this plugin on Android?
 
-The plugin requires a minimum Android API level of 24. You also need to add the `CAMERA` permission and the `com.google.mlkit.vision.DEPENDENCIES` meta data to your `AndroidManifest.xml` as described in the [Installation](#installation) section.
+The plugin requires a minimum Android API level of 24. You also need to add the `com.google.mlkit.vision.DEPENDENCIES` meta data to your `AndroidManifest.xml` as described in the [Installation](#installation) section.
 
 ### Why do I need the Google Subject Segmentation module on Android?
 
