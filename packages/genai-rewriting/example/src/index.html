@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en" dir="ltr" class="hydrated">
+  <head>
+    <meta charset="UTF-8" />
+    <title>GenAI Rewriting Example</title>
+    <meta
+      name="viewport"
+      content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta name="format-detection" content="telephone=no" />
+  </head>
+  <body>
+    <main>
+      <h1>GenAI Rewriting</h1>
+      <section>
+        <label for="outputTypeSelect">Rewrite style:</label>
+        <select id="outputTypeSelect">
+          <option value="ELABORATE">Elaborate</option>
+          <option value="EMOJIFY">Emojify</option>
+          <option value="SHORTEN">Shorten</option>
+          <option value="FRIENDLY">Friendly</option>
+          <option value="PROFESSIONAL">Professional</option>
+          <option value="REPHRASE">Rephrase</option>
+        </select>
+      </section>
+      <section>
+        <button onclick="checkFeatureStatus()">Check Feature Status</button>
+        <button onclick="downloadFeature()">Download Feature</button>
+      </section>
+      <section>
+        <label for="textInput">Text to rewrite:</label>
+        <textarea id="textInput" rows="6">
+Capacitor is an open source native runtime for building Web Native apps.</textarea
+        >
+        <button onclick="rewrite()">Rewrite</button>
+      </section>
+      <section>
+        <strong>Output:</strong>
+        <pre id="output"></pre>
+      </section>
+    </main>
+
+    <script src="./js/script.js" type="module"></script>
+  </body>
+</html>

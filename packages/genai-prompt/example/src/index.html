@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en" dir="ltr" class="hydrated">
+  <head>
+    <meta charset="UTF-8" />
+    <title>GenAI Prompt Example</title>
+    <meta
+      name="viewport"
+      content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta name="format-detection" content="telephone=no" />
+  </head>
+  <body>
+    <main>
+      <h1>GenAI Prompt</h1>
+      <section>
+        <button onclick="checkFeatureStatus()">Check Feature Status</button>
+        <button onclick="downloadFeature()">Download Feature</button>
+      </section>
+      <section>
+        <label for="promptInput">Prompt:</label>
+        <textarea id="promptInput" rows="5">
+Write a short poem about the sea.</textarea
+        >
+        <label for="imagePathInput">Image path (optional):</label>
+        <input type="text" id="imagePathInput" value="" />
+        <button onclick="generateContent()">Generate Content</button>
+      </section>
+      <section>
+        <strong>Output:</strong>
+        <pre id="output"></pre>
+      </section>
+    </main>
+
+    <script src="./js/script.js" type="module"></script>
+  </body>
+</html>

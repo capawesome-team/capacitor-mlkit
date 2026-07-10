@@ -1,4 +1,5 @@
 node_modules
+.build
 .DS_Store
 .turbo
 
@@ -9,3 +10,4 @@ node_modules
 CLAUDE.md
 AGENTS.md
 TODO.md
+plans/

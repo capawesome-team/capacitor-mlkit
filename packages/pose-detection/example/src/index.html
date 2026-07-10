@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en" dir="ltr" class="hydrated">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Pose Detection Example</title>
+    <meta
+      name="viewport"
+      content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta name="format-detection" content="telephone=no" />
+  </head>
+  <body>
+    <main>
+      <h1>Pose Detection</h1>
+      <p>Enter the local path to an image file and process it.</p>
+      <label for="pathInput">Image path:</label>
+      <input
+        type="text"
+        id="pathInput"
+        name="pathInput"
+        placeholder="file:///path/to/image.jpg"
+      />
+      <label for="performanceModeInput">Performance mode:</label>
+      <select id="performanceModeInput" name="performanceModeInput">
+        <option value="BASE">Base</option>
+        <option value="ACCURATE">Accurate</option>
+      </select>
+      <button onclick="processImage()">Process image</button>
+      <pre id="output"></pre>
+    </main>
+
+    <script src="./js/script.js" type="module"></script>
+  </body>
+</html>

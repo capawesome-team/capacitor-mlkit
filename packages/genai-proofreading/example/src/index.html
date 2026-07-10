@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en" dir="ltr" class="hydrated">
+  <head>
+    <meta charset="UTF-8" />
+    <title>GenAI Proofreading Example</title>
+    <meta
+      name="viewport"
+      content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta name="format-detection" content="telephone=no" />
+  </head>
+  <body>
+    <main>
+      <h1>GenAI Proofreading</h1>
+      <section>
+        <button onclick="checkFeatureStatus()">Check Feature Status</button>
+        <button onclick="downloadFeature()">Download Feature</button>
+      </section>
+      <section>
+        <label for="textInput">Text to proofread:</label>
+        <textarea id="textInput" rows="6">
+Capacitor is an open source natvie runtime for buildng Web Native apps.</textarea
+        >
+        <button onclick="proofread()">Proofread</button>
+      </section>
+      <section>
+        <strong>Output:</strong>
+        <pre id="output"></pre>
+      </section>
+    </main>
+
+    <script src="./js/script.js" type="module"></script>
+  </body>
+</html>

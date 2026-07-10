@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en" dir="ltr" class="hydrated">
+  <head>
+    <meta charset="UTF-8" />
+    <title>GenAI Summarization Example</title>
+    <meta
+      name="viewport"
+      content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta name="format-detection" content="telephone=no" />
+  </head>
+  <body>
+    <main>
+      <h1>GenAI Summarization</h1>
+      <section>
+        <button onclick="checkFeatureStatus()">Check Feature Status</button>
+        <button onclick="downloadFeature()">Download Feature</button>
+      </section>
+      <section>
+        <label for="textInput">Text to summarize:</label>
+        <textarea id="textInput" rows="10">
+Capacitor is an open source native runtime for building Web Native apps. Create cross-platform iOS, Android, and Progressive Web Apps with JavaScript, HTML, and CSS. Capacitor provides a consistent, web-focused set of APIs that enable an app to stay as close to web standards as possible, while accessing rich native device features on platforms that support them. Adding native functionality is easy with a simple Plugin API for Swift on iOS, Java on Android, and JavaScript for the web. Capacitor is a spiritual successor to Apache Cordova and Adobe PhoneGap, with inspiration from other popular cross-platform tools like React Native and Turbolinks, but focused entirely on enabling modern web apps to run on all major platforms with ease. Capacitor has backwards-compatible support for many existing Cordova plugins.</textarea
+        >
+        <button onclick="summarize()">Summarize</button>
+      </section>
+      <section>
+        <strong>Output:</strong>
+        <pre id="output"></pre>
+      </section>
+    </main>
+
+    <script src="./js/script.js" type="module"></script>
+  </body>
+</html>

@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en" dir="ltr" class="hydrated">
+  <head>
+    <meta charset="UTF-8" />
+    <title>GenAI Speech Recognition Example</title>
+    <meta
+      name="viewport"
+      content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta name="format-detection" content="telephone=no" />
+  </head>
+  <body>
+    <main>
+      <h1>GenAI Speech Recognition</h1>
+      <section>
+        <button onclick="checkPermissions()">Check Permissions</button>
+        <button onclick="requestPermissions()">Request Permissions</button>
+      </section>
+      <section>
+        <label for="modeSelect">Mode:</label>
+        <select id="modeSelect">
+          <option value="BASIC" selected>Basic</option>
+          <option value="ADVANCED">Advanced</option>
+        </select>
+        <label for="localeInput">Locale:</label>
+        <input type="text" id="localeInput" value="en-US" />
+      </section>
+      <section>
+        <button onclick="checkFeatureStatus()">Check Feature Status</button>
+        <button onclick="downloadFeature()">Download Feature</button>
+      </section>
+      <section>
+        <button onclick="startRecognition()">Start Recognition</button>
+        <button onclick="stopRecognition()">Stop Recognition</button>
+      </section>
+      <section>
+        <strong>Partial result:</strong>
+        <pre id="partialResult"></pre>
+        <strong>Final result:</strong>
+        <pre id="finalResult"></pre>
+        <strong>Output:</strong>
+        <pre id="output"></pre>
+      </section>
+    </main>
+
+    <script src="./js/script.js" type="module"></script>
+  </body>
+</html>
