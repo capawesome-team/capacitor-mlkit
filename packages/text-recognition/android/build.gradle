@@ -1,0 +1,68 @@
+ext {
+    junitVersion = project.hasProperty('junitVersion') ? rootProject.ext.junitVersion : '4.13.2'
+    androidxAppCompatVersion = project.hasProperty('androidxAppCompatVersion') ? rootProject.ext.androidxAppCompatVersion : '1.7.1'
+    androidxJunitVersion = project.hasProperty('androidxJunitVersion') ? rootProject.ext.androidxJunitVersion : '1.3.0'
+    androidxEspressoCoreVersion = project.hasProperty('androidxEspressoCoreVersion') ? rootProject.ext.androidxEspressoCoreVersion : '3.7.0'
+    mlkitTextRecognitionVersion = project.hasProperty('mlkitTextRecognitionVersion') ? rootProject.ext.mlkitTextRecognitionVersion : '16.0.1'
+    mlkitTextRecognitionChineseVersion = project.hasProperty('mlkitTextRecognitionChineseVersion') ? rootProject.ext.mlkitTextRecognitionChineseVersion : '16.0.1'
+    mlkitTextRecognitionDevanagariVersion = project.hasProperty('mlkitTextRecognitionDevanagariVersion') ? rootProject.ext.mlkitTextRecognitionDevanagariVersion : '16.0.1'
+    mlkitTextRecognitionJapaneseVersion = project.hasProperty('mlkitTextRecognitionJapaneseVersion') ? rootProject.ext.mlkitTextRecognitionJapaneseVersion : '16.0.1'
+    mlkitTextRecognitionKoreanVersion = project.hasProperty('mlkitTextRecognitionKoreanVersion') ? rootProject.ext.mlkitTextRecognitionKoreanVersion : '16.0.1'
+}
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.13.0'
+    }
+}
+
+apply plugin: 'com.android.library'
+
+android {
+    namespace = "io.capawesome.capacitorjs.plugins.mlkit.textrecognition"
+    compileSdk = project.hasProperty('compileSdkVersion') ? rootProject.ext.compileSdkVersion : 36
+    defaultConfig {
+        minSdkVersion project.hasProperty('minSdkVersion') ? rootProject.ext.minSdkVersion : 24
+        targetSdkVersion project.hasProperty('targetSdkVersion') ? rootProject.ext.targetSdkVersion : 36
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    lintOptions {
+        abortOnError = false
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_21
+        targetCompatibility JavaVersion.VERSION_21
+    }
+}
+
+repositories {
+    google()
+    mavenCentral()
+}
+
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(':capacitor-android')
+    implementation "androidx.appcompat:appcompat:$androidxAppCompatVersion"
+    implementation "com.google.mlkit:text-recognition:$mlkitTextRecognitionVersion"
+    implementation "com.google.mlkit:text-recognition-chinese:$mlkitTextRecognitionChineseVersion"
+    implementation "com.google.mlkit:text-recognition-devanagari:$mlkitTextRecognitionDevanagariVersion"
+    implementation "com.google.mlkit:text-recognition-japanese:$mlkitTextRecognitionJapaneseVersion"
+    implementation "com.google.mlkit:text-recognition-korean:$mlkitTextRecognitionKoreanVersion"
+    testImplementation "junit:junit:$junitVersion"
+    androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"
+}

@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en" dir="ltr" class="hydrated">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Language Identification Example</title>
+    <meta
+      name="viewport"
+      content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta name="format-detection" content="telephone=no" />
+  </head>
+  <body>
+    <main>
+      <h1>ML Kit Language Identification</h1>
+      <p>Enter some text and identify its language.</p>
+      <label for="textInput">Text:</label>
+      <input
+        type="text"
+        id="textInput"
+        name="textInput"
+        value="Wie geht es dir?"
+      />
+      <button onclick="identifyLanguage()">Identify Language</button>
+      <button onclick="identifyPossibleLanguages()">
+        Identify Possible Languages
+      </button>
+      <pre id="output"></pre>
+    </main>
+
+    <script src="./js/script.js" type="module"></script>
+  </body>
+</html>

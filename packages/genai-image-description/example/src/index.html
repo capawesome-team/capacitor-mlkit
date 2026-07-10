@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en" dir="ltr" class="hydrated">
+  <head>
+    <meta charset="UTF-8" />
+    <title>GenAI Image Description Example</title>
+    <meta
+      name="viewport"
+      content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta name="format-detection" content="telephone=no" />
+  </head>
+  <body>
+    <main>
+      <h1>GenAI Image Description</h1>
+      <section>
+        <button onclick="checkFeatureStatus()">Check Feature Status</button>
+        <button onclick="downloadFeature()">Download Feature</button>
+      </section>
+      <section>
+        <label for="pathInput">Image path:</label>
+        <input type="text" id="pathInput" value="file:///path/to/image.jpg" />
+        <button onclick="describeImage()">Describe Image</button>
+      </section>
+      <section>
+        <strong>Output:</strong>
+        <pre id="output"></pre>
+      </section>
+    </main>
+
+    <script src="./js/script.js" type="module"></script>
+  </body>
+</html>

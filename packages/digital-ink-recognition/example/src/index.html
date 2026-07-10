@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en" dir="ltr" class="hydrated">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Digital Ink Recognition Example</title>
+    <meta
+      name="viewport"
+      content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta name="format-detection" content="telephone=no" />
+  </head>
+  <body>
+    <main>
+      <h1>ML Kit Digital Ink Recognition</h1>
+      <p>
+        Download the model for a language, draw something on the canvas and
+        recognize it.
+      </p>
+      <label for="languageTagInput">Language Tag:</label>
+      <input
+        type="text"
+        id="languageTagInput"
+        name="languageTagInput"
+        value="en-US"
+      />
+      <div>
+        <canvas
+          id="canvas"
+          width="300"
+          height="200"
+          style="border: 1px solid; touch-action: none"
+        ></canvas>
+      </div>
+      <button onclick="downloadModel()">Download Model</button>
+      <button onclick="deleteDownloadedModel()">Delete Model</button>
+      <button onclick="getDownloadedModels()">Get Downloaded Models</button>
+      <button onclick="recognize()">Recognize</button>
+      <button onclick="clearCanvas()">Clear</button>
+      <pre id="output"></pre>
+    </main>
+
+    <script src="./js/script.js" type="module"></script>
+  </body>
+</html>

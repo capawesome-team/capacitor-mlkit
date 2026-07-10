@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en" dir="ltr" class="hydrated">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Entity Extraction Example</title>
+    <meta
+      name="viewport"
+      content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta name="format-detection" content="telephone=no" />
+  </head>
+  <body>
+    <main>
+      <h1>ML Kit Entity Extraction</h1>
+      <p>
+        Download the English model, then extract entities from the text below.
+      </p>
+      <label for="textInput">Text:</label>
+      <textarea id="textInput" name="textInput" rows="3" cols="40">
+Let's meet tomorrow at 5pm. My number is +1 202-555-0182.</textarea
+      >
+      <div>
+        <button onclick="downloadModel()">Download Model</button>
+        <button onclick="getDownloadedModels()">Get Downloaded Models</button>
+        <button onclick="extractEntities()">Extract Entities</button>
+        <button onclick="deleteDownloadedModel()">Delete Model</button>
+      </div>
+      <pre id="output"></pre>
+    </main>
+
+    <script src="./js/script.js" type="module"></script>
+  </body>
+</html>
