@@ -10,10 +10,25 @@ body:
       description: Select the plugins that this feature request affects.
       options:
         - label: Barcode Scanning
+        - label: Digital Ink Recognition
+        - label: Document Scanner
+        - label: Entity Extraction
         - label: Face Detection
         - label: Face Mesh Detection
+        - label: GenAI Image Description
+        - label: GenAI Prompt
+        - label: GenAI Proofreading
+        - label: GenAI Rewriting
+        - label: GenAI Speech Recognition
+        - label: GenAI Summarization
+        - label: Image Labeling
+        - label: Language Identification
+        - label: Object Detection
+        - label: Pose Detection
         - label: Selfie Segmentation
+        - label: Smart Reply
         - label: Subject Segmentation
+        - label: Text Recognition
         - label: Translation
   - type: textarea
     attributes:
