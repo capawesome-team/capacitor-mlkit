@@ -1,34 +1,85 @@
 <!doctype html>
-<html lang="en" dir="ltr" class="hydrated">
+<html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
-    <title>GenAI Summarization Example</title>
+    <title>ML Kit GenAI Summarization</title>
     <meta
       name="viewport"
       content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
     <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+
+    <script
+      type="module"
+      src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css"
+    />
+
+    <script type="module" src="./js/script.js"></script>
   </head>
   <body>
-    <main>
-      <h1>GenAI Summarization</h1>
-      <section>
-        <button onclick="checkFeatureStatus()">Check Feature Status</button>
-        <button onclick="downloadFeature()">Download Feature</button>
-      </section>
-      <section>
-        <label for="textInput">Text to summarize:</label>
-        <textarea id="textInput" rows="10">
-Capacitor is an open source native runtime for building Web Native apps. Create cross-platform iOS, Android, and Progressive Web Apps with JavaScript, HTML, and CSS. Capacitor provides a consistent, web-focused set of APIs that enable an app to stay as close to web standards as possible, while accessing rich native device features on platforms that support them. Adding native functionality is easy with a simple Plugin API for Swift on iOS, Java on Android, and JavaScript for the web. Capacitor is a spiritual successor to Apache Cordova and Adobe PhoneGap, with inspiration from other popular cross-platform tools like React Native and Turbolinks, but focused entirely on enabling modern web apps to run on all major platforms with ease. Capacitor has backwards-compatible support for many existing Cordova plugins.</textarea
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>ML Kit GenAI Summarization</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-item>
+          <ion-select id="inputType" label="Input Type" interface="popover">
+            <ion-select-option value="ARTICLE">Article</ion-select-option>
+            <ion-select-option value="CONVERSATION"
+              >Conversation</ion-select-option
+            >
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-select id="outputType" label="Output Type" interface="popover">
+            <ion-select-option value="ONE_BULLET">One Bullet</ion-select-option>
+            <ion-select-option value="TWO_BULLETS"
+              >Two Bullets</ion-select-option
+            >
+            <ion-select-option value="THREE_BULLETS"
+              >Three Bullets</ion-select-option
+            >
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-select id="language" label="Language" interface="popover">
+            <ion-select-option value="ENGLISH">English</ion-select-option>
+            <ion-select-option value="JAPANESE">Japanese</ion-select-option>
+            <ion-select-option value="KOREAN">Korean</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-textarea
+            id="text"
+            label="Text"
+            label-placement="stacked"
+            auto-grow="true"
+            rows="8"
+            value="Capacitor is an open source native runtime for building Web Native apps. Create cross-platform iOS, Android, and Progressive Web Apps with JavaScript, HTML, and CSS. Capacitor provides a consistent, web-focused set of APIs that enable an app to stay as close to web standards as possible, while accessing rich native device features on platforms that support them. Adding native functionality is easy with a simple Plugin API for Swift on iOS, Java on Android, and JavaScript for the web."
+          ></ion-textarea>
+        </ion-item>
+        <ion-button id="check-feature-status" expand="block"
+          >Check Feature Status</ion-button
         >
-        <button onclick="summarize()">Summarize</button>
-      </section>
-      <section>
-        <strong>Output:</strong>
-        <pre id="output"></pre>
-      </section>
-    </main>
-
-    <script src="./js/script.js" type="module"></script>
+        <ion-button id="download-feature" expand="block"
+          >Download Feature</ion-button
+        >
+        <ion-button id="summarize" expand="block">Summarize</ion-button>
+        <ion-item>
+          <ion-label id="result" class="ion-text-wrap">Result: -</ion-label>
+        </ion-item>
+      </ion-content>
+    </ion-app>
   </body>
 </html>

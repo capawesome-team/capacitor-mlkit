@@ -1,50 +1,63 @@
 import { EntityExtraction, Language } from '@capacitor-mlkit/entity-extraction';
 
-const output = () => document.getElementById('output');
-const getText = () => document.getElementById('textInput').value;
+const setResult = value => {
+  document.querySelector('#result').textContent = `Result: ${value}`;
+};
 
-window.downloadModel = async () => {
-  output().textContent = 'Downloading model...';
+const runWithResult = async callback => {
   try {
-    await EntityExtraction.downloadModel({ language: Language.English });
-    output().textContent = 'Model downloaded.';
+    await callback();
   } catch (error) {
-    output().textContent = `Error: ${error.message}`;
+    setResult(error.message || error);
   }
 };
 
-window.getDownloadedModels = async () => {
-  output().textContent = 'Loading...';
-  try {
-    const { languages } = await EntityExtraction.getDownloadedModels();
-    output().textContent = JSON.stringify({ languages }, null, 2);
-  } catch (error) {
-    output().textContent = `Error: ${error.message}`;
+const getLanguage = () => document.querySelector('#language').value;
+const getText = () => document.querySelector('#text').value;
+
+const populateLanguages = () => {
+  const select = document.querySelector('#language');
+  for (const language of Object.values(Language)) {
+    const option = document.createElement('ion-select-option');
+    option.value = language;
+    option.textContent = language;
+    select.appendChild(option);
   }
 };
 
-window.extractEntities = async () => {
-  output().textContent = 'Extracting...';
-  try {
-    const { annotations } = await EntityExtraction.extractEntities({
-      text: getText(),
-      language: Language.English,
-      referenceTime: Date.now(),
-    });
-    output().textContent = JSON.stringify({ annotations }, null, 2);
-  } catch (error) {
-    output().textContent = `Error: ${error.code ?? ''} ${error.message}`;
-  }
-};
+document.addEventListener('DOMContentLoaded', () => {
+  populateLanguages();
 
-window.deleteDownloadedModel = async () => {
-  output().textContent = 'Deleting model...';
-  try {
-    await EntityExtraction.deleteDownloadedModel({
-      language: Language.English,
-    });
-    output().textContent = 'Model deleted.';
-  } catch (error) {
-    output().textContent = `Error: ${error.message}`;
-  }
-};
+  document.querySelector('#downloadModel').addEventListener('click', () =>
+    runWithResult(async () => {
+      await EntityExtraction.downloadModel({ language: getLanguage() });
+      setResult('Model downloaded');
+    }),
+  );
+  document
+    .querySelector('#deleteDownloadedModel')
+    .addEventListener('click', () =>
+      runWithResult(async () => {
+        await EntityExtraction.deleteDownloadedModel({
+          language: getLanguage(),
+        });
+        setResult('Model deleted');
+      }),
+    );
+  document.querySelector('#getDownloadedModels').addEventListener('click', () =>
+    runWithResult(async () => {
+      const { languages } = await EntityExtraction.getDownloadedModels();
+      setResult(JSON.stringify({ languages }, null, 2));
+    }),
+  );
+  document.querySelector('#extractEntities').addEventListener('click', () =>
+    runWithResult(async () => {
+      const { annotations } = await EntityExtraction.extractEntities({
+        text: getText(),
+        language: getLanguage(),
+        referenceTime: Date.now(),
+      });
+      setResult(JSON.stringify({ annotations }, null, 2));
+    }),
+  );
+});

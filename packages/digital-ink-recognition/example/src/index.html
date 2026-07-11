@@ -1,44 +1,73 @@
 <!doctype html>
-<html lang="en" dir="ltr" class="hydrated">
+<html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
-    <title>Digital Ink Recognition Example</title>
+    <title>ML Kit Digital Ink Recognition</title>
     <meta
       name="viewport"
       content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
     <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+
+    <script
+      type="module"
+      src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css"
+    />
+
+    <script type="module" src="./js/script.js"></script>
   </head>
   <body>
-    <main>
-      <h1>ML Kit Digital Ink Recognition</h1>
-      <p>
-        Download the model for a language, draw something on the canvas and
-        recognize it.
-      </p>
-      <label for="languageTagInput">Language Tag:</label>
-      <input
-        type="text"
-        id="languageTagInput"
-        name="languageTagInput"
-        value="en-US"
-      />
-      <div>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>ML Kit Digital Ink Recognition</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-item>
+          <ion-input
+            id="languageTag"
+            label="Language Tag"
+            label-placement="stacked"
+            value="en-US"
+          ></ion-input>
+        </ion-item>
         <canvas
           id="canvas"
           width="300"
           height="200"
-          style="border: 1px solid; touch-action: none"
+          style="
+            width: 100%;
+            border: 1px solid var(--ion-color-medium);
+            border-radius: 4px;
+            touch-action: none;
+            margin: 16px 0;
+          "
         ></canvas>
-      </div>
-      <button onclick="downloadModel()">Download Model</button>
-      <button onclick="deleteDownloadedModel()">Delete Model</button>
-      <button onclick="getDownloadedModels()">Get Downloaded Models</button>
-      <button onclick="recognize()">Recognize</button>
-      <button onclick="clearCanvas()">Clear</button>
-      <pre id="output"></pre>
-    </main>
-
-    <script src="./js/script.js" type="module"></script>
+        <ion-button id="downloadModel" expand="block"
+          >Download Model</ion-button
+        >
+        <ion-button id="deleteDownloadedModel" expand="block"
+          >Delete Downloaded Model</ion-button
+        >
+        <ion-button id="getDownloadedModels" expand="block"
+          >Get Downloaded Models</ion-button
+        >
+        <ion-button id="recognize" expand="block">Recognize</ion-button>
+        <ion-button id="clear" expand="block" fill="outline">Clear</ion-button>
+        <ion-item>
+          <ion-label id="result" class="ion-text-wrap">Result: -</ion-label>
+        </ion-item>
+      </ion-content>
+    </ion-app>
   </body>
 </html>

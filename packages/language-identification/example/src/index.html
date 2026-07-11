@@ -1,32 +1,67 @@
 <!doctype html>
-<html lang="en" dir="ltr" class="hydrated">
+<html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
-    <title>Language Identification Example</title>
+    <title>ML Kit Language Identification</title>
     <meta
       name="viewport"
       content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
     <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+
+    <script
+      type="module"
+      src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css"
+    />
+
+    <script type="module" src="./js/script.js"></script>
   </head>
   <body>
-    <main>
-      <h1>ML Kit Language Identification</h1>
-      <p>Enter some text and identify its language.</p>
-      <label for="textInput">Text:</label>
-      <input
-        type="text"
-        id="textInput"
-        name="textInput"
-        value="Wie geht es dir?"
-      />
-      <button onclick="identifyLanguage()">Identify Language</button>
-      <button onclick="identifyPossibleLanguages()">
-        Identify Possible Languages
-      </button>
-      <pre id="output"></pre>
-    </main>
-
-    <script src="./js/script.js" type="module"></script>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>ML Kit Language Identification</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-item>
+          <ion-textarea
+            id="text"
+            label="Text"
+            label-placement="stacked"
+            auto-grow="true"
+            rows="4"
+            value="Wie geht es dir?"
+          ></ion-textarea>
+        </ion-item>
+        <ion-item>
+          <ion-input
+            id="confidenceThreshold"
+            type="number"
+            label="Confidence Threshold"
+            label-placement="stacked"
+            placeholder="0.5"
+          ></ion-input>
+        </ion-item>
+        <ion-button id="identifyLanguage" expand="block"
+          >Identify Language</ion-button
+        >
+        <ion-button id="identifyPossibleLanguages" expand="block"
+          >Identify Possible Languages</ion-button
+        >
+        <ion-item>
+          <ion-label id="result" class="ion-text-wrap">Result: -</ion-label>
+        </ion-item>
+      </ion-content>
+    </ion-app>
   </body>
 </html>

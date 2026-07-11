@@ -1,37 +1,61 @@
 <!doctype html>
-<html lang="en" dir="ltr" class="hydrated">
+<html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
-    <title>Text Recognition Example</title>
+    <title>ML Kit Text Recognition</title>
     <meta
       name="viewport"
       content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
     <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+
+    <script
+      type="module"
+      src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css"
+    />
+
+    <script type="module" src="./js/script.js"></script>
   </head>
   <body>
-    <main>
-      <h1>Text Recognition</h1>
-      <p>Enter the local path to an image file and process it.</p>
-      <label for="pathInput">Image path:</label>
-      <input
-        type="text"
-        id="pathInput"
-        name="pathInput"
-        placeholder="file:///path/to/image.jpg"
-      />
-      <label for="scriptInput">Script:</label>
-      <select id="scriptInput" name="scriptInput">
-        <option value="LATIN">Latin</option>
-        <option value="CHINESE">Chinese</option>
-        <option value="DEVANAGARI">Devanagari</option>
-        <option value="JAPANESE">Japanese</option>
-        <option value="KOREAN">Korean</option>
-      </select>
-      <button onclick="processImage()">Process image</button>
-      <pre id="output"></pre>
-    </main>
-
-    <script src="./js/script.js" type="module"></script>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>ML Kit Text Recognition</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-button id="pick-image" expand="block">Pick Image</ion-button>
+        <ion-item>
+          <ion-label id="file" class="ion-text-wrap">File: -</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-select
+            id="script"
+            label="Script"
+            value="LATIN"
+            interface="popover"
+          >
+            <ion-select-option value="LATIN">Latin</ion-select-option>
+            <ion-select-option value="CHINESE">Chinese</ion-select-option>
+            <ion-select-option value="DEVANAGARI">Devanagari</ion-select-option>
+            <ion-select-option value="JAPANESE">Japanese</ion-select-option>
+            <ion-select-option value="KOREAN">Korean</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-button id="process-image" expand="block">Process Image</ion-button>
+        <ion-item>
+          <ion-label id="result" class="ion-text-wrap">Result: -</ion-label>
+        </ion-item>
+      </ion-content>
+    </ion-app>
   </body>
 </html>

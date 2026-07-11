@@ -10,6 +10,7 @@ android {
 apply from: "../capacitor-cordova-android-plugins/cordova.variables.gradle"
 dependencies {
     implementation project(':capacitor-mlkit-genai-prompt')
+    implementation project(':capawesome-capacitor-file-picker')
 
 }
 

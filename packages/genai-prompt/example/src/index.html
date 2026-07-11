@@ -1,36 +1,66 @@
 <!doctype html>
-<html lang="en" dir="ltr" class="hydrated">
+<html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
-    <title>GenAI Prompt Example</title>
+    <title>ML Kit GenAI Prompt</title>
     <meta
       name="viewport"
       content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
     <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+
+    <script
+      type="module"
+      src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css"
+    />
+
+    <script type="module" src="./js/script.js"></script>
   </head>
   <body>
-    <main>
-      <h1>GenAI Prompt</h1>
-      <section>
-        <button onclick="checkFeatureStatus()">Check Feature Status</button>
-        <button onclick="downloadFeature()">Download Feature</button>
-      </section>
-      <section>
-        <label for="promptInput">Prompt:</label>
-        <textarea id="promptInput" rows="5">
-Write a short poem about the sea.</textarea
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>ML Kit GenAI Prompt</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-button id="check-feature-status" expand="block"
+          >Check Feature Status</ion-button
         >
-        <label for="imagePathInput">Image path (optional):</label>
-        <input type="text" id="imagePathInput" value="" />
-        <button onclick="generateContent()">Generate Content</button>
-      </section>
-      <section>
-        <strong>Output:</strong>
-        <pre id="output"></pre>
-      </section>
-    </main>
-
-    <script src="./js/script.js" type="module"></script>
+        <ion-button id="download-feature" expand="block"
+          >Download Feature</ion-button
+        >
+        <ion-item>
+          <ion-textarea
+            id="prompt"
+            label="Prompt"
+            label-placement="stacked"
+            auto-grow="true"
+            value="Write a short poem about the sea."
+          ></ion-textarea>
+        </ion-item>
+        <ion-button id="pick-image" expand="block" fill="outline"
+          >Pick Image (optional)</ion-button
+        >
+        <ion-item>
+          <ion-label id="file" class="ion-text-wrap">File: -</ion-label>
+        </ion-item>
+        <ion-button id="generate-content" expand="block"
+          >Generate Content</ion-button
+        >
+        <ion-item>
+          <ion-label id="result" class="ion-text-wrap">Result: -</ion-label>
+        </ion-item>
+      </ion-content>
+    </ion-app>
   </body>
 </html>

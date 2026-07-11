@@ -1,60 +1,67 @@
-import { GenAiRewriting, Language } from '@capacitor-mlkit/genai-rewriting';
+import {
+  GenAiRewriting,
+  Language,
+  OutputType,
+} from '@capacitor-mlkit/genai-rewriting';
 
-const outputElement = document.getElementById('output');
-
-const setOutput = text => {
-  outputElement.textContent = text;
+const setResult = value => {
+  document.querySelector('#result').textContent = `Result: ${value}`;
 };
 
-const appendOutput = text => {
-  outputElement.textContent += text;
+const appendResult = value => {
+  document.querySelector('#result').textContent += value;
 };
 
-const getFeatureOptions = () => {
-  return {
-    language: Language.English,
-    outputType: document.getElementById('outputTypeSelect').value,
-  };
+const getFeatureOptions = () => ({
+  outputType: document.querySelector('#outputType').value,
+  language: document.querySelector('#language').value,
+});
+
+const runWithResult = async callback => {
+  try {
+    await callback();
+  } catch (error) {
+    setResult(error.message || error);
+  }
 };
 
 void GenAiRewriting.addListener('downloadProgress', event => {
-  setOutput(`Total bytes downloaded: ${event.totalBytesDownloaded}`);
+  setResult(`Downloaded ${event.totalBytesDownloaded} bytes`);
 });
 
 void GenAiRewriting.addListener('inferenceProgress', event => {
-  appendOutput(event.text);
+  appendResult(event.text);
 });
 
-window.checkFeatureStatus = async () => {
-  try {
-    const { featureStatus } =
-      await GenAiRewriting.checkFeatureStatus(getFeatureOptions());
-    setOutput(`Feature status: ${featureStatus}`);
-  } catch (error) {
-    setOutput(`Error: ${error.message}`);
-  }
-};
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelector('#outputType').value = OutputType.Elaborate;
+  document.querySelector('#language').value = Language.English;
 
-window.downloadFeature = async () => {
-  try {
-    setOutput('Downloading feature...');
-    await GenAiRewriting.downloadFeature(getFeatureOptions());
-    setOutput('Feature downloaded.');
-  } catch (error) {
-    setOutput(`Error: ${error.message}`);
-  }
-};
-
-window.rewrite = async () => {
-  try {
-    setOutput('');
-    const text = document.getElementById('textInput').value;
-    const { results } = await GenAiRewriting.rewrite({
-      ...getFeatureOptions(),
-      text,
-    });
-    setOutput(results.join('\n\n---\n\n'));
-  } catch (error) {
-    setOutput(`Error: ${error.message}`);
-  }
-};
+  document
+    .querySelector('#check-feature-status')
+    .addEventListener('click', () =>
+      runWithResult(async () => {
+        const { featureStatus } =
+          await GenAiRewriting.checkFeatureStatus(getFeatureOptions());
+        setResult(featureStatus);
+      }),
+    );
+  document.querySelector('#download-feature').addEventListener('click', () =>
+    runWithResult(async () => {
+      setResult('Downloading feature...');
+      await GenAiRewriting.downloadFeature(getFeatureOptions());
+      setResult('Feature downloaded');
+    }),
+  );
+  document.querySelector('#rewrite').addEventListener('click', () =>
+    runWithResult(async () => {
+      setResult('');
+      const text = document.querySelector('#text').value;
+      const { results } = await GenAiRewriting.rewrite({
+        ...getFeatureOptions(),
+        text,
+      });
+      setResult(results.join('\n\n---\n\n'));
+    }),
+  );
+});

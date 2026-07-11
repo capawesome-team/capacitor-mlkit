@@ -1,88 +1,85 @@
-import { GenAiSpeechRecognition } from '@capacitor-mlkit/genai-speech-recognition';
+import {
+  GenAiSpeechRecognition,
+  RecognitionMode,
+} from '@capacitor-mlkit/genai-speech-recognition';
 
-const finalResultElement = document.getElementById('finalResult');
-const outputElement = document.getElementById('output');
-const partialResultElement = document.getElementById('partialResult');
+let finalText = '';
+
+const setResult = value => {
+  document.querySelector('#result').textContent = `Result: ${value}`;
+};
 
 const getFeatureOptions = () => ({
-  locale: document.getElementById('localeInput').value,
-  mode: document.getElementById('modeSelect').value,
+  locale: document.querySelector('#locale').value,
+  mode: document.querySelector('#mode').value,
 });
 
-const setOutput = text => {
-  outputElement.textContent = text;
+const runWithResult = async callback => {
+  try {
+    await callback();
+  } catch (error) {
+    setResult(error.message || error);
+  }
 };
 
 void GenAiSpeechRecognition.addListener('downloadProgress', event => {
-  setOutput(`Total bytes downloaded: ${event.totalBytesDownloaded}`);
+  setResult(`Downloaded ${event.totalBytesDownloaded} bytes`);
 });
 
 void GenAiSpeechRecognition.addListener('error', event => {
-  setOutput(`Error: ${event.message}`);
+  setResult(event.message);
 });
 
 void GenAiSpeechRecognition.addListener('finalResult', event => {
-  finalResultElement.textContent += `${event.text}\n`;
+  finalText += `${event.text} `;
+  setResult(finalText);
 });
 
 void GenAiSpeechRecognition.addListener('partialResult', event => {
-  partialResultElement.textContent = event.text;
+  setResult(`${finalText}${event.text}`);
 });
 
-window.checkFeatureStatus = async () => {
-  try {
-    const { featureStatus } =
-      await GenAiSpeechRecognition.checkFeatureStatus(getFeatureOptions());
-    setOutput(`Feature status: ${featureStatus}`);
-  } catch (error) {
-    setOutput(`Error: ${error.message}`);
-  }
-};
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelector('#mode').value = RecognitionMode.Basic;
 
-window.checkPermissions = async () => {
-  try {
-    const { microphone } = await GenAiSpeechRecognition.checkPermissions();
-    setOutput(`Microphone permission: ${microphone}`);
-  } catch (error) {
-    setOutput(`Error: ${error.message}`);
-  }
-};
-
-window.downloadFeature = async () => {
-  try {
-    setOutput('Downloading feature...');
-    await GenAiSpeechRecognition.downloadFeature(getFeatureOptions());
-    setOutput('Feature downloaded.');
-  } catch (error) {
-    setOutput(`Error: ${error.message}`);
-  }
-};
-
-window.requestPermissions = async () => {
-  try {
-    const { microphone } = await GenAiSpeechRecognition.requestPermissions();
-    setOutput(`Microphone permission: ${microphone}`);
-  } catch (error) {
-    setOutput(`Error: ${error.message}`);
-  }
-};
-
-window.startRecognition = async () => {
-  try {
-    finalResultElement.textContent = '';
-    partialResultElement.textContent = '';
-    await GenAiSpeechRecognition.startRecognition(getFeatureOptions());
-    setOutput('Recognition started.');
-  } catch (error) {
-    setOutput(`Error: ${error.message}`);
-  }
-};
-
-window.stopRecognition = async () => {
-  try {
-    await GenAiSpeechRecognition.stopRecognition();
-    setOutput('Recognition stopped.');
-  } catch (error) {
-    setOutput(`Error: ${error.message}`);
-  }
-};
+  document.querySelector('#check-permissions').addEventListener('click', () =>
+    runWithResult(async () => {
+      const { microphone } = await GenAiSpeechRecognition.checkPermissions();
+      setResult(`Microphone permission: ${microphone}`);
+    }),
+  );
+  document.querySelector('#request-permissions').addEventListener('click', () =>
+    runWithResult(async () => {
+      const { microphone } = await GenAiSpeechRecognition.requestPermissions();
+      setResult(`Microphone permission: ${microphone}`);
+    }),
+  );
+  document
+    .querySelector('#check-feature-status')
+    .addEventListener('click', () =>
+      runWithResult(async () => {
+        const { featureStatus } =
+          await GenAiSpeechRecognition.checkFeatureStatus(getFeatureOptions());
+        setResult(featureStatus);
+      }),
+    );
+  document.querySelector('#download-feature').addEventListener('click', () =>
+    runWithResult(async () => {
+      setResult('Downloading feature...');
+      await GenAiSpeechRecognition.downloadFeature(getFeatureOptions());
+      setResult('Feature downloaded');
+    }),
+  );
+  document.querySelector('#start-recognition').addEventListener('click', () =>
+    runWithResult(async () => {
+      finalText = '';
+      setResult('');
+      await GenAiSpeechRecognition.startRecognition(getFeatureOptions());
+    }),
+  );
+  document.querySelector('#stop-recognition').addEventListener('click', () =>
+    runWithResult(async () => {
+      await GenAiSpeechRecognition.stopRecognition();
+    }),
+  );
+});

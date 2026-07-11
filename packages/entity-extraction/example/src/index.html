@@ -1,33 +1,72 @@
 <!doctype html>
-<html lang="en" dir="ltr" class="hydrated">
+<html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
-    <title>Entity Extraction Example</title>
+    <title>ML Kit Entity Extraction</title>
     <meta
       name="viewport"
       content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
     <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+
+    <script
+      type="module"
+      src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css"
+    />
+
+    <script type="module" src="./js/script.js"></script>
   </head>
   <body>
-    <main>
-      <h1>ML Kit Entity Extraction</h1>
-      <p>
-        Download the English model, then extract entities from the text below.
-      </p>
-      <label for="textInput">Text:</label>
-      <textarea id="textInput" name="textInput" rows="3" cols="40">
-Let's meet tomorrow at 5pm. My number is +1 202-555-0182.</textarea
-      >
-      <div>
-        <button onclick="downloadModel()">Download Model</button>
-        <button onclick="getDownloadedModels()">Get Downloaded Models</button>
-        <button onclick="extractEntities()">Extract Entities</button>
-        <button onclick="deleteDownloadedModel()">Delete Model</button>
-      </div>
-      <pre id="output"></pre>
-    </main>
-
-    <script src="./js/script.js" type="module"></script>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>ML Kit Entity Extraction</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-item>
+          <ion-select
+            id="language"
+            label="Language"
+            value="ENGLISH"
+            interface="popover"
+          ></ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-textarea
+            id="text"
+            label="Text"
+            label-placement="stacked"
+            auto-grow="true"
+            rows="4"
+            value="Let's meet on July 15, 2026 at 1600 Amphitheatre Parkway, Mountain View, CA. Email me at john.doe@example.com."
+          ></ion-textarea>
+        </ion-item>
+        <ion-button id="downloadModel" expand="block"
+          >Download Model</ion-button
+        >
+        <ion-button id="deleteDownloadedModel" expand="block"
+          >Delete Downloaded Model</ion-button
+        >
+        <ion-button id="getDownloadedModels" expand="block"
+          >Get Downloaded Models</ion-button
+        >
+        <ion-button id="extractEntities" expand="block"
+          >Extract Entities</ion-button
+        >
+        <ion-item>
+          <ion-label id="result" class="ion-text-wrap">Result: -</ion-label>
+        </ion-item>
+      </ion-content>
+    </ion-app>
   </body>
 </html>

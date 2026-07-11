@@ -1,16 +1,48 @@
 import { TextRecognition } from '@capacitor-mlkit/text-recognition';
+import { FilePicker } from '@capawesome/capacitor-file-picker';
 
-window.processImage = async () => {
-  const path = document.getElementById('pathInput').value;
-  const script = document.getElementById('scriptInput').value;
-  const output = document.getElementById('output');
+let pickedPath;
+
+const setResult = value => {
+  document.querySelector('#result').textContent = `Result: ${value}`;
+};
+
+const setFile = value => {
+  document.querySelector('#file').textContent = `File: ${value}`;
+};
+
+const runWithResult = async callback => {
   try {
-    const result = await TextRecognition.processImage({
-      path,
-      script,
-    });
-    output.textContent = JSON.stringify(result, null, 2);
+    await callback();
   } catch (error) {
-    output.textContent = `Error: ${error.message}`;
+    setResult(error.message || error);
   }
 };
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelector('#pick-image').addEventListener('click', () =>
+    runWithResult(async () => {
+      const { files } = await FilePicker.pickImages({ limit: 1 });
+      pickedPath = files[0].path;
+      setFile(files[0].name || pickedPath);
+    }),
+  );
+  document.querySelector('#process-image').addEventListener('click', () =>
+    runWithResult(async () => {
+      if (!pickedPath) {
+        setResult('Please pick an image first.');
+        return;
+      }
+      const script = document.querySelector('#script').value;
+      const { text, blocks } = await TextRecognition.processImage({
+        path: pickedPath,
+        script,
+      });
+      if (!text) {
+        setResult('No text recognized.');
+        return;
+      }
+      setResult(`${blocks.length} block(s): ${text}`);
+    }),
+  );
+});

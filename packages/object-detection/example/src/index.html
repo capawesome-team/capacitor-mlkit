@@ -1,45 +1,57 @@
 <!doctype html>
-<html lang="en" dir="ltr" class="hydrated">
+<html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
-    <title>Object Detection Example</title>
+    <title>ML Kit Object Detection</title>
     <meta
       name="viewport"
       content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
     <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+
+    <script
+      type="module"
+      src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css"
+    />
+
+    <script type="module" src="./js/script.js"></script>
   </head>
   <body>
-    <main>
-      <h1>Object Detection</h1>
-      <p>Enter the local path to an image file and process it.</p>
-      <label for="pathInput">Image path:</label>
-      <input
-        type="text"
-        id="pathInput"
-        name="pathInput"
-        placeholder="file:///path/to/image.jpg"
-      />
-      <label for="classificationInput">
-        <input
-          type="checkbox"
-          id="classificationInput"
-          name="classificationInput"
-        />
-        Enable classification
-      </label>
-      <label for="multipleObjectsInput">
-        <input
-          type="checkbox"
-          id="multipleObjectsInput"
-          name="multipleObjectsInput"
-        />
-        Enable multiple objects
-      </label>
-      <button onclick="processImage()">Process image</button>
-      <pre id="output"></pre>
-    </main>
-
-    <script src="./js/script.js" type="module"></script>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>ML Kit Object Detection</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-button id="pick-image" expand="block">Pick Image</ion-button>
+        <ion-item>
+          <ion-label id="file" class="ion-text-wrap">File: -</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-toggle id="enable-classification"
+            >Enable classification</ion-toggle
+          >
+        </ion-item>
+        <ion-item>
+          <ion-toggle id="enable-multiple-objects"
+            >Enable multiple objects</ion-toggle
+          >
+        </ion-item>
+        <ion-button id="process-image" expand="block">Process Image</ion-button>
+        <ion-item>
+          <ion-label id="result" class="ion-text-wrap">Result: -</ion-label>
+        </ion-item>
+      </ion-content>
+    </ion-app>
   </body>
 </html>

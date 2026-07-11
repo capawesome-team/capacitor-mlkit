@@ -1,29 +1,60 @@
 <!doctype html>
-<html lang="en" dir="ltr" class="hydrated">
+<html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
-    <title>Smart Reply Example</title>
+    <title>ML Kit Smart Reply</title>
     <meta
       name="viewport"
       content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
     <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+
+    <script
+      type="module"
+      src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css"
+    />
+
+    <script type="module" src="./js/script.js"></script>
   </head>
   <body>
-    <main>
-      <h1>ML Kit Smart Reply</h1>
-      <p>
-        Generates reply suggestions for the following (English) conversation:
-      </p>
-      <ul>
-        <li>Remote: Are you free for lunch today?</li>
-        <li>Local: Sure, where do you want to go?</li>
-        <li>Remote: How about the new place downtown?</li>
-      </ul>
-      <button onclick="suggestReplies()">Suggest Replies</button>
-      <pre id="output"></pre>
-    </main>
-
-    <script src="./js/script.js" type="module"></script>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>ML Kit Smart Reply</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-item>
+          <ion-textarea
+            id="conversation"
+            label="Conversation"
+            label-placement="stacked"
+            auto-grow="true"
+            rows="4"
+            value="remote: Are you free for lunch today?
+local: Sure, where do you want to go?
+remote: How about the new place downtown?"
+          ></ion-textarea>
+        </ion-item>
+        <ion-note class="ion-padding-horizontal">
+          Prefix each line with <code>local:</code> or <code>remote:</code>.
+        </ion-note>
+        <ion-button id="suggestReplies" expand="block"
+          >Suggest Replies</ion-button
+        >
+        <ion-item>
+          <ion-label id="result" class="ion-text-wrap">Result: -</ion-label>
+        </ion-item>
+      </ion-content>
+    </ion-app>
   </body>
 </html>

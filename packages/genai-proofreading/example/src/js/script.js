@@ -4,59 +4,64 @@ import {
   Language,
 } from '@capacitor-mlkit/genai-proofreading';
 
-const featureOptions = {
-  inputType: InputType.Keyboard,
-  language: Language.English,
+const setResult = value => {
+  document.querySelector('#result').textContent = `Result: ${value}`;
 };
 
-const outputElement = document.getElementById('output');
-
-const setOutput = text => {
-  outputElement.textContent = text;
+const appendResult = value => {
+  document.querySelector('#result').textContent += value;
 };
 
-const appendOutput = text => {
-  outputElement.textContent += text;
+const getFeatureOptions = () => ({
+  inputType: document.querySelector('#inputType').value,
+  language: document.querySelector('#language').value,
+});
+
+const runWithResult = async callback => {
+  try {
+    await callback();
+  } catch (error) {
+    setResult(error.message || error);
+  }
 };
 
 void GenAiProofreading.addListener('downloadProgress', event => {
-  setOutput(`Total bytes downloaded: ${event.totalBytesDownloaded}`);
+  setResult(`Downloaded ${event.totalBytesDownloaded} bytes`);
 });
 
 void GenAiProofreading.addListener('inferenceProgress', event => {
-  appendOutput(event.text);
+  appendResult(event.text);
 });
 
-window.checkFeatureStatus = async () => {
-  try {
-    const { featureStatus } =
-      await GenAiProofreading.checkFeatureStatus(featureOptions);
-    setOutput(`Feature status: ${featureStatus}`);
-  } catch (error) {
-    setOutput(`Error: ${error.message}`);
-  }
-};
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelector('#inputType').value = InputType.Keyboard;
+  document.querySelector('#language').value = Language.English;
 
-window.downloadFeature = async () => {
-  try {
-    setOutput('Downloading feature...');
-    await GenAiProofreading.downloadFeature(featureOptions);
-    setOutput('Feature downloaded.');
-  } catch (error) {
-    setOutput(`Error: ${error.message}`);
-  }
-};
-
-window.proofread = async () => {
-  try {
-    setOutput('');
-    const text = document.getElementById('textInput').value;
-    const { results } = await GenAiProofreading.proofread({
-      ...featureOptions,
-      text,
-    });
-    setOutput(results.join('\n\n'));
-  } catch (error) {
-    setOutput(`Error: ${error.message}`);
-  }
-};
+  document
+    .querySelector('#check-feature-status')
+    .addEventListener('click', () =>
+      runWithResult(async () => {
+        const { featureStatus } =
+          await GenAiProofreading.checkFeatureStatus(getFeatureOptions());
+        setResult(featureStatus);
+      }),
+    );
+  document.querySelector('#download-feature').addEventListener('click', () =>
+    runWithResult(async () => {
+      setResult('Downloading feature...');
+      await GenAiProofreading.downloadFeature(getFeatureOptions());
+      setResult('Feature downloaded');
+    }),
+  );
+  document.querySelector('#proofread').addEventListener('click', () =>
+    runWithResult(async () => {
+      setResult('');
+      const text = document.querySelector('#text').value;
+      const { results } = await GenAiProofreading.proofread({
+        ...getFeatureOptions(),
+        text,
+      });
+      setResult(results.join('\n\n'));
+    }),
+  );
+});

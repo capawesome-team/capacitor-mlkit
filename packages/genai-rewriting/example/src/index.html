@@ -1,45 +1,82 @@
 <!doctype html>
-<html lang="en" dir="ltr" class="hydrated">
+<html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
-    <title>GenAI Rewriting Example</title>
+    <title>ML Kit GenAI Rewriting</title>
     <meta
       name="viewport"
       content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
     <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+
+    <script
+      type="module"
+      src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css"
+    />
+
+    <script type="module" src="./js/script.js"></script>
   </head>
   <body>
-    <main>
-      <h1>GenAI Rewriting</h1>
-      <section>
-        <label for="outputTypeSelect">Rewrite style:</label>
-        <select id="outputTypeSelect">
-          <option value="ELABORATE">Elaborate</option>
-          <option value="EMOJIFY">Emojify</option>
-          <option value="SHORTEN">Shorten</option>
-          <option value="FRIENDLY">Friendly</option>
-          <option value="PROFESSIONAL">Professional</option>
-          <option value="REPHRASE">Rephrase</option>
-        </select>
-      </section>
-      <section>
-        <button onclick="checkFeatureStatus()">Check Feature Status</button>
-        <button onclick="downloadFeature()">Download Feature</button>
-      </section>
-      <section>
-        <label for="textInput">Text to rewrite:</label>
-        <textarea id="textInput" rows="6">
-Capacitor is an open source native runtime for building Web Native apps.</textarea
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>ML Kit GenAI Rewriting</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-item>
+          <ion-select id="outputType" label="Style" interface="popover">
+            <ion-select-option value="ELABORATE">Elaborate</ion-select-option>
+            <ion-select-option value="EMOJIFY">Emojify</ion-select-option>
+            <ion-select-option value="SHORTEN">Shorten</ion-select-option>
+            <ion-select-option value="FRIENDLY">Friendly</ion-select-option>
+            <ion-select-option value="PROFESSIONAL"
+              >Professional</ion-select-option
+            >
+            <ion-select-option value="REPHRASE">Rephrase</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-select id="language" label="Language" interface="popover">
+            <ion-select-option value="ENGLISH">English</ion-select-option>
+            <ion-select-option value="FRENCH">French</ion-select-option>
+            <ion-select-option value="GERMAN">German</ion-select-option>
+            <ion-select-option value="ITALIAN">Italian</ion-select-option>
+            <ion-select-option value="JAPANESE">Japanese</ion-select-option>
+            <ion-select-option value="KOREAN">Korean</ion-select-option>
+            <ion-select-option value="SPANISH">Spanish</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-textarea
+            id="text"
+            label="Text"
+            label-placement="stacked"
+            auto-grow="true"
+            rows="4"
+            value="Capacitor is an open source native runtime for building Web Native apps."
+          ></ion-textarea>
+        </ion-item>
+        <ion-button id="check-feature-status" expand="block"
+          >Check Feature Status</ion-button
         >
-        <button onclick="rewrite()">Rewrite</button>
-      </section>
-      <section>
-        <strong>Output:</strong>
-        <pre id="output"></pre>
-      </section>
-    </main>
-
-    <script src="./js/script.js" type="module"></script>
+        <ion-button id="download-feature" expand="block"
+          >Download Feature</ion-button
+        >
+        <ion-button id="rewrite" expand="block">Rewrite</ion-button>
+        <ion-item>
+          <ion-label id="result" class="ion-text-wrap">Result: -</ion-label>
+        </ion-item>
+      </ion-content>
+    </ion-app>
   </body>
 </html>

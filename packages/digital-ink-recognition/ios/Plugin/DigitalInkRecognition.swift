@@ -70,6 +70,8 @@ import MLKitDigitalInkRecognition
         recognizerOptions.maxResultCount = Int32(options.maxResultCount)
         let recognizer = DigitalInkRecognizer.digitalInkRecognizer(options: recognizerOptions)
         let handleRecognitionResult: (DigitalInkRecognitionResult?, Error?) -> Void = { recognitionResult, error in
+            // Keep the recognizer alive until recognition finishes; the SDK does not retain it.
+            withExtendedLifetime(recognizer) {}
             if let error = error {
                 completion(nil, error)
                 return

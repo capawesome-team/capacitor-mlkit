@@ -1,48 +1,74 @@
 <!doctype html>
-<html lang="en" dir="ltr" class="hydrated">
+<html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
-    <title>GenAI Speech Recognition Example</title>
+    <title>ML Kit GenAI Speech Recognition</title>
     <meta
       name="viewport"
       content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
     <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+
+    <script
+      type="module"
+      src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css"
+    />
+
+    <script type="module" src="./js/script.js"></script>
   </head>
   <body>
-    <main>
-      <h1>GenAI Speech Recognition</h1>
-      <section>
-        <button onclick="checkPermissions()">Check Permissions</button>
-        <button onclick="requestPermissions()">Request Permissions</button>
-      </section>
-      <section>
-        <label for="modeSelect">Mode:</label>
-        <select id="modeSelect">
-          <option value="BASIC" selected>Basic</option>
-          <option value="ADVANCED">Advanced</option>
-        </select>
-        <label for="localeInput">Locale:</label>
-        <input type="text" id="localeInput" value="en-US" />
-      </section>
-      <section>
-        <button onclick="checkFeatureStatus()">Check Feature Status</button>
-        <button onclick="downloadFeature()">Download Feature</button>
-      </section>
-      <section>
-        <button onclick="startRecognition()">Start Recognition</button>
-        <button onclick="stopRecognition()">Stop Recognition</button>
-      </section>
-      <section>
-        <strong>Partial result:</strong>
-        <pre id="partialResult"></pre>
-        <strong>Final result:</strong>
-        <pre id="finalResult"></pre>
-        <strong>Output:</strong>
-        <pre id="output"></pre>
-      </section>
-    </main>
-
-    <script src="./js/script.js" type="module"></script>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>ML Kit GenAI Speech Recognition</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-item>
+          <ion-select id="mode" label="Mode" interface="popover">
+            <ion-select-option value="BASIC">Basic</ion-select-option>
+            <ion-select-option value="ADVANCED">Advanced</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-input
+            id="locale"
+            label="Locale"
+            label-placement="stacked"
+            value="en-US"
+          ></ion-input>
+        </ion-item>
+        <ion-button id="check-permissions" expand="block"
+          >Check Permissions</ion-button
+        >
+        <ion-button id="request-permissions" expand="block"
+          >Request Permissions</ion-button
+        >
+        <ion-button id="check-feature-status" expand="block"
+          >Check Feature Status</ion-button
+        >
+        <ion-button id="download-feature" expand="block"
+          >Download Feature</ion-button
+        >
+        <ion-button id="start-recognition" expand="block"
+          >Start Recognition</ion-button
+        >
+        <ion-button id="stop-recognition" expand="block"
+          >Stop Recognition</ion-button
+        >
+        <ion-item>
+          <ion-label id="result" class="ion-text-wrap">Result: -</ion-label>
+        </ion-item>
+      </ion-content>
+    </ion-app>
   </body>
 </html>

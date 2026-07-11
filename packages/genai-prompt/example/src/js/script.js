@@ -1,53 +1,72 @@
 import { GenAiPrompt } from '@capacitor-mlkit/genai-prompt';
+import { FilePicker } from '@capawesome/capacitor-file-picker';
 
-const outputElement = document.getElementById('output');
+let pickedPath;
 
-const setOutput = text => {
-  outputElement.textContent = text;
+const setResult = value => {
+  document.querySelector('#result').textContent = `Result: ${value}`;
 };
 
-const appendOutput = text => {
-  outputElement.textContent += text;
+const appendResult = value => {
+  document.querySelector('#result').textContent += value;
+};
+
+const setFile = value => {
+  document.querySelector('#file').textContent = `File: ${value}`;
+};
+
+const runWithResult = async callback => {
+  try {
+    await callback();
+  } catch (error) {
+    setResult(error.message || error);
+  }
 };
 
 void GenAiPrompt.addListener('downloadProgress', event => {
-  setOutput(`Total bytes downloaded: ${event.totalBytesDownloaded}`);
+  setResult(`Downloading... ${event.totalBytesDownloaded} bytes`);
 });
 
 void GenAiPrompt.addListener('inferenceProgress', event => {
-  appendOutput(event.text);
+  appendResult(event.text);
 });
 
-window.checkFeatureStatus = async () => {
-  try {
-    const { featureStatus } = await GenAiPrompt.checkFeatureStatus();
-    setOutput(`Feature status: ${featureStatus}`);
-  } catch (error) {
-    setOutput(`Error: ${error.message}`);
-  }
-};
-
-window.downloadFeature = async () => {
-  try {
-    setOutput('Downloading feature...');
-    await GenAiPrompt.downloadFeature();
-    setOutput('Feature downloaded.');
-  } catch (error) {
-    setOutput(`Error: ${error.message}`);
-  }
-};
-
-window.generateContent = async () => {
-  try {
-    setOutput('');
-    const prompt = document.getElementById('promptInput').value;
-    const imagePath = document.getElementById('imagePathInput').value;
-    const { text } = await GenAiPrompt.generateContent({
-      prompt,
-      imagePath: imagePath || undefined,
-    });
-    setOutput(text);
-  } catch (error) {
-    setOutput(`Error: ${error.message}`);
-  }
-};
+document.addEventListener('DOMContentLoaded', () => {
+  document
+    .querySelector('#check-feature-status')
+    .addEventListener('click', () =>
+      runWithResult(async () => {
+        const { featureStatus } = await GenAiPrompt.checkFeatureStatus();
+        setResult(`Feature status: ${featureStatus}`);
+      }),
+    );
+  document.querySelector('#download-feature').addEventListener('click', () =>
+    runWithResult(async () => {
+      setResult('Downloading...');
+      await GenAiPrompt.downloadFeature();
+      setResult('Feature downloaded.');
+    }),
+  );
+  document.querySelector('#pick-image').addEventListener('click', () =>
+    runWithResult(async () => {
+      const { files } = await FilePicker.pickImages({ limit: 1 });
+      pickedPath = files[0].path;
+      setFile(files[0].name || pickedPath);
+    }),
+  );
+  document.querySelector('#generate-content').addEventListener('click', () =>
+    runWithResult(async () => {
+      const prompt = document.querySelector('#prompt').value;
+      if (!prompt) {
+        setResult('Please enter a prompt first.');
+        return;
+      }
+      setResult('');
+      const { text } = await GenAiPrompt.generateContent({
+        prompt,
+        imagePath: pickedPath || undefined,
+      });
+      setResult(text);
+    }),
+  );
+});
