@@ -141,10 +141,11 @@ typealias MLKitBarcodeScanner = MLKitBarcodeScanning.BarcodeScanner
     }
 
     @objc public func isTorchAvailable() -> Bool {
-        guard let device = cameraView?.getCaptureDevice() else {
-            return false
+        if let device = cameraView?.getCaptureDevice() {
+            return device.hasTorch
         }
-        return device.hasTorch
+        let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back)
+        return device?.hasTorch ?? false
     }
 
     @objc public func setZoomRatio(_ options: SetZoomRatioOptions) throws {
