@@ -226,6 +226,7 @@ No, this plugin only supports CocoaPods for iOS dependency management because th
 
 - [Translation](https://capawesome.io/docs/sdks/capacitor/mlkit/translation/): Translate a conversation before generating reply suggestions.
 - [Language Identification](https://capawesome.io/docs/sdks/capacitor/mlkit/language-identification/): Detect the language of a conversation.
+- [GenAI Rewriting](https://capawesome.io/docs/sdks/capacitor/mlkit/genai-rewriting/): Rewrite a generated reply suggestion in a different tone before sending it.
 
 ## Terms & Privacy
 

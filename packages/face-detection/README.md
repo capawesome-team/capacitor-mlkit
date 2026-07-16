@@ -341,6 +341,7 @@ Yes, the plugin is framework-agnostic. It works in any Capacitor app regardless 
 - [ML Kit Face Mesh Detection](https://capawesome.io/docs/sdks/capacitor/mlkit/face-mesh-detection/): Detect face meshes with 468 3D points in images.
 - [ML Kit Selfie Segmentation](https://capawesome.io/docs/sdks/capacitor/mlkit/selfie-segmentation/): Segment selfies from the background with ML Kit Selfie Segmentation.
 - [ML Kit Subject Segmentation](https://capawesome.io/docs/sdks/capacitor/mlkit/subject-segmentation/): Separate subjects from the background with ML Kit Subject Segmentation.
+- [ML Kit Pose Detection](https://capawesome.io/docs/sdks/capacitor/mlkit/pose-detection/): Detect body poses alongside faces in the same scene.
 
 ## Terms & Privacy
 

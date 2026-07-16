@@ -187,6 +187,7 @@ Yes, the plugin is framework-agnostic. It works in any Capacitor app regardless 
 - [ML Kit Barcode Scanning](https://capawesome.io/docs/sdks/capacitor/mlkit/barcode-scanning/): Scan barcodes with ML Kit Barcode Scanning.
 - [ML Kit Face Detection](https://capawesome.io/docs/sdks/capacitor/mlkit/face-detection/): Detect faces in images with ML Kit Face Detection.
 - [ML Kit Subject Segmentation](https://capawesome.io/docs/sdks/capacitor/mlkit/subject-segmentation/): Separate subjects from the background with ML Kit Subject Segmentation.
+- [ML Kit Text Recognition](https://capawesome.io/docs/sdks/capacitor/mlkit/text-recognition/): Recognize text in images alongside general image labels.
 
 ## Terms & Privacy
 
