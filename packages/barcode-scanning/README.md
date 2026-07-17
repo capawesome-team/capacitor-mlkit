@@ -1255,7 +1255,6 @@ Yes, the plugin is framework-agnostic. It works in any Capacitor app regardless 
 - [Torch](https://capawesome.io/docs/sdks/capacitor/torch/): Switch the flashlight on and off during a scan session.
 - [File Picker](https://capawesome.io/docs/sdks/capacitor/file-picker/): Let the user select an image from the file system or gallery to read barcodes from.
 - [ML Kit Document Scanner](https://capawesome.io/docs/sdks/capacitor/mlkit/document-scanner/): Scan physical documents with ML Kit Document Scanner.
-- [PixLive](https://capawesome.io/docs/sdks/capacitor/pixlive/): Build augmented reality experiences that also react to scanned barcodes and QR codes.
 
 ## Terms & Privacy
 
