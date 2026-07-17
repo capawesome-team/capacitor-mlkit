@@ -350,6 +350,7 @@ Yes, the plugin is framework-agnostic. It works in any Capacitor app regardless 
 
 - [Translation](https://capawesome.io/docs/sdks/capacitor/mlkit/translation/): Unofficial Capacitor plugin for ML Kit Translation.
 - [Smart Reply](https://capawesome.io/docs/sdks/capacitor/mlkit/smart-reply/): Unofficial Capacitor plugin for ML Kit Smart Reply.
+- [GenAI Prompt](https://capawesome.io/docs/sdks/capacitor/mlkit/genai-prompt/): Run custom GenAI prompts, for example to expand on a generated image description.
 
 ## Terms & Privacy
 

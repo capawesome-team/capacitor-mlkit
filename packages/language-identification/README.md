@@ -228,6 +228,8 @@ No, this plugin only supports CocoaPods for iOS dependency management because th
 
 - [Translation](https://capawesome.io/docs/sdks/capacitor/mlkit/translation/): Translate text once its language has been identified.
 - [Smart Reply](https://capawesome.io/docs/sdks/capacitor/mlkit/smart-reply/): Generate reply suggestions for a conversation.
+- [ML Kit Digital Ink Recognition](https://capawesome.io/docs/sdks/capacitor/mlkit/digital-ink-recognition/): Recognize handwriting, then identify the language of the recognized text.
+- [GenAI Speech Recognition](https://capawesome.io/docs/sdks/capacitor/mlkit/genai-speech-recognition/): Transcribe speech, then identify the language of the transcript.
 
 ## Terms & Privacy
 

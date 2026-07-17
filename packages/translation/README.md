@@ -379,6 +379,7 @@ No, this plugin only supports CocoaPods for iOS dependency management because th
 - [Speech Recognition](https://capawesome.io/docs/sdks/capacitor/speech-recognition/): Transcribe speech into text, for example to translate it afterwards.
 - [Speech Synthesis](https://capawesome.io/docs/sdks/capacitor/speech-synthesis/): Synthesize speech from text, for example to read translated text aloud.
 - [App Language](https://capawesome.io/docs/sdks/capacitor/app-language/): Manage the app's own language override, independent of the device language.
+- [ML Kit Entity Extraction](https://capawesome.io/docs/sdks/capacitor/mlkit/entity-extraction/): Extract entities such as addresses and dates from text before or after translating it.
 
 ## Terms & Privacy
 
