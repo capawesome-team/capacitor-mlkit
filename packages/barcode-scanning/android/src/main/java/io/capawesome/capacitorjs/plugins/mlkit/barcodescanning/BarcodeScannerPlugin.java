@@ -4,9 +4,10 @@
 package io.capawesome.capacitorjs.plugins.mlkit.barcodescanning;
 
 import android.Manifest;
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Point;
 import android.util.DisplayMetrics;
-import android.util.Size;
 import androidx.activity.result.ActivityResult;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -184,44 +185,10 @@ public class BarcodeScannerPlugin extends Plugin {
                     @Override
                     public void success(boolean isAvailable) {
                         if (isAvailable) {
-                            implementation.scan(
-                                scanSettings,
-                                (new ScanResultCallback() {
-                                        @Override
-                                        public void success(Barcode barcode) {
-                                            JSObject barcodeResult = BarcodeScannerHelper.createBarcodeResultForBarcode(
-                                                barcode,
-                                                null,
-                                                null
-                                            );
-
-                                            JSArray barcodeResults = new JSArray();
-                                            barcodeResults.put(barcodeResult);
-
-                                            JSObject result = new JSObject();
-                                            result.put("barcodes", barcodeResults);
-
-                                            try {
-                                                implementation.storePendingScanResult(result);
-                                            } catch (Exception exception) {
-                                                Logger.error(TAG, "Failed to persist pending scan result.", exception);
-                                            }
-
-                                            call.resolve(result);
-                                        }
-
-                                        @Override
-                                        public void cancel() {
-                                            call.reject(ERROR_SCAN_CANCELED);
-                                        }
-
-                                        @Override
-                                        public void error(Exception exception) {
-                                            Logger.error(TAG, exception.getMessage(), exception);
-                                            call.reject(exception.getMessage());
-                                        }
-                                    })
-                            );
+                            Intent intent = new Intent(getContext(), GoogleBarcodeScannerActivity.class);
+                            intent.putExtra(GoogleBarcodeScannerActivity.EXTRA_FORMATS, scanSettings.formats);
+                            intent.putExtra(GoogleBarcodeScannerActivity.EXTRA_AUTO_ZOOM, scanSettings.autoZoom);
+                            startActivityForResult(call, intent, "scanResult");
                         } else {
                             call.reject(ERROR_GOOGLE_BARCODE_SCANNER_MODULE_NOT_AVAILABLE);
                         }
@@ -491,6 +458,61 @@ public class BarcodeScannerPlugin extends Plugin {
             call.resolve();
         } catch (Exception exception) {
             Logger.error(TAG, exception.getMessage(), exception);
+        }
+    }
+
+    @ActivityCallback
+    public void scanResult(PluginCall call, ActivityResult activityResult) {
+        try {
+            if (call == null) {
+                Logger.debug("scanResult was called with empty call parameter.");
+                return;
+            }
+
+            int resultCode = activityResult.getResultCode();
+            Intent data = activityResult.getData();
+
+            if (resultCode == Activity.RESULT_CANCELED) {
+                call.reject(ERROR_SCAN_CANCELED);
+                return;
+            }
+
+            if (resultCode == GoogleBarcodeScannerActivity.RESULT_ERROR) {
+                String errorMessage = data != null ? data.getStringExtra(GoogleBarcodeScannerActivity.EXTRA_ERROR_MESSAGE) : null;
+                call.reject(errorMessage != null ? errorMessage : "scan failed.");
+                return;
+            }
+
+            if (resultCode != Activity.RESULT_OK || data == null) {
+                call.reject("scan failed.");
+                return;
+            }
+
+            String barcodeResultJson = data.getStringExtra(GoogleBarcodeScannerActivity.EXTRA_BARCODE_RESULT_JSON);
+            if (barcodeResultJson == null) {
+                call.reject("scan failed.");
+                return;
+            }
+
+            JSObject barcodeResult = new JSObject(barcodeResultJson);
+            JSArray barcodeResults = new JSArray();
+            barcodeResults.put(barcodeResult);
+
+            JSObject result = new JSObject();
+            result.put("barcodes", barcodeResults);
+
+            try {
+                implementation.storePendingScanResult(result);
+            } catch (Exception exception) {
+                Logger.error(TAG, "Failed to persist pending scan result.", exception);
+            }
+
+            call.resolve(result);
+        } catch (Exception exception) {
+            Logger.error(TAG, exception.getMessage(), exception);
+            if (call != null) {
+                call.reject(exception.getMessage());
+            }
         }
     }
 
