@@ -4,9 +4,7 @@
 package io.capawesome.capacitorjs.plugins.mlkit.barcodescanning;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -54,13 +52,8 @@ import io.capawesome.capacitorjs.plugins.mlkit.barcodescanning.classes.results.G
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import org.json.JSONObject;
 
 public class BarcodeScanner implements ImageAnalysis.Analyzer {
-
-    private static final String PREFERENCES_NAME = "capawesome_barcode_scanner";
-    private static final String PENDING_SCAN_RESULT_KEY = "pending_scan_result";
-    private static final long DEFAULT_PENDING_SCAN_RESULT_MAX_AGE_MS = 10 * 60 * 1000;
 
     @Nullable
     private static Camera camera;
@@ -223,55 +216,6 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
             .addOnFailureListener(exception -> {
                 callback.error(exception);
             });
-    }
-
-    public void storePendingScanResult(JSObject scanResult) throws Exception {
-        JSObject payload = new JSObject();
-        payload.put("schemaVersion", 1);
-        payload.put("createdAt", System.currentTimeMillis());
-        payload.put("scanResult", scanResult);
-
-        getPreferences().edit().putString(PENDING_SCAN_RESULT_KEY, payload.toString()).apply();
-    }
-
-    @Nullable
-    public JSObject getPendingScanResult(@Nullable Long maxAgeMs) {
-        String rawPayload = getPreferences().getString(PENDING_SCAN_RESULT_KEY, null);
-        if (rawPayload == null) {
-            return null;
-        }
-
-        long maxAge = maxAgeMs != null ? maxAgeMs : DEFAULT_PENDING_SCAN_RESULT_MAX_AGE_MS;
-
-        try {
-            JSONObject payload = new JSONObject(rawPayload);
-            long createdAt = payload.optLong("createdAt", 0L);
-            if (createdAt <= 0L) {
-                clearPendingScanResult();
-                return null;
-            }
-
-            long age = Math.max(0L, System.currentTimeMillis() - createdAt);
-            if (age > maxAge) {
-                clearPendingScanResult();
-                return null;
-            }
-
-            JSONObject scanResult = payload.optJSONObject("scanResult");
-            if (scanResult == null) {
-                clearPendingScanResult();
-                return null;
-            }
-
-            return new JSObject(scanResult.toString());
-        } catch (Exception exception) {
-            clearPendingScanResult();
-            return null;
-        }
-    }
-
-    public void clearPendingScanResult() {
-        getPreferences().edit().remove(PENDING_SCAN_RESULT_KEY).apply();
     }
 
     public void isGoogleBarcodeScannerModuleAvailable(IsGoogleBarodeScannerModuleAvailableResultCallback callback) {
@@ -527,9 +471,5 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
             }
         }
         return barcodesWithEnoughVotes;
-    }
-
-    private SharedPreferences getPreferences() {
-        return plugin.getContext().getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE);
     }
 }
