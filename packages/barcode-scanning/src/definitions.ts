@@ -145,6 +145,26 @@ export interface BarcodeScannerPlugin {
    */
   installGoogleBarcodeScannerModule(): Promise<void>;
   /**
+   * Returns a previously persisted pending scan result, if present.
+   *
+   * The pending result expires after `maxAgeMs`.
+   *
+   * Only available on Android.
+   *
+   * @since 8.0.2-local
+   */
+  getPendingScanResult(
+    options?: GetPendingScanResultOptions,
+  ): Promise<GetPendingScanResultResult>;
+  /**
+   * Clears any previously persisted pending scan result.
+   *
+   * Only available on Android.
+   *
+   * @since 8.0.2-local
+   */
+  clearPendingScanResult(): Promise<void>;
+  /**
    * Check camera permission.
    *
    * @since 0.0.1
@@ -285,6 +305,28 @@ export interface ReadBarcodesFromImageResult {
    * @since 0.0.1
    */
   barcodes: Barcode[];
+}
+
+/**
+ * @since 8.0.2-local
+ */
+export interface GetPendingScanResultOptions {
+  /**
+   * Maximum age in milliseconds for a pending result to be considered valid.
+   *
+   * @default 600000
+   */
+  maxAgeMs?: number;
+}
+
+/**
+ * @since 8.0.2-local
+ */
+export interface GetPendingScanResultResult {
+  /**
+   * Pending scan result, if available.
+   */
+  scanResult?: ScanResult;
 }
 
 /**

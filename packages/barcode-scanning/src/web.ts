@@ -12,6 +12,8 @@ import type {
   GetMaxZoomRatioResult,
   GetMinZoomRatioResult,
   GetZoomRatioResult,
+  GetPendingScanResultOptions,
+  GetPendingScanResultResult,
   IsGoogleBarcodeScannerModuleAvailableResult,
   IsSupportedResult,
   IsTorchAvailableResult,
@@ -169,6 +171,16 @@ export class BarcodeScannerWeb
   }
 
   async installGoogleBarcodeScannerModule(): Promise<void> {
+    throw this.createUnimplementedException();
+  }
+
+  async getPendingScanResult(
+    _options?: GetPendingScanResultOptions,
+  ): Promise<GetPendingScanResultResult> {
+    throw this.createUnimplementedException();
+  }
+
+  async clearPendingScanResult(): Promise<void> {
     throw this.createUnimplementedException();
   }
 

@@ -53,6 +53,7 @@ public class BarcodeScannerPlugin extends Plugin {
     public static final String ERROR_GOOGLE_BARCODE_SCANNER_MODULE_ALREADY_INSTALLED =
         "The Google Barcode Scanner Module is already installed.";
     public static final String ERROR_PERMISSION_DENIED = "User denied access to camera.";
+    public static final long DEFAULT_PENDING_SCAN_RESULT_MAX_AGE_MS = 10 * 60 * 1000;
 
     private BarcodeScanner implementation;
 
@@ -199,6 +200,13 @@ public class BarcodeScannerPlugin extends Plugin {
 
                                             JSObject result = new JSObject();
                                             result.put("barcodes", barcodeResults);
+
+                                            try {
+                                                implementation.storePendingScanResult(result);
+                                            } catch (Exception exception) {
+                                                Logger.error(TAG, "Failed to persist pending scan result.", exception);
+                                            }
+
                                             call.resolve(result);
                                         }
 
@@ -422,6 +430,35 @@ public class BarcodeScannerPlugin extends Plugin {
                     }
                 }
             );
+        } catch (Exception exception) {
+            Logger.error(TAG, exception.getMessage(), exception);
+            call.reject(exception.getMessage());
+        }
+    }
+
+    @PluginMethod
+    public void getPendingScanResult(PluginCall call) {
+        try {
+            Long maxAgeMs = call.getLong("maxAgeMs", DEFAULT_PENDING_SCAN_RESULT_MAX_AGE_MS);
+            JSObject scanResult = implementation.getPendingScanResult(maxAgeMs);
+
+            JSObject result = new JSObject();
+            if (scanResult != null) {
+                result.put("scanResult", scanResult);
+            }
+
+            call.resolve(result);
+        } catch (Exception exception) {
+            Logger.error(TAG, exception.getMessage(), exception);
+            call.reject(exception.getMessage());
+        }
+    }
+
+    @PluginMethod
+    public void clearPendingScanResult(PluginCall call) {
+        try {
+            implementation.clearPendingScanResult();
+            call.resolve();
         } catch (Exception exception) {
             Logger.error(TAG, exception.getMessage(), exception);
             call.reject(exception.getMessage());
