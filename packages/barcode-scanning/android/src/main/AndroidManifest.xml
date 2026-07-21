@@ -2,7 +2,7 @@
 
 	<application>
 		<activity
-			android:name=".GoogleBarcodeScannerActivity"
+			android:name="io.capawesome.capacitorjs.plugins.mlkit.barcodescanning.GoogleBarcodeScannerActivity"
 			android:exported="false" />
 	</application>
 
