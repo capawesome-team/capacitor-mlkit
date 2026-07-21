@@ -31,12 +31,12 @@ public class GoogleBarcodeScannerActivity extends ComponentActivity {
                 formats = new int[] { Barcode.FORMAT_ALL_FORMATS };
             }
 
-            GmsBarcodeScannerOptions options;
+            int[] additionalFormats = formats.length > 1 ? java.util.Arrays.copyOfRange(formats, 1, formats.length) : new int[] {};
+            GmsBarcodeScannerOptions.Builder builder = new GmsBarcodeScannerOptions.Builder().setBarcodeFormats(formats[0], additionalFormats);
             if (autoZoom) {
-                options = new GmsBarcodeScannerOptions.Builder().setBarcodeFormats(formats[0], formats).enableAutoZoom().build();
-            } else {
-                options = new GmsBarcodeScannerOptions.Builder().setBarcodeFormats(formats[0], formats).build();
+                builder.enableAutoZoom();
             }
+            GmsBarcodeScannerOptions options = builder.build();
 
             GmsBarcodeScanner scanner = GmsBarcodeScanning.getClient(this, options);
             scanner
