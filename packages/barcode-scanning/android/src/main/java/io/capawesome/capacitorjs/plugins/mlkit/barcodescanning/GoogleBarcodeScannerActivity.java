@@ -3,14 +3,14 @@ package io.capawesome.capacitorjs.plugins.mlkit.barcodescanning;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.activity.ComponentActivity;
 import com.getcapacitor.JSObject;
 import com.google.mlkit.vision.barcode.common.Barcode;
 import com.google.mlkit.vision.codescanner.GmsBarcodeScanner;
 import com.google.mlkit.vision.codescanner.GmsBarcodeScannerOptions;
 import com.google.mlkit.vision.codescanner.GmsBarcodeScanning;
 
-public class GoogleBarcodeScannerActivity extends AppCompatActivity {
+public class GoogleBarcodeScannerActivity extends ComponentActivity {
 
     public static final String EXTRA_FORMATS = "formats";
     public static final String EXTRA_AUTO_ZOOM = "autoZoom";
