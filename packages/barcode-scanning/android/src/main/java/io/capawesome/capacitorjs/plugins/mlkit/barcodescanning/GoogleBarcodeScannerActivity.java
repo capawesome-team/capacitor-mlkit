@@ -60,7 +60,7 @@ public class GoogleBarcodeScannerActivity extends ComponentActivity {
                 });
         } catch (Exception exception) {
             Intent result = new Intent();
-            result.putExtra(EXTRA_ERROR_MESSAGE, exception.getMessage());
+            result.putExtra(EXTRA_ERROR_MESSAGE, exception.getMessage() != null ? exception.getMessage() : exception.toString());
             setResult(RESULT_ERROR, result);
             finish();
         }
