@@ -42,13 +42,19 @@ public class EntityExtraction {
 
     public void deleteDownloadedModel(@NonNull DeleteDownloadedModelOptions options, @NonNull EmptyCallback callback) {
         EntityExtractionRemoteModel model = new EntityExtractionRemoteModel.Builder(options.getModelIdentifier()).build();
-        modelManager.deleteDownloadedModel(model).addOnSuccessListener(unused -> callback.success()).addOnFailureListener(callback::error);
+        modelManager
+            .deleteDownloadedModel(model)
+            .addOnSuccessListener(unused -> callback.success())
+            .addOnFailureListener(callback::error);
     }
 
     public void downloadModel(@NonNull DownloadModelOptions options, @NonNull EmptyCallback callback) {
         EntityExtractionRemoteModel model = new EntityExtractionRemoteModel.Builder(options.getModelIdentifier()).build();
         DownloadConditions conditions = new DownloadConditions.Builder().build();
-        modelManager.download(model, conditions).addOnSuccessListener(unused -> callback.success()).addOnFailureListener(callback::error);
+        modelManager
+            .download(model, conditions)
+            .addOnSuccessListener(unused -> callback.success())
+            .addOnFailureListener(callback::error);
     }
 
     public void extractEntities(@NonNull ExtractEntitiesOptions options, @NonNull NonEmptyResultCallback<ExtractEntitiesResult> callback) {

@@ -30,25 +30,23 @@ public class ImageLabeling {
         ImageLabelerOptions imageLabelerOptions = new ImageLabelerOptions.Builder().setConfidenceThreshold(confidenceThreshold).build();
 
         final ImageLabeler imageLabeler = com.google.mlkit.vision.label.ImageLabeling.getClient(imageLabelerOptions);
-        plugin
-            .getActivity()
-            .runOnUiThread(() -> {
-                imageLabeler
-                    .process(inputImage)
-                    .addOnSuccessListener(labels -> {
-                        imageLabeler.close();
-                        ProcessImageResult result = new ProcessImageResult(labels);
-                        callback.success(result);
-                    })
-                    .addOnCanceledListener(() -> {
-                        imageLabeler.close();
-                        callback.error(new Exception(ImageLabelingPlugin.ERROR_PROCESS_IMAGE_CANCELED));
-                    })
-                    .addOnFailureListener(exception -> {
-                        imageLabeler.close();
-                        callback.error(exception);
-                    });
-            });
+        plugin.getActivity().runOnUiThread(() -> {
+            imageLabeler
+                .process(inputImage)
+                .addOnSuccessListener(labels -> {
+                    imageLabeler.close();
+                    ProcessImageResult result = new ProcessImageResult(labels);
+                    callback.success(result);
+                })
+                .addOnCanceledListener(() -> {
+                    imageLabeler.close();
+                    callback.error(new Exception(ImageLabelingPlugin.ERROR_PROCESS_IMAGE_CANCELED));
+                })
+                .addOnFailureListener(exception -> {
+                    imageLabeler.close();
+                    callback.error(exception);
+                });
+        });
     }
 
     @Nullable
