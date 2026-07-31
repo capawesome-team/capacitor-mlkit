@@ -26,8 +26,9 @@ public class ObjectDetection {
             return;
         }
 
-        ObjectDetectorOptions.Builder optionsBuilder = new ObjectDetectorOptions.Builder()
-            .setDetectorMode(ObjectDetectorOptions.SINGLE_IMAGE_MODE);
+        ObjectDetectorOptions.Builder optionsBuilder = new ObjectDetectorOptions.Builder().setDetectorMode(
+            ObjectDetectorOptions.SINGLE_IMAGE_MODE
+        );
         if (options.isClassificationEnabled()) {
             optionsBuilder.enableClassification();
         }
@@ -36,25 +37,23 @@ public class ObjectDetection {
         }
 
         final ObjectDetector objectDetector = com.google.mlkit.vision.objects.ObjectDetection.getClient(optionsBuilder.build());
-        plugin
-            .getActivity()
-            .runOnUiThread(() -> {
-                objectDetector
-                    .process(inputImage)
-                    .addOnSuccessListener(detectedObjects -> {
-                        objectDetector.close();
-                        ProcessImageResult result = new ProcessImageResult(detectedObjects);
-                        callback.success(result);
-                    })
-                    .addOnCanceledListener(() -> {
-                        objectDetector.close();
-                        callback.error(new Exception(ObjectDetectionPlugin.ERROR_PROCESS_IMAGE_CANCELED));
-                    })
-                    .addOnFailureListener(exception -> {
-                        objectDetector.close();
-                        callback.error(exception);
-                    });
-            });
+        plugin.getActivity().runOnUiThread(() -> {
+            objectDetector
+                .process(inputImage)
+                .addOnSuccessListener(detectedObjects -> {
+                    objectDetector.close();
+                    ProcessImageResult result = new ProcessImageResult(detectedObjects);
+                    callback.success(result);
+                })
+                .addOnCanceledListener(() -> {
+                    objectDetector.close();
+                    callback.error(new Exception(ObjectDetectionPlugin.ERROR_PROCESS_IMAGE_CANCELED));
+                })
+                .addOnFailureListener(exception -> {
+                    objectDetector.close();
+                    callback.error(exception);
+                });
+        });
     }
 
     @Nullable

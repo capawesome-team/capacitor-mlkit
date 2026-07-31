@@ -38,25 +38,23 @@ public class PoseDetection {
         }
 
         final PoseDetector poseDetector = com.google.mlkit.vision.pose.PoseDetection.getClient(poseDetectorOptions);
-        plugin
-            .getActivity()
-            .runOnUiThread(() -> {
-                poseDetector
-                    .process(inputImage)
-                    .addOnSuccessListener(pose -> {
-                        poseDetector.close();
-                        ProcessImageResult result = new ProcessImageResult(pose);
-                        callback.success(result);
-                    })
-                    .addOnCanceledListener(() -> {
-                        poseDetector.close();
-                        callback.error(new Exception(PoseDetectionPlugin.ERROR_PROCESS_IMAGE_CANCELED));
-                    })
-                    .addOnFailureListener(exception -> {
-                        poseDetector.close();
-                        callback.error(exception);
-                    });
-            });
+        plugin.getActivity().runOnUiThread(() -> {
+            poseDetector
+                .process(inputImage)
+                .addOnSuccessListener(pose -> {
+                    poseDetector.close();
+                    ProcessImageResult result = new ProcessImageResult(pose);
+                    callback.success(result);
+                })
+                .addOnCanceledListener(() -> {
+                    poseDetector.close();
+                    callback.error(new Exception(PoseDetectionPlugin.ERROR_PROCESS_IMAGE_CANCELED));
+                })
+                .addOnFailureListener(exception -> {
+                    poseDetector.close();
+                    callback.error(exception);
+                });
+        });
     }
 
     @Nullable

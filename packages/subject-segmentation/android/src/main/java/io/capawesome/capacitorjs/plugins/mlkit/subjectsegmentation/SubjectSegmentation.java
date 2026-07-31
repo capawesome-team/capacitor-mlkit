@@ -69,87 +69,80 @@ public class SubjectSegmentation {
             subjectSegmenterOptions
         );
 
-        plugin
-            .getActivity()
-            .runOnUiThread(() ->
-                segmenter
-                    .process(inputImage)
-                    .addOnSuccessListener(segmentationResult -> {
-                        segmenter.close();
+        plugin.getActivity().runOnUiThread(() ->
+            segmenter
+                .process(inputImage)
+                .addOnSuccessListener(segmentationResult -> {
+                    segmenter.close();
 
-                        List<Subject> subjects = segmentationResult.getSubjects();
+                    List<Subject> subjects = segmentationResult.getSubjects();
 
-                        int[] colors = new int[inputImage.getWidth() * inputImage.getHeight()];
-                        for (Subject subject : subjects) {
-                            FloatBuffer mask = subject.getConfidenceMask();
-                            assert mask != null;
-                            for (int i = 0; i < subject.getWidth() * subject.getHeight(); i++) {
-                                float confidence = mask.get(i);
-                                if (confidence > threshold) {
-                                    int x = subject.getStartX() + (i % subject.getWidth());
-                                    int y = subject.getStartY() + (i / subject.getWidth());
-                                    int position = y * inputImage.getWidth() + x;
+                    int[] colors = new int[inputImage.getWidth() * inputImage.getHeight()];
+                    for (Subject subject : subjects) {
+                        FloatBuffer mask = subject.getConfidenceMask();
+                        assert mask != null;
+                        for (int i = 0; i < subject.getWidth() * subject.getHeight(); i++) {
+                            float confidence = mask.get(i);
+                            if (confidence > threshold) {
+                                int x = subject.getStartX() + (i % subject.getWidth());
+                                int y = subject.getStartY() + (i / subject.getWidth());
+                                int position = y * inputImage.getWidth() + x;
 
-                                    colors[position] = Color.argb(128, 255, 0, 255);
-                                }
+                                colors[position] = Color.argb(128, 255, 0, 255);
                             }
                         }
+                    }
 
-                        Bitmap maskBitmap = Bitmap.createBitmap(
-                            colors,
-                            inputImage.getWidth(),
-                            inputImage.getHeight(),
-                            Bitmap.Config.ARGB_8888
+                    Bitmap maskBitmap = Bitmap.createBitmap(colors, inputImage.getWidth(), inputImage.getHeight(), Bitmap.Config.ARGB_8888);
+
+                    Bitmap originalBitmap = Bitmap.createScaledBitmap(
+                        Objects.requireNonNull(inputImage.getBitmapInternal()),
+                        maskBitmap.getWidth(),
+                        maskBitmap.getHeight(),
+                        true
+                    );
+
+                    Bitmap resultBitmap = Bitmap.createBitmap(maskBitmap.getWidth(), maskBitmap.getHeight(), Bitmap.Config.ARGB_8888);
+
+                    Canvas canvas = new Canvas(resultBitmap);
+                    canvas.drawBitmap(originalBitmap, 0, 0, null);
+
+                    Paint paint = new Paint();
+                    paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
+                    canvas.drawBitmap(maskBitmap, 0, 0, paint);
+
+                    // Create an image file name
+                    @SuppressLint("SimpleDateFormat")
+                    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+                    String imageFileName = "PNG_" + timeStamp + "_";
+
+                    try {
+                        File image = File.createTempFile(imageFileName, ".png");
+
+                        OutputStream stream = new FileOutputStream(image);
+                        resultBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                        stream.close();
+
+                        ProcessImageResult result = new ProcessImageResult(
+                            image.getAbsolutePath(),
+                            resultBitmap.getWidth(),
+                            resultBitmap.getHeight()
                         );
 
-                        Bitmap originalBitmap = Bitmap.createScaledBitmap(
-                            Objects.requireNonNull(inputImage.getBitmapInternal()),
-                            maskBitmap.getWidth(),
-                            maskBitmap.getHeight(),
-                            true
-                        );
-
-                        Bitmap resultBitmap = Bitmap.createBitmap(maskBitmap.getWidth(), maskBitmap.getHeight(), Bitmap.Config.ARGB_8888);
-
-                        Canvas canvas = new Canvas(resultBitmap);
-                        canvas.drawBitmap(originalBitmap, 0, 0, null);
-
-                        Paint paint = new Paint();
-                        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
-                        canvas.drawBitmap(maskBitmap, 0, 0, paint);
-
-                        // Create an image file name
-                        @SuppressLint("SimpleDateFormat")
-                        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-                        String imageFileName = "PNG_" + timeStamp + "_";
-
-                        try {
-                            File image = File.createTempFile(imageFileName, ".png");
-
-                            OutputStream stream = new FileOutputStream(image);
-                            resultBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                            stream.close();
-
-                            ProcessImageResult result = new ProcessImageResult(
-                                image.getAbsolutePath(),
-                                resultBitmap.getWidth(),
-                                resultBitmap.getHeight()
-                            );
-
-                            callback.success(result);
-                        } catch (Exception exception) {
-                            callback.error(exception);
-                        }
-                    })
-                    .addOnCanceledListener(() -> {
-                        segmenter.close();
-                        callback.cancel();
-                    })
-                    .addOnFailureListener(exception -> {
-                        segmenter.close();
+                        callback.success(result);
+                    } catch (Exception exception) {
                         callback.error(exception);
-                    })
-            );
+                    }
+                })
+                .addOnCanceledListener(() -> {
+                    segmenter.close();
+                    callback.cancel();
+                })
+                .addOnFailureListener(exception -> {
+                    segmenter.close();
+                    callback.error(exception);
+                })
+        );
     }
 
     public void isSubjectSegmentationScannerModuleAvailable(IsGoogleSubjectSegmentationModuleAvailableResultCallback callback) {

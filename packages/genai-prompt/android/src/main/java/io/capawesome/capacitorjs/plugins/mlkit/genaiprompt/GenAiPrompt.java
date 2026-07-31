@@ -47,57 +47,51 @@ public class GenAiPrompt {
     public void checkFeatureStatus(@NonNull NonEmptyResultCallback<CheckFeatureStatusResult> callback) {
         GenerativeModelFutures generativeModel = getGenerativeModel();
         ListenableFuture<Integer> future = generativeModel.checkStatus();
-        future.addListener(
-            () -> {
-                try {
-                    int featureStatus = future.get();
-                    callback.success(new CheckFeatureStatusResult(featureStatus));
-                } catch (Exception exception) {
-                    callback.error(unwrapException(exception));
-                }
-            },
-            executor
-        );
+        future.addListener(() -> {
+            try {
+                int featureStatus = future.get();
+                callback.success(new CheckFeatureStatusResult(featureStatus));
+            } catch (Exception exception) {
+                callback.error(unwrapException(exception));
+            }
+        }, executor);
     }
 
     public void downloadFeature(@NonNull EmptyCallback callback) {
         GenerativeModelFutures generativeModel = getGenerativeModel();
         ListenableFuture<Integer> future = generativeModel.checkStatus();
-        future.addListener(
-            () -> {
-                try {
-                    int featureStatus = future.get();
-                    if (featureStatus == FeatureStatus.AVAILABLE) {
-                        callback.success();
-                        return;
-                    }
-                    generativeModel.download(
-                        new DownloadCallback() {
-                            @Override
-                            public void onDownloadStarted(long bytesToDownload) {}
-
-                            @Override
-                            public void onDownloadProgress(long totalBytesDownloaded) {
-                                plugin.notifyDownloadProgressListeners(new DownloadProgressEvent(totalBytesDownloaded));
-                            }
-
-                            @Override
-                            public void onDownloadCompleted() {
-                                callback.success();
-                            }
-
-                            @Override
-                            public void onDownloadFailed(@NonNull GenAiException exception) {
-                                callback.error(exception);
-                            }
-                        }
-                    );
-                } catch (Exception exception) {
-                    callback.error(unwrapException(exception));
+        future.addListener(() -> {
+            try {
+                int featureStatus = future.get();
+                if (featureStatus == FeatureStatus.AVAILABLE) {
+                    callback.success();
+                    return;
                 }
-            },
-            executor
-        );
+                generativeModel.download(
+                    new DownloadCallback() {
+                        @Override
+                        public void onDownloadStarted(long bytesToDownload) {}
+
+                        @Override
+                        public void onDownloadProgress(long totalBytesDownloaded) {
+                            plugin.notifyDownloadProgressListeners(new DownloadProgressEvent(totalBytesDownloaded));
+                        }
+
+                        @Override
+                        public void onDownloadCompleted() {
+                            callback.success();
+                        }
+
+                        @Override
+                        public void onDownloadFailed(@NonNull GenAiException exception) {
+                            callback.error(exception);
+                        }
+                    }
+                );
+            } catch (Exception exception) {
+                callback.error(unwrapException(exception));
+            }
+        }, executor);
     }
 
     public void generateContent(@NonNull GenerateContentOptions options, @NonNull NonEmptyResultCallback<GenerateContentResult> callback) {
@@ -125,17 +119,14 @@ public class GenAiPrompt {
         ListenableFuture<GenerateContentResponse> future = generativeModel.generateContent(requestBuilder.build(), additionalText ->
             plugin.notifyInferenceProgressListeners(new InferenceProgressEvent(additionalText))
         );
-        future.addListener(
-            () -> {
-                try {
-                    GenerateContentResponse response = future.get();
-                    callback.success(new GenerateContentResult(response.getCandidates().get(0).getText()));
-                } catch (Exception exception) {
-                    callback.error(unwrapException(exception));
-                }
-            },
-            executor
-        );
+        future.addListener(() -> {
+            try {
+                GenerateContentResponse response = future.get();
+                callback.success(new GenerateContentResult(response.getCandidates().get(0).getText()));
+            } catch (Exception exception) {
+                callback.error(unwrapException(exception));
+            }
+        }, executor);
     }
 
     public void handleOnDestroy() {

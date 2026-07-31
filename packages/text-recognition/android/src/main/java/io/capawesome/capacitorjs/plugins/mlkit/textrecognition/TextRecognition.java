@@ -33,25 +33,23 @@ public class TextRecognition {
 
         TextRecognizerOptionsInterface recognizerOptions = createRecognizerOptionsForScript(options.getScript());
         final TextRecognizer textRecognizer = com.google.mlkit.vision.text.TextRecognition.getClient(recognizerOptions);
-        plugin
-            .getActivity()
-            .runOnUiThread(() -> {
-                textRecognizer
-                    .process(inputImage)
-                    .addOnSuccessListener(text -> {
-                        textRecognizer.close();
-                        ProcessImageResult result = new ProcessImageResult(text);
-                        callback.success(result);
-                    })
-                    .addOnCanceledListener(() -> {
-                        textRecognizer.close();
-                        callback.error(new Exception(TextRecognitionPlugin.ERROR_PROCESS_IMAGE_CANCELED));
-                    })
-                    .addOnFailureListener(exception -> {
-                        textRecognizer.close();
-                        callback.error(exception);
-                    });
-            });
+        plugin.getActivity().runOnUiThread(() -> {
+            textRecognizer
+                .process(inputImage)
+                .addOnSuccessListener(text -> {
+                    textRecognizer.close();
+                    ProcessImageResult result = new ProcessImageResult(text);
+                    callback.success(result);
+                })
+                .addOnCanceledListener(() -> {
+                    textRecognizer.close();
+                    callback.error(new Exception(TextRecognitionPlugin.ERROR_PROCESS_IMAGE_CANCELED));
+                })
+                .addOnFailureListener(exception -> {
+                    textRecognizer.close();
+                    callback.error(exception);
+                });
+        });
     }
 
     @NonNull
