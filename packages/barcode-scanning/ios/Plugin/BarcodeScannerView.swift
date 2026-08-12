@@ -151,9 +151,21 @@ public protocol BarcodeScannerViewDelegate {
         self.removeTorchButton()
         self.removeCancelButton()
         self.removeVideoPreviewLayer()
+        self.stopCaptureSession()
+        self.barcodeScannerInstance = nil
+    }
+
+    // `setSampleBufferDelegate(self, ...)` gives the capture session a strong reference back to
+    // this view, so `deinit` isn't guaranteed to run when the view is removed - the old session
+    // can keep running underneath a new one. Call this explicitly from `stopScan()` to break that
+    // cycle and actually stop the session. Fixes the black screen from rapidly switching cameras
+    // (issue #335).
+    public func stopCaptureSession() {
+        self.captureSession?.outputs.forEach {
+            ($0 as? AVCaptureVideoDataOutput)?.setSampleBufferDelegate(nil, queue: nil)
+        }
         self.captureSession?.stopRunning()
         self.captureSession = nil
-        self.barcodeScannerInstance = nil
     }
 
     override public func layoutSubviews() {

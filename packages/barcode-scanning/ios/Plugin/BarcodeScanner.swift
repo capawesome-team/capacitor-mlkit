@@ -47,6 +47,10 @@ typealias MLKitBarcodeScanner = MLKitBarcodeScanning.BarcodeScanner
     @objc public func stopScan() {
         DispatchQueue.main.async {
             self.showWebViewBackground()
+            // Stop the capture session before releasing the view - deinit alone can't be trusted
+            // here since the session holds a strong ref back to the view. Otherwise switching
+            // lensFacing quickly can leave the old session running under the new one (#335).
+            self.cameraView?.stopCaptureSession()
             self.cameraView?.removeFromSuperview()
             self.cameraView = nil
         }
