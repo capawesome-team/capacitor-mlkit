@@ -182,7 +182,7 @@ public protocol BarcodeScannerViewDelegate {
             self.addDetectionAreaView()
         }
 
-        if let interfaceOrientation = UIApplication.shared.windows.first(where: { $0.isKeyWindow })?.windowScene?.interfaceOrientation {
+        if let interfaceOrientation = self.window?.windowScene?.interfaceOrientation {
             let videoOrientation = interfaceOrientationToVideoOrientation(interfaceOrientation)
             self.videoPreviewLayer?.connection?.videoOrientation = videoOrientation
             self.videoOrientation = videoOrientation
@@ -300,8 +300,7 @@ public protocol BarcodeScannerViewDelegate {
     }
 
     private func addCancelButton() {
-        let interfaceOrientation = UIApplication.shared.windows.first(where: { $0.isKeyWindow })?
-            .windowScene?.interfaceOrientation ?? UIInterfaceOrientation.portrait
+        let interfaceOrientation = self.window?.windowScene?.interfaceOrientation ?? UIInterfaceOrientation.portrait
         let image = UIImage(systemName: "xmark")?.withTintColor(.white, renderingMode: .alwaysOriginal)
         let button = UIButton(type: .custom)
         if interfaceOrientation.isPortrait {
