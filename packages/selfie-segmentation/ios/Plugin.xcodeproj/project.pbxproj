@@ -14,9 +14,7 @@
 		4A4E0DE62AA478A800BED263 /* ProcessImageResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4E0DE42AA478A800BED263 /* ProcessImageResult.swift */; };
 		50ADFF92201F53D600D50D53 /* Plugin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50ADFF88201F53D600D50D53 /* Plugin.framework */; };
 		50ADFF97201F53D600D50D53 /* SelfieSegmentationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50ADFF96201F53D600D50D53 /* SelfieSegmentationTests.swift */; };
-		50ADFF99201F53D600D50D53 /* SelfieSegmentationPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ADFF8B201F53D600D50D53 /* SelfieSegmentationPlugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		50ADFFA42020D75100D50D53 /* Capacitor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50ADFFA52020D75100D50D53 /* Capacitor.framework */; };
-		50ADFFA82020EE4F00D50D53 /* SelfieSegmentationPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 50ADFFA72020EE4F00D50D53 /* SelfieSegmentationPlugin.m */; };
 		50E1A94820377CB70090CE1A /* SelfieSegmentationPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E1A94720377CB70090CE1A /* SelfieSegmentationPlugin.swift */; };
 /* End PBXBuildFile section */
 
@@ -36,13 +34,11 @@
 		4A4E0DE32AA478A800BED263 /* ProcessImageOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProcessImageOptions.swift; path = Classes/ProcessImageOptions.swift; sourceTree = "<group>"; };
 		4A4E0DE42AA478A800BED263 /* ProcessImageResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProcessImageResult.swift; path = Classes/ProcessImageResult.swift; sourceTree = "<group>"; };
 		50ADFF88201F53D600D50D53 /* Plugin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Plugin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		50ADFF8B201F53D600D50D53 /* SelfieSegmentationPlugin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SelfieSegmentationPlugin.h; sourceTree = "<group>"; };
 		50ADFF8C201F53D600D50D53 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		50ADFF91201F53D600D50D53 /* PluginTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PluginTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		50ADFF96201F53D600D50D53 /* SelfieSegmentationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfieSegmentationTests.swift; sourceTree = "<group>"; };
 		50ADFF98201F53D600D50D53 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		50ADFFA52020D75100D50D53 /* Capacitor.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Capacitor.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		50ADFFA72020EE4F00D50D53 /* SelfieSegmentationPlugin.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SelfieSegmentationPlugin.m; sourceTree = "<group>"; };
 		50E1A94720377CB70090CE1A /* SelfieSegmentationPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelfieSegmentationPlugin.swift; sourceTree = "<group>"; };
 		5E23F77F099397094342571A /* Pods-Plugin.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Plugin.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Plugin/Pods-Plugin.debug.xcconfig"; sourceTree = "<group>"; };
 		91781294A431A2A7CC6EB714 /* Pods-Plugin.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Plugin.release.xcconfig"; path = "Pods/Target Support Files/Pods-Plugin/Pods-Plugin.release.xcconfig"; sourceTree = "<group>"; };
@@ -108,8 +104,6 @@
 				4A4E0DE22AA4788400BED263 /* Classes */,
 				50E1A94720377CB70090CE1A /* SelfieSegmentationPlugin.swift */,
 				2F98D68124C9AAE400613A4C /* SelfieSegmentation.swift */,
-				50ADFF8B201F53D600D50D53 /* SelfieSegmentationPlugin.h */,
-				50ADFFA72020EE4F00D50D53 /* SelfieSegmentationPlugin.m */,
 				50ADFF8C201F53D600D50D53 /* Info.plist */,
 			);
 			path = Plugin;
@@ -152,7 +146,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				50ADFF99201F53D600D50D53 /* SelfieSegmentationPlugin.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -382,7 +375,6 @@
 				50E1A94820377CB70090CE1A /* SelfieSegmentationPlugin.swift in Sources */,
 				2F98D68224C9AAE500613A4C /* SelfieSegmentation.swift in Sources */,
 				4A4E0DE52AA478A800BED263 /* ProcessImageOptions.swift in Sources */,
-				50ADFFA82020EE4F00D50D53 /* SelfieSegmentationPlugin.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

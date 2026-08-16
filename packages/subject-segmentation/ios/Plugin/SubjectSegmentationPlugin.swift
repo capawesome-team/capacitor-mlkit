@@ -6,7 +6,14 @@ import Capacitor
  * here: https://capacitorjs.com/docs/plugins/ios
  */
 @objc(SubjectSegmentationPlugin)
-public class SubjectSegmentationPlugin: CAPPlugin {
+public class SubjectSegmentationPlugin: CAPPlugin, CAPBridgedPlugin {
+    public let identifier = "SubjectSegmentationPlugin"
+    public let jsName = "SubjectSegmentation"
+    public let pluginMethods: [CAPPluginMethod] = [
+        CAPPluginMethod(name: "processImage", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "isGoogleSubjectSegmentationModuleAvailable", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "installGoogleSubjectSegmentationModule", returnType: CAPPluginReturnPromise)
+    ]
     private let implementation = SubjectSegmentation()
 
     @objc func processImage(_ call: CAPPluginCall) {
