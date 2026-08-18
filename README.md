@@ -1,5 +1,6 @@
 > [!WARNING]
 > These plugins do **not** support Swift Package Manager (SPM) because the underlying [ML Kit SDKs do not support SPM](https://github.com/googlesamples/mlkit/issues/180#issuecomment-1298964099) (see [#186](https://github.com/capawesome-team/capacitor-mlkit/issues/186)).
+> If you need SPM support for barcode scanning, take a look at our new [Barcode Scanner plugin](https://capawesome.io/docs/sdks/capacitor/barcode-scanner/), which uses AVFoundation and Vision instead of ML Kit on iOS.
 
 <br />
 <div align="center">
