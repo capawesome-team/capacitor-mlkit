@@ -1,5 +1,13 @@
 # Changelog
 
+## 8.1.1
+
+### Patch Changes
+
+- [`40527f5925e141bf4bb41c9ca297016c1dd6b952`](https://github.com/capawesome-team/capacitor-mlkit/commit/40527f5925e141bf4bb41c9ca297016c1dd6b952) ([#349](https://github.com/capawesome-team/capacitor-mlkit/pull/349)): fix(ios): resolve the interface orientation from the view's own window scene
+
+- [`bf90a10393ad1dcf7993f2e972731e8e298ccce8`](https://github.com/capawesome-team/capacitor-mlkit/commit/bf90a10393ad1dcf7993f2e972731e8e298ccce8) ([#347](https://github.com/capawesome-team/capacitor-mlkit/pull/347)): fix(ios): stop the capture session when scanning stops, fixing a black screen when switching cameras mid-scan
+
 ## 8.1.0
 
 ### Minor Changes
