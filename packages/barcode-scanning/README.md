@@ -1235,7 +1235,7 @@ The `startScan(...)` method renders the camera behind the WebView so that you ca
 
 ### Why is the camera view not visible during a scan?
 
-When using `startScan(...)`, the camera is rendered behind the WebView. If any element in the DOM is visible or has an opaque background, it covers the camera view. Make sure to hide all elements or give them a transparent background, as shown in the [usage example](#hide-all-webview-elements-during-a-scan).
+When using `startScan(...)`, the camera is rendered behind the WebView. If any element in the DOM is visible or has an opaque background, it covers the camera view. Make sure to hide all elements or give them a transparent background, as shown in the [usage example](#hide-all-webview-elements-during-a-scan). If hiding all elements is impractical in your app (for example with Ionic modals or page transitions), the [Capacitor Barcode Scanner plugin](https://capawesome.io/docs/sdks/capacitor/barcode-scanner/) offers an [embedded camera view](https://capawesome.io/blog/capacitor-embedded-barcode-scanner/) that is rendered above the web view instead.
 
 ### Which barcode formats are supported?
 
