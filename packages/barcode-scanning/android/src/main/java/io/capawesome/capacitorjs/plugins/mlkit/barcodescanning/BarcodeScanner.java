@@ -42,7 +42,6 @@ import com.google.mlkit.vision.barcode.BarcodeScannerOptions;
 import com.google.mlkit.vision.barcode.BarcodeScanning;
 import com.google.mlkit.vision.barcode.common.Barcode;
 import com.google.mlkit.vision.codescanner.GmsBarcodeScanner;
-import com.google.mlkit.vision.codescanner.GmsBarcodeScannerOptions;
 import com.google.mlkit.vision.codescanner.GmsBarcodeScanning;
 import com.google.mlkit.vision.common.InputImage;
 import io.capawesome.capacitorjs.plugins.mlkit.barcodescanning.classes.options.SetZoomRatioOptions;
@@ -198,21 +197,11 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
             });
     }
 
-    public void scan(ScanSettings scanSettings, ScanResultCallback callback) {
-        GmsBarcodeScannerOptions options = buildGmsBarcodeScannerOptions(scanSettings);
-        GmsBarcodeScanner scanner = GmsBarcodeScanning.getClient(plugin.getContext(), options);
-
-        scanner
-            .startScan()
-            .addOnSuccessListener(barcode -> {
-                callback.success(barcode);
-            })
-            .addOnCanceledListener(() -> {
-                callback.cancel();
-            })
-            .addOnFailureListener(exception -> {
-                callback.error(exception);
-            });
+    public void scan(ScanSettings scanSettings, PluginCall call) {
+        Intent intent = new Intent(plugin.getContext(), ScanActivity.class);
+        intent.putExtra(ScanActivity.EXTRA_FORMATS, scanSettings.formats);
+        intent.putExtra(ScanActivity.EXTRA_AUTO_ZOOM, scanSettings.autoZoom);
+        plugin.startActivityForResult(call, intent, "scanResult");
     }
 
     public void isGoogleBarcodeScannerModuleAvailable(IsGoogleBarodeScannerModuleAvailableResultCallback callback) {
@@ -426,20 +415,6 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
     private BarcodeScannerOptions buildBarcodeScannerOptions(ScanSettings scanSettings) {
         int[] formats = scanSettings.formats.length == 0 ? new int[] { Barcode.FORMAT_ALL_FORMATS } : scanSettings.formats;
         BarcodeScannerOptions options = new BarcodeScannerOptions.Builder().setBarcodeFormats(formats[0], formats).build();
-        return options;
-    }
-
-    private GmsBarcodeScannerOptions buildGmsBarcodeScannerOptions(ScanSettings scanSettings) {
-        int[] formats = scanSettings.formats.length == 0 ? new int[] { Barcode.FORMAT_ALL_FORMATS } : scanSettings.formats;
-        boolean autoZoom = scanSettings.autoZoom;
-        GmsBarcodeScannerOptions options;
-
-        if (autoZoom) {
-            options = new GmsBarcodeScannerOptions.Builder().setBarcodeFormats(formats[0], formats).enableAutoZoom().build();
-        } else {
-            options = new GmsBarcodeScannerOptions.Builder().setBarcodeFormats(formats[0], formats).build();
-        }
-
         return options;
     }
 

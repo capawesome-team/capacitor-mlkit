@@ -30,6 +30,11 @@ export interface BarcodeScannerPlugin {
    * **Attention:** Before using this method on *Android*, first check if the Google Barcode Scanner module is available
    * by using `isGoogleBarcodeScannerModuleAvailable()`.
    *
+   * **Attention:** On *Android*, the system may destroy the app while the scanner is open. In this case, the promise
+   * will never resolve. Instead, the result is delivered through the `appRestoredResult` event of the
+   * [App plugin](https://capacitorjs.com/docs/apis/app#addlistenerapprestoredresult-) when the app is restored.
+   * If the app process was terminated, the scan result cannot be recovered and the event contains an error.
+   *
    * Only available on Android and iOS.
    *
    * @since 0.0.1

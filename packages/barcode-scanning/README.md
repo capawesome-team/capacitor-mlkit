@@ -239,6 +239,23 @@ const scan = async () => {
 };
 ```
 
+On Android, the system may destroy the app while the scanner is open. In this case, the promise will never resolve. Instead, the result is delivered through the `appRestoredResult` event of the [App plugin](https://capacitorjs.com/docs/apis/app#addlistenerapprestoredresult-) when the app is restored. If the app process was terminated, the scan result cannot be recovered and the event contains an error:
+
+```typescript
+import { App } from '@capacitor/app';
+
+App.addListener('appRestoredResult', event => {
+  if (event.pluginId !== 'BarcodeScanner' || event.methodName !== 'scan') {
+    return;
+  }
+  if (event.success) {
+    const barcodes = event.data.barcodes;
+  } else {
+    console.error(event.error?.message);
+  }
+});
+```
+
 ### Check if the barcode scanner is supported
 
 Check whether the device has a camera that can be used for barcode scanning:
@@ -488,6 +505,11 @@ installed. Therefore, no camera permission is required.
 
 **Attention:** Before using this method on *Android*, first check if the Google <a href="#barcode">Barcode</a> Scanner module is available
 by using `isGoogleBarcodeScannerModuleAvailable()`.
+
+**Attention:** On *Android*, the system may destroy the app while the scanner is open. In this case, the promise
+will never resolve. Instead, the result is delivered through the `appRestoredResult` event of the
+[App plugin](https://capacitorjs.com/docs/apis/app#addlistenerapprestoredresult-) when the app is restored.
+If the app process was terminated, the scan result cannot be recovered and the event contains an error.
 
 Only available on Android and iOS.
 
