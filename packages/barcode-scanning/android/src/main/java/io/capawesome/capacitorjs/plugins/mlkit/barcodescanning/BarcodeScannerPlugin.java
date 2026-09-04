@@ -4,6 +4,8 @@
 package io.capawesome.capacitorjs.plugins.mlkit.barcodescanning;
 
 import android.Manifest;
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Point;
 import android.util.DisplayMetrics;
 import android.util.Size;
@@ -44,6 +46,7 @@ public class BarcodeScannerPlugin extends Plugin {
     public static final String SCAN_ERROR_EVENT = "scanError";
     public static final String GOOGLE_BARCODE_SCANNER_MODULE_INSTALL_PROGRESS_EVENT = "googleBarcodeScannerModuleInstallProgress";
     public static final String ERROR_SCAN_CANCELED = "scan canceled.";
+    public static final String ERROR_SCAN_RESULT_LOST = "The scan result was lost because the app process was terminated.";
     public static final String ERROR_PATH_MISSING = "path must be provided.";
     public static final String ERROR_LOAD_IMAGE_FAILED = "The image could not be loaded.";
     public static final String ERROR_ZOOM_RATIO_MISSING = "zoomRatio must be provided.";
@@ -181,37 +184,7 @@ public class BarcodeScannerPlugin extends Plugin {
                     @Override
                     public void success(boolean isAvailable) {
                         if (isAvailable) {
-                            implementation.scan(
-                                scanSettings,
-                                (new ScanResultCallback() {
-                                        @Override
-                                        public void success(Barcode barcode) {
-                                            JSObject barcodeResult = BarcodeScannerHelper.createBarcodeResultForBarcode(
-                                                barcode,
-                                                null,
-                                                null
-                                            );
-
-                                            JSArray barcodeResults = new JSArray();
-                                            barcodeResults.put(barcodeResult);
-
-                                            JSObject result = new JSObject();
-                                            result.put("barcodes", barcodeResults);
-                                            call.resolve(result);
-                                        }
-
-                                        @Override
-                                        public void cancel() {
-                                            call.reject(ERROR_SCAN_CANCELED);
-                                        }
-
-                                        @Override
-                                        public void error(Exception exception) {
-                                            Logger.error(TAG, exception.getMessage(), exception);
-                                            call.reject(exception.getMessage());
-                                        }
-                                    })
-                            );
+                            implementation.scan(scanSettings, call);
                         } else {
                             call.reject(ERROR_GOOGLE_BARCODE_SCANNER_MODULE_NOT_AVAILABLE);
                         }
@@ -452,6 +425,33 @@ public class BarcodeScannerPlugin extends Plugin {
             call.resolve();
         } catch (Exception exception) {
             Logger.error(TAG, exception.getMessage(), exception);
+        }
+    }
+
+    @ActivityCallback
+    public void scanResult(PluginCall call, ActivityResult result) {
+        try {
+            if (call == null) {
+                Logger.debug("scanResult was called with empty call parameter.");
+                return;
+            }
+            Intent data = result.getData();
+            if (result.getResultCode() == Activity.RESULT_OK && data != null) {
+                JSObject barcodeResult = new JSObject(data.getStringExtra(ScanActivity.EXTRA_BARCODE));
+
+                JSArray barcodeResults = new JSArray();
+                barcodeResults.put(barcodeResult);
+
+                JSObject scanResult = new JSObject();
+                scanResult.put("barcodes", barcodeResults);
+                call.resolve(scanResult);
+                return;
+            }
+            String error = data == null ? null : data.getStringExtra(ScanActivity.EXTRA_ERROR);
+            call.reject(error == null ? ERROR_SCAN_CANCELED : error);
+        } catch (Exception exception) {
+            Logger.error(TAG, exception.getMessage(), exception);
+            call.reject(exception.getMessage());
         }
     }
 
