@@ -47,57 +47,51 @@ public class GenAiProofreading {
     public void checkFeatureStatus(@NonNull FeatureOptions options, @NonNull NonEmptyResultCallback<CheckFeatureStatusResult> callback) {
         Proofreader proofreader = getProofreader(options);
         ListenableFuture<Integer> future = proofreader.checkFeatureStatus();
-        future.addListener(
-            () -> {
-                try {
-                    int featureStatus = future.get();
-                    callback.success(new CheckFeatureStatusResult(featureStatus));
-                } catch (Exception exception) {
-                    callback.error(unwrapException(exception));
-                }
-            },
-            executor
-        );
+        future.addListener(() -> {
+            try {
+                int featureStatus = future.get();
+                callback.success(new CheckFeatureStatusResult(featureStatus));
+            } catch (Exception exception) {
+                callback.error(unwrapException(exception));
+            }
+        }, executor);
     }
 
     public void downloadFeature(@NonNull FeatureOptions options, @NonNull EmptyCallback callback) {
         Proofreader proofreader = getProofreader(options);
         ListenableFuture<Integer> future = proofreader.checkFeatureStatus();
-        future.addListener(
-            () -> {
-                try {
-                    int featureStatus = future.get();
-                    if (featureStatus == FeatureStatus.AVAILABLE) {
-                        callback.success();
-                        return;
-                    }
-                    proofreader.downloadFeature(
-                        new DownloadCallback() {
-                            @Override
-                            public void onDownloadStarted(long bytesToDownload) {}
-
-                            @Override
-                            public void onDownloadProgress(long totalBytesDownloaded) {
-                                plugin.notifyDownloadProgressListeners(new DownloadProgressEvent(totalBytesDownloaded));
-                            }
-
-                            @Override
-                            public void onDownloadCompleted() {
-                                callback.success();
-                            }
-
-                            @Override
-                            public void onDownloadFailed(@NonNull GenAiException exception) {
-                                callback.error(exception);
-                            }
-                        }
-                    );
-                } catch (Exception exception) {
-                    callback.error(unwrapException(exception));
+        future.addListener(() -> {
+            try {
+                int featureStatus = future.get();
+                if (featureStatus == FeatureStatus.AVAILABLE) {
+                    callback.success();
+                    return;
                 }
-            },
-            executor
-        );
+                proofreader.downloadFeature(
+                    new DownloadCallback() {
+                        @Override
+                        public void onDownloadStarted(long bytesToDownload) {}
+
+                        @Override
+                        public void onDownloadProgress(long totalBytesDownloaded) {
+                            plugin.notifyDownloadProgressListeners(new DownloadProgressEvent(totalBytesDownloaded));
+                        }
+
+                        @Override
+                        public void onDownloadCompleted() {
+                            callback.success();
+                        }
+
+                        @Override
+                        public void onDownloadFailed(@NonNull GenAiException exception) {
+                            callback.error(exception);
+                        }
+                    }
+                );
+            } catch (Exception exception) {
+                callback.error(unwrapException(exception));
+            }
+        }, executor);
     }
 
     public void handleOnDestroy() {
@@ -110,21 +104,18 @@ public class GenAiProofreading {
         ListenableFuture<ProofreadingResult> future = proofreader.runInference(request, additionalText ->
             plugin.notifyInferenceProgressListeners(new InferenceProgressEvent(additionalText))
         );
-        future.addListener(
-            () -> {
-                try {
-                    ProofreadingResult result = future.get();
-                    List<String> results = new ArrayList<>();
-                    for (ProofreadingSuggestion suggestion : result.getResults()) {
-                        results.add(suggestion.getText());
-                    }
-                    callback.success(new ProofreadResult(results));
-                } catch (Exception exception) {
-                    callback.error(unwrapException(exception));
+        future.addListener(() -> {
+            try {
+                ProofreadingResult result = future.get();
+                List<String> results = new ArrayList<>();
+                for (ProofreadingSuggestion suggestion : result.getResults()) {
+                    results.add(suggestion.getText());
                 }
-            },
-            executor
-        );
+                callback.success(new ProofreadResult(results));
+            } catch (Exception exception) {
+                callback.error(unwrapException(exception));
+            }
+        }, executor);
     }
 
     private void closeProofreader() {

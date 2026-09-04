@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>ML Kit Barcode Scanning</title>
+    <meta
+      name="viewport"
+      content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+
+    <script
+      type="module"
+      src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css"
+    />
+
+    <style>
+      /* Hide all elements so that the camera behind the WebView is visible. */
+      body.barcode-scanner-active {
+        visibility: hidden;
+        --background: transparent;
+        --ion-background-color: transparent;
+      }
+
+      /* Show only the scanner overlay. */
+      .barcode-scanner-modal {
+        visibility: visible;
+      }
+
+      #scanner {
+        position: fixed;
+        inset: 0;
+        z-index: 20;
+        display: flex;
+        flex-direction: column;
+      }
+
+      #scanner[hidden] {
+        display: none;
+      }
+
+      #video {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      #scanner-frame {
+        position: relative;
+        margin: auto;
+        width: 70vw;
+        max-width: 320px;
+        aspect-ratio: 1;
+        border: 2px solid #fff;
+        border-radius: 12px;
+      }
+
+      #scanner-panel {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        padding: 16px;
+        padding-bottom: calc(16px + env(safe-area-inset-bottom));
+        background: rgba(0, 0, 0, 0.6);
+        color: #fff;
+      }
+    </style>
+
+    <script type="module" src="./js/script.js"></script>
+  </head>
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>ML Kit Barcode Scanning</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-list-header>Options</ion-list-header>
+        <ion-item>
+          <ion-select id="formats" label="Formats" multiple="true">
+            <ion-select-option value="AZTEC">Aztec</ion-select-option>
+            <ion-select-option value="CODABAR">Codabar</ion-select-option>
+            <ion-select-option value="CODE_39">Code 39</ion-select-option>
+            <ion-select-option value="CODE_93">Code 93</ion-select-option>
+            <ion-select-option value="CODE_128">Code 128</ion-select-option>
+            <ion-select-option value="DATA_MATRIX"
+              >Data Matrix</ion-select-option
+            >
+            <ion-select-option value="EAN_8">EAN-8</ion-select-option>
+            <ion-select-option value="EAN_13">EAN-13</ion-select-option>
+            <ion-select-option value="ITF">ITF</ion-select-option>
+            <ion-select-option value="PDF_417">PDF417</ion-select-option>
+            <ion-select-option value="QR_CODE">QR Code</ion-select-option>
+            <ion-select-option value="UPC_A">UPC-A</ion-select-option>
+            <ion-select-option value="UPC_E">UPC-E</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-select
+            id="lens-facing"
+            label="Lens Facing"
+            value="BACK"
+            interface="popover"
+          >
+            <ion-select-option value="BACK">Back</ion-select-option>
+            <ion-select-option value="FRONT">Front</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-select
+            id="resolution"
+            label="Resolution"
+            value="1"
+            interface="popover"
+          >
+            <ion-select-option value="0">640x480</ion-select-option>
+            <ion-select-option value="1">1280x720</ion-select-option>
+            <ion-select-option value="2">1920x1080</ion-select-option>
+            <ion-select-option value="3">3840x2160</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-toggle id="auto-zoom">Auto zoom</ion-toggle>
+        </ion-item>
+
+        <ion-list-header>Scan</ion-list-header>
+        <ion-button id="start-scan" expand="block">Start Scan</ion-button>
+        <ion-button id="scan" expand="block"
+          >Scan (Ready-To-Use Interface)</ion-button
+        >
+        <ion-button id="pick-image" expand="block" fill="outline"
+          >Pick Image</ion-button
+        >
+        <ion-item>
+          <ion-label id="file" class="ion-text-wrap">File: -</ion-label>
+        </ion-item>
+        <ion-button id="read-barcodes-from-image" expand="block"
+          >Read Barcodes From Image</ion-button
+        >
+
+        <ion-list-header>Google Barcode Scanner Module</ion-list-header>
+        <ion-button
+          id="is-google-barcode-scanner-module-available"
+          expand="block"
+          >Is Module Available</ion-button
+        >
+        <ion-button id="install-google-barcode-scanner-module" expand="block"
+          >Install Module</ion-button
+        >
+
+        <ion-list-header>Support & Permissions</ion-list-header>
+        <ion-button id="is-supported" expand="block">Is Supported</ion-button>
+        <ion-button id="check-permissions" expand="block"
+          >Check Permissions</ion-button
+        >
+        <ion-button id="request-permissions" expand="block"
+          >Request Permissions</ion-button
+        >
+        <ion-button id="open-settings" expand="block">Open Settings</ion-button>
+
+        <ion-item>
+          <ion-label id="result" class="ion-text-wrap">Result: -</ion-label>
+        </ion-item>
+      </ion-content>
+    </ion-app>
+
+    <div id="scanner" class="barcode-scanner-modal" hidden>
+      <video id="video" muted playsinline></video>
+      <div id="scanner-frame"></div>
+      <div id="scanner-panel">
+        <ion-label id="scanner-result" class="ion-text-wrap"></ion-label>
+        <ion-range
+          id="zoom-ratio"
+          label="Zoom"
+          label-placement="start"
+          color="light"
+          pin="true"
+          step="0.1"
+        ></ion-range>
+        <ion-button
+          id="toggle-torch"
+          expand="block"
+          fill="outline"
+          color="light"
+          >Torch</ion-button
+        >
+        <ion-button id="stop-scan" expand="block" color="danger"
+          >Stop Scan</ion-button
+        >
+      </div>
+    </div>
+  </body>
+</html>

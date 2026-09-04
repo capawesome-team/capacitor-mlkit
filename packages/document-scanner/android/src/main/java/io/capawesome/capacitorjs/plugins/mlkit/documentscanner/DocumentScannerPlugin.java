@@ -39,8 +39,9 @@ public class DocumentScannerPlugin extends Plugin {
         } catch (Exception exception) {
             Logger.error(TAG, exception.getMessage(), exception);
         }
-        scannerLauncher = getActivity()
-            .registerForActivityResult(new ActivityResultContracts.StartIntentSenderForResult(), activityResult -> {
+        scannerLauncher = getActivity().registerForActivityResult(
+            new ActivityResultContracts.StartIntentSenderForResult(),
+            activityResult -> {
                 if (savedCall == null) {
                     return;
                 }
@@ -76,7 +77,8 @@ public class DocumentScannerPlugin extends Plugin {
                     savedCall.reject("Scan cancelled or failed. Result code: " + activityResult.getResultCode());
                 }
                 savedCall = null;
-            });
+            }
+        );
     }
 
     @PluginMethod

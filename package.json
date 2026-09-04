@@ -1,7 +1,7 @@
 {
   "name": "capacitor-mlkit",
   "private": true,
-  "packageManager": "npm@8.3.0",
+  "packageManager": "npm@11.17.0",
   "workspaces": [
     "packages/*"
   ],
@@ -31,7 +31,7 @@
     "prepare": "husky"
   },
   "devDependencies": {
-    "@changesets/cli": "2.29.8",
+    "@changesets/cli": "3.0.1",
     "@ionic/swiftlint-config": "2.0.0",
     "@robingenz/changelog-github": "0.0.1",
     "husky": "9.1.7",
@@ -39,8 +39,8 @@
     "patch-package": "8.0.1",
     "pkg-pr-new": "0.0.20",
     "prettier": "3.4.2",
-    "prettier-plugin-java": "2.6.7",
-    "turbo": "2.6.3"
+    "prettier-plugin-java": "2.9.7",
+    "turbo": "2.10.7"
   },
   "overrides": {
     "zod-package-json": "1.0.3"

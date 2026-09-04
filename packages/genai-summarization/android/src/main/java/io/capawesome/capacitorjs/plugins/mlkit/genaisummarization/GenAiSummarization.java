@@ -44,57 +44,51 @@ public class GenAiSummarization {
     public void checkFeatureStatus(@NonNull FeatureOptions options, @NonNull NonEmptyResultCallback<CheckFeatureStatusResult> callback) {
         Summarizer summarizer = getSummarizer(options);
         ListenableFuture<Integer> future = summarizer.checkFeatureStatus();
-        future.addListener(
-            () -> {
-                try {
-                    int featureStatus = future.get();
-                    callback.success(new CheckFeatureStatusResult(featureStatus));
-                } catch (Exception exception) {
-                    callback.error(unwrapException(exception));
-                }
-            },
-            executor
-        );
+        future.addListener(() -> {
+            try {
+                int featureStatus = future.get();
+                callback.success(new CheckFeatureStatusResult(featureStatus));
+            } catch (Exception exception) {
+                callback.error(unwrapException(exception));
+            }
+        }, executor);
     }
 
     public void downloadFeature(@NonNull FeatureOptions options, @NonNull EmptyCallback callback) {
         Summarizer summarizer = getSummarizer(options);
         ListenableFuture<Integer> future = summarizer.checkFeatureStatus();
-        future.addListener(
-            () -> {
-                try {
-                    int featureStatus = future.get();
-                    if (featureStatus == FeatureStatus.AVAILABLE) {
-                        callback.success();
-                        return;
-                    }
-                    summarizer.downloadFeature(
-                        new DownloadCallback() {
-                            @Override
-                            public void onDownloadStarted(long bytesToDownload) {}
-
-                            @Override
-                            public void onDownloadProgress(long totalBytesDownloaded) {
-                                plugin.notifyDownloadProgressListeners(new DownloadProgressEvent(totalBytesDownloaded));
-                            }
-
-                            @Override
-                            public void onDownloadCompleted() {
-                                callback.success();
-                            }
-
-                            @Override
-                            public void onDownloadFailed(@NonNull GenAiException exception) {
-                                callback.error(exception);
-                            }
-                        }
-                    );
-                } catch (Exception exception) {
-                    callback.error(unwrapException(exception));
+        future.addListener(() -> {
+            try {
+                int featureStatus = future.get();
+                if (featureStatus == FeatureStatus.AVAILABLE) {
+                    callback.success();
+                    return;
                 }
-            },
-            executor
-        );
+                summarizer.downloadFeature(
+                    new DownloadCallback() {
+                        @Override
+                        public void onDownloadStarted(long bytesToDownload) {}
+
+                        @Override
+                        public void onDownloadProgress(long totalBytesDownloaded) {
+                            plugin.notifyDownloadProgressListeners(new DownloadProgressEvent(totalBytesDownloaded));
+                        }
+
+                        @Override
+                        public void onDownloadCompleted() {
+                            callback.success();
+                        }
+
+                        @Override
+                        public void onDownloadFailed(@NonNull GenAiException exception) {
+                            callback.error(exception);
+                        }
+                    }
+                );
+            } catch (Exception exception) {
+                callback.error(unwrapException(exception));
+            }
+        }, executor);
     }
 
     public void handleOnDestroy() {
@@ -107,17 +101,14 @@ public class GenAiSummarization {
         ListenableFuture<SummarizationResult> future = summarizer.runInference(request, additionalText ->
             plugin.notifyInferenceProgressListeners(new InferenceProgressEvent(additionalText))
         );
-        future.addListener(
-            () -> {
-                try {
-                    SummarizationResult result = future.get();
-                    callback.success(new SummarizeResult(result.getSummary()));
-                } catch (Exception exception) {
-                    callback.error(unwrapException(exception));
-                }
-            },
-            executor
-        );
+        future.addListener(() -> {
+            try {
+                SummarizationResult result = future.get();
+                callback.success(new SummarizeResult(result.getSummary()));
+            } catch (Exception exception) {
+                callback.error(unwrapException(exception));
+            }
+        }, executor);
     }
 
     private void closeSummarizer() {

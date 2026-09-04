@@ -85,24 +85,23 @@ public class BarcodeScannerPlugin extends Plugin {
                 return;
             }
 
-            getActivity()
-                .runOnUiThread(() -> {
-                    implementation.startScan(
-                        scanSettings,
-                        new StartScanResultCallback() {
-                            @Override
-                            public void success() {
-                                call.resolve();
-                            }
-
-                            @Override
-                            public void error(Exception exception) {
-                                Logger.error(TAG, exception.getMessage(), exception);
-                                call.reject(exception.getMessage());
-                            }
+            getActivity().runOnUiThread(() -> {
+                implementation.startScan(
+                    scanSettings,
+                    new StartScanResultCallback() {
+                        @Override
+                        public void success() {
+                            call.resolve();
                         }
-                    );
-                });
+
+                        @Override
+                        public void error(Exception exception) {
+                            Logger.error(TAG, exception.getMessage(), exception);
+                            call.reject(exception.getMessage());
+                        }
+                    }
+                );
+            });
         } catch (Exception exception) {
             Logger.error(TAG, exception.getMessage(), exception);
             call.reject(exception.getMessage());
@@ -112,11 +111,10 @@ public class BarcodeScannerPlugin extends Plugin {
     @PluginMethod
     public void stopScan(PluginCall call) {
         try {
-            getActivity()
-                .runOnUiThread(() -> {
-                    implementation.stopScan();
-                    call.resolve();
-                });
+            getActivity().runOnUiThread(() -> {
+                implementation.stopScan();
+                call.resolve();
+            });
         } catch (Exception exception) {
             Logger.error(TAG, exception.getMessage(), exception);
             call.reject(exception.getMessage());

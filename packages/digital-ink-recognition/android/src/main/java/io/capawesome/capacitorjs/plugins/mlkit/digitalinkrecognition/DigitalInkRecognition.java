@@ -32,13 +32,19 @@ public class DigitalInkRecognition {
 
     public void deleteDownloadedModel(@NonNull DeleteDownloadedModelOptions options, @NonNull EmptyCallback callback) throws Exception {
         DigitalInkRecognitionModel model = createModel(options.getLanguageTag());
-        modelManager.deleteDownloadedModel(model).addOnSuccessListener(result -> callback.success()).addOnFailureListener(callback::error);
+        modelManager
+            .deleteDownloadedModel(model)
+            .addOnSuccessListener(result -> callback.success())
+            .addOnFailureListener(callback::error);
     }
 
     public void downloadModel(@NonNull DownloadModelOptions options, @NonNull EmptyCallback callback) throws Exception {
         DigitalInkRecognitionModel model = createModel(options.getLanguageTag());
         DownloadConditions conditions = new DownloadConditions.Builder().build();
-        modelManager.download(model, conditions).addOnSuccessListener(result -> callback.success()).addOnFailureListener(callback::error);
+        modelManager
+            .download(model, conditions)
+            .addOnSuccessListener(result -> callback.success())
+            .addOnFailureListener(callback::error);
     }
 
     public void getDownloadedModels(@NonNull NonEmptyResultCallback<GetDownloadedModelsResult> callback) {
@@ -64,18 +70,17 @@ public class DigitalInkRecognition {
                     recognizerOptions
                 );
                 RecognitionContext recognitionContext = createRecognitionContext(options.getPreContext(), options.getWritingArea());
-                Task<RecognitionResult> task = recognitionContext == null
-                    ? recognizer.recognize(options.getInk())
-                    : recognizer.recognize(options.getInk(), recognitionContext);
-                task
-                    .addOnSuccessListener(recognitionResult -> {
-                        recognizer.close();
-                        callback.success(new RecognizeResult(recognitionResult));
-                    })
-                    .addOnFailureListener(exception -> {
-                        recognizer.close();
-                        callback.error(exception);
-                    });
+                Task<RecognitionResult> task =
+                    recognitionContext == null
+                        ? recognizer.recognize(options.getInk())
+                        : recognizer.recognize(options.getInk(), recognitionContext);
+                task.addOnSuccessListener(recognitionResult -> {
+                    recognizer.close();
+                    callback.success(new RecognizeResult(recognitionResult));
+                }).addOnFailureListener(exception -> {
+                    recognizer.close();
+                    callback.error(exception);
+                });
             })
             .addOnFailureListener(callback::error);
     }

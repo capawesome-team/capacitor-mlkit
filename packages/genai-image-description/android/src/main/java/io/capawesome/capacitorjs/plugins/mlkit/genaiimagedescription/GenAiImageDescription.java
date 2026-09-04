@@ -46,17 +46,14 @@ public class GenAiImageDescription {
     public void checkFeatureStatus(@NonNull NonEmptyResultCallback<CheckFeatureStatusResult> callback) {
         ImageDescriber imageDescriber = getImageDescriber();
         ListenableFuture<Integer> future = imageDescriber.checkFeatureStatus();
-        future.addListener(
-            () -> {
-                try {
-                    int featureStatus = future.get();
-                    callback.success(new CheckFeatureStatusResult(featureStatus));
-                } catch (Exception exception) {
-                    callback.error(unwrapException(exception));
-                }
-            },
-            executor
-        );
+        future.addListener(() -> {
+            try {
+                int featureStatus = future.get();
+                callback.success(new CheckFeatureStatusResult(featureStatus));
+            } catch (Exception exception) {
+                callback.error(unwrapException(exception));
+            }
+        }, executor);
     }
 
     public void describeImage(@NonNull DescribeImageOptions options, @NonNull NonEmptyResultCallback<DescribeImageResult> callback) {
@@ -72,57 +69,51 @@ public class GenAiImageDescription {
         ListenableFuture<ImageDescriptionResult> future = imageDescriber.runInference(request, additionalText ->
             plugin.notifyInferenceProgressListeners(new InferenceProgressEvent(additionalText))
         );
-        future.addListener(
-            () -> {
-                try {
-                    ImageDescriptionResult result = future.get();
-                    callback.success(new DescribeImageResult(result.getDescription()));
-                } catch (Exception exception) {
-                    callback.error(unwrapException(exception));
-                }
-            },
-            executor
-        );
+        future.addListener(() -> {
+            try {
+                ImageDescriptionResult result = future.get();
+                callback.success(new DescribeImageResult(result.getDescription()));
+            } catch (Exception exception) {
+                callback.error(unwrapException(exception));
+            }
+        }, executor);
     }
 
     public void downloadFeature(@NonNull EmptyCallback callback) {
         ImageDescriber imageDescriber = getImageDescriber();
         ListenableFuture<Integer> future = imageDescriber.checkFeatureStatus();
-        future.addListener(
-            () -> {
-                try {
-                    int featureStatus = future.get();
-                    if (featureStatus == FeatureStatus.AVAILABLE) {
-                        callback.success();
-                        return;
-                    }
-                    imageDescriber.downloadFeature(
-                        new DownloadCallback() {
-                            @Override
-                            public void onDownloadStarted(long bytesToDownload) {}
-
-                            @Override
-                            public void onDownloadProgress(long totalBytesDownloaded) {
-                                plugin.notifyDownloadProgressListeners(new DownloadProgressEvent(totalBytesDownloaded));
-                            }
-
-                            @Override
-                            public void onDownloadCompleted() {
-                                callback.success();
-                            }
-
-                            @Override
-                            public void onDownloadFailed(@NonNull GenAiException exception) {
-                                callback.error(exception);
-                            }
-                        }
-                    );
-                } catch (Exception exception) {
-                    callback.error(unwrapException(exception));
+        future.addListener(() -> {
+            try {
+                int featureStatus = future.get();
+                if (featureStatus == FeatureStatus.AVAILABLE) {
+                    callback.success();
+                    return;
                 }
-            },
-            executor
-        );
+                imageDescriber.downloadFeature(
+                    new DownloadCallback() {
+                        @Override
+                        public void onDownloadStarted(long bytesToDownload) {}
+
+                        @Override
+                        public void onDownloadProgress(long totalBytesDownloaded) {
+                            plugin.notifyDownloadProgressListeners(new DownloadProgressEvent(totalBytesDownloaded));
+                        }
+
+                        @Override
+                        public void onDownloadCompleted() {
+                            callback.success();
+                        }
+
+                        @Override
+                        public void onDownloadFailed(@NonNull GenAiException exception) {
+                            callback.error(exception);
+                        }
+                    }
+                );
+            } catch (Exception exception) {
+                callback.error(unwrapException(exception));
+            }
+        }, executor);
     }
 
     public void handleOnDestroy() {

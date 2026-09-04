@@ -37,24 +37,22 @@ public class FaceMeshDetection {
         FaceMeshDetectorOptions faceMeshDetectorOptions = builder.build();
 
         final FaceMeshDetector faceMeshDetector = com.google.mlkit.vision.facemesh.FaceMeshDetection.getClient(faceMeshDetectorOptions);
-        plugin
-            .getActivity()
-            .runOnUiThread(() -> {
-                faceMeshDetector
-                    .process(inputImage)
-                    .addOnSuccessListener(faceMeshs -> {
-                        faceMeshDetector.close();
-                        ProcessImageResult result = new ProcessImageResult(faceMeshs);
-                        callback.success(result);
-                    })
-                    .addOnCanceledListener(() -> {
-                        faceMeshDetector.close();
-                        callback.cancel();
-                    })
-                    .addOnFailureListener(exception -> {
-                        faceMeshDetector.close();
-                        callback.error(exception);
-                    });
-            });
+        plugin.getActivity().runOnUiThread(() -> {
+            faceMeshDetector
+                .process(inputImage)
+                .addOnSuccessListener(faceMeshs -> {
+                    faceMeshDetector.close();
+                    ProcessImageResult result = new ProcessImageResult(faceMeshs);
+                    callback.success(result);
+                })
+                .addOnCanceledListener(() -> {
+                    faceMeshDetector.close();
+                    callback.cancel();
+                })
+                .addOnFailureListener(exception -> {
+                    faceMeshDetector.close();
+                    callback.error(exception);
+                });
+        });
     }
 }

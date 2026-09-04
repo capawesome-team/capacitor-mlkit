@@ -121,41 +121,38 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
         imageAnalysis.setAnalyzer(ContextCompat.getMainExecutor(plugin.getContext()), this);
 
         ListenableFuture<ProcessCameraProvider> cameraProviderFuture = ProcessCameraProvider.getInstance(plugin.getContext());
-        cameraProviderFuture.addListener(
-            () -> {
-                try {
-                    processCameraProvider = cameraProviderFuture.get();
+        cameraProviderFuture.addListener(() -> {
+            try {
+                processCameraProvider = cameraProviderFuture.get();
 
-                    CameraSelector cameraSelector = new CameraSelector.Builder().requireLensFacing(this.scanSettings.lensFacing).build();
+                CameraSelector cameraSelector = new CameraSelector.Builder().requireLensFacing(this.scanSettings.lensFacing).build();
 
-                    previewView = new PreviewView(plugin.getActivity());
-                    previewView.setLayoutParams(
-                        new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT)
-                    );
-                    previewView.setScaleType(PreviewView.ScaleType.FILL_CENTER);
-                    previewView.setBackgroundColor(Color.BLACK);
+                previewView = new PreviewView(plugin.getActivity());
+                previewView.setLayoutParams(
+                    new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT)
+                );
+                previewView.setScaleType(PreviewView.ScaleType.FILL_CENTER);
+                previewView.setBackgroundColor(Color.BLACK);
 
-                    // Add preview view behind the WebView
-                    ((ViewGroup) plugin.getBridge().getWebView().getParent()).addView(previewView, 0);
+                // Add preview view behind the WebView
+                ((ViewGroup) plugin.getBridge().getWebView().getParent()).addView(previewView, 0);
 
-                    Preview preview = new Preview.Builder().build();
-                    preview.setSurfaceProvider(previewView.getSurfaceProvider());
+                Preview preview = new Preview.Builder().build();
+                preview.setSurfaceProvider(previewView.getSurfaceProvider());
 
-                    // Start the camera
-                    camera = processCameraProvider.bindToLifecycle(
-                        (LifecycleOwner) plugin.getContext(),
-                        cameraSelector,
-                        preview,
-                        imageAnalysis
-                    );
+                // Start the camera
+                camera = processCameraProvider.bindToLifecycle(
+                    (LifecycleOwner) plugin.getContext(),
+                    cameraSelector,
+                    preview,
+                    imageAnalysis
+                );
 
-                    callback.success();
-                } catch (Exception exception) {
-                    callback.error(exception);
-                }
-            },
-            ContextCompat.getMainExecutor(plugin.getContext())
-        );
+                callback.success();
+            } catch (Exception exception) {
+                callback.error(exception);
+            }
+        }, ContextCompat.getMainExecutor(plugin.getContext()));
     }
 
     /**

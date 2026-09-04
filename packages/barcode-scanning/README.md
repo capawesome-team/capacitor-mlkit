@@ -2,6 +2,9 @@
 
 Unofficial Capacitor plugin for [ML Kit Barcode Scanning](https://developers.google.com/ml-kit/vision/barcode-scanning).[^1][^2]
 
+> [!TIP]
+> Looking for Swift Package Manager (SPM) support, a themeable fullscreen scanner UI on both Android and iOS, or an embedded camera view? Take a look at our new [Barcode Scanner plugin](https://capawesome.io/docs/sdks/capacitor/barcode-scanner/) for [Capawesome Insiders](https://capawesome.io/insiders/) — a separate plugin that replaces ML Kit with AVFoundation and Vision on iOS.
+
 <div class="capawesome-z29o10a">
   <a href="https://cloud.capawesome.io/" target="_blank">
     <img alt="Deliver Live Updates to your Capacitor app with Capawesome Cloud" src="https://cloud.capawesome.io/assets/banners/cloud-build-and-deploy-capacitor-apps.png?t=1" />
@@ -74,7 +77,7 @@ npm install @capacitor-mlkit/barcode-scanning
 npx cap sync
 ```
 
-**Attention**: This plugin **only supports CocoaPods** for iOS dependency management. Swift Package Manager (SPM) is not supported for the ML Kit SDK, see [this comment](https://github.com/googlesamples/mlkit/issues/180#issuecomment-1298964099).
+**Attention**: This plugin **only supports CocoaPods** for iOS dependency management. Swift Package Manager (SPM) is not supported for the ML Kit SDK, see [this comment](https://github.com/googlesamples/mlkit/issues/180#issuecomment-1298964099). If you need SPM support, take a look at our new [Barcode Scanner plugin](https://capawesome.io/docs/sdks/capacitor/barcode-scanner/), which uses AVFoundation and Vision instead of ML Kit on iOS.
 
 ### Android
 
@@ -1232,7 +1235,7 @@ The `startScan(...)` method renders the camera behind the WebView so that you ca
 
 ### Why is the camera view not visible during a scan?
 
-When using `startScan(...)`, the camera is rendered behind the WebView. If any element in the DOM is visible or has an opaque background, it covers the camera view. Make sure to hide all elements or give them a transparent background, as shown in the [usage example](#hide-all-webview-elements-during-a-scan).
+When using `startScan(...)`, the camera is rendered behind the WebView. If any element in the DOM is visible or has an opaque background, it covers the camera view. Make sure to hide all elements or give them a transparent background, as shown in the [usage example](#hide-all-webview-elements-during-a-scan). If hiding all elements is impractical in your app (for example with Ionic modals or page transitions), the [Capacitor Barcode Scanner plugin](https://capawesome.io/docs/sdks/capacitor/barcode-scanner/) offers an [embedded camera view](https://capawesome.io/blog/capacitor-embedded-barcode-scanner/) that is rendered above the web view instead.
 
 ### Which barcode formats are supported?
 
