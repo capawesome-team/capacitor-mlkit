@@ -47,6 +47,7 @@ public class BarcodeScannerPlugin extends Plugin {
     public static final String GOOGLE_BARCODE_SCANNER_MODULE_INSTALL_PROGRESS_EVENT = "googleBarcodeScannerModuleInstallProgress";
     public static final String ERROR_SCAN_CANCELED = "scan canceled.";
     public static final String ERROR_SCAN_RESULT_LOST = "The scan result was lost because the app process was terminated.";
+    public static final String ERROR_SCAN_FAILED = "The scan failed.";
     public static final String ERROR_PATH_MISSING = "path must be provided.";
     public static final String ERROR_LOAD_IMAGE_FAILED = "The image could not be loaded.";
     public static final String ERROR_ZOOM_RATIO_MISSING = "zoomRatio must be provided.";

@@ -61,7 +61,7 @@ public class ScanActivity extends Activity {
         finishWithResult(RESULT_OK, data);
     }
 
-    private void finishWithError(@Nullable String message) {
+    private void finishWithError(@NonNull String message) {
         Intent data = new Intent().putExtra(EXTRA_ERROR, message);
         finishWithResult(RESULT_CANCELED, data);
     }
@@ -81,7 +81,8 @@ public class ScanActivity extends Activity {
         } else if (task.isCanceled()) {
             finishWithResult(RESULT_CANCELED, null);
         } else {
-            finishWithError(task.getException().getMessage());
+            String message = task.getException().getMessage();
+            finishWithError(message == null ? BarcodeScannerPlugin.ERROR_SCAN_FAILED : message);
         }
     }
 
