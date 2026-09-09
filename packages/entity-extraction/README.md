@@ -74,10 +74,6 @@ platform :ios, '15.5'
 
 No configuration required for this plugin.
 
-## Demo
-
-A working example can be found here: [robingenz/capacitor-mlkit-plugin-demo](https://github.com/robingenz/capacitor-mlkit-plugin-demo)
-
 ## Usage
 
 Before you can extract entities, you must download the model for the language you want to use.

@@ -71,10 +71,6 @@ platform :ios, '15.5'
 
 No configuration required for this plugin.
 
-## Demo
-
-A working example can be found here: [robingenz/capacitor-mlkit-plugin-demo](https://github.com/robingenz/capacitor-mlkit-plugin-demo)
-
 ## Usage
 
 The language identification model ships with the SDK, so no model download is required.

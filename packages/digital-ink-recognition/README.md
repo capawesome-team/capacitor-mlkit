@@ -71,10 +71,6 @@ platform :ios, '15.5'
 
 No configuration required for this plugin.
 
-## Demo
-
-A working example can be found here: [robingenz/capacitor-mlkit-plugin-demo](https://github.com/robingenz/capacitor-mlkit-plugin-demo)
-
 ## Usage
 
 Before any ink can be recognized, the model for the desired language must be downloaded:
