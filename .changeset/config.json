@@ -10,11 +10,25 @@
   "fixed": [
     [
       "@capacitor-mlkit/barcode-scanning",
+      "@capacitor-mlkit/digital-ink-recognition",
       "@capacitor-mlkit/document-scanner",
+      "@capacitor-mlkit/entity-extraction",
       "@capacitor-mlkit/face-detection",
       "@capacitor-mlkit/face-mesh-detection",
+      "@capacitor-mlkit/genai-image-description",
+      "@capacitor-mlkit/genai-prompt",
+      "@capacitor-mlkit/genai-proofreading",
+      "@capacitor-mlkit/genai-rewriting",
+      "@capacitor-mlkit/genai-speech-recognition",
+      "@capacitor-mlkit/genai-summarization",
+      "@capacitor-mlkit/image-labeling",
+      "@capacitor-mlkit/language-identification",
+      "@capacitor-mlkit/object-detection",
+      "@capacitor-mlkit/pose-detection",
       "@capacitor-mlkit/selfie-segmentation",
+      "@capacitor-mlkit/smart-reply",
       "@capacitor-mlkit/subject-segmentation",
+      "@capacitor-mlkit/text-recognition",
       "@capacitor-mlkit/translation"
     ]
   ],
