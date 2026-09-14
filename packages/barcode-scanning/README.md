@@ -3,7 +3,7 @@
 Unofficial Capacitor plugin for [ML Kit Barcode Scanning](https://developers.google.com/ml-kit/vision/barcode-scanning).[^1][^2]
 
 > [!TIP]
-> Looking for Swift Package Manager (SPM) support, a themeable fullscreen scanner UI on both Android and iOS, or an embedded camera view? Take a look at our new [Barcode Scanner plugin](https://capawesome.io/docs/sdks/capacitor/barcode-scanner/) for [Capawesome Insiders](https://capawesome.io/insiders/) — a separate plugin that replaces ML Kit with AVFoundation and Vision on iOS.
+> Looking for Swift Package Manager (SPM) support, a themeable fullscreen scanner UI on both Android and iOS, or an [embedded camera view](https://capawesome.io/blog/capacitor-embedded-barcode-scanner/)? Take a look at our new [Barcode Scanner plugin](https://capawesome.io/docs/sdks/capacitor/barcode-scanner/) for [Capawesome Insiders](https://capawesome.io/insiders/) — a separate plugin that replaces ML Kit with AVFoundation and Vision on iOS.
 
 <div class="capawesome-z29o10a">
   <a href="https://cloud.capawesome.io/" target="_blank">
@@ -53,7 +53,7 @@ A working example can be found here: [https://github.com/robingenz/capacitor-mlk
 ## Guides
 
 - [Announcing the Capacitor ML Kit Barcode Scanning Plugin](https://capawesome.io/blog/announcing-the-capacitor-mlkit-barcode-scanner-plugin/)
-- [How to build an Ionic Barcode Scanner with Capacitor](https://ionic.io/blog/how-to-build-an-ionic-barcode-scanner-with-capacitor)
+- [How to build an Ionic Barcode Scanner with Capacitor](https://capawesome.io/blog/how-to-build-an-ionic-barcode-scanner-with-capacitor/)
 
 ## Installation
 
