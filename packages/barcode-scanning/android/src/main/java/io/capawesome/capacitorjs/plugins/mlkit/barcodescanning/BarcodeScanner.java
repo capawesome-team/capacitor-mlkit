@@ -156,6 +156,7 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
 
                 callback.success();
             } catch (Exception exception) {
+                showWebViewBackground();
                 callback.error(exception);
             }
         }, ContextCompat.getMainExecutor(plugin.getContext()));

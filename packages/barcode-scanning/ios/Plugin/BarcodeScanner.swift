@@ -250,11 +250,13 @@ typealias MLKitBarcodeScanner = MLKitBarcodeScanning.BarcodeScanner
         guard let webView = self.plugin.webView else {
             return
         }
-        originalWebViewAppearance = WebViewAppearance(
-            isOpaque: webView.isOpaque,
-            backgroundColor: webView.backgroundColor,
-            scrollViewBackgroundColor: webView.scrollView.backgroundColor
-        )
+        if originalWebViewAppearance == nil {
+            originalWebViewAppearance = WebViewAppearance(
+                isOpaque: webView.isOpaque,
+                backgroundColor: webView.backgroundColor,
+                scrollViewBackgroundColor: webView.scrollView.backgroundColor
+            )
+        }
         webView.isOpaque = false
         webView.backgroundColor = UIColor.clear
         webView.scrollView.backgroundColor = UIColor.clear
