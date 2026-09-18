@@ -11,9 +11,16 @@ typealias MLKitBarcodeScanner = MLKitBarcodeScanning.BarcodeScanner
 
 @objc public class BarcodeScanner: NSObject {
 
+    private struct WebViewAppearance {
+        let isOpaque: Bool
+        let backgroundColor: UIColor?
+        let scrollViewBackgroundColor: UIColor?
+    }
+
     public let plugin: BarcodeScannerPlugin
 
     private var cameraView: BarcodeScannerView?
+    private var originalWebViewAppearance: WebViewAppearance?
     private var scanCompletionHandler: (([Barcode]?, AVCaptureVideoOrientation?, String?) -> Void)?
     private var barcodeRawValueVotes = [String: Int]()
 
@@ -243,6 +250,13 @@ typealias MLKitBarcodeScanner = MLKitBarcodeScanning.BarcodeScanner
         guard let webView = self.plugin.webView else {
             return
         }
+        if originalWebViewAppearance == nil {
+            originalWebViewAppearance = WebViewAppearance(
+                isOpaque: webView.isOpaque,
+                backgroundColor: webView.backgroundColor,
+                scrollViewBackgroundColor: webView.scrollView.backgroundColor
+            )
+        }
         webView.isOpaque = false
         webView.backgroundColor = UIColor.clear
         webView.scrollView.backgroundColor = UIColor.clear
@@ -252,12 +266,13 @@ typealias MLKitBarcodeScanner = MLKitBarcodeScanning.BarcodeScanner
      * Must run on UI thread.
      */
     private func showWebViewBackground() {
-        guard let webView = self.plugin.webView else {
+        guard let webView = self.plugin.webView, let appearance = originalWebViewAppearance else {
             return
         }
-        webView.isOpaque = true
-        webView.backgroundColor = UIColor.white
-        webView.scrollView.backgroundColor = UIColor.white
+        webView.isOpaque = appearance.isOpaque
+        webView.backgroundColor = appearance.backgroundColor
+        webView.scrollView.backgroundColor = appearance.scrollViewBackgroundColor
+        originalWebViewAppearance = nil
     }
 
     private func handleScannedBarcode(barcode: Barcode, imageSize: CGSize, videoOrientation: AVCaptureVideoOrientation?) {

@@ -9,12 +9,15 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.net.Uri;
 import android.provider.Settings;
 import android.view.Display;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.webkit.WebView;
 import android.widget.FrameLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -74,6 +77,9 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
 
     @Nullable
     private ModuleInstallProgressListener moduleInstallProgressListener;
+
+    @Nullable
+    private Integer originalWebViewBackgroundColor;
 
     private HashMap<String, Integer> barcodeRawValueVotes = new HashMap<String, Integer>();
 
@@ -150,6 +156,7 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
 
                 callback.success();
             } catch (Exception exception) {
+                showWebViewBackground();
                 callback.error(exception);
             }
         }, ContextCompat.getMainExecutor(plugin.getContext()));
@@ -390,14 +397,21 @@ public class BarcodeScanner implements ImageAnalysis.Analyzer {
      * Must run on UI thread.
      */
     private void hideWebViewBackground() {
-        plugin.getBridge().getWebView().setBackgroundColor(Color.TRANSPARENT);
+        WebView webView = plugin.getBridge().getWebView();
+        Drawable background = webView.getBackground();
+        originalWebViewBackgroundColor = background instanceof ColorDrawable ? ((ColorDrawable) background).getColor() : Color.WHITE;
+        webView.setBackgroundColor(Color.TRANSPARENT);
     }
 
     /**
      * Must run on UI thread.
      */
     private void showWebViewBackground() {
-        plugin.getBridge().getWebView().setBackgroundColor(Color.WHITE);
+        if (originalWebViewBackgroundColor == null) {
+            return;
+        }
+        plugin.getBridge().getWebView().setBackgroundColor(originalWebViewBackgroundColor);
+        originalWebViewBackgroundColor = null;
     }
 
     private void handleScannedBarcode(Barcode barcode, Point imageSize) {
