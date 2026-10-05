@@ -6,8 +6,8 @@ Unofficial Capacitor plugin for [ML Kit Barcode Scanning](https://developers.goo
 > Looking for Swift Package Manager (SPM) support, a themeable fullscreen scanner UI on both Android and iOS, or an [embedded camera view](https://capawesome.io/blog/capacitor-embedded-barcode-scanner/)? Take a look at our new [Barcode Scanner plugin](https://capawesome.io/docs/sdks/capacitor/barcode-scanner/) for [Capawesome Insiders](https://capawesome.io/insiders/) — a separate plugin that replaces ML Kit with AVFoundation and Vision on iOS.
 
 <div class="capawesome-z29o10a">
-  <a href="https://cloud.capawesome.io/" target="_blank">
-    <img alt="Deliver Live Updates to your Capacitor app with Capawesome Cloud" src="https://cloud.capawesome.io/assets/banners/cloud-build-and-deploy-capacitor-apps.png?t=1" />
+  <a href="https://capawesome.io/" target="_blank">
+    <img alt="Try Capawesome Cloud free for 14 days — iOS builds without a Mac" src="https://capawesome.io/assets/banners/cloud-free-trial-capacitor-apps.png" />
   </a>
 </div>
 
