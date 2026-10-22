@@ -1,8 +1,8 @@
 package io.capawesome.capacitorjs.plugins.mlkit.documentscanner;
 
-import android.app.Activity;
-import androidx.activity.result.ActivityResultLauncher;
+import android.content.Intent;
 import androidx.activity.result.IntentSenderRequest;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import com.getcapacitor.PluginCall;
 import com.google.android.gms.common.moduleinstall.InstallStatusListener;
@@ -23,7 +23,7 @@ public class DocumentScanner {
         this.plugin = plugin;
     }
 
-    public void startScan(Activity activity, PluginCall call, ActivityResultLauncher<IntentSenderRequest> scannerLauncher) {
+    public void startScan(PluginCall call) {
         boolean galleryImportAllowed = call.getBoolean("galleryImportAllowed", false);
         int pageLimit = call.getInt("pageLimit", 10);
         String resultFormatsOption = call.getString("resultFormats", "JPEG_PDF");
@@ -64,9 +64,16 @@ public class DocumentScanner {
         GmsDocumentScanner scanner = GmsDocumentScanning.getClient(optionsBuilder.build());
 
         scanner
-            .getStartScanIntent(activity)
+            .getStartScanIntent(plugin.getActivity())
             .addOnSuccessListener(intentSender -> {
-                scannerLauncher.launch(new IntentSenderRequest.Builder(intentSender).build());
+                // Capacitor only launches Intents, but the activity result registry starts an Intent
+                // with this action via startIntentSenderForResult. Going through startActivityForResult
+                // lets Capacitor restore the call if the app is destroyed while the scanner is open.
+                Intent intent = new ActivityResultContracts.StartIntentSenderForResult().createIntent(
+                    plugin.getContext(),
+                    new IntentSenderRequest.Builder(intentSender).build()
+                );
+                plugin.startActivityForResult(call, intent, "scanDocumentResult");
             })
             .addOnFailureListener(e -> {
                 call.reject("Failed to start scan intent: " + e.getMessage());

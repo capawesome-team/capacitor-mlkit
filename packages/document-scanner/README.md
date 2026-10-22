@@ -79,6 +79,23 @@ const scanDocument = async () => {
 };
 ```
 
+On Android, the system may destroy the app while the scanner is open. In this case, the promise will never resolve. Instead, the result is delivered through the `appRestoredResult` event of the [App plugin](https://capacitorjs.com/docs/apis/app#addlistenerapprestoredresult-) when the app is restored:
+
+```typescript
+import { App } from '@capacitor/app';
+
+App.addListener('appRestoredResult', event => {
+  if (event.pluginId !== 'DocumentScanner' || event.methodName !== 'scanDocument') {
+    return;
+  }
+  if (event.success) {
+    const scannedImages = event.data.scannedImages;
+  } else {
+    console.error(event.error?.message);
+  }
+});
+```
+
 ### Check and install the Google Document Scanner module
 
 The document scanner models, scanning logic, and UI flow are dynamically downloaded by Google Play services. Check if the module is available and install it if needed. The installation only starts with this call; the `googleDocumentScannerModuleInstallProgress` event notifies you about the progress. Only available on Android:
@@ -126,6 +143,10 @@ scanDocument(options: ScanOptions) => Promise<ScanResult>
 ```
 
 Starts the document scanning process.
+
+**Attention:** On *Android*, the system may destroy the app while the scanner is open. In this case, the promise
+will never resolve. Instead, the result is delivered through the `appRestoredResult` event of the
+[App plugin](https://capacitorjs.com/docs/apis/app#addlistenerapprestoredresult-) when the app is restored.
 
 Only available on Android.
 
