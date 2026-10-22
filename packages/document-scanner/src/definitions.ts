@@ -4,6 +4,10 @@ export interface DocumentScannerPlugin {
   /**
    * Starts the document scanning process.
    *
+   * **Attention:** On *Android*, the system may destroy the app while the scanner is open. In this case, the promise
+   * will never resolve. Instead, the result is delivered through the `appRestoredResult` event of the
+   * [App plugin](https://capacitorjs.com/docs/apis/app#addlistenerapprestoredresult-) when the app is restored.
+   *
    * Only available on Android.
    *
    * @since 7.3.0
