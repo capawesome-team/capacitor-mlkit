@@ -1,5 +1,11 @@
 # Changelog
 
+## 8.2.2
+
+### Patch Changes
+
+- [`0ca9fbc2d54b9d8cbcf8010e9a41ba2339496827`](https://github.com/capawesome-team/capacitor-mlkit/commit/0ca9fbc2d54b9d8cbcf8010e9a41ba2339496827) ([#362](https://github.com/capawesome-team/capacitor-mlkit/pull/362)): fix: restore the original WebView background after `stopScan()` instead of forcing a white background
+
 ## 8.2.1
 
 ### Patch Changes
