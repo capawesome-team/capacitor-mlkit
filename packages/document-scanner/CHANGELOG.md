@@ -1,5 +1,11 @@
 # Changelog
 
+## 8.2.2
+
+### Patch Changes
+
+- [`46874cc260c7523f40157fd98a0790e554d54bca`](https://github.com/capawesome-team/capacitor-mlkit/commit/46874cc260c7523f40157fd98a0790e554d54bca) ([#366](https://github.com/capawesome-team/capacitor-mlkit/pull/366)): fix(android): deliver the `scanDocument(...)` result via the `appRestoredResult` event if the app was destroyed while the scanner was open
+
 ## 8.2.1
 
 ## 8.1.1
