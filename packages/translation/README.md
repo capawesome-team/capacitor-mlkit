@@ -272,11 +272,11 @@ Only available on Android and iOS.
 
 #### TranslateOptions
 
-| Prop                 | Type                                          | Description                                                                                                                                                    | Since |
-| -------------------- | --------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
-| **`text`**           | <code>string</code>                           | The text to translate.                                                                                                                                         | 0.0.1 |
-| **`sourceLanguage`** | <code><a href="#language">Language</a></code> | The source language of the text. If you don't know the source language, you can use the <a href="#language">`Language</a> Identification` plugin to detect it. | 0.0.1 |
-| **`targetLanguage`** | <code><a href="#language">Language</a></code> | The target language to translate the text to.                                                                                                                  | 0.0.1 |
+| Prop                 | Type                                          | Description                                                                                                                            | Since |
+| -------------------- | --------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | ----- |
+| **`text`**           | <code>string</code>                           | The text to translate.                                                                                                                 | 0.0.1 |
+| **`sourceLanguage`** | <code><a href="#language">Language</a></code> | The source language of the text. If you don't know the source language, you can use the `Language Identification` plugin to detect it. | 0.0.1 |
+| **`targetLanguage`** | <code><a href="#language">Language</a></code> | The target language to translate the text to.                                                                                          | 0.0.1 |
 
 
 ### Enums
