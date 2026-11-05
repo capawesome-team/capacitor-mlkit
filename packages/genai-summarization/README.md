@@ -356,10 +356,10 @@ output type and language. Therefore, `checkFeatureStatus(...)` and
 
 #### InputType
 
-| Members            | Value                       | Description                                                                                       | Since |
-| ------------------ | --------------------------- | ------------------------------------------------------------------------------------------------- | ----- |
-| **`Article`**      | <code>'ARTICLE'</code>      | The input text is an article.                                                                     | 8.2.0 |
-| **`Conversation`** | <code>'CONVERSATION'</code> | The input text is a conversation where each line uses the format `&lt;name&gt;: &lt;message&gt;`. | 8.2.0 |
+| Members            | Value                       | Description                                                                           | Since |
+| ------------------ | --------------------------- | ------------------------------------------------------------------------------------- | ----- |
+| **`Article`**      | <code>'ARTICLE'</code>      | The input text is an article.                                                         | 8.2.0 |
+| **`Conversation`** | <code>'CONVERSATION'</code> | The input text is a conversation where each line uses the format `<name>: <message>`. | 8.2.0 |
 
 
 #### Language

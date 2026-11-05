@@ -136,7 +136,7 @@ When `BoundingBoxOnly` is selected, <a href="#facemesh">`FaceMesh`</a> only cont
 
 When <a href="#facemesh">`FaceMesh`</a> is selected, <a href="#facemesh">`FaceMesh`</a> also contains a group of 468 3D face mesh points and related triangle information.
 Each point is represented by <a href="#facemeshpoint">`FaceMeshPoint`</a> describing a specific position in detected face.
-The triangle information is a group of 3 `FaceMeshPoint`s representing a valid surface on Face (e.g. a valid small surface on nose tip).
+The triangle information is a group of 3 <a href="#facemeshpoint">`FaceMeshPoint`</a>s representing a valid surface on Face (e.g. a valid small surface on nose tip).
 
 | Prop                 | Type                                          | Description                                                                                                                                                                                                                                                                                                                                        | Since |
 | -------------------- | --------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
